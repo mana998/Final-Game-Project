@@ -10,10 +10,11 @@ const player = new Player(0, 0, 32, 32, playerImg, "username")
 
 //hardcoded animation values for now
 let animations = {
-    down: [0, 0],
-    left: [1, 0],
-    right: [2, 0],
-    up: [3, 0]
+    //startRow, startColumn, rows, columns
+    down: [0, 0, 0, 2],
+    left: [1, 0, 0, 2],
+    right: [2, 0, 0, 2],
+    up: [3, 0, 0, 2]
 }
 
 socket.on("new frame", () => {
@@ -29,6 +30,9 @@ function draw(){
 
 //event listener for start of the movement
 window.addEventListener("keydown", movePlayer);
+
+//event listener for end of the movement
+window.addEventListener("keyup", stopPlayer);
 
 function movePlayer(e) {
     switch(e.key) {
@@ -63,9 +67,25 @@ function movePlayer(e) {
     //add update of server
 }
 
+function stopPlayer() {
+    player.img.currentColumn = player.img.startColumn + 1; //ensure middle position
+    //stop animation movement
+    player.img.rows = 0;
+    player.img.columns = 0;
+    player.direction = '';
+}
+
 //change animation based on the direction of the player
 function changeAnimation(direction) {
-    player.img.startRow = animations[direction][0];
-    player.img.startColumn = animations[direction][1];
+    //only change animation when direction changes
+    if (player.direction !== direction) {
+        player.img.rows = animations[direction][2];
+        player.img.columns = animations[direction][3];
+        player.img.startRow = animations[direction][0];
+        player.img.startColumn = animations[direction][1];
+        player.img.currentRow = animations[direction][0];
+        player.img.currentColumn = animations[direction][1];
+        player.direction = direction;
+    }
 }
 
