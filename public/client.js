@@ -6,7 +6,10 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const playerImg = new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1);
+const player2Img = new Img("./assets/images/test.png", 4, 0, 0, 2, 5, 1);
 const player = new Player(0, 0, 32, 32, playerImg, "username")
+const player2 = new Player(50, 50, 32, 32, player2Img, "username")
+
 
 //change canvas size on resize
 window.addEventListener("resize", () => {
@@ -35,8 +38,9 @@ socket.on("new frame", () => {
 
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.draw(ctx);
+    player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
     //get data about other players from server
+    player2.draw(ctx, ((canvas.width - player.width) / 2) - player.x + player2.x, ((canvas.height - player.height) / 2) - player.y + player2.y);
 }
 
 //event listener for start of the movement
