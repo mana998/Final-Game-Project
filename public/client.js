@@ -6,7 +6,10 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const playerImg = new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1);
+const player2Img = new Img("./assets/images/test.png", 4, 0, 0, 2, 5, 1);
 const player = new Player(0, 0, 32, 32, playerImg, "username")
+const player2 = new Player(50, 50, 32, 32, player2Img, "username")
+
 
 //change canvas size on resize
 window.addEventListener("resize", () => {
@@ -46,7 +49,7 @@ function draw(data){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     data.players.map(gamePlayer => {
         if (player.username === gamePlayer.username) {
-            player.draw(ctx);
+            player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
         } else {
             //transform data into proper object
             gamePlayer = new Player(gamePlayer.x, gamePlayer.y, gamePlayer.width, gamePlayer.height, 
@@ -54,7 +57,7 @@ function draw(data){
                 gamePlayer.username
             );
             //get data about other players from server
-            gamePlayer.draw(ctx);
+            gamePlayer.draw(ctx, ((canvas.width - player.width) / 2) - player.x + player2.x, ((canvas.height - player.height) / 2) - player.y + player2.y);
         }
     })
 }
