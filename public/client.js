@@ -8,6 +8,17 @@ const ctx = canvas.getContext("2d");
 const playerImg = new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1);
 const player = new Player(0, 0, 32, 32, playerImg, "username")
 
+//change canvas size on resize
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+})
+//change canvas size onload
+window.addEventListener("load", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+})
+
 //hardcoded animation values for now
 let animations = {
     //startRow, startColumn, rows, columns
