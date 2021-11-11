@@ -5,6 +5,9 @@ const app = express();
 //setup static dir
 app.use(express.static(__dirname + '/public'));
 
+//database setup
+const db = require("./database/connection").connection; 
+
 //setup socket server
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
