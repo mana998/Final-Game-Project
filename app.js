@@ -19,7 +19,6 @@ const games = {}
 //hardcoded for now
 games.room1 = new Game();
 
-
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 })
@@ -27,6 +26,10 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
 
     socket.on('join', (data) => {
+        //add map if no map
+        if (!games.room1.map) {
+            games.room1.map = data.map;
+        }
         if (games.room1.players.some((player) => player.username === data.player.username)){
             data.player.username += Math.random();
         }
@@ -35,12 +38,13 @@ io.on("connection", (socket) => {
         socket.emit('dummy username', data.player.username);
     })
 
-    socket.on('player updated', (data) => {
+    socket.on('client updated', (data) => {
         //needs to be adjusted for rooms
         //find player object with same username
         const updatedPlayer = games.room1.players.find(player => player.username === data.player.username);
         //update the player object with new data
         games.room1.players[games.room1.players.indexOf(updatedPlayer)] = data.player;
+        games.room1.map = data.map;
     })
 
     setInterval(() => {

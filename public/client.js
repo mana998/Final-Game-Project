@@ -8,6 +8,8 @@ const ctx = canvas.getContext("2d");
 const playerImg = new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1);
 const player = new Player(0, 0, 32, 32, playerImg, "username")
 
+//hardcoded map for now
+const map = new GameMap();
 
 //change canvas size on resize
 window.addEventListener("resize", () => {
@@ -30,7 +32,7 @@ let animations = {
 }
 
 //hardcoded join - will change
-socket.emit('join', {player: player});
+socket.emit('join', {player: player, map: map.tiles});
 
 //delete
 socket.on("dummy username", (data) => {
@@ -58,6 +60,9 @@ function draw(data){
             gamePlayer.draw(ctx, ((canvas.width - player.width) / 2) - player.x + gamePlayer.x, ((canvas.height - player.height) / 2) - player.y + gamePlayer.y);
         }
     })
+    //draw map
+    const map = new GameMap(data.map);
+    map.draw(ctx, player, canvas.width, canvas.height);
 }
 
 //event listener for start of the movement
@@ -124,6 +129,6 @@ function changeAnimation(direction) {
 }
 
 function updateServer() {
-    socket.emit('player updated', {player: player})
+    socket.emit('client updated', {player: player, map: map.tiles})
 }
 
