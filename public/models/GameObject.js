@@ -14,7 +14,6 @@ class GameObject {
         //if values aren't passed, use object ones
         x = x || this.x;
         y = y || this.y;
-        console.log("x",x,"y",y,"thisx",this.x,"thisy",this.y);
         this.img.draw(ctx, x, y, this.width, this.height);
     }
     
