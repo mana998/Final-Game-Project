@@ -9,12 +9,18 @@ app.use(express.static(__dirname + '/public'));
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+//framerate
+const FRAME_RATE = 60;
+
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 })
 
 io.on("connection", (socket) => {
-    
+    setInterval(() => {
+        io.emit('new frame');
+    }, 1000 / FRAME_RATE);
+
 })
 
 const PORT = process.env.PORT || 8080;
