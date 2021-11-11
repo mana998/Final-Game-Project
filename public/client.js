@@ -17,14 +17,29 @@ let animations = {
     up: [3, 0, 0, 2]
 }
 
-socket.on("new frame", () => {
-    draw();
+//hardcoded join - will change
+socket.emit('join', {player: player});
+
+socket.on("dummy username", (data) => {
+    player.username = data;
+    console.log(player.username);
+})
+
+socket.on("new frame", (data) => {
+    draw(data);
 })
 
 
-function draw(){
+function draw(data){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.draw(ctx);
+    data.players.map(gamePlayer => {
+        gamePlayer = new Player(gamePlayer.x, gamePlayer.y, gamePlayer.width, gamePlayer.height, 
+            new Img(gamePlayer.img.src, gamePlayer.img.startRow, gamePlayer.img.startColumn, gamePlayer.img.rows, gamePlayer.img.columns, gamePlayer.img.speed, '', gamePlayer.img.currentRow, gamePlayer.img.currentColumn),
+            gamePlayer.username
+        );
+        gamePlayer.draw(ctx);
+    })
+    //player.draw(ctx);
     //get data about other players from server
 }
 
@@ -65,6 +80,7 @@ function movePlayer(e) {
             return;
     }
     //add update of server
+    updateServer();
 }
 
 function stopPlayer() {
@@ -87,5 +103,9 @@ function changeAnimation(direction) {
         player.img.currentColumn = animations[direction][1];
         player.direction = direction;
     }
+}
+
+function updateServer() {
+    socket.emit('player updated', {player: player})
 }
 
