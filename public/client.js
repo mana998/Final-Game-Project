@@ -20,6 +20,7 @@ let animations = {
 //hardcoded join - will change
 socket.emit('join', {player: player});
 
+//delete
 socket.on("dummy username", (data) => {
     player.username = data;
     console.log(player.username);
@@ -33,14 +34,18 @@ socket.on("new frame", (data) => {
 function draw(data){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     data.players.map(gamePlayer => {
-        gamePlayer = new Player(gamePlayer.x, gamePlayer.y, gamePlayer.width, gamePlayer.height, 
-            new Img(gamePlayer.img.src, gamePlayer.img.startRow, gamePlayer.img.startColumn, gamePlayer.img.rows, gamePlayer.img.columns, gamePlayer.img.speed, '', gamePlayer.img.currentRow, gamePlayer.img.currentColumn),
-            gamePlayer.username
-        );
-        gamePlayer.draw(ctx);
+        if (player.username === gamePlayer.username) {
+            player.draw(ctx);
+        } else {
+            //transform data into proper object
+            gamePlayer = new Player(gamePlayer.x, gamePlayer.y, gamePlayer.width, gamePlayer.height, 
+                new Img(gamePlayer.img.src, gamePlayer.img.startRow, gamePlayer.img.startColumn, gamePlayer.img.rows, gamePlayer.img.columns, gamePlayer.img.speed, '', gamePlayer.img.currentRow, gamePlayer.img.currentColumn),
+                gamePlayer.username
+            );
+            //get data about other players from server
+            gamePlayer.draw(ctx);
+        }
     })
-    //player.draw(ctx);
-    //get data about other players from server
 }
 
 //event listener for start of the movement
@@ -89,6 +94,7 @@ function stopPlayer() {
     player.img.rows = 0;
     player.img.columns = 0;
     player.direction = '';
+    updateServer();
 }
 
 //change animation based on the direction of the player
