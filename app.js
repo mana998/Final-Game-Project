@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
 
     }
 
-    function handleNewGameCreation() {
+    function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
         let roomName = makeId(8) //function which creates id, we pass length of the id
 
@@ -71,6 +71,7 @@ io.on("connection", (socket) => {
 
         //create state of the game for the room
         games[roomName] = new Game();
+        games[roomName].map = map;
         socket.join(roomName); 
     }
 
@@ -122,7 +123,6 @@ io.on("connection", (socket) => {
 
     function startGame(gameCode) {
         const gameState = games[gameCode];
-        gameState.map = new Map();
         //loop over game object to check if all players are reayd if yes start game interval
         startGameInterval(gameCode, gameState);
     }

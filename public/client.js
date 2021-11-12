@@ -9,7 +9,7 @@ socket.on("playerAddedToGame", enablePlayButton);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let map;
+let map = new GameMap;
 let player;
 
 //menu
@@ -51,7 +51,7 @@ joinGameButton.addEventListener("click", joinGame);
 playGameButton.addEventListener("click", playGame);
 
 function createGame() {
-    socket.emit("newGame");
+    socket.emit("newGame", map);
     init();
 }
 
@@ -77,7 +77,7 @@ function addUsername() {
 }
 function acceptUsername() {
     const username = usernameInput.value;
-    player = new Player(0, 0, 32, 32, new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1), username);
+    player = new Player(64, 64, 32, 32, new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1), username);
     socket.emit("playerCreated", player);
 }
 
@@ -131,7 +131,7 @@ function draw(data){
         }
     })
     //draw map
-    map = new GameMap(data.map);
+    map = new GameMap(data.map.tiles);
     map.draw(ctx, player, canvas.width, canvas.height);
 }
 
@@ -143,6 +143,7 @@ window.addEventListener("keydown", movePlayer);
 window.addEventListener("keyup", stopPlayer);
 
 function movePlayer(e) {
+    console.log(map.tileWidth, map.tileHeight);
     switch(e.key) {
         case "A":
         case "a":
