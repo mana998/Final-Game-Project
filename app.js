@@ -22,66 +22,99 @@ app.get("/", (req, res) => {
 const { makeId } = require('./public/utils');
 
 //variable that maps client id to the room name
-const clientRoomTable = {};
+const playersRoomTable = {};
 
 //global state that holds states of all posible rooms
-const state = {};
+const games = {};
 
 io.on("connection", (socket) => {
     socket.on("newGame", handleNewGameCreation);
     socket.on("joinGame", handleJoinGame);
+    socket.on("createUsername", handleCreateUsername);
+    socket.on("playerCreated", addPlayerToGameObject);
+    socket.on("playGame", startGame);
+    socket.on("playGameButtonClicked", updatePlayerReadyToPlay);
+
+    function updatePlayerReadyToPlay(username) {
+        const roomName = playersRoomTable[socket.id];
+        const gameState = games[roomName];
+        //loop over game state and update player to have field ready
+
+    }
 
     function handleNewGameCreation() {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
         let roomName = makeId(8) //function which creates id, we pass length of the id
 
         //new game starts so the user is assigned to the room
-        clientRoomTable[socket.id] = roomName;
+        playersRoomTable[socket.id] = roomName;
         socket.emit("roomName", roomName);
 
         //create state of the game for the room
-        state[roomName] = createNewGameState(); //we don't have this function!!!!!
-        socket.join(roomName);
-        socket.number = 1;
-        socket.emit("init", 1) // does nothing for now, we can use it to send player number to client 
+        games[roomName] = createGame(); //we don't have this function!!!!!
+        socket.join(roomName); 
+    }
+
+    function addPlayerToGameObject() {
+        //empty for now no game object;
+        socket.emit("playerAddedToGame")
+    }
+
+    function handleCreateUsername(username) {
+        console.log(username);
+        const roomName = playersRoomTable[socket.id];
+        const desiredRoom = io.sockets.adapter.rooms.get(roomName);
+        let totalPlayersInRoom;
+        if (desiredRoom) {
+            totalPlayersInRoom = desiredRoom.size;
+        }
+
+        if (totalPlayersInRoom === 1) {
+            socket.emit("usernameAccepted");
+        } else {
+            const gameState = games[roomName];
+            console.log(gameState);
+            //check if username is not used by other users
+            socket.emit("usernameAccepted");
+        }
     }
 
     function handleJoinGame(gameCode) {
-        const desiredRoom = io.sockets.adapter.rooms.get(gameCode)//we grab the room by passign its name=id
+        const desiredRoom = io.sockets.adapter.rooms.get(gameCode)
 
-        let playerNumber;
+        let totalPlayersInRoom;
         if (desiredRoom) {
-            playerNumber = desiredRoom.size;
+            totalPlayersInRoom = desiredRoom.size;
         }
 
-        if (playerNumber === 0) {
+        if (totalPlayersInRoom === 0) {
             socket.emit("EmptyRoom");
             return;
-        }else if (playerNumber > 3) {
+        }else if (totalPlayersInRoom > 3) {
             socket.emit("FullRoom");
             return;
         }
 
-        clientRoomTable[socket.id] = gameCode;
+        playersRoomTable[socket.id] = gameCode;
         socket.emit("roomName", gameCode);
         socket.join(gameCode);
-        //socket.number = 
-        //socket.emit("init", 1) // does nothing for now, we can use it to send player number to client 
+    }
+
+    function startGame(gameCode) {
+        const gameState = games[gameCode];
+        //loop over game object to check if all players are reayd if yes start game interval
         startGameInterval(gameCode);
-    
     }
 
     function startGameInterval (gameCode) {
         setInterval(() => {
-            io.emit('new frame');
+            io.to(gameCode).emit('new frame');
         }, 1000 / FRAME_RATE);
-
-        //this method should access the roomTable access the right room by gameCode and check if someone won the game 
     }
 
 })
 //just for testing if multiplayer works!!!!
-function createNewGameState() {
+function createGame() {
     console.log("new game state created");
     return {data: "new state"};
 }
