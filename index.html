@@ -11,17 +11,48 @@
             padding: 0;
             overflow: hidden;
         }
+        #gameScreen {
+            display: none;
+        }
     </style>
 </head>
 <body>
-
-<script src="/socket.io/socket.io.js"></script>
-<canvas id ="canvas" width="500", height="500" style="transform: scale(3)"></canvas>
-<script src="./models/Img.js"></script>
-<script src="./models/GameObject.js"></script>
-<script src="./models/GameMap.js"></script>
-<script src="./models/Player.js"></script>
-<script src="./client.js"></script>
-
+    <div class="containr">
+        <div id="menuScreen">
+            <div>
+                <h1>Game</h1>
+                <button type="submit" class="" id="createNewGameButton">
+                    Creeate New Game
+                </button>
+                <div>OR</div>
+                <div class='' id="joinRoomToPlay">
+                    <input type="text" placeholder="Enter game code to play" id="codeInput">
+                </div>
+                <button type="submit" class="" id="joinGameButton">
+                    Join Game
+                </button>
+            </div>
+        </div>
+        <div id="gameScreen">
+            <script src="/socket.io/socket.io.js"></script>
+            <h1>Your game code is: 
+                <span id = "dispalyGameCode"></span>
+            </h1>
+            <div class='' id="createUsername">
+                <input type="text" placeholder="Enter username" id="usernameInput">
+            </div>
+            <span id = "changeUsernameMessage"></span>
+            <button type="submit" class="" id="playGameButton" disabled>
+                Play Game
+            </button>
+            <canvas id ="canvas" width="500", height="500"></canvas>
+            <script src="./models/Img.js"></script>
+            <script src="./models/GameObject.js"></script>
+            <script src="./models/GameMap.js"></script>
+            <script src="./models/Player.js"></script>
+            <script src="./client.js"></script>
+        </div>
+        
+    </div>
 </body>
 </html>
