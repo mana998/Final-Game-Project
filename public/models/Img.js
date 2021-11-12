@@ -2,8 +2,14 @@ class Img {
     constructor (src, startRow, startColumn, rows, columns, speed, size, currentRow, currentColumn) {
         //src img
         this.src = src
-        this.img = new Image();
-        this.img.src = src;
+        if (typeof exports !== 'undefined'&& typeof module !== 'undefined' && module.exports) {
+            //used on the server
+            this.img = `<img src="${src}">`;
+        } else {
+            //used in client
+            this.img = new Image();
+            this.img.src = src;
+        }
         //start position on spritesheet
         this.startRow = startRow;
         this.startColumn = startColumn;
@@ -52,3 +58,5 @@ class Img {
     }
 
 }
+
+if (typeof exports !== 'undefined'&& typeof module !== 'undefined' && module.exports) module.exports = {Img};

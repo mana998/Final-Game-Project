@@ -27,6 +27,7 @@ app.get("/", (req, res) => {
 //get method for random id generation
 const { makeId } = require('./public/utils');
 
+
 //variable that maps client id to the room name
 const playersRoomTable = {};
 
@@ -41,6 +42,7 @@ io.on("connection", (socket) => {
         //find player object with same username
         const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.username === data.player.username);
         //update the player object with new data
+        games[playersRoomTable[socket.id]].map = data.map;
         games[playersRoomTable[socket.id]].players[games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer)] = data.player;
     })
 
@@ -120,6 +122,7 @@ io.on("connection", (socket) => {
 
     function startGame(gameCode) {
         const gameState = games[gameCode];
+        gameState.map = new Map();
         //loop over game object to check if all players are reayd if yes start game interval
         startGameInterval(gameCode, gameState);
     }

@@ -9,6 +9,7 @@ socket.on("playerAddedToGame", enablePlayButton);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+let map;
 let player;
 
 //menu
@@ -22,6 +23,7 @@ const dispalyGameCode = document.getElementById("dispalyGameCode");
 const usernameInput = document.getElementById("usernameInput");
 const playGameButton = document.getElementById("playGameButton");
 const changeUsernameMessage = document.getElementById("changeUsernameMessage");
+
 
 //change canvas size on resize
 window.addEventListener("resize", () => {
@@ -60,7 +62,6 @@ function joinGame() {
     init();
 }
 
-//not sure what here
 function playGame() {
     const username = usernameInput.value;
     socket.on("playGameButtonClicked", username);
@@ -129,6 +130,9 @@ function draw(data){
             gamePlayer.draw(ctx, ((canvas.width - player.width) / 2) - player.x + gamePlayer.x, ((canvas.height - player.height) / 2) - player.y + gamePlayer.y);
         }
     })
+    //draw map
+    map = new GameMap(data.map);
+    map.draw(ctx, player, canvas.width, canvas.height);
 }
 
 //need to consider whether game started
@@ -144,25 +148,29 @@ function movePlayer(e) {
         case "a":
         case "ArrowLeft":
             changeAnimation("left");
-            player.x -= 1 * player.speed;
+            if (!player.isWallCollision(map, "left", -player.speed, 0))
+                player.x -= player.speed;
             break;
         case "D":
         case "d":
         case "ArrowRight":
             changeAnimation("right");
-            player.x += 1 * player.speed;
+            if (!player.isWallCollision(map, "right", player.speed, 0))
+                player.x += player.speed;
             break;
         case "W":
         case "w":
         case "ArrowUp":
             changeAnimation("up");
-            player.y -= 1 * player.speed;
+            if (!player.isWallCollision(map, "up", 0, -player.speed))
+                player.y -= player.speed;
             break;
         case "S":
         case "s":
         case "ArrowDown":
             changeAnimation("down");
-            player.y += 1 * player.speed;
+            if (!player.isWallCollision(map, "down", 0, player.speed))
+                player.y += player.speed;
             break;
         default:
             //no need to update server if player didn't move
@@ -196,5 +204,5 @@ function changeAnimation(direction) {
 }
 
 function updateServer() {
-    socket.emit('player updated', {player: player})
+    socket.emit('client updated', {player: player, map: map.tiles})
 }
