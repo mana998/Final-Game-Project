@@ -37,7 +37,6 @@ io.on("connection", (socket) => {
 
         //new game starts so the user is assigned to the room
         clientRoomTable[socket.id] = roomName;
-        console.log(clientRoomTable);
         socket.emit("roomName", roomName);
 
         //create state of the game for the room
