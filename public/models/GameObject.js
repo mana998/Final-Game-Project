@@ -10,8 +10,12 @@ class GameObject {
         this.img = img;
     }
 
-    draw(ctx) {
-        this.img.draw(ctx, this.x, this.y, this.width, this.height);
+    draw(ctx, x, y) {
+        //if values aren't passed, use object ones
+        x = x || this.x;
+        y = y || this.y;
+        console.log("x",x,"y",y,"thisx",this.x,"thisy",this.y);
+        this.img.draw(ctx, x, y, this.width, this.height);
     }
     
 }
