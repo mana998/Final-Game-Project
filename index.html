@@ -5,16 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
-    <h1>Game</h1>
+    <style>
+        #gameScreen {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-
-<script src="/socket.io/socket.io.js"></script>
-<canvas id ="canvas" width="500", height="500"></canvas>
-<script src="./models/Img.js"></script>
-<script src="./models/GameObject.js"></script>
-<script src="./models/Player.js"></script>
-<script src="./client.js"></script>
+    <div class="containr">
+        <div id="menuScreen">
+            <div>
+                <h1>Game</h1>
+                <button type="submit" class="" id="createNewGameButton">
+                    Creeate New Game
+                </button>
+                <div>OR</div>
+                <div class='' id="joinRoomToPlay">
+                    <input type="text" placeholder="Enter game code to play" id="codeInput">
+                </div>
+                <button type="submit" class="" id="joinGameButton">
+                    Join Game
+                </button>
+            </div>
+        </div>
+        <div id="gameScreen">
+            <script src="/socket.io/socket.io.js"></script>
+            <h1>Your game code is: 
+                <span id = "dispalyGameCode"></span>
+            </h1>
+            <canvas id ="canvas" width="500", height="500"></canvas>
+            <script src="./models/Img.js"></script>
+            <script src="./models/GameObject.js"></script>
+            <script src="./models/Player.js"></script>
+            <script src="./client.js"></script>
+        </div>
+        
+    </div>
+    
 
 </body>
 </html>
