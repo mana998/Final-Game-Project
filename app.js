@@ -36,7 +36,7 @@ const games = {};
 
 io.on("connection", (socket) => {
 
-    socket.on('player updated', (data) => {
+    socket.on('client updated', (data) => {
         //UPDATE
         //needs to be adjusted for rooms
         //find player object with same username
@@ -94,7 +94,6 @@ io.on("connection", (socket) => {
             socket.emit("usernameAccepted");
         } else {
             const gameState = games[roomName];
-            console.log(gameState);
             //check if username is not used by other users
             socket.emit("usernameAccepted");
         }

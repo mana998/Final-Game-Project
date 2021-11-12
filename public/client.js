@@ -143,7 +143,6 @@ window.addEventListener("keydown", movePlayer);
 window.addEventListener("keyup", stopPlayer);
 
 function movePlayer(e) {
-    console.log(map.tileWidth, map.tileHeight);
     switch(e.key) {
         case "A":
         case "a":
@@ -205,5 +204,5 @@ function changeAnimation(direction) {
 }
 
 function updateServer() {
-    socket.emit('client updated', {player: player, map: map.tiles})
+    socket.emit('client updated', {player: player, map: map})
 }
