@@ -6,6 +6,7 @@ class Player extends GameObject { //Marianna
         this.health = 10;
         this.score = 0;
         this.speed = 5;
+        this.direction = 'down';
     }
    
 }
