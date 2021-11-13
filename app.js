@@ -1,7 +1,5 @@
 //setup express Marianna
 const express = require("express");
-const { ClientRequest } = require("http");
-const { SocketAddress } = require("net");
 const app = express();
 
 //setup static dir
@@ -16,6 +14,10 @@ const io = require('socket.io')(server);
 
 //import game class
 const Game = require("./private/models/Game").Game;
+//import utils class
+const Utilities = require("./private/models/Utils").Utils;
+//create utils object
+const Utils = new Utilities();
 
 //framerate
 const FRAME_RATE = 60;
@@ -23,10 +25,6 @@ const FRAME_RATE = 60;
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 })
-
-//get method for random id generation
-const { makeId } = require('./public/utils');
-
 
 //variable that maps client id to the room name
 const playersRoomTable = {};
@@ -63,7 +61,7 @@ io.on("connection", (socket) => {
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
-        let roomName = makeId(8) //function which creates id, we pass length of the id
+        let roomName = Utils.makeId(8) //function which creates id, we pass length of the id
 
         //new game starts so the user is assigned to the room
         playersRoomTable[socket.id] = roomName;
