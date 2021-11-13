@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
 
         //import map class
         const GameMap = require("./public/models/GameMap").GameMap;
-        const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 1)}.json`;
+        const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 3)}.json`;
         map = new GameMap();
         map.loadMap(require(mapFile));
         games[roomName].map = map;
