@@ -181,7 +181,9 @@ function movePlayer(e) {
 }
 
 function stopPlayer() {
-    player.img.currentColumn = player.img.startColumn + 1; //ensure middle position
+    //ensure middle position
+    player.img.startColumn += 1;
+    player.img.currentColumn = player.img.startColumn;
     //stop animation movement
     player.img.rows = 0;
     player.img.columns = 0;
