@@ -17,7 +17,8 @@
     </style>
 </head>
 <body>
-    <div class="containr">
+    <script src="/socket.io/socket.io.js"></script>
+    <div class="container">
         <div id="menuScreen">
             <div>
                 <h1>Game</h1>
@@ -34,25 +35,25 @@
             </div>
         </div>
         <div id="gameScreen">
-            <script src="/socket.io/socket.io.js"></script>
-            <h1>Your game code is: 
-                <span id = "dispalyGameCode"></span>
-            </h1>
-            <div class='' id="createUsername">
-                <input type="text" placeholder="Enter username" id="usernameInput">
+            <div id="playMenu" style="position: absolute; z-index:2">
+                <h1>Your game code is: 
+                    <span id = "dispalyGameCode"></span>
+                </h1>
+                <div class='' id="createUsername">
+                    <input type="text" placeholder="Enter username" id="usernameInput">
+                </div>
+                <span id = "changeUsernameMessage"></span>
+                <button type="submit" class="" id="playGameButton" disabled>
+                    Play Game
+                </button>
             </div>
-            <span id = "changeUsernameMessage"></span>
-            <button type="submit" class="" id="playGameButton" disabled>
-                Play Game
-            </button>
-            <canvas id ="canvas" width="500", height="500"></canvas>
-            <script src="./models/Img.js"></script>
-            <script src="./models/GameObject.js"></script>
-            <script src="./models/GameMap.js"></script>
-            <script src="./models/Player.js"></script>
-            <script src="./client.js"></script>
+            <canvas id ="canvas" width="500", height="500" style="transform: scale(3); z-index: -1;"></canvas>
         </div>
-        
+        <script src="./models/Img.js"></script>
+        <script src="./models/GameObject.js"></script>
+        <script src="./models/GameMap.js"></script>
+        <script src="./models/Player.js"></script>
+        <script src="./client.js"></script>
     </div>
 </body>
 </html>
