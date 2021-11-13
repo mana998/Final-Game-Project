@@ -12,6 +12,8 @@ app.use(express.static(__dirname + '/public'));
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+const fs = require('fs');
+
 //import game class
 const Game = require("./private/models/Game").Game;
 //import utils class
@@ -58,7 +60,7 @@ io.on("connection", (socket) => {
         //loop over game state and update player to have field ready
 
     }
-
+//can remove map from passed params
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
         let roomName = Utils.makeId(8) //function which creates id, we pass length of the id
@@ -69,6 +71,10 @@ io.on("connection", (socket) => {
 
         //create state of the game for the room
         games[roomName] = new Game();
+
+        //import map class
+        const GameMap = require("./public/models/GameMap").GameMap;
+        map = new GameMap();
         games[roomName].map = map;
         socket.join(roomName); 
     }

@@ -9,7 +9,7 @@ socket.on("playerAddedToGame", enablePlayButton);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let map = new GameMap;
+let map;
 let player;
 
 //menu
@@ -51,7 +51,7 @@ joinGameButton.addEventListener("click", joinGame);
 playGameButton.addEventListener("click", playGame);
 
 function createGame() {
-    socket.emit("newGame", map);
+    socket.emit("newGame");
     init();
 }
 

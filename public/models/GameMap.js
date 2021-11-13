@@ -1,3 +1,9 @@
+
+ if (typeof exports !== 'undefined'&& typeof module !== 'undefined' && module.exports) {
+    //used on the server
+    Img = require("./Img").Img;
+}
+
 const wall = new Img("./assets/images/wall.png", 0, 0, 0, 0, 0, 1);
 
 class GameMap {
@@ -27,3 +33,5 @@ class GameMap {
         }
     }
 }
+
+if (typeof exports !== 'undefined'&& typeof module !== 'undefined' && module.exports) module.exports = {GameMap};
