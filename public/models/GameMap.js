@@ -32,6 +32,10 @@ class GameMap {
             }
         }
     }
+
+    loadMap (data) {
+        this.tiles = data.tiles;
+    }
 }
 
 if (typeof exports !== 'undefined'&& typeof module !== 'undefined' && module.exports) module.exports = {GameMap};
