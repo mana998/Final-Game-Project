@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 })
 
 //get method for random id generation
-const { makeId } = require('./public/utils');
+const { createId } = require('./public/utils');
 
 
 //variable that maps client id to the room name
@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
-        let roomName = makeId(8) //function which creates id, we pass length of the id
+        let roomName = createId(8) //function which creates id, we pass length of the id
 
         //new game starts so the user is assigned to the room
         playersRoomTable[socket.id] = roomName;

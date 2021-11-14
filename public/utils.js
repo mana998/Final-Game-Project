@@ -1,14 +1,12 @@
 //method for id generation
-function makeId(length) {
-    var result = "";
-    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
+function createId(length) {
+    var id = "";
     for ( var loopNumber = 0; loopNumber < length; loopNumber++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        id += String.fromCharCode(Math.floor(Math.random() * 75)+48);
     }
-    return result;
+    return id;
 }
 
 module.exports = {
-    makeId,
+    createId,
 }
