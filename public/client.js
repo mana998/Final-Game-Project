@@ -4,6 +4,7 @@ socket.on("roomName", handleGameCodeDisplay);
 socket.on("EmptyRoom", handleEmptyRoom);
 socket.on("FullRoom", handleFullRoom);
 socket.on("playerAddedToGame", enablePlayButton);
+socket.on("playersNotReady", playersNotReady);
 
 //setup canvas
 const canvas = document.getElementById("canvas");
@@ -11,6 +12,7 @@ const ctx = canvas.getContext("2d");
 
 let map = new GameMap;
 let player;
+let username;
 
 //menu
 const menuScreen = document.getElementById("menuScreen");
@@ -63,20 +65,19 @@ function joinGame() {
 }
 
 function playGame() {
-    const username = usernameInput.value;
-    socket.on("playGameButtonClicked", username);
+    player.readyToPlay = true;
+    updateServer();
     //do something to activate only on click when everyone set login
     socket.emit("playGame", dispalyGameCode.innerText);
 }
 
 function addUsername() {
-    const username = usernameInput.value;
+    username = usernameInput.value;
     socket.emit("createUsername", username);
     socket.on("usernameAccepted", acceptUsername);
     socket.on("usernameDeclined", changeUsername);
 }
 function acceptUsername() {
-    const username = usernameInput.value;
     player = new Player(64, 64, 32, 32, new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1), username);
     socket.emit("playerCreated", player);
 }
@@ -89,7 +90,10 @@ function changeUsername() {
     changeUsernameMessage.innerText = "Username already exists, input new username!"
 }
 
-//this function should be probably changed BUT REMEMBER TO LEAVE DISPLAY CHANGE!!!
+function playersNotReady() {
+    changeUsernameMessage.innerText = "Other players are still not ready, give them another minute!"
+}
+
 function init() {
     menuScreen.style.display = "none";
     gameScreen.style.display = "block";
@@ -101,12 +105,15 @@ function handleGameCodeDisplay(gameCode) {
 
 function handleEmptyRoom() {
     alert("The room doesn't exists!");
-    menuScreen.style.display = "block";
-    gameScreen.style.display = "none";
+    showMenuScreen();
 }
 
 function handleFullRoom() {
     alert("This room is full");
+    showMenuScreen();
+}
+
+function showMenuScreen() {
     menuScreen.style.display = "block";
     gameScreen.style.display = "none";
 }
@@ -194,7 +201,7 @@ function stopPlayer() {
 //change animation based on the direction of the player
 function changeAnimation(direction) {
     //only change animation when direction changes
-    if (player.direction !== direction) {
+    if (player.direction !== undefined && player.direction !== direction) {
         player.img.rows = animations[direction][2];
         player.img.columns = animations[direction][3];
         player.img.startRow = animations[direction][0];

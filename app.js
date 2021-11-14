@@ -51,15 +51,6 @@ io.on("connection", (socket) => {
     socket.on("createUsername", handleCreateUsername);
     socket.on("playerCreated", addPlayerToGameObject);
     socket.on("playGame", startGame);
-    socket.on("playGameButtonClicked", updatePlayerReadyToPlay);
-
-
-    function updatePlayerReadyToPlay(username) {
-        const roomName = playersRoomTable[socket.id];
-        const gameState = games[roomName];
-        //loop over game state and update player to have field ready
-
-    }
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
@@ -82,7 +73,6 @@ io.on("connection", (socket) => {
     }
 
     function handleCreateUsername(username) {
-        console.log(username);
         const roomName = playersRoomTable[socket.id];
         const desiredRoom = io.sockets.adapter.rooms.get(roomName);
         let totalPlayersInRoom;
@@ -122,8 +112,14 @@ io.on("connection", (socket) => {
 
     function startGame(gameCode) {
         const gameState = games[gameCode];
-        //loop over game object to check if all players are reayd if yes start game interval
-        startGameInterval(gameCode, gameState);
+        const allPlayerrsReadyToPlay = gameState.players.filter(player => player.readyToPlay).length;
+        if (allPlayerrsReadyToPlay === 4){
+            startGameInterval(gameCode, gameState);
+        }else {
+            socket.emit("playersNotReady");
+            return;
+        }
+        
     }
 
     function startGameInterval (gameCode, gameState) {

@@ -7,6 +7,7 @@ class Player extends GameObject { //Marianna
         this.score = 0;
         this.speed = 4;
         this.direction = 'down';
+        this.readyToPlay = false;
     }
 
     isWallCollision (map, direction, columnMovement, rowMovement){
