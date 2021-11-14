@@ -1,9 +1,13 @@
+//control variable to check whether game is in-progress
+let playing = false;
+
 //setup socket
 const socket = io();
 socket.on("roomName", handleGameCodeDisplay);
 socket.on("EmptyRoom", handleEmptyRoom);
 socket.on("FullRoom", handleFullRoom);
 socket.on("playerAddedToGame", enablePlayButton);
+socket.on("startPlaying", () => playing = true);
 
 //menu
 const menuScreen = document.getElementById("menuScreen");

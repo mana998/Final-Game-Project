@@ -129,6 +129,8 @@ io.on("connection", (socket) => {
     function startGame(gameCode) {
         const gameState = games[gameCode];
         //loop over game object to check if all players are reayd if yes start game interval
+        //send signal that the game has started
+        io.to(gameCode).emit('startPlaying');
         startGameInterval(gameCode, gameState);
     }
 

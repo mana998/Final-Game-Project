@@ -60,6 +60,8 @@ window.addEventListener("keydown", movePlayer);
 window.addEventListener("keyup", stopPlayer);
 
 function movePlayer(e) {
+    //stop if game is not in progress
+    if (!playing) return;
     switch(e.key) {
         case "A":
         case "a":
@@ -98,6 +100,8 @@ function movePlayer(e) {
 }
 
 function stopPlayer(e) {
+    //stop if game is not in progress
+    if (!playing) return;
     //update only if the key was for movement
     if (e.key.match(/^[aAdDsSwW]|Arrow(Up|Down|Right|Left)$/)){ 
         //ensure middle position
