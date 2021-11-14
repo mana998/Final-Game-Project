@@ -97,15 +97,18 @@ function movePlayer(e) {
     updateServer();
 }
 
-function stopPlayer() {
-    //ensure middle position
-    player.img.startColumn += 1;
-    player.img.currentColumn = player.img.startColumn;
-    //stop animation movement
-    player.img.rows = 0;
-    player.img.columns = 0;
-    player.direction = '';
-    updateServer();
+function stopPlayer(e) {
+    //update only if the key was for movement
+    if (e.key.match(/^[aAdDsSwW]|Arrow(Up|Down|Right|Left)$/)){ 
+        //ensure middle position
+        player.img.startColumn += 1;
+        player.img.currentColumn = player.img.startColumn;
+        //stop animation movement
+        player.img.rows = 0;
+        player.img.columns = 0;
+        player.direction = '';
+        updateServer();
+    }
 }
 
 //change animation based on the direction of the player
