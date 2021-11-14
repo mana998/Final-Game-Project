@@ -114,6 +114,7 @@ io.on("connection", (socket) => {
         const gameState = games[gameCode];
         const allPlayerrsReadyToPlay = gameState.players.filter(player => player.readyToPlay).length;
         if (allPlayerrsReadyToPlay === 4){
+            io.to(gameCode).emit("playersReady");
             startGameInterval(gameCode, gameState);
         }else {
             socket.emit("playersNotReady");
