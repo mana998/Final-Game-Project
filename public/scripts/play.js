@@ -28,7 +28,7 @@ let animations = {
     up: [3, 0, 0, 2]
 }
 
-socket.on("new frame", (data) => {
+socket.on("newFrame", (data) => {
     draw(data);
 })
 
@@ -126,5 +126,5 @@ function changeAnimation(direction) {
 }
 
 function updateServer() {
-    socket.emit('client updated', {player: player, map: map})
+    socket.emit('clientUpdated', {player: player, map: map})
 }

@@ -36,7 +36,7 @@ const games = {};
 
 io.on("connection", (socket) => {
 
-    socket.on('client updated', (data) => {
+    socket.on('clientUpdated', (data) => {
         //UPDATE
         //needs to be adjusted for rooms
         //find player object with same username
@@ -134,7 +134,7 @@ io.on("connection", (socket) => {
 
     function startGameInterval (gameCode, gameState) {
         setInterval(() => {
-            io.to(gameCode).emit('new frame', gameState);
+            io.to(gameCode).emit('newFrame', gameState);
         }, 1000 / FRAME_RATE);
     }
 
