@@ -1,7 +1,5 @@
 //setup express Marianna
 const express = require("express");
-const { ClientRequest } = require("http");
-const { SocketAddress } = require("net");
 const app = express();
 
 //setup static dir
@@ -14,8 +12,14 @@ app.use(express.static(__dirname + '/public'));
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+const fs = require('fs');
+
 //import game class
 const Game = require("./private/models/Game").Game;
+//import utils class
+const Utilities = require("./private/models/Utils").Utils;
+//create utils object
+const Utils = new Utilities();
 
 //framerate
 const FRAME_RATE = 60;
@@ -23,10 +27,6 @@ const FRAME_RATE = 60;
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 })
-
-//get method for random id generation
-const { makeId } = require('./public/utils');
-
 
 //variable that maps client id to the room name
 const playersRoomTable = {};
@@ -60,10 +60,10 @@ io.on("connection", (socket) => {
         //loop over game state and update player to have field ready
 
     }
-
+//can remove map from passed params
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
-        let roomName = makeId(8) //function which creates id, we pass length of the id
+        let roomName = Utils.makeId(8) //function which creates id, we pass length of the id
 
         //new game starts so the user is assigned to the room
         playersRoomTable[socket.id] = roomName;
@@ -71,6 +71,12 @@ io.on("connection", (socket) => {
 
         //create state of the game for the room
         games[roomName] = new Game();
+
+        //import map class
+        const GameMap = require("./public/models/GameMap").GameMap;
+        const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
+        map = new GameMap();
+        map.loadMap(require(mapFile));
         games[roomName].map = map;
         socket.join(roomName); 
     }
