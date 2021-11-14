@@ -11,7 +11,7 @@ socket.on("playersReady", playersReady);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let map = new GameMap;
+let map;
 let player;
 let username;
 
@@ -57,7 +57,7 @@ playGameButton.addEventListener("click", playGame);
 //Dagmara
 //creates the room and game state
 function createGame() {
-    socket.emit("newGame", map);
+    socket.emit("newGame");
     init();
 }
 
@@ -144,7 +144,7 @@ function handleFullRoom() {
 }
 
 //Dagmara
-//Hides usewrname input and show game menu
+//Hides username input and show game menu
 function showMenuScreen() {
     menuScreen.style.display = "block";
     gameScreen.style.display = "none";
@@ -233,7 +233,7 @@ function stopPlayer() {
 //change animation based on the direction of the player
 function changeAnimation(direction) {
     //only change animation when direction changes
-    if (player.direction !== undefined && player.direction !== direction) {
+    if (player.direction !== direction) {
         player.img.rows = animations[direction][2];
         player.img.columns = animations[direction][3];
         player.img.startRow = animations[direction][0];

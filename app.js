@@ -1,7 +1,5 @@
-//setup express Marianna
+//setup express
 const express = require("express");
-const { ClientRequest } = require("http");
-const { SocketAddress } = require("net");
 const app = express();
 
 //setup static dir
@@ -14,8 +12,14 @@ app.use(express.static(__dirname + '/public'));
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+const fs = require('fs');
+
 //import game class
 const Game = require("./private/models/Game").Game;
+//import utils class
+const Utilities = require("./private/models/Utils").Utils;
+//create utils object
+const Utils = new Utilities();
 
 //framerate
 const FRAME_RATE = 60;
@@ -23,10 +27,6 @@ const FRAME_RATE = 60;
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 })
-
-//get method for random id generation
-const { createId } = require('./public/utils');
-
 
 //variable that maps client id to the room name
 const playersRoomTable = {};
@@ -42,8 +42,11 @@ io.on("connection", (socket) => {
         //find player object with same username
         const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.username === data.player.username);
         //update the player object with new data
-        games[playersRoomTable[socket.id]].map = data.map;
         games[playersRoomTable[socket.id]].players[games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer)] = data.player;
+        //update map
+        if (data.map) {
+            games[playersRoomTable[socket.id]].map = data.map;
+        }
     })
 
     socket.on("newGame", handleNewGameCreation);
@@ -54,7 +57,7 @@ io.on("connection", (socket) => {
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
-        let roomName = createId(8) //function which creates id, we pass length of the id
+        let roomName = Utils.createId(8) //function which creates id, we pass length of the id
 
         //new game starts so the user is assigned to the room
         playersRoomTable[socket.id] = roomName;
@@ -62,6 +65,13 @@ io.on("connection", (socket) => {
 
         //create state of the game for the room
         games[roomName] = new Game();
+
+        //import map class
+        const GameMap = require("./public/models/GameMap").GameMap;
+        const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
+        console.log(mapFile);
+        map = new GameMap();
+        map.loadMap(require(mapFile));
         games[roomName].map = map;
         socket.join(roomName); 
     }
@@ -100,7 +110,7 @@ io.on("connection", (socket) => {
         if (totalPlayersInRoom === 0) {
             socket.emit("EmptyRoom");
             return;
-        }else if (totalPlayersInRoom > 3) {
+        } else if (totalPlayersInRoom > 3) {
             socket.emit("FullRoom");
             return;
         }
@@ -113,10 +123,10 @@ io.on("connection", (socket) => {
     function startGame(gameCode) {
         const gameState = games[gameCode];
         const allPlayerrsReadyToPlay = gameState.players.filter(player => player.readyToPlay).length;
-        if (allPlayerrsReadyToPlay === 4){
+        if (allPlayerrsReadyToPlay === gameState.players.length){
             io.to(gameCode).emit("playersReady");
             startGameInterval(gameCode, gameState);
-        }else {
+        } else {
             socket.emit("playersNotReady");
             return;
         }
