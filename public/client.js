@@ -6,6 +6,7 @@ const socket = io();
 socket.on("roomName", handleGameCodeDisplay);
 socket.on("EmptyRoom", handleEmptyRoom);
 socket.on("FullRoom", handleFullRoom);
+socket.on("wrongCode", handleWrongCode);
 socket.on("playerAddedToGame", enablePlayButton);
 socket.on("playersNotReady", playersNotReady);
 socket.on("playersReady", playersReady);
@@ -22,6 +23,7 @@ const usernameInput = document.getElementById("usernameInput");
 const playGameButton = document.getElementById("playGameButton");
 const changeUsernameMessage = document.getElementById("changeUsernameMessage");
 const playMenu = document.getElementById("playMenu");
+const wrongGameCode = document.getElementById("wrongGameCode");
 
 createGameButton.addEventListener("click", createGame);
 usernameInput.addEventListener("change", addUsername);
@@ -36,11 +38,16 @@ function createGame() {
 }
 
 //Dagmara
-//if the room code is valid it allows player to join existing the game
+//display message if the code is wrong
+function handleWrongCode() {
+    wrongGameCode.innerText = "Incorrect game code, the room doesn't exists";
+}
+
+//Dagmara
+//if the room code is valid it allows player to join existing game
 function joinGame() {
     const code = codeInput.value;
     socket.emit("joinGame", code);
-    init();
 }
 
 //Dagmara
@@ -101,6 +108,7 @@ function init() {
 //Dagmara
 //Display game code
 function handleGameCodeDisplay(gameCode) {
+    init();
     dispalyGameCode.innerText = gameCode;
 }
 
