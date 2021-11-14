@@ -36,24 +36,12 @@ const games = {};
 
 io.on("connection", (socket) => {
 
-    socket.on('client updated', (data) => {
-        //UPDATE
-        //needs to be adjusted for rooms
-        //find player object with same username
-        const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.username === data.player.username);
-        //update the player object with new data
-        games[playersRoomTable[socket.id]].players[games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer)] = data.player;
-        //update map
-        if (data.map) {
-            games[playersRoomTable[socket.id]].map = data.map;
-        }
-    })
-
     socket.on("newGame", handleNewGameCreation);
     socket.on("joinGame", handleJoinGame);
     socket.on("createUsername", handleCreateUsername);
     socket.on("playerCreated", addPlayerToGameObject);
     socket.on("playGame", startGame);
+    socket.on("clientUpdated", handleClientUpdate);
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
@@ -69,7 +57,6 @@ io.on("connection", (socket) => {
         //import map class
         const GameMap = require("./public/models/GameMap").GameMap;
         const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
-        console.log(mapFile);
         map = new GameMap();
         map.loadMap(require(mapFile));
         games[roomName].map = map;
@@ -130,13 +117,24 @@ io.on("connection", (socket) => {
             socket.emit("playersNotReady");
             return;
         }
-        
     }
 
     function startGameInterval (gameCode, gameState) {
         setInterval(() => {
-            io.to(gameCode).emit('new frame', gameState);
+            io.to(gameCode).emit('newFrame', gameState);
         }, 1000 / FRAME_RATE);
+    }
+
+    function handleClientUpdate(data) {
+        //consider socket id instead of username
+        //find player object with same username
+        const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.username === data.player.username);
+        //update the player object with new data
+        games[playersRoomTable[socket.id]].players[games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer)] = data.player;
+        //update map
+        if (data.map) {
+            games[playersRoomTable[socket.id]].map = data.map;
+        }
     }
 
 })
