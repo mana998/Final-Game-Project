@@ -37,7 +37,7 @@ function draw(data){
     data.players.map(gamePlayer => {
         if (player.username === gamePlayer.username) {
             player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
-        } else {
+        } else if (!gamePlayer.isDone) {
             //transform data into proper object
             gamePlayer = new Player(gamePlayer.x, gamePlayer.y, gamePlayer.width, gamePlayer.height, 
                 new Img(gamePlayer.img.src, gamePlayer.img.startRow, gamePlayer.img.startColumn, gamePlayer.img.rows, gamePlayer.img.columns, gamePlayer.img.speed, '', gamePlayer.img.currentRow, gamePlayer.img.currentColumn),
@@ -61,35 +61,53 @@ window.addEventListener("keyup", stopPlayer);
 
 function movePlayer(e) {
     //stop if game is not in progress
-    if (!playing) return;
+    //!!!!THINK ABOUT STORING BLOCK TYPES IN SOME GLOBAL VARIABLES!!!!
+    //3rd parameter in isBlockCollision
+    if (!playing || player.isDone) return;
     switch(e.key) {
         case "A":
         case "a":
         case "ArrowLeft":
             changeAnimation("left");
-            if (!player.isWallCollision(map, "left", -player.speed, 0))
+            if (!player.isBlockCollision(map, "left", 1, -player.speed, 0)) {
                 player.x -= player.speed;
+                if (player.isBlockCollision(map, "left", 2)) {
+                    playerIsDone();
+                }
+            }
             break;
         case "D":
         case "d":
         case "ArrowRight":
             changeAnimation("right");
-            if (!player.isWallCollision(map, "right", player.speed, 0))
+            if (!player.isBlockCollision(map, "right", 1, player.speed, 0)) {
                 player.x += player.speed;
+                if (player.isBlockCollision(map, "right", 2)) {
+                    playerIsDone()
+                }
+            }
             break;
         case "W":
         case "w":
         case "ArrowUp":
             changeAnimation("up");
-            if (!player.isWallCollision(map, "up", 0, -player.speed))
+            if (!player.isBlockCollision(map, "up", 1, 0, -player.speed)) {
                 player.y -= player.speed;
+                if (player.isBlockCollision(map, "up", 2)) {
+                    playerIsDone()
+                }
+            }
             break;
         case "S":
         case "s":
         case "ArrowDown":
             changeAnimation("down");
-            if (!player.isWallCollision(map, "down", 0, player.speed))
+            if (!player.isBlockCollision(map, "down", 1, 0, player.speed)) {
                 player.y += player.speed;
+                if (player.isBlockCollision(map, "down", 2)) {
+                    playerIsDone()
+                }
+            }
             break;
         default:
             //no need to update server if player didn't move
@@ -101,7 +119,7 @@ function movePlayer(e) {
 
 function stopPlayer(e) {
     //stop if game is not in progress
-    if (!playing) return;
+    if (!playing || player.isDone) return;
     //update only if the key was for movement
     if (e.key.match(/^[aAdDsSwW]|Arrow(Up|Down|Right|Left)$/)){ 
         //ensure middle position
@@ -131,4 +149,9 @@ function changeAnimation(direction) {
 
 function updateServer() {
     socket.emit('clientUpdated', {player: player, map: map})
+}
+
+function playerIsDone() {
+    player.isDone = true;
+    player.draw = () => {return};
 }
