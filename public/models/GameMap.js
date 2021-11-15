@@ -5,13 +5,18 @@
 }
 
 const wall = new Img("./assets/images/wall.png", 0, 0, 0, 0, 0, 1);
+const goal = new Img("./assets/images/goal.png", 0, 0, 0, 0, 0, 1);
+
+let Utils;
 
 class GameMap {
-    constructor (tiles) {
-        //hardcoded map
+    constructor (tiles, Utilities) {
+        //utils object - use new one if passed else keep the old one
+        Utils = Utilities || Utils;
         //0 path
         //1 wall
-        //2 player
+        //2 goal
+        //3 player
         this.tileWidth = 32;
         this.tileHeight = 32;
         this.tiles = tiles || [];
@@ -28,6 +33,13 @@ class GameMap {
                             this.tileWidth, this.tileHeight
                         );
                         break;
+                    case 2:
+                        goal.draw(ctx, 
+                            (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth), 
+                            ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight, 
+                            this.tileWidth, this.tileHeight
+                        );
+                        break;
                 }
             }
         }
@@ -35,6 +47,13 @@ class GameMap {
 
     loadMap (data) {
         this.tiles = data.tiles;
+        //get random position for goal
+        let [row, column] = [-1, -1];
+        do {
+            row = Utils.getRandomNumber(0, this.tiles.length);
+            column = Utils.getRandomNumber(0, this.tiles[row].length);
+        } while (this.tiles[row][column] !== 0);
+        this.tiles[row][column] = 2;
     }
 }
 
