@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
     socket.on("playerCreated", addPlayerToGameObject);
     socket.on("playGame", startGame);
     socket.on("clientUpdated", handleClientUpdate);
+    socket.on("playerFinished", handlePlayerFinished);
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
@@ -141,6 +142,10 @@ io.on("connection", (socket) => {
         }
     }
 
+    function handlePlayerFinished(player) {
+        console.log("finished", playersRoomTable[socket.id]);
+        io.to(playersRoomTable[socket.id]).emit("addPlayerScore", player)
+    }
 })
 
 const PORT = process.env.PORT || 8080;

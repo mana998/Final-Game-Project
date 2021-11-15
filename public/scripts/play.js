@@ -159,6 +159,7 @@ function playerIsDone() {
     //if final number is negative, set it to 0;
     timeScore = timeScore > 0 ? timeScore : 0;
     player.score += timeScore;
-    console.log("player score", player.score);
+    endScreen.setAttribute("style", "display:block")
+    socket.emit("playerFinished", player);
     player.draw = () => {return};
 }
