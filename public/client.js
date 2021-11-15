@@ -43,7 +43,7 @@ function createGame() {
 //Dagmara
 //update player
 function updatePlayer(updatedPlayer) {
-    player = updatedPlayer;
+    player.username = updatedPlayer.username;
 }
 
 //Dagmara
