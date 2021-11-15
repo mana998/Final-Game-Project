@@ -63,7 +63,8 @@ function joinGame() {
 //starts the game for the user, changes it's state to ready to play and if all players are ready starts the game
 function playGame() {
     player.readyToPlay = true;
-    //codeInput.createAttribute("disabled");
+    codeInput.disabled = "true";
+    console.log(player);
     updateServer();
     socket.emit("playGame", dispalyGameCode.innerText);
 }

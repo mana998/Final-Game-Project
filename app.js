@@ -102,7 +102,7 @@ io.on("connection", (socket) => {
         playersRoomTable[socket.id] = gameCode;
         socket.emit("roomName", gameCode);
         socket.join(gameCode);
-        socket.emit("createPlayer");
+        socket.emit("createPlayer", socket.id);
     }
 
     function startGame(gameCode) {
@@ -126,8 +126,10 @@ io.on("connection", (socket) => {
         //update the player object with new data
         const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.socketId === socket.id);
         const index = games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer);
+        console.log(index);
+        console.log(data);
         //update the player object with new data
-        if (index === undefined|| index < 0) {
+        if ( index < 0) {
             socket.emit("noPlayer");
             return;
         }
