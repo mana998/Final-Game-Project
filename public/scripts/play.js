@@ -6,6 +6,7 @@ const ctx = canvas.getContext("2d");
 //global objects for map and player
 let map;
 let player;
+let startTime;
 
 //change canvas size on resize
 window.addEventListener("resize", () => {
@@ -48,7 +49,7 @@ function draw(data){
         }
     })
     //draw map
-    map = new GameMap(data.map.tiles);
+    map = new GameMap(data.map.tiles, data.map.timeLimit);
     map.draw(ctx, player, canvas.width, canvas.height);
 }
 
@@ -153,5 +154,11 @@ function updateServer() {
 
 function playerIsDone() {
     player.isDone = true;
+    //maximum time - elapsed time
+    let timeScore = map.timeLimit - (new Date().getTime() - startTime);
+    //if final number is negative, set it to 0;
+    timeScore = timeScore > 0 ? timeScore : 0;
+    player.score += timeScore;
+    console.log("player score", player.score);
     player.draw = () => {return};
 }
