@@ -61,29 +61,24 @@ io.on("connection", (socket) => {
         map.loadMap(require(mapFile));
         games[roomName].map = map;
         socket.join(roomName); 
+        socket.emit("createPlayer", socket.id);
     }
 
     function addPlayerToGameObject(player) {
+        player.socketId = socket.id;
         games[playersRoomTable[socket.id]].players.push(player);
-        //empty for now no game object;
-        socket.emit("playerAddedToGame");
     }
 
-    function handleCreateUsername(username) {
-        const roomName = playersRoomTable[socket.id];
-        const desiredRoom = io.sockets.adapter.rooms.get(roomName);
-        let totalPlayersInRoom;
-        if (desiredRoom) {
-            totalPlayersInRoom = desiredRoom.size;
+    function handleCreateUsername(data) {
+        const uniqueUsername = games[playersRoomTable[socket.id]].players.every(player => player.username !== data.username);
+        if (!uniqueUsername) {
+            socket.emit("usernameDeclined");
+            return;
         }
-
-        if (totalPlayersInRoom === 1) {
-            socket.emit("usernameAccepted");
-        } else {
-            const gameState = games[roomName];
-            //check if username is not used by other users
-            socket.emit("usernameAccepted");
-        }
+        data.player.username = data.username;
+        handleClientUpdate(data);
+        socket.emit("usernameAdded");
+        socket.emit("updatePlayer", data.player);
     }
 
     function handleJoinGame(gameCode) {
@@ -107,18 +102,18 @@ io.on("connection", (socket) => {
         playersRoomTable[socket.id] = gameCode;
         socket.emit("roomName", gameCode);
         socket.join(gameCode);
+        socket.emit("createPlayer");
     }
 
     function startGame(gameCode) {
         const gameState = games[gameCode];
-        const allPlayerrsReadyToPlay = gameState.players.filter(player => player.readyToPlay).length;
-        if (allPlayerrsReadyToPlay === gameState.players.length){
-            io.to(gameCode).emit("playersReady");
-            startGameInterval(gameCode, gameState);
-        } else {
+        const allPlayersReadyToPlay = gameState.players.filter(player => player.readyToPlay).length;
+        if (allPlayersReadyToPlay !== gameState.players.length){
             socket.emit("playersNotReady");
             return;
         }
+        io.to(gameCode).emit("playersReady");
+        startGameInterval(gameCode, gameState);
     }
 
     function startGameInterval (gameCode, gameState) {
@@ -128,11 +123,15 @@ io.on("connection", (socket) => {
     }
 
     function handleClientUpdate(data) {
-        //consider socket id instead of username
-        //find player object with same username
-        const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.username === data.player.username);
         //update the player object with new data
-        games[playersRoomTable[socket.id]].players[games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer)] = data.player;
+        const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.socketId === socket.id);
+        const index = games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer);
+        //update the player object with new data
+        if (index === undefined|| index < 0) {
+            socket.emit("noPlayer");
+            return;
+        }
+        games[playersRoomTable[socket.id]].players[index] = data.player;
         //update map
         if (data.map) {
             games[playersRoomTable[socket.id]].map = data.map;

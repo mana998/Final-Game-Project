@@ -1,5 +1,5 @@
 class Player extends GameObject { //Marianna
-    constructor (x, y, width, height, img, username) {
+    constructor (x, y, width, height, img, username, socketId) {
         super(x, y, width, height, img);
         this.username = username;
         this.coins = 0;
@@ -8,6 +8,7 @@ class Player extends GameObject { //Marianna
         this.speed = 4;
         this.direction = 'down';
         this.readyToPlay = false;
+        this.socketId = socketId;
     }
 
     isWallCollision (map, direction, columnMovement, rowMovement){

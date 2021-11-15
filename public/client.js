@@ -7,9 +7,12 @@ socket.on("roomName", handleGameCodeDisplay);
 socket.on("EmptyRoom", handleEmptyRoom);
 socket.on("FullRoom", handleFullRoom);
 socket.on("wrongCode", handleWrongCode);
-socket.on("playerAddedToGame", enablePlayButton);
+socket.on("usernameAdded", enablePlayButton);
 socket.on("playersNotReady", playersNotReady);
 socket.on("playersReady", playersReady);
+socket.on("createPlayer", createPlayer);
+socket.on("noPlayer", playerNotExists);
+socket.on("updatePlayer", updatePlayer);
 
 //menu
 const menuScreen = document.getElementById("menuScreen");
@@ -26,7 +29,7 @@ const playMenu = document.getElementById("playMenu");
 const wrongGameCode = document.getElementById("wrongGameCode");
 
 createGameButton.addEventListener("click", createGame);
-usernameInput.addEventListener("change", addUsername);
+usernameInput.addEventListener("change", handleCreateUsername);
 joinGameButton.addEventListener("click", joinGame);
 playGameButton.addEventListener("click", playGame);
 
@@ -35,6 +38,12 @@ playGameButton.addEventListener("click", playGame);
 function createGame() {
     socket.emit("newGame");
     init();
+}
+
+//Dagmara
+//update player
+function updatePlayer(updatedPlayer) {
+    player = updatedPlayer;
 }
 
 //Dagmara
@@ -54,30 +63,30 @@ function joinGame() {
 //starts the game for the user, changes it's state to ready to play and if all players are ready starts the game
 function playGame() {
     player.readyToPlay = true;
+    //codeInput.createAttribute("disabled");
     updateServer();
-    //do something to activate only on click when everyone set login
     socket.emit("playGame", dispalyGameCode.innerText);
 }
 
 //Dagmara
 //Checks if player can use the username
-function addUsername() {
+function handleCreateUsername() {
     username = usernameInput.value;
-    socket.emit("createUsername", username);
-    socket.on("usernameAccepted", acceptUsername);
+    socket.emit("createUsername", ({player:player, username:username}) );
     socket.on("usernameDeclined", changeUsername);
 }
 
 //Dagmara
 //Adds player to the game object
-function acceptUsername() {
-    player = new Player(64, 64, 32, 32, new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1), username);
+function createPlayer(socketId) {
+    player = new Player(64, 64, 32, 32, new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1), "", socketId);
     socket.emit("playerCreated", player);
 }
 
 //Dagmara
 //If players' username is valid the play game button is enabled
 function enablePlayButton() {
+    changeUsernameMessage.innerText = "";
     playGameButton.removeAttribute("disabled");
 }
 
@@ -110,6 +119,13 @@ function init() {
 function handleGameCodeDisplay(gameCode) {
     init();
     dispalyGameCode.innerText = gameCode;
+}
+
+//Dagmara
+//In case the room is empty notify and return to game menu
+function playerNotExists() {
+    alert("Error the player does not exists, pls try again");
+    showMenuScreen();
 }
 
 //Dagmara
