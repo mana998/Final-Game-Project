@@ -20,6 +20,8 @@ class GameMap {
         this.tileWidth = 32;
         this.tileHeight = 32;
         this.tiles = tiles || [];
+        this.goalRow;
+        this.goalColumn;
     }
 
     draw (ctx, player, canvasWidth, canvasHeight) {
@@ -54,6 +56,20 @@ class GameMap {
             column = Utils.getRandomNumber(0, this.tiles[row].length);
         } while (this.tiles[row][column] !== 0);
         this.tiles[row][column] = 2;
+        this.goalRow = row;
+        this.goalColumn = column;
+    }
+
+    setPlayerStartPosition(player) {
+        let [row, column] = [-1, -1];
+        do {
+            row = Utils.getRandomNumber(0, this.tiles.length);
+            column = Utils.getRandomNumber(0, this.tiles[row].length);
+            //at least third of the map away from the goal
+        } while (Math.abs(row - this.goalRow) < this.tiles.length / 3 || Math.abs(column - this.goalColumn) < this.tiles[row].length / 3 || this.tiles[row][column] !== 0);
+        this.tiles[row][column] = 3;
+        player.x = column * this.tileWidth;
+        player.y = row * this.tileHeight + this.tileHeight;
     }
 }
 

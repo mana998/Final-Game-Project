@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
         //import map class
         const GameMap = require("./public/models/GameMap").GameMap;
         const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
-        map = new GameMap('' ,Utils);
+        map = new GameMap('', Utils);
         map.loadMap(require(mapFile));
         games[roomName].map = map;
         socket.join(roomName); 
@@ -111,7 +111,11 @@ io.on("connection", (socket) => {
         const gameState = games[gameCode];
         const allPlayerrsReadyToPlay = gameState.players.filter(player => player.readyToPlay).length;
         if (allPlayerrsReadyToPlay === gameState.players.length){
-            io.to(gameCode).emit("playersReady");
+            //send new player position to each player
+            gameState.players.map(player => {
+                gameState.map.setPlayerStartPosition(player);
+            })
+            io.to(gameCode).emit("playersReady", gameState.players);
             startGameInterval(gameCode, gameState);
         } else {
             socket.emit("playersNotReady");

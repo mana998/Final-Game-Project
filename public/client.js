@@ -86,9 +86,13 @@ function playersNotReady() {
     changeUsernameMessage.innerText = "Other players are still not ready, give them another minute!"
 }
 
-function playersReady() {
+function playersReady(players) {
     playMenu.style.display = "none";
     playing = true;
+    //place player at random position on the map
+    let currentPlayer = players.find(gamePlayer => gamePlayer.username === player.username)
+    player.x = currentPlayer.x;
+    player.y = currentPlayer.y;
 }
 
 //Dagmara
