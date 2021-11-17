@@ -130,5 +130,6 @@ function changeAnimation(direction) {
 }
 
 function updateServer() {
+    console.log(player);
     socket.emit('clientUpdated', {player: player, map: map})
 }
