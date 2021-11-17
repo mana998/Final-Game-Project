@@ -6,6 +6,7 @@ const ctx = canvas.getContext("2d");
 //global objects for map and player
 let map;
 let player;
+let spectatingPlayer;
 let startTime;
 
 //change canvas size on resize
@@ -35,9 +36,29 @@ socket.on("newFrame", (data) => {
 
 function draw(data){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //player that will be centered
+    //by default it's your player
+    let compareToPlayer = player;
+    //if your player is done it changes to another player to spectate
+    if (player.isDone) {
+        let username = (spectatingPlayer) ? spectatingPlayer.username : ''
+        let tempPlayer = data.players.find(gamePlayer => gamePlayer.username === username) || null;
+        //if no player is defined to spectate, it asks server for next one
+        if (!tempPlayer || tempPlayer.isDone) {
+            socket.emit('changeSpectator', (spectatingPlayer) ? tempPlayer.username : '');
+        } else {
+            spectatingPlayer = new Player(tempPlayer.x, tempPlayer.y, tempPlayer.width, tempPlayer.height, 
+                new Img(tempPlayer.img.src, tempPlayer.img.startRow, tempPlayer.img.startColumn, tempPlayer.img.rows, tempPlayer.img.columns, tempPlayer.img.speed, '', tempPlayer.img.currentRow, tempPlayer.img.currentColumn),
+                tempPlayer.username
+            );
+            compareToPlayer = spectatingPlayer;
+        }
+    }
     data.players.map(gamePlayer => {
         if (player.username === gamePlayer.username) {
             player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
+        } else if (spectatingPlayer && spectatingPlayer.username === gamePlayer.username) {
+            spectatingPlayer.draw(ctx, (canvas.width - spectatingPlayer.width) / 2, (canvas.height - spectatingPlayer.height) / 2);
         } else if (!gamePlayer.isDone) {
             //transform data into proper object
             gamePlayer = new Player(gamePlayer.x, gamePlayer.y, gamePlayer.width, gamePlayer.height, 
@@ -45,12 +66,12 @@ function draw(data){
                 gamePlayer.username
             );
             //get data about other players from server
-            gamePlayer.draw(ctx, ((canvas.width - player.width) / 2) - player.x + gamePlayer.x, ((canvas.height - player.height) / 2) - player.y + gamePlayer.y);
+            gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
         }
     })
     //draw map
     map = new GameMap(data.map.tiles, data.map.timeLimit);
-    map.draw(ctx, player, canvas.width, canvas.height);
+    map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
 }
 
 //need to consider whether game started
@@ -162,4 +183,7 @@ function playerIsDone() {
     endScreen.setAttribute("style", "display:block")
     socket.emit("playerFinished", player);
     player.draw = () => {return};
+    //playing false so movement keys get disabled
+    playing = false;
+    window.addEventListener("keyup", changeSpectator)
 }

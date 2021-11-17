@@ -143,8 +143,22 @@ io.on("connection", (socket) => {
     }
 
     function handlePlayerFinished(player) {
-        console.log("finished", playersRoomTable[socket.id]);
         io.to(playersRoomTable[socket.id]).emit("addPlayerScore", player)
+    }
+
+    socket.on('changeSpectator', changeSpectatingPlayer)
+
+    function changeSpectatingPlayer(username){
+        //get player list
+        let players = games[playersRoomTable[socket.id]].players;
+        let player = players.find(player => player.username === username)
+        let playerPosition = players.indexOf(player);
+        let position = playerPosition;
+        do {
+            position++;
+            if (players.length <= position) position = 0;
+        } while (players[position].isDone === true && position !== playerPosition);
+        socket.emit('changeSpectating', players[position]);
     }
 })
 
