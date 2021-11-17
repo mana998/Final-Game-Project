@@ -15,6 +15,7 @@
 </head>
 <body>
     <script src="/socket.io/socket.io.js"></script>
+    <div id="viewBlock"></div>
     <div class="container">
         <div id="menuScreen">
             <div id="panel">
@@ -59,15 +60,15 @@
                 <span id="spectateAnotherPlayer">(Press enter to spectate another player)</span>
                 <h1 id="currentScoreHeader">Current scores:</h1>
             </div>
-            <canvas id ="canvas" width="500", height="500" style="transform: scale(3); z-index: -1;position: absolute"></canvas>
         </div>
-        <script src="./models/Img.js"></script>
-        <script src="./models/GameObject.js"></script>
-        <script src="./models/GameMap.js"></script>
-        <script src="./models/Player.js"></script>
-        <script src="./client.js"></script>
-        <script src="./scripts/play.js"></script>
-        <script src="./scripts/end.js"></script>
     </div>
+    <canvas id ="canvas" width="500", height="500"></canvas>
+    <script src="./models/Img.js"></script>
+    <script src="./models/GameObject.js"></script>
+    <script src="./models/GameMap.js"></script>
+    <script src="./models/Player.js"></script>
+    <script src="./client.js"></script>
+    <script src="./scripts/play.js"></script>
+    <script src="./scripts/end.js"></script>
 </body>
 </html>

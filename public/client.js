@@ -23,6 +23,7 @@ const usernameInput = document.getElementById("usernameInput");
 const playGameButton = document.getElementById("playGameButton");
 const changeUsernameMessage = document.getElementById("changeUsernameMessage");
 const playMenu = document.getElementById("playMenu");
+const viewBlock = document.getElementById("viewBlock");
 
 const container = document.getElementsByClassName("container")[0];
 
@@ -105,6 +106,7 @@ function playersReady(players) {
     startTime = new Date().getTime();
     canvas.style.display = "block";
     container.style.border = "none";
+    viewBlock.style.display = "block";
 }
 
 //Dagmara
