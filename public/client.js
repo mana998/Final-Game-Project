@@ -24,9 +24,10 @@ const joinGameButton = document.getElementById("joinGameButton");
 const displayGameCode = document.getElementById("displayGameCode");
 const usernameInput = document.getElementById("usernameInput");
 const playGameButton = document.getElementById("playGameButton");
-const changeUsernameMessage = document.getElementById("changeUsernameMessage");
+const usernameMessage = document.getElementById("usernameMessage");
 const playMenu = document.getElementById("playMenu");
 const viewBlock = document.getElementById("viewBlock");
+const wrongGameCode = document.getElementById("wrongGameCode");
 
 const container = document.getElementsByClassName("container")[0];
 
@@ -65,7 +66,7 @@ function joinGame() {
 //starts the game for the user, changes it's state to ready to play and if all players are ready starts the game
 function playGame() {
     player.readyToPlay = true;
-    codeInput.disabled = "true";
+    usernameInput.setAttribute("disabled","true");
     updateServer();
     socket.emit("playGame", displayGameCode.innerText);
 }
@@ -88,20 +89,25 @@ function createPlayer(socketId) {
 //Dagmara
 //If players' username is valid the play game button is enabled
 function enablePlayButton() {
-    changeUsernameMessage.innerText = "";
+    usernameMessage.innerText = "";
     playGameButton.removeAttribute("disabled");
 }
 
 //Dagmara
 //If username is invalid the user is promped to enter different username
-function changeUsername() {
-    changeUsernameMessage.innerText = "Username already exists, input new username!"
+function changeUsername(message="") {
+    if (message) {
+        usernameMessage.innerText = message;
+        playGameButton.setAttribute("disabled","true");
+        return;
+    }
+    usernameMessage.innerText = "Username already exists, input new username!"
 }
 
 //Dagmara
 //informs players that not all players are ready to play
 function playersNotReady() {
-    changeUsernameMessage.innerText = "Other players are still not ready, give them another minute!"
+    usernameMessage.innerText = "Other players are still not ready, give them another minute!"
 }
 
 function playersReady(players) {
