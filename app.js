@@ -88,13 +88,14 @@ io.on("connection", (socket) => {
     }
 
     function handleJoinGame(gameCode) {
-        const desiredRoom = io.sockets.adapter.rooms.get(gameCode)
-
+        const desiredRoom = io.sockets.adapter.rooms.get(gameCode);
         let totalPlayersInRoom;
-        if (desiredRoom) {
-            totalPlayersInRoom = desiredRoom.size;
+        if (!desiredRoom) {
+            socket.emit("wrongCode");
+            return;
         }
 
+        totalPlayersInRoom = desiredRoom.size;
         if (totalPlayersInRoom === 0) {
             socket.emit("EmptyRoom");
             return;

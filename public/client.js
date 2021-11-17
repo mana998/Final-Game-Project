@@ -6,6 +6,7 @@ const socket = io();
 socket.on("roomName", handleGameCodeDisplay);
 socket.on("EmptyRoom", handleEmptyRoom);
 socket.on("FullRoom", handleFullRoom);
+socket.on("wrongCode", handleWrongCode);
 socket.on("playerAddedToGame", enablePlayButton);
 socket.on("playersNotReady", playersNotReady);
 socket.on("playersReady", playersReady);
@@ -17,11 +18,13 @@ const gameScreen = document.getElementById("gameScreen");
 const createGameButton = document.getElementById("createNewGameButton");
 const codeInput = document.getElementById("codeInput");
 const joinGameButton = document.getElementById("joinGameButton");
-const dispalyGameCode = document.getElementById("dispalyGameCode");
+const displayGameCode = document.getElementById("displayGameCode");
 const usernameInput = document.getElementById("usernameInput");
 const playGameButton = document.getElementById("playGameButton");
 const changeUsernameMessage = document.getElementById("changeUsernameMessage");
 const playMenu = document.getElementById("playMenu");
+
+const container = document.getElementsByClassName("container")[0];
 
 createGameButton.addEventListener("click", createGame);
 usernameInput.addEventListener("change", addUsername);
@@ -36,11 +39,16 @@ function createGame() {
 }
 
 //Dagmara
-//if the room code is valid it allows player to join existing the game
+//display message if the code is wrong
+function handleWrongCode() {
+    wrongGameCode.innerText = "Incorrect game code, the room doesn't exists";
+}
+
+//Dagmara
+//if the room code is valid it allows player to join existing game
 function joinGame() {
     const code = codeInput.value;
     socket.emit("joinGame", code);
-    init();
 }
 
 //Dagmara
@@ -49,7 +57,7 @@ function playGame() {
     player.readyToPlay = true;
     updateServer();
     //do something to activate only on click when everyone set login
-    socket.emit("playGame", dispalyGameCode.innerText);
+    socket.emit("playGame", displayGameCode.innerText);
 }
 
 //Dagmara
@@ -95,6 +103,8 @@ function playersReady(players) {
     player.y = currentPlayer.y;
     //get start time for score tracking
     startTime = new Date().getTime();
+    canvas.style.display = "block";
+    container.style.border = "none";
 }
 
 //Dagmara
@@ -107,7 +117,8 @@ function init() {
 //Dagmara
 //Display game code
 function handleGameCodeDisplay(gameCode) {
-    dispalyGameCode.innerText = gameCode;
+    init();
+    displayGameCode.innerText = gameCode;
 }
 
 //Dagmara
