@@ -80,3 +80,26 @@ body{
 .form-control {
     font-size: 2vw;
 }
+
+/*Score endscreen*/
+#endScreen {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 2em;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 1em 0.1em #00000048;
+    border-radius: 1em;
+}
+
+#spectateAnotherPlayer {
+
+}
+
+#currentScoreHeader {
+
+}
+
+.playerEndScore {
+
+}

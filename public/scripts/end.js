@@ -4,7 +4,7 @@ socket.on("addPlayerScore", addScoreToDisplay)
 
 function addScoreToDisplay(player) {
     //might change to ajax
-    endScreen.innerHTML += `<span>${player.username} : ${player.score}</span></br>`;
+    endScreen.innerHTML += `<span class="playerEndScore">${player.username} : ${player.score}</span></br>`;
 }
 
 function changeSpectator(e) {
