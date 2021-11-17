@@ -4,49 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
-    <style>
-        body{
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        #gameScreen {
-            display: none;
-        }
-    </style>
+    
+    <!-- Google Font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/client.css">
+    <title>GAME</title>
 </head>
 <body>
     <script src="/socket.io/socket.io.js"></script>
     <div class="container">
         <div id="menuScreen">
-            <div>
-                <h1>Game</h1>
-                <button type="submit" class="" id="createNewGameButton">
-                    Creeate New Game
-                </button>
-                <div>OR</div>
-                <div class='' id="joinRoomToPlay">
-                    <input type="text" placeholder="Enter game code to play" id="codeInput">
+            <div id="panel">
+                <h1 id="gameTitle">GAME</h1>
+                <div>
+                    <button type="button" class="btn" id="createNewGameButton">
+                        <span>New Game</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                    </button>
                 </div>
-                <span id = "wrongGameCode"></span>
-                <button type="submit" class="" id="joinGameButton">
-                    Join Game
-                </button>
+                <div>
+                    <div class='' id="joinRoomToPlay">
+                        <input type="text" class="form-control" placeholder="Enter game code:" id="codeInput">
+                    </div>
+                    <button type="button" class="btn" class="" id="joinGameButton">
+                        <div id="iconBox">
+                            <span>Join Game</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
+                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
         <div id="gameScreen">
-            <div id="playMenu" style="position: absolute; z-index:2">
-                <h1>Your game code is: 
-                    <span id = "dispalyGameCode"></span>
+            <div id="playMenu">
+                <h1 id="codeDisplay">Your game code is: 
+                    <span id = "displayGameCode"></span>
                 </h1>
                 <div class='' id="createUsername">
-                    <input type="text" placeholder="Enter username" id="usernameInput">
+                    <input type="text" placeholder="Enter username" class="form-control" id="usernameInput">
                     <span id = "changeUsernameMessage"></span>
                 </div>
-                <button type="submit" class="" id="playGameButton" disabled>
+                <button type="button" class="btn" id="playGameButton" disabled>
                     Play Game
-                </button>
+                </button>               
             </div>
             <canvas id ="canvas" width="500", height="500" style="transform: scale(3); z-index: -1;"></canvas>
         </div>

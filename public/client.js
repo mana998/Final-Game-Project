@@ -18,12 +18,13 @@ const gameScreen = document.getElementById("gameScreen");
 const createGameButton = document.getElementById("createNewGameButton");
 const codeInput = document.getElementById("codeInput");
 const joinGameButton = document.getElementById("joinGameButton");
-const dispalyGameCode = document.getElementById("dispalyGameCode");
+const displayGameCode = document.getElementById("displayGameCode");
 const usernameInput = document.getElementById("usernameInput");
 const playGameButton = document.getElementById("playGameButton");
 const changeUsernameMessage = document.getElementById("changeUsernameMessage");
 const playMenu = document.getElementById("playMenu");
-const wrongGameCode = document.getElementById("wrongGameCode");
+
+const container = document.getElementsByClassName("container")[0];
 
 createGameButton.addEventListener("click", createGame);
 usernameInput.addEventListener("change", addUsername);
@@ -56,7 +57,7 @@ function playGame() {
     player.readyToPlay = true;
     updateServer();
     //do something to activate only on click when everyone set login
-    socket.emit("playGame", dispalyGameCode.innerText);
+    socket.emit("playGame", displayGameCode.innerText);
 }
 
 //Dagmara
@@ -96,6 +97,8 @@ function playersNotReady() {
 function playersReady() {
     playMenu.style.display = "none";
     playing = true;
+    canvas.style.display = "block";
+    container.style.border = "none";
 }
 
 //Dagmara
@@ -109,7 +112,7 @@ function init() {
 //Display game code
 function handleGameCodeDisplay(gameCode) {
     init();
-    dispalyGameCode.innerText = gameCode;
+    displayGameCode.innerText = gameCode;
 }
 
 //Dagmara
