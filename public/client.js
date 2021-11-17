@@ -115,7 +115,7 @@ function playersReady(players) {
     startTime = new Date().getTime();
     canvas.style.display = "block";
     container.style.border = "none";
-    //viewBlock.style.display = "block";
+    viewBlock.style.display = "block";
 }
 
 //Dagmara
