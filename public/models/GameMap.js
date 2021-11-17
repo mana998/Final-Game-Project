@@ -4,8 +4,8 @@
     Img = require("./Img").Img;
 }
 
-const wall = new Img("./assets/images/wall.png", 0, 0, 0, 0, 0, 1);
-const goal = new Img("./assets/images/goal.png", 0, 0, 0, 0, 0, 1);
+const wall = new Img("./assets/images/game/wall.png", 0, 0, 0, 0, 0, 1);
+const goal = new Img("./assets/images/game/goal.png", 0, 0, 0, 0, 0, 1);
 
 let Utils;
 

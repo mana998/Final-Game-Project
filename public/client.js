@@ -72,7 +72,7 @@ function addUsername() {
 //Dagmara
 //Adds player to the game object
 function acceptUsername() {
-    player = new Player(64, 64, 32, 32, new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1), username);
+    player = new Player(64, 64, 32, 32, new Img("./assets/images/game/test.png", 0, 0, 0, 2, 5, 1), username);
     socket.emit("playerCreated", player);
 }
 
