@@ -6,6 +6,8 @@
 
 const wall = new Img("./assets/images/game/wall.png", 0, 0, 0, 0, 0, 1);
 const goal = new Img("./assets/images/game/goal.png", 0, 0, 0, 0, 0, 1);
+const path = new Img("./assets/images/game/path.png", 0, 0, 0, 0, 0, 1);
+
 
 let Utils;
 
@@ -29,6 +31,15 @@ class GameMap {
         for(let row = 0; row < this.tiles.length; row++) {
             for(let column = 0; column < this.tiles[row].length; column++) {
                 switch(this.tiles[row][column]) {
+                    case 0:
+                    //draw path under the player
+                    case 3:
+                        path.draw(ctx, 
+                            (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth), 
+                            ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight, 
+                            this.tileWidth, this.tileHeight
+                        );
+                        break;
                     case 1:
                         wall.draw(ctx, 
                             (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth), 

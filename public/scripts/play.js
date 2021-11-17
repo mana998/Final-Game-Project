@@ -54,6 +54,9 @@ function draw(data){
             compareToPlayer = spectatingPlayer;
         }
     }
+    //draw map
+    map = new GameMap(data.map.tiles, data.map.timeLimit);
+    map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
     data.players.map(gamePlayer => {
         if (player.username === gamePlayer.username) {
             player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
@@ -69,9 +72,6 @@ function draw(data){
             gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
         }
     })
-    //draw map
-    map = new GameMap(data.map.tiles, data.map.timeLimit);
-    map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
 }
 
 //need to consider whether game started
