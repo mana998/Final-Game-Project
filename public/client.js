@@ -26,6 +26,7 @@ const usernameInput = document.getElementById("usernameInput");
 const playGameButton = document.getElementById("playGameButton");
 const changeUsernameMessage = document.getElementById("changeUsernameMessage");
 const playMenu = document.getElementById("playMenu");
+const viewBlock = document.getElementById("viewBlock");
 
 const container = document.getElementsByClassName("container")[0];
 
@@ -80,7 +81,7 @@ function handleCreateUsername() {
 //Dagmara
 //Adds player to the game object
 function createPlayer(socketId) {
-    player = new Player(64, 64, 32, 32, new Img("./assets/images/test.png", 0, 0, 0, 2, 5, 1), "", socketId);
+    player = new Player(64, 64, 32, 32, new Img("./assets/images/game/test.png", 0, 0, 0, 2, 5, 1), "", socketId);
     socket.emit("playerCreated", player);
 }
 
@@ -106,14 +107,15 @@ function playersNotReady() {
 function playersReady(players) {
     playMenu.style.display = "none";
     playing = true;
-    canvas.style.display = "block";
-    container.style.border = "none";
     //place player at random position on the map
     let currentPlayer = players.find(gamePlayer => gamePlayer.username === player.username)
     player.x = currentPlayer.x;
     player.y = currentPlayer.y;
     //get start time for score tracking
     startTime = new Date().getTime();
+    canvas.style.display = "block";
+    container.style.border = "none";
+    //viewBlock.style.display = "block";
 }
 
 //Dagmara

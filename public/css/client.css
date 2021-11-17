@@ -8,7 +8,7 @@ body{
 }
 
 #menuScreen, #playMenu  {
-    background-image: url("./assets/images/background.jpg");
+    background-image: url("../assets/images/backgrounds/background.jpg");
     background-position: center;
     height: 80vh;
 }
@@ -79,4 +79,36 @@ body{
 
 .form-control {
     font-size: 2vw;
+}
+
+/*Score endscreen*/
+#endScreen {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 2em;
+    position: relative;
+    top: 5em;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 1em 0.1em #00000048;
+    border-radius: 1em;
+    z-index: 5;
+}
+
+#viewBlock {
+    display: none;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%,transparent 100px,black calc(320px - 32px));
+    margin: 0 auto;
+}
+
+canvas {
+    transform: scale(3);
+    z-index: -1;
+    position: absolute;
+    top: 0;
 }
