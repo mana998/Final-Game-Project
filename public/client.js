@@ -66,7 +66,7 @@ function playGame() {
     player.readyToPlay = true;
     codeInput.disabled = "true";
     updateServer();
-    socket.emit("playGame", dispalyGameCode.innerText);
+    socket.emit("playGame", displayGameCode.innerText);
 }
 
 //Dagmara
@@ -103,11 +103,15 @@ function playersNotReady() {
     changeUsernameMessage.innerText = "Other players are still not ready, give them another minute!"
 }
 
-function playersReady() {
+function playersReady(players) {
     playMenu.style.display = "none";
     playing = true;
     canvas.style.display = "block";
     container.style.border = "none";
+    //place player at random position on the map
+    let currentPlayer = players.find(gamePlayer => gamePlayer.username === player.username)
+    player.x = currentPlayer.x;
+    player.y = currentPlayer.y;
 }
 
 //Dagmara
