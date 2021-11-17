@@ -10,7 +10,7 @@ const goal = new Img("./assets/images/goal.png", 0, 0, 0, 0, 0, 1);
 let Utils;
 
 class GameMap {
-    constructor (tiles, Utilities) {
+    constructor (tiles, timeLimit, Utilities) {
         //utils object - use new one if passed else keep the old one
         Utils = Utilities || Utils;
         //0 path
@@ -22,6 +22,7 @@ class GameMap {
         this.tiles = tiles || [];
         this.goalRow;
         this.goalColumn;
+        this.timeLimit = timeLimit || 0;
     }
 
     draw (ctx, player, canvasWidth, canvasHeight) {
@@ -58,6 +59,8 @@ class GameMap {
         this.tiles[row][column] = 2;
         this.goalRow = row;
         this.goalColumn = column;
+        //set time limit based on size - 1 minute for 10x10
+        this.timeLimit = 60 * 1000 * (this.tiles.length, this.tiles[0].length);;
     }
 
     setPlayerStartPosition(player) {

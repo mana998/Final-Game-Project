@@ -112,6 +112,8 @@ function playersReady(players) {
     let currentPlayer = players.find(gamePlayer => gamePlayer.username === player.username)
     player.x = currentPlayer.x;
     player.y = currentPlayer.y;
+    //get start time for score tracking
+    startTime = new Date().getTime();
 }
 
 //Dagmara
