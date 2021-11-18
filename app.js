@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
     socket.on("playerFinished", handlePlayerFinished);
     socket.on('changeSpectator', changeSpectatingPlayer)
     socket.on('disconnect', handlePlayerDisconnect);
-
+    socket.on('stopInterval', handleStopInterval);
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
@@ -134,7 +134,6 @@ io.on("connection", (socket) => {
         //update the player object with new data
         const updatedPlayer = games[playersRoomTable[socket.id]].players.find(player => player.socketId === socket.id);
         const index = games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer);
-        
         if ( index < 0) {
             socket.emit("noPlayer");
             return;
@@ -150,6 +149,13 @@ io.on("connection", (socket) => {
     //when player finishes, update everyone in the room with their score
     function handlePlayerFinished(player) {
         io.to(playersRoomTable[socket.id]).emit("addPlayerScore", player)
+        //give time till server updates with newest values
+        setTimeout(() => {
+            //check if all players finished to disable spectating mode
+            if (games[playersRoomTable[socket.id]].players.every(player => player.isDone === true)) {
+                io.to(playersRoomTable[socket.id]).emit("gameEnded");
+            }
+        }, 100);
     }
 
     //Marianna
@@ -165,23 +171,29 @@ io.on("connection", (socket) => {
         do {
             position++;
             if (players.length <= position) position = 0;
-        } while (players[position].isDone === true && position !== playerPosition);
+        } while (playerPosition !== -1 && players[position].isDone === true && position !== playerPosition);
         socket.emit('changeSpectating', players[position]);
     }
 
     //Marianna
     function handlePlayerDisconnect() {
-        //remove player from room
-        games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter(player => player.socketId !== socket.id);
-        //empty room
-        //remove data about room
-        if (games[playersRoomTable[socket.id]].players.length === 0) {
-            //stop timer
-            clearInterval(games[playersRoomTable[socket.id]].interval);
-            delete games[playersRoomTable[socket.id]];
+        if (games[playersRoomTable[socket.id]]) {
+            //remove player from room
+            games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter(player => player.socketId !== socket.id);
+            //empty room
+            //remove data about room
+            if (games[playersRoomTable[socket.id]].players.length === 0) {
+                //stop timer
+                clearInterval(games[playersRoomTable[socket.id]].interval);
+                delete games[playersRoomTable[socket.id]];
+            }
+            //remove data about player
+            delete playersRoomTable[socket.id];
         }
-        //remove data about player
-        delete playersRoomTable[socket.id];
+    }
+
+    function handleStopInterval() {
+        clearInterval(games[playersRoomTable[socket.id]].interval);
     }
 })
 
