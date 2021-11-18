@@ -122,11 +122,10 @@ io.on("connection", (socket) => {
             socket.emit("playersNotReady");
             return;
         }
-        startGameInterval(gameCode, gameState);
     }
 
     function startGameInterval (gameCode, gameState) {
-        setInterval(() => {
+        gameState.interval = setInterval(() => {
             io.to(gameCode).emit('newFrame', gameState);
         }, 1000 / FRAME_RATE);
     }
@@ -147,16 +146,22 @@ io.on("connection", (socket) => {
         }
     }
 
+    //Marianna
+    //when player finishes, update everyone in the room with their score
     function handlePlayerFinished(player) {
         io.to(playersRoomTable[socket.id]).emit("addPlayerScore", player)
     }
 
+    //Marianna
     function changeSpectatingPlayer(username){
         //get player list
         let players = games[playersRoomTable[socket.id]].players;
+        //find current spectating player and index
         let player = players.find(player => player.username === username)
         let playerPosition = players.indexOf(player);
         let position = playerPosition;
+        //look for player who isn't done
+        //stop if it gets back to current spectating player
         do {
             position++;
             if (players.length <= position) position = 0;
@@ -164,12 +169,15 @@ io.on("connection", (socket) => {
         socket.emit('changeSpectating', players[position]);
     }
 
+    //Marianna
     function handlePlayerDisconnect() {
         //remove player from room
         games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter(player => player.socketId !== socket.id);
         //empty room
         //remove data about room
         if (games[playersRoomTable[socket.id]].players.length === 0) {
+            //stop timer
+            clearInterval(games[playersRoomTable[socket.id]].interval);
             delete games[playersRoomTable[socket.id]];
         }
         //remove data about player
