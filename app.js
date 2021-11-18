@@ -43,6 +43,9 @@ io.on("connection", (socket) => {
     socket.on("playGame", startGame);
     socket.on("clientUpdated", handleClientUpdate);
     socket.on("playerFinished", handlePlayerFinished);
+    socket.on('changeSpectator', changeSpectatingPlayer)
+    socket.on('disconnect', handlePlayerDisconnect);
+
 
     function handleNewGameCreation(map) {
         //what we want to do is: create socketIO room and client that joins the game have to add the code which is roomId 
@@ -148,8 +151,6 @@ io.on("connection", (socket) => {
         io.to(playersRoomTable[socket.id]).emit("addPlayerScore", player)
     }
 
-    socket.on('changeSpectator', changeSpectatingPlayer)
-
     function changeSpectatingPlayer(username){
         //get player list
         let players = games[playersRoomTable[socket.id]].players;
@@ -161,6 +162,18 @@ io.on("connection", (socket) => {
             if (players.length <= position) position = 0;
         } while (players[position].isDone === true && position !== playerPosition);
         socket.emit('changeSpectating', players[position]);
+    }
+
+    function handlePlayerDisconnect() {
+        //remove player from room
+        games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter(player => player.socketId !== socket.id);
+        //empty room
+        //remove data about room
+        if (games[playersRoomTable[socket.id]].players.length === 0) {
+            delete games[playersRoomTable[socket.id]];
+        }
+        //remove data about player
+        delete playersRoomTable[socket.id];
     }
 })
 
