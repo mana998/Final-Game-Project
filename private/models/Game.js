@@ -1,10 +1,10 @@
 class Game {
-    constructor () {
-        this.players = [];
-        this.map;
-    }
+  constructor() {
+    this.players = [];
+    this.map = {};
+  }
 }
 
 module.exports = {
-    Game: Game
+  Game,
 };
