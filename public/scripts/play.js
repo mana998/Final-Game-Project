@@ -30,23 +30,28 @@ let animations = {
     up: [3, 0, 0, 2]
 }
 
+//Marianna
+//update game 
 socket.on("newFrame", (data) => {
     draw(data);
 })
 
+//Marianna
+//draw everything
 function draw(data){
+    //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //player that will be centered
+    //set player that will be centered
     //by default it's your player
     let compareToPlayer = player;
     //if your player is done it changes to another player to spectate
     if (player.isDone) {
         let username = (spectatingPlayer) ? spectatingPlayer.username : ''
         let tempPlayer = data.players.find(gamePlayer => gamePlayer.username === username) || null;
-        //if no player is defined to spectate, it asks server for next one
+        //if no player is defined to spectate, it asks server for next available one
         if (!tempPlayer || tempPlayer.isDone) {
             socket.emit('changeSpectator', (spectatingPlayer) ? tempPlayer.username : '');
-        } else {
+        } else { //else it sets the player
             spectatingPlayer = new Player(tempPlayer.x, tempPlayer.y, tempPlayer.width, tempPlayer.height, 
                 new Img(tempPlayer.img.src, tempPlayer.img.startRow, tempPlayer.img.startColumn, tempPlayer.img.rows, tempPlayer.img.columns, tempPlayer.img.speed, '', tempPlayer.img.currentRow, tempPlayer.img.currentColumn),
                 tempPlayer.username
@@ -57,12 +62,16 @@ function draw(data){
     //draw map
     map = new GameMap(data.map.tiles, data.map.timeLimit);
     map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
+    //draw all players
     data.players.map(gamePlayer => {
         if (player.username === gamePlayer.username) {
+            //draw your player - center camera
             player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
         } else if (spectatingPlayer && spectatingPlayer.username === gamePlayer.username) {
+            //or draw spectating player - center camera
             spectatingPlayer.draw(ctx, (canvas.width - spectatingPlayer.width) / 2, (canvas.height - spectatingPlayer.height) / 2);
         } else if (!gamePlayer.isDone) {
+            //or draw all other players in relation to spectating player
             //transform data into proper object
             gamePlayer = new Player(gamePlayer.x, gamePlayer.y, gamePlayer.width, gamePlayer.height, 
                 new Img(gamePlayer.img.src, gamePlayer.img.startRow, gamePlayer.img.startColumn, gamePlayer.img.rows, gamePlayer.img.columns, gamePlayer.img.speed, '', gamePlayer.img.currentRow, gamePlayer.img.currentColumn),
@@ -74,15 +83,15 @@ function draw(data){
     })
 }
 
-//need to consider whether game started
 //event listener for start of the movement
 window.addEventListener("keydown", movePlayer);
 
 //event listener for end of the movement
 window.addEventListener("keyup", stopPlayer);
 
+//Marianna
+//key listeners to move the player
 function movePlayer(e) {
-    //stop if game is not in progress
     //!!!!THINK ABOUT STORING BLOCK TYPES IN SOME GLOBAL VARIABLES!!!!
     //3rd parameter in isBlockCollision
     if (!playing || player.isDone) return;
@@ -91,8 +100,10 @@ function movePlayer(e) {
         case "a":
         case "ArrowLeft":
             changeAnimation("left");
+            //check for wall collision
             if (!player.isBlockCollision(map, "left", 1, -player.speed, 0)) {
                 player.x -= player.speed;
+                //check for goal collision
                 if (player.isBlockCollision(map, "left", 2)) {
                     playerIsDone();
                 }
@@ -139,6 +150,8 @@ function movePlayer(e) {
     updateServer();
 }
 
+//Marianna
+//Stop animation when player stops moving
 function stopPlayer(e) {
     //stop if game is not in progress
     if (!playing || player.isDone) return;
@@ -155,6 +168,7 @@ function stopPlayer(e) {
     }
 }
 
+//Marianna
 //change animation based on the direction of the player
 function changeAnimation(direction) {
     //only change animation when direction changes
@@ -169,10 +183,15 @@ function changeAnimation(direction) {
     }
 }
 
+//Marianna
+//update server if something on the client changed
 function updateServer() {
     socket.emit('clientUpdated', {player: player, map: map})
 }
 
+//Marianna
+//set score when player finished the game
+//show score of all players and move to spectator mode
 function playerIsDone() {
     player.isDone = true;
     //maximum time - elapsed time

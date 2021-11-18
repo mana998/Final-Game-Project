@@ -27,6 +27,8 @@ class GameMap {
         this.timeLimit = timeLimit || 0;
     }
 
+    //Marianna
+    //draw map in relation to player
     draw (ctx, player, canvasWidth, canvasHeight) {
         for(let row = 0; row < this.tiles.length; row++) {
             for(let column = 0; column < this.tiles[row].length; column++) {
@@ -59,6 +61,9 @@ class GameMap {
         }
     }
 
+    //Marianna
+    //load map from the file
+    //set goal tile and time limit
     loadMap (data) {
         this.tiles = data.tiles;
         //get random position for goal
@@ -74,6 +79,9 @@ class GameMap {
         this.timeLimit = 60 * 1000 * (this.tiles.length, this.tiles[0].length);;
     }
 
+    //Marianna
+    //place player on the map in relation to goal
+    //at least 1/3 horizontally and vertically from the goal
     setPlayerStartPosition(player) {
         let [row, column] = [-1, -1];
         do {

@@ -31,6 +31,8 @@ class Img {
         this.size = size || 1;
     }
 
+    //Marianna
+    //draw and change animation based on data in spritesheet
     draw (ctx, x, y, width, height) {
         //where on the spritesheet should we start - x and y coordinates
         let startX = this.currentColumn * width;
