@@ -17,6 +17,11 @@ class Player extends GameObject { //Marianna
         //1 wall
         //2 goal
         //3 player
+    //Marianna
+    //check for collision
+    //based on player rotation check only adjecent tiles in correct direction
+    //check based on tilemap
+    //for future: instead of collision might just return tiletype if there is collision and based on that act
     isBlockCollision (map, direction, blockType, columnMovement, rowMovement){
         let collision = false;
         let x = this.x + columnMovement || this.x;

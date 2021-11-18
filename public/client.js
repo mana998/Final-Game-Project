@@ -104,6 +104,8 @@ function playersNotReady() {
     changeUsernameMessage.innerText = "Other players are still not ready, give them another minute!"
 }
 
+//Marianna + Dagmara
+//update necessary information when game starts
 function playersReady(players) {
     playMenu.style.display = "none";
     playing = true;
