@@ -10,6 +10,15 @@ class Utils {
         return id;
     }
 
+    //Dagmara
+    //check if string contains only : ; < = > A-Z and 0-9
+    checkStringCharacters(word) {
+        const reg = /^[a-zA-Z\d]*$/;
+        console.log(word);
+        console.log(reg.test(word));
+        return reg.test(word);
+    }
+
     //Marianna
     //generate random whole number
     getRandomNumber(min, max) {

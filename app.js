@@ -74,6 +74,11 @@ io.on("connection", (socket) => {
     }
 
     function handleCreateUsername(data) {
+        const usernameValid = Utils.checkStringCharacters(data.username);
+        if (!usernameValid) {
+            socket.emit("usernameDeclined", "Please, use one or more characters from: A-Z and 0-9.");
+            return;
+        }
         const uniqueUsername = games[playersRoomTable[socket.id]].players.every(player => player.username !== data.username);
         if (!uniqueUsername) {
             socket.emit("usernameDeclined");
