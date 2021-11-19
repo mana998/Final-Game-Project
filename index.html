@@ -31,6 +31,7 @@
                 <div>
                     <div class='' id="joinRoomToPlay">
                         <input type="text" class="form-control" placeholder="Enter game code:" id="codeInput">
+                        <span id="wrongGameCode"></span>
                     </div>
                     <button type="button" class="btn" class="" id="joinGameButton">
                         <div id="iconBox">
@@ -50,13 +51,14 @@
                 </h1>
                 <div class='' id="createUsername">
                     <input type="text" placeholder="Enter username" class="form-control" id="usernameInput">
-                    <span id = "changeUsernameMessage"></span>
+                    <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span>
                 </div>
                 <button type="button" class="btn" id="playGameButton" disabled>
                     Play Game
                 </button>               
             </div>
             <div id="endScreen" style="display: none">
+                <button type="button" class="btn" id="leaveGameButton" onClick="leaveGame()">Leave Game</button><br>
                 <span id="spectateAnotherPlayer">(Press enter to spectate another player)</span>
                 <h1 id="currentScoreHeader">Current scores:</h1>
             </div>

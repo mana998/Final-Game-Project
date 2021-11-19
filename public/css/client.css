@@ -96,6 +96,11 @@ body {
     z-index: 5;
 }
 
+#leaveGameButton {
+    position: relative;
+    z-index: 6;
+}
+
 #viewBlock {
     display: none;
     position: fixed;

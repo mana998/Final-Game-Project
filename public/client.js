@@ -14,9 +14,10 @@ const joinGameButton = document.getElementById('joinGameButton');
 const displayGameCode = document.getElementById('displayGameCode');
 const usernameInput = document.getElementById('usernameInput');
 const playGameButton = document.getElementById('playGameButton');
-const changeUsernameMessage = document.getElementById('changeUsernameMessage');
+const usernameMessage = document.getElementById("usernameMessage");
 const playMenu = document.getElementById('playMenu');
 const viewBlock = document.getElementById('viewBlock');
+const wrongGameCode = document.getElementById("wrongGameCode");
 const container = document.getElementsByClassName('container')[0];
 
 // Dagmara
@@ -26,10 +27,15 @@ function init() {
   gameScreen.style.display = 'block';
 }
 
-// Dagmara
-// If username is invalid the user is promped to enter different username
-function changeUsername() {
-  changeUsernameMessage.innerText = 'Username already exists, input new username!';
+//Dagmara
+//If username is invalid the user is promped to enter different username
+function changeUsername(message="") {
+  if (message) {
+      usernameMessage.innerText = message;
+      playGameButton.setAttribute("disabled","true");
+      return;
+  }
+  usernameMessage.innerText = "Username already exists, input new username!"
 }
 
 // Dagmara
@@ -69,10 +75,10 @@ function joinGame() {
 // starts the game for the user,
 // changes it's state to ready to play and if all players are ready starts the game
 function playGame() {
-  player.readyToPlay = true;
-  codeInput.disabled = 'true';
-  updateServer();
-  socket.emit('playGame', displayGameCode.innerText);
+    player.readyToPlay = true;
+    usernameInput.setAttribute("disabled","true");
+    updateServer();
+    socket.emit("playGame", displayGameCode.innerText);
 }
 
 // Dagmara
@@ -93,16 +99,18 @@ function createPlayer(socketId) {
 // Dagmara
 // If players' username is valid the play game button is enabled
 function enablePlayButton() {
-  changeUsernameMessage.innerText = '';
-  playGameButton.removeAttribute('disabled');
+    usernameMessage.innerText = "";
+    playGameButton.removeAttribute("disabled");
 }
 
-// Dagmara
-// informs players that not all players are ready to play
+//Dagmara
+//informs players that not all players are ready to play
 function playersNotReady() {
-  changeUsernameMessage.innerText = 'Other players are still not ready, give them another minute!';
+    usernameMessage.innerText = "Other players are still not ready, give them another minute!";
 }
 
+//Marianna + Dagmara
+//update necessary information when game starts
 function playersReady(players) {
   playMenu.style.display = 'none';
   playing = true;
@@ -114,7 +122,7 @@ function playersReady(players) {
   startTime = new Date().getTime();
   canvas.style.display = 'block';
   container.style.border = 'none';
-  // viewBlock.style.display = "block";
+  viewBlock.style.display = "block";
 }
 
 // Dagmara

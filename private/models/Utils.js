@@ -9,11 +9,18 @@ class Utils {
     return id;
   }
 
-  // Marianna
-  // generate random whole number
-  getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-  }
+    //Dagmara
+    //check if string contains only : ; < = > A-Z and 0-9
+    checkStringCharacters(word) {
+        const reg = /^[a-zA-Z\d]*$/;
+        return reg.test(word);
+    }
+
+    //Marianna
+    //generate random whole number
+    getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
 }
 
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { Utils };
