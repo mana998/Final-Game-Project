@@ -8,24 +8,26 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 const wall = new Img("./assets/images/game/wall.png", 0, 0, 0, 0, 0, 1);
 const goal = new Img("./assets/images/game/goal.png", 0, 0, 0, 0, 0, 1);
 const path = new Img("./assets/images/game/path.png", 0, 0, 0, 0, 0, 1);
-const coin = new Coin(0, 0, 32, 32, 10);
+const coin = new Img("./assets/images/game/coin.png", 0, 0, 0, 4, 5, 1);
 
 let Utils;
 
 class GameMap {
-  constructor(tiles, timeLimit, Utilities) {
+  constructor(tiles, timeLimit, coins, Utilities) {
     // utils object - use new one if passed else keep the old one
     Utils = Utilities || Utils;
     // 0 path
     // 1 wall
     // 2 goal
     // 3 player
+    // 4 coin
     this.tileWidth = 32;
     this.tileHeight = 32;
     this.tiles = tiles || [];
     this.goalRow = null;
     this.goalColumn = null;
     this.timeLimit = timeLimit || 0;
+    this.coins = coins || [];
   }
 
     //Marianna
@@ -42,11 +44,20 @@ class GameMap {
                             ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight, 
                             this.tileWidth, this.tileHeight
                         );
+                        break;
+                    //coin match
+                    case String(this.tiles[row][column]).match(/^4/)?.input:
+                        path.draw(ctx, 
+                            (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth), 
+                            ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight, 
+                            this.tileWidth, this.tileHeight
+                        );
+                        //take one coin to draw as they are the same
                         coin.draw(ctx, 
-                        (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth), 
-                        ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight, 
-                        this.tileWidth, this.tileHeight
-                    );
+                            (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth), 
+                            ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
+                            this.tileWidth, this.tileHeight
+                        );
                         break;
                     case 1:
                         wall.draw(ctx, 
@@ -83,7 +94,10 @@ class GameMap {
         this.goalRow = row;
         this.goalColumn = column;
         //set time limit based on size - 1 minute for 10x10
-        this.timeLimit = 60 * 1000 * (this.tiles.length, this.tiles[0].length);;
+        this.timeLimit = 60 * 1000 * (this.tiles.length * this.tiles[0].length / 100);
+        //generate coins
+        //5 coins per 10x10 
+        this.generateCoins(this.tiles.length * this.tiles[0].length / 20)
     }
 
     //Marianna
@@ -99,6 +113,21 @@ class GameMap {
         this.tiles[row][column] = 3;
         player.x = column * this.tileWidth;
         player.y = row * this.tileHeight + this.tileHeight;
+    }
+
+    generateCoins (amount) {
+        const coinValues = [1000, 5000, 10000, 15000, 20000];
+        //for every coin
+        for (let i = 0; i < amount; i++) {
+            let [row, column] = [-1, -1];
+            do {
+                row = Utils.getRandomNumber(0, this.tiles.length);
+                column = Utils.getRandomNumber(0, this.tiles[row].length);
+                //has to be empty block
+            } while (this.tiles[row][column] !== 0);
+            this.tiles[row][column] = `4.${i}`;
+            this.coins.push(new Coin(0, 0, 32, 32, coinValues[Utils.getRandomNumber(0, coinValues.length)]));
+        }
     }
 }
 
