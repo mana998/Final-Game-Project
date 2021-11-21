@@ -81,12 +81,12 @@ io.on('connection', (socket) => {
   }
 
   function handleCreateUsername(initialData) {
-    let data = initialData;
+    const data = initialData;
     const usernameValid = Utils.checkStringCharacters(data.username);
-        if (!usernameValid) {
-            socket.emit("usernameDeclined", "Please, use one or more characters from: A-Z and 0-9.");
-            return;
-        }
+    if (!usernameValid) {
+      socket.emit('usernameDeclined', 'Please, use one or more characters from: A-Z and 0-9.');
+      return;
+    }
     const uniqueUsername = games[playersRoomTable[socket.id]].players
       .every((player) => player.username !== data.username);
     if (!uniqueUsername) {
@@ -137,53 +137,52 @@ io.on('connection', (socket) => {
       startGameInterval(gameCode, gameState);
     } else {
       socket.emit('playersNotReady');
-      return;
     }
   }
 
-  //Marianna
-    //when player finishes, update everyone in the room with their score
-    function handlePlayerFinished(player) {
-      io.to(playersRoomTable[socket.id]).emit("addPlayerScore", player)
-      //give time till server updates with newest values
-      setTimeout(() => {
-          //check if all players finished to disable spectating mode
-          if (games[playersRoomTable[socket.id]].players.every(player => player.isDone === true)) {
-              io.to(playersRoomTable[socket.id]).emit("gameEnded");
-          }
-      }, 100);
-    }
+  // Marianna
+  // when player finishes, update everyone in the room with their score
+  function handlePlayerFinished(player) {
+    io.to(playersRoomTable[socket.id]).emit('addPlayerScore', player);
+    // give time till server updates with newest values
+    setTimeout(() => {
+      // check if all players finished to disable spectating mode
+      if (games[playersRoomTable[socket.id]].players.every((player) => player.isDone === true)) {
+        io.to(playersRoomTable[socket.id]).emit('gameEnded');
+      }
+    }, 100);
+  }
 
   function changeSpectatingPlayer(username) {
-    //get player list
-    let players = games[playersRoomTable[socket.id]].players;
-    //find current spectating player and index
-    let player = players.find(player => player.username === username)
-    let playerPosition = players.indexOf(player);
+    // get player list
+    const { players } = games[playersRoomTable[socket.id]];
+    // find current spectating player and index
+    const player = players.find((player) => player.username === username);
+    const playerPosition = players.indexOf(player);
     let position = playerPosition;
-    //look for player who isn't done
-    //stop if it gets back to current spectating player
+    // look for player who isn't done
+    // stop if it gets back to current spectating player
     do {
-        position++;
-        if (players.length <= position) position = 0;
+      position++;
+      if (players.length <= position) position = 0;
     } while (playerPosition !== -1 && players[position].isDone === true && position !== playerPosition);
     socket.emit('changeSpectating', players[position]);
   }
 
-  //Marianna
+  // Marianna
   function handlePlayerDisconnect() {
     if (games[playersRoomTable[socket.id]]) {
-        //remove player from room
-        games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter(player => player.socketId !== socket.id);
-        //empty room
-        //remove data about room
-        if (games[playersRoomTable[socket.id]].players.length === 0) {
-            //stop timer
-            clearInterval(games[playersRoomTable[socket.id]].interval);
-            delete games[playersRoomTable[socket.id]];
-        }
-        //remove data about player
-        delete playersRoomTable[socket.id];
+      // remove player from room
+      games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter((player) => player.socketId !== socket.id);
+      // empty room
+      // remove data about room
+      if (games[playersRoomTable[socket.id]].players.length === 0) {
+        // stop timer
+        clearInterval(games[playersRoomTable[socket.id]].interval);
+        delete games[playersRoomTable[socket.id]];
+      }
+      // remove data about player
+      delete playersRoomTable[socket.id];
     }
   }
 

@@ -2,11 +2,13 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   // used on the server
   // eslint-disable-next-line global-require
   Img = require('./Img').Img;
+  Coin = require('./Coin').Coin;
 }
 
 const wall = new Img("./assets/images/game/wall.png", 0, 0, 0, 0, 0, 1);
 const goal = new Img("./assets/images/game/goal.png", 0, 0, 0, 0, 0, 1);
 const path = new Img("./assets/images/game/path.png", 0, 0, 0, 0, 0, 1);
+const coin = new Coin(0, 0, 32, 32, 10);
 
 let Utils;
 
@@ -40,6 +42,11 @@ class GameMap {
                             ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight, 
                             this.tileWidth, this.tileHeight
                         );
+                        coin.draw(ctx, 
+                        (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth), 
+                        ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight, 
+                        this.tileWidth, this.tileHeight
+                    );
                         break;
                     case 1:
                         wall.draw(ctx, 

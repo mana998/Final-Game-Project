@@ -36,6 +36,7 @@ class Img {
     //draw and change animation based on data in spritesheet
     draw (ctx, x, y, width, height) {
         //where on the spritesheet should we start - x and y coordinates
+        //console.log(this.currentSpeed, this.speed);
         let startX = this.currentColumn * width;
         let startY = this.currentRow * height;
         //increase the current speed value
