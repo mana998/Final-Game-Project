@@ -6,7 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class Coin extends GameObject { // Marianna
   constructor(x, y, width, height, value) {
-    super(x, y, width, height, new Img('./assets/images/game/coin.png', 0, 0, 0, 4, 5, 1));
+    super(x, y, width, height);
     this.value = value;
   }
 }
