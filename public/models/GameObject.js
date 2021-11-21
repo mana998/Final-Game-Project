@@ -19,3 +19,5 @@ class GameObject {
     this.img.draw(ctx, x, y, this.width, this.height);
   }
 }
+
+if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { GameObject };
