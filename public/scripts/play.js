@@ -94,45 +94,54 @@ function movePlayer(e) {
         case "ArrowLeft":
             changeAnimation("left");
             //check for wall collision
-            if (!player.isBlockCollision(map, "left", 1, -player.speed, 0)) {
+            //console.log('left');
+            //console.log('check', !player.isBlockCollision(map, "left", -player.speed, 0));
+            let notMove = player.isBlockCollision(map, "left", -player.speed, 0);
+            console.log('notmove', notMove);
+            if (!notMove) {
+                console.log('move');
                 player.x -= player.speed;
+                player.isBlockCollision(map, "left")
                 //check for goal collision
-                if (player.isBlockCollision(map, "left", 2)) {
+                /*if (player.isBlockCollision(map, "left", 2)) {
                     playerIsDone();
-                }
+                }*/
             }
             break;
         case "D":
         case "d":
         case "ArrowRight":
             changeAnimation("right");
-            if (!player.isBlockCollision(map, "right", 1, player.speed, 0)) {
+            if (!player.isBlockCollision(map, "right", player.speed, 0)) {
                 player.x += player.speed;
-                if (player.isBlockCollision(map, "right", 2)) {
+                player.isBlockCollision(map, "right")
+                /*if (player.isBlockCollision(map, "right", 2)) {
                     playerIsDone()
-                }
+                }*/
             }
             break;
         case "W":
         case "w":
         case "ArrowUp":
             changeAnimation("up");
-            if (!player.isBlockCollision(map, "up", 1, 0, -player.speed)) {
+            if (!player.isBlockCollision(map, "up", 0, -player.speed)) {
                 player.y -= player.speed;
-                if (player.isBlockCollision(map, "up", 2)) {
+                player.isBlockCollision(map, "up")
+                /*if (player.isBlockCollision(map, "up", 2)) {
                     playerIsDone()
-                }
+                }*/
             }
             break;
         case "S":
         case "s":
         case "ArrowDown":
             changeAnimation("down");
-            if (!player.isBlockCollision(map, "down", 1, 0, player.speed)) {
+            if (!player.isBlockCollision(map, "down", 0, player.speed)) {
                 player.y += player.speed;
-                if (player.isBlockCollision(map, "down", 2)) {
+                player.isBlockCollision(map, "down")
+                /*if (player.isBlockCollision(map, "down", 2)) {
                     playerIsDone()
-                }
+                }*/
             }
             break;
         default:
@@ -185,7 +194,7 @@ function updateServer() {
 //Marianna
 //set score when player finished the game
 //show score of all players and move to spectator mode
-function playerIsDone() {
+/*function playerIsDone() {
   player.isDone = true;
   // maximum time - elapsed time
   let timeScore = map.timeLimit - (new Date().getTime() - startTime);
@@ -198,7 +207,7 @@ function playerIsDone() {
   // playing false so movement keys get disabled
   playing = false;
   window.addEventListener('keyup', changeSpectator);
-}
+}*/
 
 //Marianna
 //update game 
