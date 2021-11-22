@@ -6,12 +6,28 @@ const app = express();
 // setup static dir
 app.use(express.static(`${__dirname}/public`));
 
-// database setup
-// const db = require("./database/connection").connection;
+const session = require('express-session');
+app.use(session({
+  secret: 'requiredSecret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false },
+}));
 
-// setup socket server
+app.use(express.json());
+
+// allow to pass form data
+app.use(express.urlencoded({ extended: true }));
+
+// database setup
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const db = require('./database/connection').connection;
+
+const handleSession = require('./private/session.js');
+app.use(handleSession.router);
+
+// setup socket server
 
 // import game class
 const { Game } = require('./private/models/Game');
@@ -22,6 +38,10 @@ const Utils = new Utilities();
 
 // framerate
 const FRAME_RATE = 60;
+
+// user login and register
+const userRouter = require('./private/user.js');
+app.use(userRouter.router);
 
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);

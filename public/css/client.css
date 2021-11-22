@@ -9,7 +9,6 @@ body {
 }
 
 #menuScreen, #playMenu  {
-    background-image: url("../assets/images/backgrounds/background.jpg");
     background-position: center;
     height: 80vh;
 }
