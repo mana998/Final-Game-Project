@@ -11,7 +11,7 @@ class Gem extends Collectible { // Marianna
   }
 
   onCollect() {
-    console.log('Better luck next time');
+    console.log('Better luck next time', this);
   }
 }
 

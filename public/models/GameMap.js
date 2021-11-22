@@ -3,6 +3,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   // eslint-disable-next-line global-require
   Img = require('./Img').Img;
   Coin = require('./Coin').Coin;
+  Gem = require('./Gem').Gem;
 }
 
 const wall = new Img('./assets/images/game/wall.png', 0, 0, 0, 0, 0, 1);
@@ -14,7 +15,7 @@ const gem = new Img('./assets/images/game/gem.png', 0, 0, 0, 3, 5, 1);
 let Utils;
 
 class GameMap {
-  constructor(tiles, timeLimit, coins, Utilities) {
+  constructor(tiles, timeLimit, coins, gems, Utilities) {
     // utils object - use new one if passed else keep the old one
     Utils = Utilities || Utils;
     // 0 path
@@ -22,6 +23,7 @@ class GameMap {
     // 2 goal
     // 3 player
     // 4 coin
+    // 5 gem
     this.tileWidth = 32;
     this.tileHeight = 32;
     this.tiles = tiles || [];
@@ -29,6 +31,7 @@ class GameMap {
     this.goalColumn = null;
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
+    this.gems = gems || [];
   }
 
   // Marianna
@@ -59,6 +62,23 @@ class GameMap {
             );
             // take one coin to draw as they are the same
             coin.draw(
+              ctx,
+              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
+              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
+              this.tileWidth,
+              this.tileHeight,
+            );
+            break;
+          case String(this.tiles[row][column]).match(/^5/)?.input:
+            path.draw(
+              ctx,
+              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
+              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
+              this.tileWidth,
+              this.tileHeight,
+            );
+            // take one gem to draw as they are the same
+            gem.draw(
               ctx,
               (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
               ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
@@ -111,6 +131,9 @@ class GameMap {
     // generate coins
     // 5 coins per 10x10
     this.generateCoins(this.tiles.length * this.tiles[0].length / 20);
+    // generate gems
+    // 1 gemper 10x10
+    this.generateGems(this.tiles.length * this.tiles[0].length / 100);
   }
 
   // Marianna
@@ -140,6 +163,22 @@ class GameMap {
       } while (this.tiles[row][column] !== 0);
       this.tiles[row][column] = `4.${i}`;
       this.coins.push(new Coin(0, 0, 32, 32, coinValues[Utils.getRandomNumber(0, coinValues.length)]));
+    }
+  }
+
+  generateGems(amount) {
+    // for now hardcoded - after that each type will have its own values
+    const gemValue = 0;
+    // for every gem
+    for (let i = 0; i < amount; i++) {
+      let [row, column] = [-1, -1];
+      do {
+        row = Utils.getRandomNumber(0, this.tiles.length);
+        column = Utils.getRandomNumber(0, this.tiles[row].length);
+        // has to be empty block
+      } while (this.tiles[row][column] !== 0);
+      this.tiles[row][column] = `5.${i}`;
+      this.gems.push(new Gem(0, 0, 32, 32, gemValue, Utils.getRandomNumber(0, 2)));
     }
   }
 }

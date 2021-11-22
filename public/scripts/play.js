@@ -57,7 +57,7 @@ function draw(data) {
     }
   }
   // draw map
-  map = new GameMap(data.map.tiles, data.map.timeLimit, data.map.coins);
+  map = new GameMap(data.map.tiles, data.map.timeLimit, data.map.coins, data.map.gems);
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
   // draw all players
   data.players.map((gamePlayer) => {
