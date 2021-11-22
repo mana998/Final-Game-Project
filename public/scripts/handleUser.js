@@ -112,3 +112,18 @@ async function setSession(playerId, username) {
   const result = await response.json();
   return result;
 }
+
+window.addEventListener("load", () => {
+    checkSession();
+});
+
+async function checkSession() {
+    fetchString = '/getsession';
+    response = await fetch(fetchString);
+    result = await response.json();
+    if (result.playerId && result.username) {
+        setLogoutHtml(response);
+    } else {
+        setLoginHtml();
+    }
+}
