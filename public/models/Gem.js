@@ -1,12 +1,13 @@
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
   // used on the server
   // eslint-disable-next-line global-require
-  GameObject = require('./GameObject').GameObject;
+  Collectible = require('./Collectible').Collectible;
 }
 
-class Gem extends GameObject { // Marianna
-  constructor(x, y, width, height, value) {
-    super(x, y, width, height);
+class Gem extends Collectible { // Marianna
+  constructor(x, y, width, height, value, affectsMe) {
+    super(x, y, width, height, value);
+    this.affectsMe = affectsMe;
   }
 
   onCollect() {
