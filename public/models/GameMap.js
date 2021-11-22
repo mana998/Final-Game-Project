@@ -82,8 +82,10 @@ class GameMap {
     //Marianna
     //load map from the file
     //set goal tile and time limit
-    loadMap (data) {
-        this.tiles = data.tiles;
+    loadMap (mapFile) {
+        const fs = require('fs');
+        let data = fs.readFileSync(mapFile);
+        this.tiles = JSON.parse(data).tiles;
         //get random position for goal
         let [row, column] = [-1, -1];
         do {

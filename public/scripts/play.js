@@ -94,18 +94,9 @@ function movePlayer(e) {
         case "ArrowLeft":
             changeAnimation("left");
             //check for wall collision
-            //console.log('left');
-            //console.log('check', !player.isBlockCollision(map, "left", -player.speed, 0));
-            let notMove = player.isBlockCollision(map, "left", -player.speed, 0);
-            console.log('notmove', notMove);
-            if (!notMove) {
-                console.log('move');
+            if (!player.isBlockCollision(map, "left", -player.speed, 0)) {
                 player.x -= player.speed;
                 player.isBlockCollision(map, "left")
-                //check for goal collision
-                /*if (player.isBlockCollision(map, "left", 2)) {
-                    playerIsDone();
-                }*/
             }
             break;
         case "D":
@@ -115,9 +106,6 @@ function movePlayer(e) {
             if (!player.isBlockCollision(map, "right", player.speed, 0)) {
                 player.x += player.speed;
                 player.isBlockCollision(map, "right")
-                /*if (player.isBlockCollision(map, "right", 2)) {
-                    playerIsDone()
-                }*/
             }
             break;
         case "W":
@@ -127,9 +115,6 @@ function movePlayer(e) {
             if (!player.isBlockCollision(map, "up", 0, -player.speed)) {
                 player.y -= player.speed;
                 player.isBlockCollision(map, "up")
-                /*if (player.isBlockCollision(map, "up", 2)) {
-                    playerIsDone()
-                }*/
             }
             break;
         case "S":
@@ -139,9 +124,6 @@ function movePlayer(e) {
             if (!player.isBlockCollision(map, "down", 0, player.speed)) {
                 player.y += player.speed;
                 player.isBlockCollision(map, "down")
-                /*if (player.isBlockCollision(map, "down", 2)) {
-                    playerIsDone()
-                }*/
             }
             break;
         default:
@@ -190,24 +172,6 @@ function changeAnimation(direction) {
 function updateServer() {
   socket.emit('clientUpdated', { player, map });
 }
-
-//Marianna
-//set score when player finished the game
-//show score of all players and move to spectator mode
-/*function playerIsDone() {
-  player.isDone = true;
-  // maximum time - elapsed time
-  let timeScore = map.timeLimit - (new Date().getTime() - startTime);
-  // if final number is negative, set it to 0;
-  timeScore = timeScore > 0 ? timeScore : 0;
-  player.score += timeScore;
-  endScreen.setAttribute('style', 'display:block');
-  socket.emit('playerFinished', player);
-  player.draw = () => {};
-  // playing false so movement keys get disabled
-  playing = false;
-  window.addEventListener('keyup', changeSpectator);
-}*/
 
 //Marianna
 //update game 
