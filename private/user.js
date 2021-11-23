@@ -14,7 +14,7 @@ const saltRounds = 15;
 
 //Dagmara
 //check if username and password exists in db and return player id if not return message 
-router.post('/api/users/login', (req, res) => {
+router.post('/api/user/login', (req, res) => {
   db.query('SELECT * FROM player WHERE username=?;', [req.body.username], (error, result, fields) => {
     if (result && result.length === 1) {
       bcrypt.compare(req.body.password, result[0].password, (error, match) => {
@@ -39,7 +39,7 @@ router.post('/api/users/login', (req, res) => {
 
 //Dagmara
 //check if username and password are valid, check if username already exsts, add new player to db
-router.post('/api/users/register', (req, res) => {
+router.post('/api/user/register', (req, res) => {
   const usernameValid = Utils.checkStringCharacters(req.body.username);
   const passwordValid = Utils.checkStringCharacters(req.body.password);
   if (usernameValid && passwordValid) {
@@ -49,9 +49,9 @@ router.post('/api/users/register', (req, res) => {
           message: 'User with the same username already exists. Try again.',
         });
       } else if (result.length === 0) {
-        bcrypt.hash(req.body.password, saltRounds, (error, hash) => {
+        bcrypt.hash(req.body.password, saltRounds, (error, hashedPassword) => {
           if (!error) {
-            db.query('INSERT INTO player (username, password) VALUES (?, ?);', [req.body.username, hash], (error, result, fields) => {
+            db.query('INSERT INTO player (username, password) VALUES (?, ?);', [req.body.username, hashedPassword], (error, result, fields) => {
               if (result.affectedRows === 1) {
                 res.send({
                   message: 'User added.',

@@ -11,7 +11,7 @@ router.get('/getsession', (req, res) => {
 
 //Dagmara
 //sets session id with player id
-router.post('/setsession/player', (req, res) => {
+router.post('/setsession', (req, res) => {
   if (req.body.playerId && req.body.username) {
     req.session.playerId = req.body.playerId;
     req.session.username = req.body.username;

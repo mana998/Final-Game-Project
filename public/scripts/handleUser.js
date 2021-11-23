@@ -1,10 +1,18 @@
+//MOST OF THE CODE TAKEN FROM FOOD-APP PROJECT WRITTEN BY MARIANNA: SET LOGIN, SET LOGOUT HTML, REGISTERSTART, LOGINSTART, etc.
+
+//Dagmara
+function resetLoginFields () {
+    username.value = '';
+    password.vaule = '';
+}
+
 //Dagmara
 //function to login into the game and set session with player id, sent request to server to check uf username and password exists
 async function login() {
   const username = document.getElementById('username');
   const password = document.getElementById('password');
-  const fetchString = '/api/users/login';
-  const response = await fetch(fetchString, {
+  resetLoginFields(username, password);
+  const response = await fetch('/api/user/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -12,12 +20,10 @@ async function login() {
     },
     body: JSON.stringify({ username: username.value, password: password.value }),
   });
-  username.value = '';
-  password.vaule = '';
-  let result = await response.json();
+  const result = await response.json();
   if (result.playerId) {
-    result = await setSession(result.playerId, result.username);
-    if (result.playerId && result.username) {
+    const sessionResult = await setSession(result.playerId, result.username);
+    if (sessionResult.playerId && sessionResult.username) {
       $('#loginModal').modal('hide');
       setLogoutHtml();
     }
@@ -50,15 +56,13 @@ function loginStart() {
 async function register() {
   const username = document.getElementById('username');
   const password = document.getElementById('password');
+  resetLoginFields(username, password);
   const repeatPassword = document.getElementById('repeatPassword');
   if (password.value !== repeatPassword.value) {
-    $('#message').text('Passwords do not match. Try again');
-    password.value = '';
-    repeatPassword.value = '';
+    $('#message').text('Passwords have to match. Try again');
     return;
   }
-  const fetchString = '/api/users/register';
-  const response = await fetch(fetchString, {
+  const response = await fetch('/api/user/register', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -73,8 +77,7 @@ async function register() {
 //Dagmara
 //destroy session and call method to display login 
 async function logout() {
-  const fetchString = '/destroysession';
-  const response = await fetch(fetchString, {
+  const response = await fetch('/destroysession', {
     method: 'DELETE',
   });
   const result = await response.json();
@@ -83,9 +86,6 @@ async function logout() {
   } else {
     alert(result.message);
   }
-
-  // redirect
-  window.location.replace('/');
 }
 
 //Dagmara
@@ -100,8 +100,7 @@ function setLogoutHtml() {
 
 //Dagmara
 async function setSession(playerId, username) {
-  const fetchString = '/setsession/player';
-  const response = await fetch(fetchString, {
+  const response = await fetch('/setsession', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -118,8 +117,7 @@ window.addEventListener("load", () => {
 });
 
 async function checkSession() {
-    fetchString = '/getsession';
-    response = await fetch(fetchString);
+    response = await fetch('/getsession');
     result = await response.json();
     if (result.playerId && result.username) {
         setLogoutHtml(response);

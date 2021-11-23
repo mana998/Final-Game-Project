@@ -93,8 +93,7 @@ function handleCreateUsername() {
 // Adds player to the game object
 async function createPlayer(socketId) {
   username = '';
-  fetchString = '/getsession';
-  response = await fetch(fetchString);
+  response = await fetch('/getsession');
   result = await response.json();
   if (result.username) {
     usernameInput.value = result.username;
