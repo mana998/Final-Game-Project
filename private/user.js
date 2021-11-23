@@ -25,13 +25,13 @@ router.post('/api/user/login', (req, res) => {
           });
         } else {
           res.send({
-            message: 'Incorrect username or password. Try again.',
+            message: 'You have entered an invalid username or password.',
           });
         }
       });
     } else {
       res.send({
-        message: 'Incorrect username or password. Try again.',
+        message: 'You have entered an invalid username or password',
       });
     }
   });
@@ -46,7 +46,7 @@ router.post('/api/user/register', (req, res) => {
     db.query('SELECT * FROM player WHERE username=?;', [req.body.username], (error, result, fields) => {
       if (result && result.length === 1) {
         res.send({
-          message: 'User with the same username already exists. Try again.',
+          message: 'Username already exists. Try again.',
         });
       } else if (result.length === 0) {
         bcrypt.hash(req.body.password, saltRounds, (error, hashedPassword) => {
@@ -54,7 +54,7 @@ router.post('/api/user/register', (req, res) => {
             db.query('INSERT INTO player (username, password) VALUES (?, ?);', [req.body.username, hashedPassword], (error, result, fields) => {
               if (result.affectedRows === 1) {
                 res.send({
-                  message: 'User added.',
+                  message: 'User added successfully.',
                 });
               } else {
                 res.send({
