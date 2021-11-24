@@ -4,6 +4,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   Img = require('./Img').Img;
   Coin = require('./Coin').Coin;
   Gem = require('./Gem').Gem;
+  ReverseMovementGem = require('./ReverseMovementGem').ReverseMovementGem;
 }
 
 const wall = new Img('./assets/images/game/wall.png', 0, 0, 0, 0, 0, 1);
@@ -32,6 +33,9 @@ class GameMap {
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
     this.gems = gems || [];
+    this.gemTypes = {
+      0 : new ReverseMovementGem()
+    };
   }
 
   // Marianna
@@ -167,8 +171,6 @@ class GameMap {
   }
 
   generateGems(amount) {
-    // for now hardcoded - after that each type will have its own values
-    const gemValue = 1000;
     // for every gem
     for (let i = 0; i < amount; i++) {
       let [row, column] = [-1, -1];
@@ -177,7 +179,11 @@ class GameMap {
         column = Utils.getRandomNumber(0, this.tiles[row].length);
         // has to be empty block
       } while (this.tiles[row][column] !== 0);
-      this.tiles[row][column] = `5.${i}`;
+      //add random type based on keys in gemTypes
+      //get gem type key
+      const gemTypeKey = Utils.getRandomNumber(0, Object.keys(this.gemTypes).length);
+      this.tiles[row][column] = `5.${i}.${gemTypeKey}`;
+      const gemValue = this.gemTypes[gemTypeKey].values[Utils.getRandomNumber(0, this.gemTypes[gemTypeKey].values.length)];
       this.gems.push(new Gem(0, 0, 32, 32, gemValue, Utils.getRandomNumber(0, 2)));
     }
   }

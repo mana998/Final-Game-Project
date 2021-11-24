@@ -10,6 +10,12 @@ class Player extends GameObject { // Marianna
     this.readyToPlay = false;
     this.socketId = socketId;
     this.isDone = false;
+    this.movement = {
+      left: /^([aA]|ArrowLeft)$/,
+      right: /^([dD]|ArrowRight)$/,
+      up: /^([wW]|ArrowUp)$/,
+      down: /^([sS]|ArrowDown)$/
+    }
   }
 
   // Block types
@@ -138,12 +144,14 @@ class Player extends GameObject { // Marianna
   handleGemCollision(block, row, column, map) {
     map.tiles[row][column] = 0;
     const blockValue = block.split('.');
-    let gem = map.gems[parseInt(blockValue[1])];
+    let placeholderGem = map.gems[parseInt(blockValue[1])];
     // based on additional value that will signal gem type
     // can be passed in the map as 5.index.type - where types will be mapped
     // for now just general gem
-    gem = new Gem(0, 0, 0, 0, gem.value, gem.affectsMe);
+    const gem = map.gemTypes[blockValue[2]];
+    gem.value = placeholderGem.value;
+    gem.affectsMe = placeholderGem.affectsMe;
     // call the action
-    gem.onCollect();
+    gem.onCollect(this);
   }
 }
