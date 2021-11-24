@@ -224,7 +224,7 @@ class GameMap {
         // has to be empty block
       } while (this.tiles[row][column] !== 0);
       this.tiles[row][column] = `6.${i}`;
-      this.traps.push(new Trap(0, 0, 32, 32, trapValues[Utils.getRandomNumber(0, trapValues.length)]));
+      this.traps.push(new Trap(0, 0, 32, 32, '',trapValues[Utils.getRandomNumber(0, trapValues.length)]));
     }
   }
 }

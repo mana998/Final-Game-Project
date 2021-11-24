@@ -113,6 +113,9 @@ class Player extends GameObject { // Marianna
       case (block.match(/^5/)?.input):
         this.handleGemCollision(block, row, column, map);
         break;
+      case (block.match(/^6/)?.input):
+        this.handleTrapCollision(block, map);
+        break;
       default:
     }
   }
@@ -153,5 +156,14 @@ class Player extends GameObject { // Marianna
     gem.affectsMe = placeholderGem.affectsMe;
     // call the action
     gem.onCollect(this);
+  }
+
+  handleTrapCollision(block, map) {
+    const blockValue = block.split('.');
+    console.log(this.health);
+    console.log( map.traps[parseInt(blockValue[1])].value);
+    this.health -= map.traps[parseInt(blockValue[1])].value;
+    console.log(this.health);
+    new Trap().onCollision();
   }
 }
