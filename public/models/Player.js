@@ -10,6 +10,12 @@ class Player extends GameObject { // Marianna
     this.readyToPlay = false;
     this.socketId = socketId;
     this.isDone = false;
+    this.movement = {
+      left: /^([aA]|ArrowLeft)$/,
+      right: /^([dD]|ArrowRight)$/,
+      up: /^([wW]|ArrowUp)$/,
+      down: /^([sS]|ArrowDown)$/
+    }
   }
 
   // Block types

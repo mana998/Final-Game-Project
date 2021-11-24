@@ -97,9 +97,7 @@ function movePlayer(e) {
   // 3rd parameter in isBlockCollision
   if (!playing || player.isDone) return;
   switch (e.key) {
-    case 'A':
-    case 'a':
-    case 'ArrowLeft':
+    case (e.key.match(player.movement.left)?.input):
       changeAnimation('left');
       // check for wall collision
       if (!player.isBlockCollision(map, 'left', -player.speed, 0)) {
@@ -107,27 +105,21 @@ function movePlayer(e) {
         player.isBlockCollision(map, 'left');
       }
       break;
-    case 'D':
-    case 'd':
-    case 'ArrowRight':
+    case (e.key.match(player.movement.right)?.input):
       changeAnimation('right');
       if (!player.isBlockCollision(map, 'right', player.speed, 0)) {
         player.x += player.speed;
         player.isBlockCollision(map, 'right');
       }
       break;
-    case 'W':
-    case 'w':
-    case 'ArrowUp':
+    case (e.key.match(player.movement.up)?.input):
       changeAnimation('up');
       if (!player.isBlockCollision(map, 'up', 0, -player.speed)) {
         player.y -= player.speed;
         player.isBlockCollision(map, 'up');
       }
       break;
-    case 'S':
-    case 's':
-    case 'ArrowDown':
+    case (e.key.match(player.movement.down)?.input):
       changeAnimation('down');
       if (!player.isBlockCollision(map, 'down', 0, player.speed)) {
         player.y += player.speed;
