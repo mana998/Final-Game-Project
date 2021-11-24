@@ -12,7 +12,7 @@ const wall = new Img('./assets/images/game/wall.png', 0, 0, 0, 0, 0, 1);
 const goal = new Img('./assets/images/game/goal.png', 0, 0, 0, 0, 0, 1);
 const path = new Img('./assets/images/game/path.png', 0, 0, 0, 0, 0, 1);
 const coin = new Img('./assets/images/game/coin.png', 0, 0, 0, 4, 5, 1);
-const gem = new Img('./assets/images/game/coin.png', 0, 0, 0, 3, 5, 1);
+const gem = new Img('./assets/images/game/gem.png', 0, 0, 0, 3, 5, 1);
 //no animation
 const trap = new Img('./assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
 
