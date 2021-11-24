@@ -1,6 +1,16 @@
-//MOST OF THE CODE TAKEN FROM FOOD-APP PROJECT WRITTEN BY MARIANNA: SET LOGIN, SET LOGOUT HTML, REGISTERSTART, LOGINSTART, etc. WILL BE REMOVED
+const loginAndRegisterButton = document.getElementById("loginAndRegisterButton");
+loginAndRegisterButton.addEventListener("click", openLoginAndRegistration);
+
+
+//Dgmara
+//show div for login and register hide menu 
+function openLoginAndRegistration() {
+  document.getElementById("loginAndRegister").style.display = "block";
+  document.getElementById("panel").style.display = "none";
+}
 
 //Dagmara
+//reset fields
 function resetLoginFields () {
     username.value = '';
     password.vaule = '';
@@ -11,7 +21,6 @@ function resetLoginFields () {
 async function login() {
   const username = document.getElementById('username');
   const password = document.getElementById('password');
-  resetLoginFields(username, password);
   const response = await fetch('/api/user/login', {
     method: 'POST',
     headers: {
@@ -20,35 +29,59 @@ async function login() {
     },
     body: JSON.stringify({ username: username.value, password: password.value }),
   });
+  resetLoginFields(username, password);
   const result = await response.json();
   if (result.playerId) {
     const sessionResult = await setSession(result.playerId, result.username);
     if (sessionResult.playerId && sessionResult.username) {
-      $('#loginModal').modal('hide');
-      setLogoutHtml();
+      showMainMenu();
+      changeButtonToLogout();
     }
   }
   $('#message').text(result.message);
+  document.getElementById("loggedInUser").innerText = `Logged: ${result.username}`;
+}
+
+//Dagmara 
+//hide login and register show main menu
+function showMainMenu(){
+  document.getElementById("panel").style.display = "block";
+  document.getElementById("loginAndRegister").style.display = "none";
+
 }
 
 //Dagmara
-//displays for user ability to register
-function registerStart() {
-  $('#repeatPasswordLabel').show();
-  $('#repeatPassword').show();
-  $('#register').attr('onclick', 'register()').removeClass('btn-secondary').addClass('btn-primary');
-  $('#loginButton').attr('onclick', 'loginStart()').addClass('btn-secondary').removeClass('btn-primary');
-  $('.modal-title').text('Register');
+//begin login procedure
+function activateLogin() {
+  changeButtonToLogin();
 }
 
 //Dagmara
-//displays for user ability to login 
-function loginStart() {
-  $('#repeatPasswordLabel').hide();
-  $('#repeatPassword').hide();
-  $('#register').attr('onclick', 'registerStart()').addClass('btn-secondary').removeClass('btn-primary');
-  $('#loginButton').attr('onclick', 'login()').removeClass('btn-secondary').addClass('btn-primary');
-  $('.modal-title').text('Login');
+//begin register procedure
+function activateRegistartion() {
+  document.getElementById("loginAndRegisterHeadder").innerText = "Register";
+  document.getElementById("registerButton").setAttribute("onclick", "register()");
+  document.getElementById("repeatPassword").style.display = "inline-block";
+  document.getElementById("loginButton").setAttribute("onclick", "activateLogin()");
+}
+
+//Dagmara
+//begin logout procedure
+function changeButtonToLogout() {
+  document.getElementById("loginAndRegister").style.display = "none";
+  document.getElementById("loginAndRegisterHeadder").innerText = "Logout";
+  document.getElementById("loginButton").innerText = "Logout";
+  document.getElementById("loginButton").setAttribute("onclick", "logout()");
+}
+
+//Dagmara
+//begin login procedure
+function changeButtonToLogin() {
+  document.getElementById("repeatPassword").style.display = "none";
+  document.getElementById("loginAndRegisterHeadder").innerText = "Login";
+  document.getElementById("loginButton").innerText = "Login";
+  document.getElementById("loginButton").setAttribute("onclick", "login()");
+  document.getElementById("registerButton").setAttribute("onclick", "activateRegistartion()");
 }
 
 //Dagmara
@@ -56,7 +89,6 @@ function loginStart() {
 async function register() {
   const username = document.getElementById('username');
   const password = document.getElementById('password');
-  resetLoginFields(username, password);
   const repeatPassword = document.getElementById('repeatPassword');
   if (password.value !== repeatPassword.value) {
     $('#message').text('Passwords have to match. Try again');
@@ -70,6 +102,7 @@ async function register() {
     },
     body: JSON.stringify({ username: username.value, password: password.value }),
   });
+  resetLoginFields(username, password);
   const result = await response.json();
   $('#message').text(result.message);
 }
@@ -82,23 +115,15 @@ async function logout() {
   });
   const result = await response.json();
   if (result.message === 'Session destroyed') {
-    setLoginHtml();
+    changeButtonToLogin();
+    document.getElementById("loggedInUser").innerText = '';
   } else {
     alert(result.message);
   }
 }
 
 //Dagmara
-function setLoginHtml() {
-  $('#login-style').text('Login').attr({ 'data-target': '#loginModal', 'data-toggle': 'modal' }).removeAttr('onClick');
-}
-
-//Dagmara
-function setLogoutHtml() {
-  $('#login-style').text('Logout').removeAttr('data-target data-toggle').attr('onClick', 'logout();');
-}
-
-//Dagmara
+//set playerId from db and username to session
 async function setSession(playerId, username) {
   const response = await fetch('/setsession', {
     method: 'POST',
@@ -112,16 +137,20 @@ async function setSession(playerId, username) {
   return result;
 }
 
+//Marianna
+//check if session is set
 window.addEventListener("load", () => {
     checkSession();
 });
 
+//Marianna
+//if session set enable logout, if not login
 async function checkSession() {
     response = await fetch('/getsession');
     result = await response.json();
     if (result.playerId && result.username) {
-        setLogoutHtml(response);
+      changeButtonToLogout();
     } else {
-        setLoginHtml();
+      changeButtonToLogin();
     }
 }
