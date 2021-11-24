@@ -178,3 +178,9 @@ function updateServer() {
 socket.on('newFrame', (data) => {
   draw(data);
 });
+
+//Marianna
+//reverse movement
+socket.on('reversePlayerMovement', () => {
+  new ReverseMovementGem().swapMovement(player);
+})

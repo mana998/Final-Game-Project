@@ -190,6 +190,10 @@ io.on('connection', (socket) => {
     clearInterval(games[playersRoomTable[socket.id]].interval);
   }
 
+  function handleReverseMovement() {
+    socket.broadcast.to(playersRoomTable[socket.id]).emit('reversePlayerMovement');
+  }
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -200,6 +204,7 @@ io.on('connection', (socket) => {
   socket.on('changeSpectator', changeSpectatingPlayer);
   socket.on('disconnect', handlePlayerDisconnect);
   socket.on('stopInterval', handleStopInterval);
+  socket.on('reverseMovement', handleReverseMovement);
 });
 
 const PORT = process.env.PORT || 8080;

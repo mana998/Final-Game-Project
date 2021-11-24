@@ -23,7 +23,7 @@ class ReverseMovementGem extends Gem { // Marianna
     if (this.affectsMe) {
       this.swapMovement(player);
     } else {
-      console.log('someone else');
+      socket.emit('reverseMovement');
     }
   }
 
