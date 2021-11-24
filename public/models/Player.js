@@ -34,52 +34,52 @@ class Player extends GameObject { // Marianna
     // console.log('row', row, 'column', column, 'x', x, 'y', y);
     switch (direction) {
       case 'up':
-        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision);
+        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
         // console.log('check row', row - 1, 'column', column);
         if (x % map.tileWidth) {
-          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision) || collision;
+          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map) || collision;
           // console.log('check row', row - 1, 'column', column + 1);
         }
         break;
       case 'down':
         if (y % map.tileHeight) {
-          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision);
+          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map);
           // console.log('check row', row , 'column', column);
           if (x % map.tileWidth) {
-            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision) || collision;
+            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map) || collision;
             // console.log('check row', row, 'column', column + 1);
           }
         } else {
-          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision);
+          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
           // console.log('check row', row - 1, 'column', column);
           if (x % map.tileWidth) {
-            collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision) || collision;
+            collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map) || collision;
             // console.log('check row', row - 1, 'column', column + 1);
           }
         }
         break;
       case 'right':
         if (x % map.tileWidth) {
-          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision);
+          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map);
           // console.log('check row', row - 1, 'column', column + 1);
           if (y % map.tileHeight) {
-            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision) || collision;
+            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map) || collision;
             // console.log('check row', row, 'column', column + 1);
           }
         } else {
-          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision);
+          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
           // console.log('check row', row - 1, 'column', column);
           if (y % map.tileHeight) {
-            collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision) || collision;
+            collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map) || collision;
             // console.log('check row', row, 'column', column + 1);
           }
         }
         break;
       case 'left':
-        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision);
+        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
         // console.log('check row', row - 1, 'column', column);
         if (y % map.tileHeight) {
-          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision) || collision;
+          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map) || collision;
           // console.log('check row', row, 'column', column);
         }
         break;
@@ -88,7 +88,7 @@ class Player extends GameObject { // Marianna
     return collision;
   }
 
-  handleCollision(block, row, column, onlyWallCollision) {
+  handleCollision(block, row, column, onlyWallCollision, map) {
     // check only wall collisions
     if (block !== 1 && onlyWallCollision) block = '';
     block = String(block);
@@ -102,7 +102,10 @@ class Player extends GameObject { // Marianna
         break;
       case (block.match(/^4/)?.input):
         // console.log("coin", row, column);
-        this.handleCoinCollision(block, row, column);
+        this.handleCoinCollision(block, row, column, map);
+        break;
+      case (block.match(/^5/)?.input):
+        this.handleGemCollision(block, row, column, map);
         break;
       default:
     }
@@ -126,9 +129,21 @@ class Player extends GameObject { // Marianna
     window.addEventListener('keyup', changeSpectator);
   }
 
-  handleCoinCollision(block, row, column) {
+  handleCoinCollision(block, row, column, map) {
     map.tiles[row][column] = 0;
     const blockValue = block.split('.');
-    this.score += parseInt(blockValue[1]);
+    this.score += map.coins[parseInt(blockValue[1])].value;
+  }
+
+  handleGemCollision(block, row, column, map) {
+    map.tiles[row][column] = 0;
+    const blockValue = block.split('.');
+    let gem = map.gems[parseInt(blockValue[1])];
+    // based on additional value that will signal gem type
+    // can be passed in the map as 5.index.type - where types will be mapped
+    // for now just general gem
+    gem = new Gem(0, 0, 0, 0, gem.value, gem.affectsMe);
+    // call the action
+    gem.onCollect();
   }
 }

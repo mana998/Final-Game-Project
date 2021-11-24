@@ -168,7 +168,7 @@ class GameMap {
 
   generateGems(amount) {
     // for now hardcoded - after that each type will have its own values
-    const gemValue = 0;
+    const gemValue = 1000;
     // for every gem
     for (let i = 0; i < amount; i++) {
       let [row, column] = [-1, -1];
