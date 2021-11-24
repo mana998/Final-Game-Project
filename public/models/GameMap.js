@@ -4,6 +4,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   Img = require('./Img').Img;
   Coin = require('./Coin').Coin;
   Gem = require('./Gem').Gem;
+  Trap = require('./Trap').Trap;
   ReverseMovementGem = require('./ReverseMovementGem').ReverseMovementGem;
 }
 
@@ -11,12 +12,14 @@ const wall = new Img('./assets/images/game/wall.png', 0, 0, 0, 0, 0, 1);
 const goal = new Img('./assets/images/game/goal.png', 0, 0, 0, 0, 0, 1);
 const path = new Img('./assets/images/game/path.png', 0, 0, 0, 0, 0, 1);
 const coin = new Img('./assets/images/game/coin.png', 0, 0, 0, 4, 5, 1);
-const gem = new Img('./assets/images/game/gem.png', 0, 0, 0, 3, 5, 1);
+const gem = new Img('./assets/images/game/coin.png', 0, 0, 0, 3, 5, 1);
+//no animation
+const trap = new Img('./assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
 
 let Utils;
 
 class GameMap {
-  constructor(tiles, timeLimit, coins, gems, Utilities) {
+  constructor(tiles, timeLimit, coins, gems, traps, Utilities) {
     // utils object - use new one if passed else keep the old one
     Utils = Utilities || Utils;
     // 0 path
@@ -25,6 +28,7 @@ class GameMap {
     // 3 player
     // 4 coin
     // 5 gem
+    // 6 trap
     this.tileWidth = 32;
     this.tileHeight = 32;
     this.tiles = tiles || [];
@@ -36,6 +40,7 @@ class GameMap {
     this.gemTypes = {
       0 : new ReverseMovementGem()
     };
+    this.traps = traps || [];
   }
 
   // Marianna
@@ -83,6 +88,23 @@ class GameMap {
             );
             // take one gem to draw as they are the same
             gem.draw(
+              ctx,
+              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
+              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
+              this.tileWidth,
+              this.tileHeight,
+            );
+            break;
+          case String(this.tiles[row][column]).match(/^6/)?.input:
+            path.draw(
+              ctx,
+              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
+              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
+              this.tileWidth,
+              this.tileHeight,
+            );
+            // take one trap to draw as they are the same, the traps image will be different but for now only one img
+            trap.draw(
               ctx,
               (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
               ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
@@ -138,6 +160,9 @@ class GameMap {
     // generate gems
     // 1 gemper 10x10
     this.generateGems(this.tiles.length * this.tiles[0].length / 100);
+    //generate traps
+    //1 trap 10x10
+    this.generateTraps(this.tiles.length * this.tiles[0].length / 100);
   }
 
   // Marianna
@@ -185,6 +210,21 @@ class GameMap {
       this.tiles[row][column] = `5.${i}.${gemTypeKey}`;
       const gemValue = this.gemTypes[gemTypeKey].values[Utils.getRandomNumber(0, this.gemTypes[gemTypeKey].values.length)];
       this.gems.push(new Gem(0, 0, 32, 32, gemValue, Utils.getRandomNumber(0, 2)));
+    }
+  }
+
+  generateTraps(amount) {
+    // for every trp, for now trap size is one block but we can change it
+    const trapValues = [1, 0.5, 2, 5, 9];
+    for (let i = 0; i < amount; i++) {
+      let [row, column] = [-1, -1];
+      do {
+        row = Utils.getRandomNumber(0, this.tiles.length);
+        column = Utils.getRandomNumber(0, this.tiles[row].length);
+        // has to be empty block
+      } while (this.tiles[row][column] !== 0);
+      this.tiles[row][column] = `6.${i}`;
+      this.traps.push(new Trap(0, 0, 32, 32, trapValues[Utils.getRandomNumber(0, trapValues.length)]));
     }
   }
 }
