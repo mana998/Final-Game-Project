@@ -184,7 +184,6 @@ class GameMap {
       const gemTypeKey = Utils.getRandomNumber(0, Object.keys(this.gemTypes).length);
       this.tiles[row][column] = `5.${i}.${gemTypeKey}`;
       const gemValue = this.gemTypes[gemTypeKey].values[Utils.getRandomNumber(0, this.gemTypes[gemTypeKey].values.length)];
-      console.log("gemTypekey", gemTypeKey, "gemvalue", gemValue);
       this.gems.push(new Gem(0, 0, 32, 32, gemValue, Utils.getRandomNumber(0, 2)));
     }
   }

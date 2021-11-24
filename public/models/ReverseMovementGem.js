@@ -11,9 +11,31 @@ class ReverseMovementGem extends Gem { // Marianna
   }
 
   onCollect(player) {
+    this.reverseMovement(player)
+    //reverse back after period of time
+    setTimeout ( () => {
+      this.reverseMovement(player);
+    }, this.value);
   }
 
+  //decide whether to reverse for current player or other players
+  reverseMovement(player) {
+    if (this.affectsMe) {
+      this.swapMovement(player);
+    } else {
+      console.log('someone else');
+    }
+  }
 
+  //swap movement for passed player
+  swapMovement(player) {
+    let temp = player.movement.left;
+    player.movement.left = player.movement.right;
+    player.movement.right = temp;
+    temp = player.movement.up;
+    player.movement.up = player.movement.down;
+    player.movement.down = temp;
+  }
 }
 
 
