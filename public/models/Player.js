@@ -1,3 +1,9 @@
+//how much time until the player can be affected by the trap again 
+//PROBLEM WITH THE TRAP: reset trap effect to 0 when palayer stop touching the trap
+//FOR WHOEVER WILL GOOD THE SPEED JEM, IT MIGHT BR GOOD TO CHANGE MAXTRAPTIME BASED ON SPEED
+const maxTrapTime = 10;
+let trapEffect = 0;
+
 class Player extends GameObject { // Marianna
   constructor(x, y, width, height, img, username, socketId) {
     super(x, y, width, height, img);
@@ -113,6 +119,9 @@ class Player extends GameObject { // Marianna
       case (block.match(/^5/)?.input):
         this.handleGemCollision(block, row, column, map);
         break;
+      case (block.match(/^6/)?.input):
+        this.handleTrapCollision(block, map);
+        break;
       default:
     }
   }
@@ -153,5 +162,18 @@ class Player extends GameObject { // Marianna
     gem.affectsMe = placeholderGem.affectsMe;
     // call the action
     gem.onCollect(this);
+  }
+
+  handleTrapCollision(block, map) {
+    if (trapEffect === 0 ) {
+      const blockValue = block.split('.');
+      this.health -= map.traps[parseInt(blockValue[1])].value;
+      new Trap().onCollision();
+    }
+    trapEffect += 1;
+    if (trapEffect === maxTrapTime) {
+      trapEffect = 0;
+    }
+    
   }
 }
