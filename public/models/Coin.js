@@ -1,7 +1,7 @@
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
-    // used on the server
-    // eslint-disable-next-line global-require
-    GameObject = require('./GameObject').GameObject;
+  // used on the server
+  // eslint-disable-next-line global-require
+  GameObject = require('./GameObject').GameObject;
 }
 
 class Coin extends GameObject { // Marianna
