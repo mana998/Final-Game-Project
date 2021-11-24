@@ -49,9 +49,9 @@ io.on('connection', (socket) => {
     // eslint-disable-next-line global-require
     const { GameMap } = require('./public/models/GameMap');
     const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
-    const map = new GameMap('', '', '', Utils);
+    const map = new GameMap('', '', '', '', Utils);
     // eslint-disable-next-line global-require
-    map.loadMap(require(mapFile)); // eslint-disable-line import/no-dynamic-require
+    map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require
     games[roomName].map = map;
     socket.join(roomName);
     socket.emit('createPlayer', socket.id);
@@ -190,6 +190,10 @@ io.on('connection', (socket) => {
     clearInterval(games[playersRoomTable[socket.id]].interval);
   }
 
+  function handleReverseMovement() {
+    socket.broadcast.to(playersRoomTable[socket.id]).emit('reversePlayerMovement');
+  }
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -200,6 +204,7 @@ io.on('connection', (socket) => {
   socket.on('changeSpectator', changeSpectatingPlayer);
   socket.on('disconnect', handlePlayerDisconnect);
   socket.on('stopInterval', handleStopInterval);
+  socket.on('reverseMovement', handleReverseMovement);
 });
 
 const PORT = process.env.PORT || 8080;
