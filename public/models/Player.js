@@ -146,12 +146,14 @@ class Player extends GameObject { // Marianna
 
   handleCoinCollision(block, row, column, map) {
     map.tiles[row][column] = 0;
+    updateServerMap(map);
     const blockValue = block.split('.');
     this.score += map.coins[parseInt(blockValue[1])].value;
   }
 
   handleGemCollision(block, row, column, map) {
     map.tiles[row][column] = 0;
+    updateServerMap(map);
     const blockValue = block.split('.');
     let placeholderGem = map.gems[parseInt(blockValue[1])];
     // based on additional value that will signal gem type
@@ -176,4 +178,8 @@ class Player extends GameObject { // Marianna
     }
     
   }
+}
+
+function updateServerMap(map) {
+  socket.emit('clientMapUpdated', map);
 }

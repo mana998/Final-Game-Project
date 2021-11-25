@@ -63,7 +63,7 @@ io.on('connection', (socket) => {
     games[playersRoomTable[socket.id]].players.push(newPlayer);
   }
 
-  function handleClientUpdate(data) {
+  function handleClientPlayerUpdate(data) {
     // update the player object with new data
     const updatedPlayer = games[playersRoomTable[socket.id]].players
       .find((player) => player.socketId === socket.id);
@@ -75,9 +75,11 @@ io.on('connection', (socket) => {
     }
     games[playersRoomTable[socket.id]].players[index] = data.player;
     // update map
-    if (data.map) {
-      games[playersRoomTable[socket.id]].map = data.map;
-    }
+  }
+
+  function handleClientMapUpdate(map) {
+      games[playersRoomTable[socket.id]].map = map;
+      io.to(playersRoomTable[socket.id]).emit('mapUpdated', map);
   }
 
   function handleCreateUsername(initialData) {
@@ -94,7 +96,7 @@ io.on('connection', (socket) => {
       return;
     }
     data.player.username = data.username;
-    handleClientUpdate(data);
+    handleClientPlayerUpdate(data);
     socket.emit('usernameAdded');
     socket.emit('updatePlayer', data.player);
   }
@@ -131,6 +133,8 @@ io.on('connection', (socket) => {
     const gameState = games[gameCode];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
     if (allPlayerrsReadyToPlay === gameState.players.length) {
+      //send map to each player
+      io.to(gameCode).emit('mapUpdated', gameState.map);
       // send new player position to each player
       gameState.players.map((player) => gameState.map.setPlayerStartPosition(player));
       io.to(gameCode).emit('playersReady', gameState.players);
@@ -199,7 +203,8 @@ io.on('connection', (socket) => {
   socket.on('createUsername', handleCreateUsername);
   socket.on('playerCreated', addPlayerToGameObject);
   socket.on('playGame', startGame);
-  socket.on('clientUpdated', handleClientUpdate);
+  socket.on('clientPlayerUpdated', handleClientPlayerUpdate);
+  socket.on('clientMapUpdated', handleClientMapUpdate);
   socket.on('playerFinished', handlePlayerFinished);
   socket.on('changeSpectator', changeSpectatingPlayer);
   socket.on('disconnect', handlePlayerDisconnect);

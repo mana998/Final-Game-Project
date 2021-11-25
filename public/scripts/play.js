@@ -57,7 +57,6 @@ function draw(data) {
     }
   }
   // draw map
-  map = new GameMap(data.map.tiles, data.map.timeLimit, data.map.coins, data.map.gems, data.map.traps);
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
   // draw all players
   data.players.map((gamePlayer) => {
@@ -131,7 +130,7 @@ function movePlayer(e) {
       return;
   }
   // add update of server
-  updateServer();
+  updateServerPlayer();
 }
 
 // Marianna
@@ -148,7 +147,7 @@ function stopPlayer(e) {
     player.img.rows = 0;
     player.img.columns = 0;
     player.direction = '';
-    updateServer();
+    updateServerPlayer();
   }
 }
 
@@ -169,8 +168,12 @@ function changeAnimation(direction) {
 
 // Marianna
 // update server if something on the client changed
-function updateServer() {
-  socket.emit('clientUpdated', { player, map });
+function updateServerPlayer() {
+  socket.emit('clientPlayerUpdated', {player});
+}
+
+function handleMapUpdated(newMap) {
+  map = new GameMap(newMap.tiles, newMap.timeLimit, newMap.coins, newMap.gems, newMap.traps);
 }
 
 // Marianna
@@ -184,3 +187,5 @@ socket.on('newFrame', (data) => {
 socket.on('reversePlayerMovement', () => {
   new ReverseMovementGem().swapMovement(player);
 })
+
+socket.on('mapUpdated', handleMapUpdated)

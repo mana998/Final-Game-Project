@@ -77,7 +77,7 @@ function joinGame() {
 function playGame() {
     player.readyToPlay = true;
     usernameInput.setAttribute("disabled","true");
-    updateServer();
+    updateServerPlayer();
     socket.emit("playGame", displayGameCode.innerText);
 }
 
