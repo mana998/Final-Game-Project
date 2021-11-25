@@ -21,7 +21,7 @@ const Utilities = require('./private/models/Utils').Utils;
 const Utils = new Utilities();
 
 // framerate
-const FRAME_RATE = 60;
+const FRAME_RATE = 30;
 
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
