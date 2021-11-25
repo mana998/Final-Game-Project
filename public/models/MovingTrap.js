@@ -5,8 +5,9 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   }
 
 class MovingTrap extends Trap {
-    constructor(x, y, width, height, img, value) {
+    constructor(x, y, width, height, img, value, speed) {
         super(x, y, width, height, img, value);
+        this.speed = speed;
     }
 
     onCollision () {

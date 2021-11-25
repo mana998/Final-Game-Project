@@ -4,8 +4,9 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   Img = require('./Img').Img;
   Coin = require('./Coin').Coin;
   Gem = require('./Gem').Gem;
-  Trap = require('./Trap').Trap;
   ReverseMovementGem = require('./ReverseMovementGem').ReverseMovementGem;
+  Trap = require('./Trap').Trap;
+  MovingTrap = require('./MovingTrap').MovingTrap;
 }
 
 const wall = new Img('./assets/images/game/wall.png', 0, 0, 0, 0, 0, 1);
@@ -41,6 +42,9 @@ class GameMap {
       0 : new ReverseMovementGem()
     };
     this.traps = traps || [];
+    this.trapTypes = {
+      0 : new MovingTrap()
+    };
   }
 
   // Marianna
@@ -217,14 +221,93 @@ class GameMap {
     // for every trp, for now trap size is one block but we can change it
     const trapValues = [1, 0.5, 2, 5, 9];
     for (let i = 0; i < amount; i++) {
-      let [row, column] = [-1, -1];
-      do {
-        row = Utils.getRandomNumber(0, this.tiles.length);
-        column = Utils.getRandomNumber(0, this.tiles[row].length);
-        // has to be empty block
-      } while (this.tiles[row][column] !== 0);
-      this.tiles[row][column] = `6.${i}`;
-      this.traps.push(new Trap(0, 0, 32, 32, '',trapValues[Utils.getRandomNumber(0, trapValues.length)]));
+      const trapTypeKey = Utils.getRandomNumber(0, Object.keys(this.trapTypes).length);
+      switch (trapTypeKey) {
+        case 0:
+          //trap should spread at least through 2 tiles so player can avoid it
+          //it additionally needs  at least 2x2 area to not block paths with width 1
+          const maxTries = 100; //try to find place 100 times before giving up 
+          let tries = 0;
+          let [startRow, endRow, startColumn, endColumn] = [-1, -1, -1, -1];
+          do {
+            //start row and collumn will have additional number in tilemap to trigger draw only once
+            startRow = Utils.getRandomNumber(0, this.tiles.length);
+            startColumn = Utils.getRandomNumber(0, this.tiles[startRow].length);
+            // has to be empty block
+            tries++;
+          } while (tries < maxTries && (this.tiles[startRow][startColumn] !== 0 || //current block needs to be 0
+            startRow + 1 >= this.tiles.length || startColumn + 1 >= this.tiles[startRow].length || //whether it is in te map
+            this.tiles[startRow+1][startColumn] !== 0 || //block in next row needs to be 0
+            this.tiles[startRow+1][startColumn + 1] || this.tiles[startRow+1][startColumn + 1] !== 0 || //block in next row and next collumn
+            this.tiles[startRow][startColumn + 1] || this.tiles[startRow][startColumn + 1] !== 0) //block in next collumn
+          );
+          if (tries < maxTries) {
+            endRow = startRow + 1;
+            endColumn = startColumn + 1;
+            //decide on direction of the trap
+            const direction = Utils.getRandomNumber(0, 2);
+            switch (direction) {
+              case 0: //rows
+                while (this.tiles[startRow - 1][startColumn] === 0 && this.tiles[startRow - 1][endColumn] === 0) {
+                  startRow--;
+                }
+                //modify end row
+                while (this.tiles[endRow + 1][startColumn] === 0 && this.tiles[endRow + 1][endColumn] === 0) {
+                  endRow++;
+                }
+                break;
+              case 1: //collumns
+                while (this.tiles[startRow][startColumn - 1] === 0 && this.tiles[endRow][startColumn - 1] === 0) {
+                  startColumn--;
+                }
+                //modify end row
+                while (this.tiles[startRow][endColumn + 1] === 0 && this.tiles[endRow][endColumn + 1] === 0) {
+                  endColumn++;
+                }
+                break;
+            }
+            //modify start column
+            /*let expandColumn = true;
+            while (expandColumn) {
+              for (let row = startRow; row <= endRow; row++) {
+                if (this.tiles[row][startColumn-1] !== 0) {
+                  expandColumn = false;
+                  break;
+                }
+              }
+              startColumn--;
+            }*/
+            //console.log('startcolumn', startColumn);
+            //modify end column
+            /*expandColumn = true;
+            while (expandColumn) {
+              for (let row = startRow; row <= endRow; row++) {
+                if (this.tiles[row][endColumn+1] !== 0) {
+                  expandColumn = false;
+                  break;
+                }
+              }
+              endColumn++;
+            }*/
+            //add trap to the map
+            for (let row = startRow; row <= endRow; row++) {
+              for (let column = startColumn; column <= endColumn; column++) {
+                this.tiles[row][column] = `6.${i}.${trapTypeKey}`;
+              }
+            }
+            break;
+          } // else it falls down to dafault case
+        default:
+          let [row, column] = [-1, -1];
+          do {
+            row = Utils.getRandomNumber(0, this.tiles.length);
+            column = Utils.getRandomNumber(0, this.tiles[row].length);
+            // has to be empty block
+          } while (this.tiles[row][column] !== 0);
+          this.tiles[row][column] = `6.${i}.${trapTypeKey}`;
+          this.traps.push(new Trap(0, 0, 32, 32, '',trapValues[Utils.getRandomNumber(0, trapValues.length)]));
+          break;
+      }
     }
   }
 }
