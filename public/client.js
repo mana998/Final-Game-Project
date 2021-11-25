@@ -23,8 +23,11 @@ const container = document.getElementsByClassName('container')[0];
 // Dagmara
 // hide game menu and show the game username input and play button
 function init() {
-  menuScreen.style.display = 'none';
-  gameScreen.style.display = 'block';
+  document.getElementById("highscore").style.display = "none";
+  document.getElementById("menuOptions").style.display = "block";
+  document.getElementById("gameScreen").style.display = "block";
+  document.getElementById("panel").style.display = "none";
+  document.getElementById("loginAndRegister").style.display = "none";
 }
 
 //Dagmara
@@ -36,13 +39,6 @@ function changeUsername(message="") {
       return;
   }
   usernameMessage.innerText = "Username already exists, input new username!"
-}
-
-// Dagmara
-// Hides username input and show game menu
-function showMenuScreen() {
-  menuScreen.style.display = 'block';
-  gameScreen.style.display = 'none';
 }
 
 // Dagmara
@@ -93,8 +89,7 @@ function handleCreateUsername() {
 // Adds player to the game object
 async function createPlayer(socketId) {
   username = '';
-  response = await fetch('/getsession');
-  result = await response.json();
+  const result = await getSession();
   if (result.username) {
     usernameInput.value = result.username;
     usernameInput.setAttribute("disabled","true");

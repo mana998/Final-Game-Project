@@ -43,6 +43,10 @@ const FRAME_RATE = 60;
 const userRouter = require('./private/user.js');
 app.use(userRouter.router);
 
+// highscore list
+const highscoreListRouter = require('./private/highscoreList.js');
+app.use(highscoreListRouter.router);
+
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });

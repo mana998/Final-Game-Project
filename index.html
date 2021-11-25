@@ -29,8 +29,8 @@
     <div id="viewBlock"></div>
     <div class="container">
         <div id="menuScreen">
+            <span id="loggedInUser"></span>
             <div id="panel">
-                <span id="loggedInUser"></span>
                 <h1 id="gameTitle">GAME</h1>
                 <div>
                     <button type="button" class="btn" id="createNewGameButton">
@@ -62,38 +62,62 @@
                         </svg>
                     </button>
                 </div>
-            </div>
-            <div id="loginAndRegister">
-                <div id="loginAndRegisterBody">
-                    <h1 id="loginAndRegisterHeadder">Login</h1>
-                    <form>
-                        <input placeholder="username" type="text" id="username" name="username"><br>
-                        <input placeholder="password" type="password" id="password" name="password"><br>
-                        <input placeholder="repeatPassword" type="password" id="repeatPassword" name="repeatPassword"><br>
-                    </form> 
-                    <button type="button" id="loginButton" class="btn btn-primary" onClick="activateLogin()">Login</button>
-                    <button type="button" id="registerButton" class="btn btn-secondary" onClick="activateRegistartion()">Register</button>
-                    <p id="message"></p> 
+                <div>
+                    <button type="button" class="btn" id="highscoreButton">
+                        <span>View Highscores</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
-        </div>
-        <div id="gameScreen">
-            <div id="playMenu">
-                <h1 id="codeDisplay">Your game code is: 
-                    <span id = "displayGameCode"></span>
-                </h1>
-                <div class='' id="createUsername">
-                    <input type="text" placeholder="Enter username" class="form-control" id="usernameInput">
-                    <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span>
+            <div id="menuOptions">
+                <div id="loginAndRegister">
+                    <div id="loginAndRegisterBody">
+                        <h1 id="loginAndRegisterHeadder">Login</h1>
+                        <form>
+                            <input placeholder="username" type="text" id="username" name="username"><br>
+                            <input placeholder="password" type="password" id="password" name="password"><br>
+                            <input placeholder="repeatPassword" type="password" id="repeatPassword" name="repeatPassword"><br>
+                        </form> 
+                        <button type="button" id="loginButton" class="btn btn-primary" onClick="activateLogin()">Login</button>
+                        <button type="button" id="registerButton" class="btn btn-secondary" onClick="activateRegistartion()">Register</button>
+                        <p id="message"></p> 
+                    </div>
                 </div>
-                <button type="button" class="btn" id="playGameButton" disabled>
-                    Play Game
-                </button>               
-            </div>
-            <div id="endScreen" style="display: none">
-                <button type="button" class="btn" id="leaveGameButton" onClick="leaveGame()">Leave Game</button><br>
-                <span id="spectateAnotherPlayer">(Press enter to spectate another player)</span>
-                <h1 id="currentScoreHeader">Current scores:</h1>
+                <div id="highscore">
+                    <div id="highscoreBody">
+                        <h1 id="highscoreHeadder">High Score List</h1>
+                        <table id="highscoreList">
+                            <tr>
+                                <th>Number</th>
+                                <th>Name</th>
+                                <th>Score</th>
+                            </tr>
+                        </table>
+                        <p id="message"></p>
+                    </div>
+                </div>
+                <div id="gameScreen">
+                    <div id="playMenu">
+                        <h1 id="codeDisplay">Your game code is: 
+                            <span id = "displayGameCode"></span>
+                        </h1>
+                        <div class='' id="createUsername">
+                            <input type="text" placeholder="Enter username" class="form-control" id="usernameInput">
+                            <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span>
+                        </div>
+                        <button type="button" class="btn" id="playGameButton" disabled>
+                            Play Game
+                        </button>
+                    </div>
+                    <div id="endScreen" style="display: none">
+                        <button type="button" class="btn" id="leaveGameButton" onClick="leaveGame()">Leave Game</button><br>
+                        <span id="spectateAnotherPlayer">(Press enter to spectate another player)</span>
+                        <h1 id="currentScoreHeader">Current scores:</h1>
+                    </div>
+                </div>
+                <button type="button" class="btn" id="returnToMainMenuButton" onClick = "showMainMenu()">Main Menu</button>
             </div>
         </div>
     </div>
@@ -107,5 +131,7 @@
     <script src="./scripts/play.js"></script>
     <script src="./scripts/end.js"></script>
     <script src="./scripts/handleUser.js"></script>
+    <script src="./scripts/handleHighscore.js"></script>
+    
 </body>
 </html>

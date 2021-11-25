@@ -6,7 +6,10 @@ loginAndRegisterButton.addEventListener("click", openLoginAndRegistration);
 //show div for login and register hide menu 
 function openLoginAndRegistration() {
   document.getElementById("loginAndRegister").style.display = "block";
+  document.getElementById("menuOptions").style.display = "block";
   document.getElementById("panel").style.display = "none";
+  document.getElementById("highscore").style.display = "none";
+  document.getElementById("gameScreen").style.display = "none";
 }
 
 //Dagmara
@@ -38,7 +41,6 @@ async function login() {
       changeButtonToLogout();
     }
   }
-  $('#message').text(result.message);
   document.getElementById("loggedInUser").innerText = `Logged: ${result.username}`;
 }
 
@@ -46,7 +48,7 @@ async function login() {
 //hide login and register show main menu
 function showMainMenu(){
   document.getElementById("panel").style.display = "block";
-  document.getElementById("loginAndRegister").style.display = "none";
+  document.getElementById("menuOptions").style.display = "none";
 
 }
 
@@ -91,7 +93,7 @@ async function register() {
   const password = document.getElementById('password');
   const repeatPassword = document.getElementById('repeatPassword');
   if (password.value !== repeatPassword.value) {
-    $('#message').text('Passwords have to match. Try again');
+    document.getElementById('message').innerText = 'Passwords have to match. Try again';
     return;
   }
   const response = await fetch('/api/user/register', {
@@ -104,7 +106,7 @@ async function register() {
   });
   resetLoginFields(username, password);
   const result = await response.json();
-  $('#message').text(result.message);
+  document.getElementById('message').innerText = result.message;
 }
 
 //Dagmara
@@ -121,6 +123,10 @@ async function logout() {
     alert(result.message);
   }
 }
+
+//Dagmara
+//add listener for span element in main menu to logout user
+document.getElementById("loggedInUser").addEventListener("click",logout);
 
 //Dagmara
 //set playerId from db and username to session
@@ -143,14 +149,21 @@ window.addEventListener("load", () => {
     checkSession();
 });
 
-//Marianna
+//Marianna & Dagmara
 //if session set enable logout, if not login
 async function checkSession() {
-    response = await fetch('/getsession');
-    result = await response.json();
+    let result = await getSession();
     if (result.playerId && result.username) {
+      document.getElementById("loggedInUser").innerText = `Logged: ${result.username}`;
       changeButtonToLogout();
     } else {
       changeButtonToLogin();
+      document.getElementById("loggedInUser").innerText = '';
     }
+}
+
+//Dagmara
+async function getSession() {
+  const response = await fetch('/getsession');
+  return await response.json();
 }
