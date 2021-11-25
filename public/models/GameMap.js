@@ -50,8 +50,17 @@ class GameMap {
   // Marianna
   // draw map in relation to player
   draw(ctx, player, canvasWidth, canvasHeight) {
-    for (let row = 0; row < this.tiles.length; row++) {
-      for (let column = 0; column < this.tiles[row].length; column++) {
+    //limit rendering to 5 blocks around player
+    let rowStart = Math.floor(player.y / this.tileHeight - 5);
+    if (rowStart < 0) rowStart = 0;
+    let rowEnd = Math.floor(player.y / this.tileHeight + 5);
+    if (rowEnd > this.tiles.length) rowEnd = this.tiles.length;
+    let columnStart = Math.floor(player.x / this.tileWidth - 5);
+    if (columnStart < 0) columnStart = 0;
+    let columnEnd = Math.floor(player.x / this.tileWidth + 5);
+    if (columnEnd > this.tiles[0].length) columnEnd = this.tiles[0].length;
+    for (let row = rowStart; row < rowEnd; row++) {
+      for (let column = columnStart; column < columnEnd; column++) {
         switch (this.tiles[row][column]) {
           case 0:
             // draw path under the player
