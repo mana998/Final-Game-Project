@@ -12,7 +12,8 @@ async function openHighscores() {
     const result = await getSession();
     if (result.username && result.playerId) {
         showHighscores();
-        const userHighestScore = getUserHighestscore(result.playerId);
+        const userHighestScore = await getUserHighestscore(result.playerId);
+        displayHighscores(userHighestScore);
         return;
     }
     alert(result.message);
@@ -22,7 +23,6 @@ async function getUserHighestscore(playerId) {
     if (playerId) {
         const response = await fetch(`/api/highestscore/user/${playerId}`);
         result = await response.json();
-        console.log(result);
         if (result.highestscore) {
             return result.highestscore;
         }
@@ -31,21 +31,31 @@ async function getUserHighestscore(playerId) {
     }
     showMainMenu();
 }
-/*
-function displayHighscores() {
-    response = await fetch('/api/highscores');
-    result = await response.json();
-    if (result.highscores) {
-      result.highscores.foreach(position => 
-        document.getElementById("highscoreList").append(`
+
+async function displayHighscores(userHighestScore) {
+    if (!userHighestScore) {
+        document.getElementById('message').innerText = 'User does not have any saved score';
+    }
+    const aboveResponse = await fetch(`/api/highscoresAbove/user/${userHighestScore}`);
+    const aboveResult = await aboveResponse.json();
+
+    const belowResponse = await fetch(`/api/highscoresBelow/user/${userHighestScore}`);
+    const belowResult = await belowResponse.json();
+
+    const finalList = aboveResult.highscores.concat(belowResult.highscores);
+
+    if (finalList) {
+      $("#highscorestableBody").empty();
+      finalList.forEach(record => 
+        $("#highscorestableBody").append(`
         <tr>
-            <td>${position.player_id}</td>
-            <td>${position.username}</td>
-            <td>${position.score}</td>
+            <th>${record.place}</th>
+            <th>${record.username}</th>
+            <th>${record.score}</th>
+            <th>${record.dateTime}</th>
         </tr>
         `))
     } else {
-        document.getElementById('#message').text(result.message);
+        document.getElementById('message').innertext = result.message;
     }
 }
-*/
