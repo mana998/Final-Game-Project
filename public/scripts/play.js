@@ -172,8 +172,21 @@ function updateServerPlayer() {
   socket.emit('clientPlayerUpdated', {player});
 }
 
-function handleMapUpdated(newMap) {
-  map = new GameMap(newMap.tiles, newMap.timeLimit, newMap.coins, newMap.gems, newMap.traps);
+function handleMapCreated(data) {
+  map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
+  data.gameMap.coins.map(coin => {
+    coin = new Coin(0, 0, 32, 32, coin.value);
+  })
+  for (let i = 0; i < data.gameMap.gems.length; i++) {
+      map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
+  }
+  for (let i = 0; i < data.gameMap.traps.length; i++) {
+    map.traps[i] = getNewTrap(data.trapTypes[i], [data.gameMap.traps[i].value, data.gameMap.traps[i].speed]);
+  }
+}
+
+function handleMapUpdated(tiles) {
+  map.tiles = tiles;
 }
 
 // Marianna
@@ -189,3 +202,4 @@ socket.on('reversePlayerMovement', () => {
 })
 
 socket.on('mapUpdated', handleMapUpdated)
+socket.on('mapCreated', handleMapCreated)

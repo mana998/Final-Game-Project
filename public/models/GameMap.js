@@ -38,11 +38,11 @@ class GameMap {
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
     this.gems = gems || [];
-    this.gemTypes = {
+    this.gemClasses = {
       0 : new ReverseMovementGem()
     };
     this.traps = traps || [];
-    this.trapTypes = {
+    this.trapClasses = {
       0 : new MovingTrap()
     };
   }
@@ -219,10 +219,13 @@ class GameMap {
       } while (this.tiles[row][column] !== 0);
       //add random type based on keys in gemTypes
       //get gem type key
-      const gemTypeKey = Utils.getRandomNumber(0, Object.keys(this.gemTypes).length);
-      this.tiles[row][column] = `5.${i}.${gemTypeKey}`;
-      const gemValue = this.gemTypes[gemTypeKey].values[Utils.getRandomNumber(0, this.gemTypes[gemTypeKey].values.length)];
-      this.gems.push(new Gem(0, 0, 32, 32, gemValue, Utils.getRandomNumber(0, 2)));
+      const gemTypeKey = Utils.getRandomNumber(0, Object.keys(this.gemClasses).length);
+      this.tiles[row][column] = `5.${i}`;
+      let newGem = getNewGem(gemTypeKey, [0, 0]);
+      const gemValue = newGem.values[Utils.getRandomNumber(0, this.gemClasses[gemTypeKey].values.length)];
+      newGem.value = gemValue;
+      newGem.affectsMe = Utils.getRandomNumber(0, 2);
+      this.gems.push(newGem);
     }
   }
 
@@ -230,7 +233,7 @@ class GameMap {
     // for every trp, for now trap size is one block but we can change it
     const trapValues = [1, 0.5, 2, 5, 9];
     for (let i = 0; i < amount; i++) {
-      const trapTypeKey = Utils.getRandomNumber(0, Object.keys(this.trapTypes).length);
+      const trapTypeKey = Utils.getRandomNumber(0, Object.keys(this.trapClasses).length);
       switch (trapTypeKey) {
         case 0:
           //trap should spread at least through 2 tiles so player can avoid it
@@ -301,9 +304,11 @@ class GameMap {
             //add trap to the map
             for (let row = startRow; row <= endRow; row++) {
               for (let column = startColumn; column <= endColumn; column++) {
-                this.tiles[row][column] = `6.${i}.${trapTypeKey}`;
+                this.tiles[row][column] = `6.${i}`;
               }
             }
+            //TO DO: change hardcoded values
+            this.traps.push(new MovingTrap('', '', '', '', '', 10, 10));
             break;
           } // else it falls down to dafault case
         default:
@@ -313,7 +318,7 @@ class GameMap {
             column = Utils.getRandomNumber(0, this.tiles[row].length);
             // has to be empty block
           } while (this.tiles[row][column] !== 0);
-          this.tiles[row][column] = `6.${i}.${trapTypeKey}`;
+          this.tiles[row][column] = `6.${i}`;
           this.traps.push(new Trap(0, 0, 32, 32, '',trapValues[Utils.getRandomNumber(0, trapValues.length)]));
           break;
       }
@@ -322,3 +327,26 @@ class GameMap {
 }
 
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { GameMap };
+
+function getNewGem(type, parameters) {
+  type = String(type);
+  let gem;
+  switch (type) {
+    case type.match(/0|ReverseMovementGem/)?.input:
+      gem = new ReverseMovementGem(0, 0, 0, 0, ...parameters);
+      return gem;
+  }
+}
+
+function getNewTrap(type, parameters) {
+  type = String(type);
+  let trap;
+  switch (type) {
+    case type.match(/^0|MovingTrap$/)?.input:
+      trap = new MovingTrap(0, 0, 0, 0, '', ...parameters);
+      return trap;
+    case type.match(/^1|Trap$/)?.input:
+      trap = new Trap(0, 0, 0, 0, '', ...parameters);
+      return trap;
+  }
+}

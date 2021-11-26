@@ -74,12 +74,11 @@ io.on('connection', (socket) => {
       return;
     }
     games[playersRoomTable[socket.id]].players[index] = data.player;
-    // update map
   }
 
-  function handleClientMapUpdate(map) {
-      games[playersRoomTable[socket.id]].map = map;
-      io.to(playersRoomTable[socket.id]).emit('mapUpdated', map);
+  function handleClientMapUpdate(tiles) {
+      games[playersRoomTable[socket.id]].map.tiles = tiles;
+      io.to(playersRoomTable[socket.id]).emit('mapUpdated', tiles);
   }
 
   function handleCreateUsername(initialData) {
@@ -134,7 +133,15 @@ io.on('connection', (socket) => {
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
     if (allPlayerrsReadyToPlay === gameState.players.length) {
       //send map to each player
-      io.to(gameCode).emit('mapUpdated', gameState.map);
+      const gemTypes = [];
+      gameState.map.gems.map( gem => {
+        gemTypes.push(gem.__proto__.constructor.name);
+      })
+      const trapTypes = [];
+      gameState.map.traps.map( trap => {
+        trapTypes.push(trap.__proto__.constructor.name);
+      })
+      io.to(gameCode).emit('mapCreated', {gameMap: gameState.map, gemTypes: gemTypes, trapTypes: trapTypes});
       // send new player position to each player
       gameState.players.map((player) => gameState.map.setPlayerStartPosition(player));
       io.to(gameCode).emit('playersReady', gameState.players);

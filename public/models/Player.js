@@ -146,31 +146,23 @@ class Player extends GameObject { // Marianna
 
   handleCoinCollision(block, row, column, map) {
     map.tiles[row][column] = 0;
-    updateServerMap(map);
+    updateServerMap(map.tiles);
     const blockValue = block.split('.');
     this.score += map.coins[parseInt(blockValue[1])].value;
   }
 
   handleGemCollision(block, row, column, map) {
     map.tiles[row][column] = 0;
-    updateServerMap(map);
+    updateServerMap(map.tiles);
     const blockValue = block.split('.');
-    let placeholderGem = map.gems[parseInt(blockValue[1])];
-    // based on additional value that will signal gem type
-    // can be passed in the map as 5.index.type - where types will be mapped
-    // for now just general gem
-    const gem = map.gemTypes[blockValue[2]];
-    gem.value = placeholderGem.value;
-    gem.affectsMe = placeholderGem.affectsMe;
-    // call the action
-    gem.onCollect(this);
+    map.gems[parseInt(blockValue[1])].onCollect(this);
   }
 
   handleTrapCollision(block, map) {
     if (trapEffect === 0 ) {
       const blockValue = block.split('.');
       this.health -= map.traps[parseInt(blockValue[1])].value;
-      new Trap().onCollision();
+      map.traps[parseInt(blockValue[1])].onCollision();
     }
     trapEffect += 1;
     if (trapEffect === maxTrapTime) {
@@ -180,6 +172,6 @@ class Player extends GameObject { // Marianna
   }
 }
 
-function updateServerMap(map) {
-  socket.emit('clientMapUpdated', map);
+function updateServerMap(tiles) {
+  socket.emit('clientMapUpdated', tiles);
 }
