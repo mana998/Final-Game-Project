@@ -36,17 +36,11 @@ async function displayHighscores(userHighestScore) {
     if (!userHighestScore) {
         document.getElementById('message').innerText = 'User does not have any saved score';
     }
-    const aboveResponse = await fetch(`/api/highscoresAbove/user/${userHighestScore}`);
-    const aboveResult = await aboveResponse.json();
-
-    const belowResponse = await fetch(`/api/highscoresBelow/user/${userHighestScore}`);
-    const belowResult = await belowResponse.json();
-
-    const finalList = aboveResult.highscores.concat(belowResult.highscores);
-
-    if (finalList) {
+    const response = await fetch(`/api/highscores/user/${userHighestScore}`);
+    const result = await response.json();
+    if (result.highscores) {
       $("#highscorestableBody").empty();
-      finalList.forEach(record => 
+      result.highscores.forEach(record => 
         $("#highscorestableBody").append(`
         <tr>
             <th>${record.place}</th>

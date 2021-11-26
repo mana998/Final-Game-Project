@@ -34,14 +34,14 @@ async function login() {
   });
   resetLoginFields(username, password);
   const result = await response.json();
-  if (result.playerId) {
+  if (result.playerId && result.username) {
     const sessionResult = await setSession(result.playerId, result.username);
     if (sessionResult.playerId && sessionResult.username) {
+      document.getElementById("loggedInUser").innerText = `Logged: ${sessionResult.username}`;
       showMainMenu();
       changeButtonToLogout();
     }
   }
-  document.getElementById("loggedInUser").innerText = `Logged: ${result.username}`;
 }
 
 //Dagmara 
