@@ -1,3 +1,5 @@
+let currentPage = 1;
+
 function showHighscores() {
   $('#loginAndRegister').css('display', 'none');
   $('#menuOptions').css('display', 'block');
@@ -19,6 +21,7 @@ async function getUserHighestscore(playerId) {
   }
 }
 
+//display 5 score before and after the users highest score
 async function displayHighscores(userHighestScore) {
   if (!userHighestScore) {
     $('#message').text('User does not have any saved score');
@@ -41,12 +44,59 @@ async function displayHighscores(userHighestScore) {
   }
 }
 
+function changePage(pageNumber) {
+  currentPage = pageNumber;
+  displayAllHighscores();
+}
+
+//display highscore with pagination
+async function displayAllHighscores() {
+  const response = await fetch(`/api/highestscores/${currentPage}`);
+  const result = await response.json();
+  console.log(result);
+  if (result.highscores && result.pages) {
+    $('#highscorestableBody').empty();
+    result.highscores.forEach((record) => $('#highscorestableBody').append(`
+        <tr>
+            <th>${record.place}</th>
+            <th>${record.username}</th>
+            <th>${record.score}</th>
+            <th>${record.dateTime}</th>
+        </tr>
+        `));
+    $('#pages').empty();
+    let visiblePageNumbers = 3;
+    switch(currentPage) {
+      case 1:
+        if (currentPage + 3 > result.pages){
+          visiblePageNumbers = result.pages;
+        }
+        for (let page = currentPage; page <= visiblePageNumbers; page ++) {
+          $('#pages').append(`<button onclick = "changePage(${page})">${page}</button>`);
+        } 
+        break;
+      case result.pages:
+        for (let page = currentPage-2; page <= result.pages; page ++) {
+          $('#pages').append(`<button onclick = "changePage(${page})">${page}</button>`);
+        }
+        break;
+      default:
+        for (let page = currentPage; page < currentPage+3; page ++) {
+          $('#pages').append(`<button onclick = "changePage(${page-1})">${page-1}</button>`);
+        }
+    }
+      
+     
+  } else {
+    $('#message').text(result.message);
+  }
+}
+
 async function openHighscores() {
   const result = await getSession();
   if (result.username && result.playerId) {
     showHighscores();
-    const userHighestScore = await getUserHighestscore(result.playerId);
-    displayHighscores(userHighestScore);
+    displayAllHighscores();
     return;
   }
   alert(result.message);

@@ -49,6 +49,47 @@ router.get('/api/highestscore/user/:userId', (req, res) => {
   });
 });
 
+router.get('/api/highestscores/:currentPage', (req, res) => {
+  db.query('SELECT * FROM high_score;',(error, result, fields) => {
+    if (result && result.length) {
+      const pageLimit = 1;
+      const currentPage = req.params.currentPage;
+      const scoresSize = result.length;
+      const offset = (currentPage - 1) *pageLimit; //minus one because offset defines from which row we want to retrieve data
+      const fullPages = scoresSize/pageLimit;
+      const reminderOfScores = scoresSize % pageLimit === 0 ? 0 : 1;
+      const pages = fullPages + reminderOfScores;
+      db.query(`SELECT high_score.high_score_id, player.username, high_score.score, high_score.date_time 
+      FROM player 
+      JOIN high_score
+      ON player.player_id = high_score.player_id
+      LIMIT ?
+      OFFSET ?;`, [pageLimit,offset], (error, result2, fields) => {
+        if (result2 && result2.length) {
+          const highscores = [];
+          for (const highscore of result2) {
+            highscores.push({
+              place: highscore.high_score_id, username: highscore.username, score: highscore.score, dateTime: highscore.date_time,
+            });
+          }
+          res.send({
+            highscores,
+            pages,
+          });
+        } else {
+          res.send({
+            message: 'No scores found',
+          });
+        }
+      });
+    } else {
+      res.send({
+        message: 'No scores found.',
+      });
+    }
+  });
+});
+
 module.exports = {
   router,
 };

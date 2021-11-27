@@ -127,6 +127,7 @@ async function logout() {
   });
   const result = await response.json();
   if (result.message === 'Session destroyed') {
+    leaveGame();
     changeButtonToLogin();
     $('#loggedInUser').text('');
   } else {
