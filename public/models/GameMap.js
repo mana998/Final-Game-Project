@@ -118,12 +118,15 @@ class GameMap {
               this.tileHeight,
             );
             // take one trap to draw as they are the same, the traps image will be different but for now only one img
-            const blockValue = this.tiles[row][column].split('.');
-            map.traps[parseInt(blockValue[1])].draw(
-              ctx,
-              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
-              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight
-            );
+            //draw all traps but only first occurence of moving trap
+            if (String(this.tiles[row][column]).match(/^(6\.\d+|6\.\d+\.1)$/)) {
+              const blockValue = this.tiles[row][column].split('.');
+              map.traps[parseInt(blockValue[1])].draw(
+                ctx,
+                (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
+                ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight
+              );
+            }
             break;
           case 1:
             wall.draw(
@@ -302,9 +305,16 @@ class GameMap {
               endColumn++;
             }*/
             //add trap to the map
+            let first = true;
             for (let row = startRow; row <= endRow; row++) {
               for (let column = startColumn; column <= endColumn; column++) {
                 this.tiles[row][column] = `6.${i}`;
+                if (first) {
+                  this.tiles[row][column] += '.1';
+                  first = false;
+                } else {
+                  this.tiles[row][column] += '.2';
+                }
               }
             }
             //TO DO: change hardcoded values
