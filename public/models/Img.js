@@ -3,6 +3,7 @@ class Img {
   constructor(src, startRow, startColumn, rows, columns, speed, size, currentRow, currentColumn) {
     // src img
     this.src = src;
+    this.img;
     if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
       // used on the server
       this.img = `<img src="${src}">`;
@@ -40,26 +41,29 @@ class Img {
     // console.log(this.currentSpeed, this.speed);
     const startX = this.currentColumn * width;
     const startY = this.currentRow * height;
-    // increase the current speed value
-    this.currentSpeed++;
-    // if current speed value equals defined speed, then we change the animation frame
-    if (this.currentSpeed === this.speed) {
-      // increase the column - our animations go from left to right and then to the next line so firstly we increase columns
-      this.currentColumn++;
-      // reset currentSpeed to 0 again to be prepared for next call of the function
-      this.currentSpeed = 0;
-    }
-    // if the value of currentColumn is higher than the last column, we reset it to 1st one and move to the next row
-    if (this.currentColumn > this.startColumn + this.columns) {
-      this.currentColumn = this.startColumn;
-      this.currentRow++;
-      // if current row is higher than the last row, we reset it to the first one
-      if (this.currentRow > this.startRow + this.rows) {
-        this.currentRow = this.startRow;
+    if (this.speed > 0) {
+      // increase the current speed value
+      this.currentSpeed++;
+      // if current speed value equals defined speed, then we change the animation frame
+      if (this.currentSpeed === this.speed) {
+        // increase the column - our animations go from left to right and then to the next line so firstly we increase columns
+        this.currentColumn++;
+        // reset currentSpeed to 0 again to be prepared for next call of the function
+        this.currentSpeed = 0;
+      }
+      // if the value of currentColumn is higher than the last column, we reset it to 1st one and move to the next row
+      if (this.currentColumn > this.startColumn + this.columns) {
+        this.currentColumn = this.startColumn;
+        this.currentRow++;
+        // if current row is higher than the last row, we reset it to the first one
+        if (this.currentRow > this.startRow + this.rows) {
+          this.currentRow = this.startRow;
+        }
       }
     }
     // draw the image (spritesheet IMG, start x on img, start y on img, width, height, x on canvas, y on canvas, width on canvas, height on canvas)
     ctx.drawImage(this.img, startX, startY, width, height, x, y, width * this.size, height * this.size);
+    
   }
 }
 

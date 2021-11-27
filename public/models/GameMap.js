@@ -15,7 +15,8 @@ const path = new Img('./assets/images/game/path.png', 0, 0, 0, 0, 0, 1);
 const coin = new Img('./assets/images/game/coin.png', 0, 0, 0, 4, 5, 1);
 const gem = new Img('./assets/images/game/gem.png', 0, 0, 0, 3, 5, 1);
 //no animation
-const trap = new Img('./assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
+const trap = new Img('../assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
+const movingTrap = new Img('./assets/images/game/ninjaStar.png', 0, 0, 0, 0, 0, 1);
 
 let Utils;
 
@@ -117,12 +118,11 @@ class GameMap {
               this.tileHeight,
             );
             // take one trap to draw as they are the same, the traps image will be different but for now only one img
-            trap.draw(
+            const blockValue = this.tiles[row][column].split('.');
+            map.traps[parseInt(blockValue[1])].draw(
               ctx,
               (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
-              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
-              this.tileWidth,
-              this.tileHeight,
+              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight
             );
             break;
           case 1:
@@ -308,7 +308,7 @@ class GameMap {
               }
             }
             //TO DO: change hardcoded values
-            this.traps.push(new MovingTrap('', '', '', '', '', 10, 10));
+            this.traps.push(new MovingTrap('', '', '', '', movingTrap, 10, 10));
             break;
           } // else it falls down to dafault case
         default:
@@ -319,7 +319,7 @@ class GameMap {
             // has to be empty block
           } while (this.tiles[row][column] !== 0);
           this.tiles[row][column] = `6.${i}`;
-          this.traps.push(new Trap(0, 0, 32, 32, '',trapValues[Utils.getRandomNumber(0, trapValues.length)]));
+          this.traps.push(new Trap(0, 0, 32, 32, trap, trapValues[Utils.getRandomNumber(0, trapValues.length)]));
           break;
       }
     }
@@ -341,12 +341,14 @@ function getNewGem(type, parameters) {
 function getNewTrap(type, parameters) {
   type = String(type);
   let trap;
+  let image = new Img(parameters[0].src, parameters[0].startRow, parameters[0].startColumn, parameters[0].rows, parameters[0].columns, parameters[0].speed, parameters[0].size);
+  parameters.shift();
   switch (type) {
     case type.match(/^0|MovingTrap$/)?.input:
-      trap = new MovingTrap(0, 0, 0, 0, '', ...parameters);
+      trap = new MovingTrap(0, 0, 16, 16, image, ...parameters);
       return trap;
     case type.match(/^1|Trap$/)?.input:
-      trap = new Trap(0, 0, 0, 0, '', ...parameters);
+      trap = new Trap(0, 0, 0, 0, image, ...parameters);
       return trap;
   }
 }
