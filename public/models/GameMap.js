@@ -15,7 +15,7 @@ const path = new Img('./assets/images/game/path.png', 0, 0, 0, 0, 0, 1);
 const coin = new Img('./assets/images/game/coin.png', 0, 0, 0, 4, 5, 1);
 const gem = new Img('./assets/images/game/gem.png', 0, 0, 0, 3, 5, 1);
 //no animation
-const trap = new Img('../assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
+const trap = new Img('./assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
 const movingTrap = new Img('./assets/images/game/ninjaStar.png', 0, 0, 0, 0, 0, 1);
 
 let Utils;
@@ -352,7 +352,7 @@ function getNewTrap(type, parameters) {
       trap = new MovingTrap(0, 0, 16, 16, image, ...parameters);
       return trap;
     case 'Trap':
-      trap = new Trap(0, 0, 0, 0, image, ...parameters);
+      trap = new Trap(0, 0, 32, 32, image, ...parameters);
       return trap;
   }
 }

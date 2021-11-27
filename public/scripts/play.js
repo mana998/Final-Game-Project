@@ -180,7 +180,7 @@ function handleMapCreated(data) {
   for (let i = 0; i < data.gameMap.gems.length; i++) {
       map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
   }
-  console.log("TRAPS");  for (let i = 0; i < data.gameMap.traps.length; i++) {
+  for (let i = 0; i < data.gameMap.traps.length; i++) {
     map.traps[i] = getNewTrap(data.trapTypes[i], [data.gameMap.traps[i].img, data.gameMap.traps[i].value, data.gameMap.traps[i].speed]);
   }
 }
