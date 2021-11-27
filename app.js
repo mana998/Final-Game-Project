@@ -224,6 +224,8 @@ io.on('connection', (socket) => {
   socket.on('changeSpectator', changeSpectatingPlayer);
   socket.on('disconnect', handlePlayerDisconnect);
   socket.on('stopInterval', handleStopInterval);
+  //this is temporary fix, also creates bugs TO BE CHANGED
+  socket.on('removePlayer',handlePlayerDisconnect);
 });
 
 const PORT = process.env.PORT || 8080;

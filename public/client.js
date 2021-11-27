@@ -12,6 +12,7 @@ function init() {
   $('#panel').css('display', 'none');
   $('#highscore').css('display', 'none');
   $('#gameScreen').css('display', 'block');
+  $('#returnToMainMenuButton').css('display', 'none');
 }
 
 // Dagmara
@@ -44,6 +45,14 @@ function handleWrongCode() {
   $('#wrongGameCode').text("Incorrect game code, the room doesn't exists");
 }
 
+//Dagmara
+//removes player from game object and changes interface back to main menu
+function removePlayerAndGoToMainMenu() {
+  socket.emit("removePlayer");
+  socket.broadcast.emit('playGame', $('#codeInput').val());
+  leaveGame();
+  showMainMenu();
+}
 // Dagmara
 // if the room code is valid it allows player to join existing game
 function joinGame() {
