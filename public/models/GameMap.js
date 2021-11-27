@@ -39,13 +39,9 @@ class GameMap {
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
     this.gems = gems || [];
-    this.gemClasses = {
-      0 : new ReverseMovementGem()
-    };
+    this.gemClasses = ['ReverseMovementGem'];
     this.traps = traps || [];
-    this.trapClasses = {
-      0 : new MovingTrap()
-    };
+    this.trapClasses = ['MovingTrap', 'Trap'];
   }
 
   // Marianna
@@ -222,10 +218,10 @@ class GameMap {
       } while (this.tiles[row][column] !== 0);
       //add random type based on keys in gemTypes
       //get gem type key
-      const gemTypeKey = Utils.getRandomNumber(0, Object.keys(this.gemClasses).length);
+      const gemTypeKey = this.gemClasses[Utils.getRandomNumber(0, this.gemClasses.length)];
       this.tiles[row][column] = `5.${i}`;
       let newGem = getNewGem(gemTypeKey, [0, 0]);
-      const gemValue = newGem.values[Utils.getRandomNumber(0, this.gemClasses[gemTypeKey].values.length)];
+      const gemValue = newGem.values[Utils.getRandomNumber(0, newGem.values.length)];
       newGem.value = gemValue;
       newGem.affectsMe = Utils.getRandomNumber(0, 2);
       this.gems.push(newGem);
@@ -236,9 +232,9 @@ class GameMap {
     // for every trp, for now trap size is one block but we can change it
     const trapValues = [1, 0.5, 2, 5, 9];
     for (let i = 0; i < amount; i++) {
-      const trapTypeKey = Utils.getRandomNumber(0, Object.keys(this.trapClasses).length);
+      const trapTypeKey = this.trapClasses[Utils.getRandomNumber(0, this.trapClasses.length)];
       switch (trapTypeKey) {
-        case 0:
+        case 'MovingTrap':
           //trap should spread at least through 2 tiles so player can avoid it
           //it additionally needs  at least 2x2 area to not block paths with width 1
           const maxTries = 100; //try to find place 100 times before giving up 
@@ -339,25 +335,23 @@ class GameMap {
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { GameMap };
 
 function getNewGem(type, parameters) {
-  type = String(type);
   let gem;
   switch (type) {
-    case type.match(/0|ReverseMovementGem/)?.input:
+    case 'ReverseMovementGem':
       gem = new ReverseMovementGem(0, 0, 0, 0, ...parameters);
       return gem;
   }
 }
 
 function getNewTrap(type, parameters) {
-  type = String(type);
   let trap;
   let image = new Img(parameters[0].src, parameters[0].startRow, parameters[0].startColumn, parameters[0].rows, parameters[0].columns, parameters[0].speed, parameters[0].size);
   parameters.shift();
   switch (type) {
-    case type.match(/^0|MovingTrap$/)?.input:
+    case 'MovingTrap':
       trap = new MovingTrap(0, 0, 16, 16, image, ...parameters);
       return trap;
-    case type.match(/^1|Trap$/)?.input:
+    case 'Trap':
       trap = new Trap(0, 0, 0, 0, image, ...parameters);
       return trap;
   }
