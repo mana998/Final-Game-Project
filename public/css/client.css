@@ -8,8 +8,7 @@ body {
     display: none;
 }
 
-#menuScreen, #playMenu  {
-    background-image: url("../assets/images/backgrounds/background.jpg");
+#menuScreen, #playMenu #loginAndRegister {
     background-position: center;
     height: 80vh;
 }
@@ -23,7 +22,7 @@ body {
     border: black solid 10px;
 }
 
-#panel, #playMenu {
+#panel, #playMenu #loginAndRegister {
     padding-top: 5vh;
 }
 
@@ -117,4 +116,8 @@ canvas {
     z-index: -1;
     position: absolute;
     top: 0;
+}
+
+#loginAndRegister {
+    display: none;
 }

@@ -91,8 +91,17 @@ function handleCreateUsername() {
 
 // Dagmara
 // Adds player to the game object
-function createPlayer(socketId) {
-  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), '', socketId);
+async function createPlayer(socketId) {
+  username = '';
+  response = await fetch('/getsession');
+  result = await response.json();
+  if (result.username) {
+    usernameInput.value = result.username;
+    usernameInput.setAttribute("disabled","true");
+    username = result.username;
+    enablePlayButton();
+  }
+  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, socketId);
   socket.emit('playerCreated', player);
 }
 

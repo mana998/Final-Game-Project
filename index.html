@@ -11,6 +11,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="./css/client.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
     <title>GAME</title>
 </head>
 <body>
@@ -19,6 +30,7 @@
     <div class="container">
         <div id="menuScreen">
             <div id="panel">
+                <span id="loggedInUser"></span>
                 <h1 id="gameTitle">GAME</h1>
                 <div>
                     <button type="button" class="btn" id="createNewGameButton">
@@ -41,6 +53,27 @@
                             </svg>
                         </div>
                     </button>
+                </div>
+                <div>
+                    <button type="button" class="btn" id="loginAndRegisterButton">
+                        <span>Login/Register</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="loginAndRegister">
+                <div id="loginAndRegisterBody">
+                    <h1 id="loginAndRegisterHeadder">Login</h1>
+                    <form>
+                        <input placeholder="username" type="text" id="username" name="username"><br>
+                        <input placeholder="password" type="password" id="password" name="password"><br>
+                        <input placeholder="repeatPassword" type="password" id="repeatPassword" name="repeatPassword"><br>
+                    </form> 
+                    <button type="button" id="loginButton" class="btn btn-primary" onClick="activateLogin()">Login</button>
+                    <button type="button" id="registerButton" class="btn btn-secondary" onClick="activateRegistartion()">Register</button>
+                    <p id="message"></p> 
                 </div>
             </div>
         </div>
@@ -78,5 +111,6 @@
     <script src="./client.js"></script>
     <script src="./scripts/play.js"></script>
     <script src="./scripts/end.js"></script>
+    <script src="./scripts/handleUser.js"></script>
 </body>
 </html>
