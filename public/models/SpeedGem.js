@@ -2,7 +2,6 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
     // used on the server
     // eslint-disable-next-line global-require
     Gem = require('./Gem').Gem;
-    Utils = require('../../private/models/Utils').Utils;
 }
 
 class SpeedGem extends Gem { // Dagmara
@@ -30,7 +29,7 @@ class SpeedGem extends Gem { // Dagmara
   
     //heal player
     speed(player) {
-        const speedSign = Utils.getRandomNumber(0,1);
+        const speedSign = Math.random() < 0.5;
         console.log('speed');
         if (player.speed == 16 || player.speed == 0) {
             //message,: I can't change my speed!
