@@ -43,6 +43,10 @@ const FRAME_RATE = 30;
 const userRouter = require('./private/user.js');
 app.use(userRouter.router);
 
+// highscore list
+const highscoreListRouter = require('./private/highscoreList.js');
+app.use(highscoreListRouter.router);
+
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });
@@ -162,6 +166,7 @@ io.on('connection', (socket) => {
         trapTypes.push(trap.__proto__.constructor.name);
       })
       io.to(gameCode).emit('mapCreated', {gameMap: gameState.map, gemTypes: gemTypes, trapTypes: trapTypes});
+      gameState.playing = true;
       // send new player position to each player
       gameState.players.map((player) => gameState.map.setPlayerStartPosition(player));
       io.to(gameCode).emit('playersReady', gameState.players);
@@ -201,7 +206,7 @@ io.on('connection', (socket) => {
   }
 
   // Marianna
-  function handlePlayerDisconnect() {
+  function handlePlayerDisconnect(beforeGameStart='false') {
     if (games[playersRoomTable[socket.id]]) {
       // remove player from room
       games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter((player) => player.socketId !== socket.id);
@@ -211,6 +216,8 @@ io.on('connection', (socket) => {
         // stop timer
         clearInterval(games[playersRoomTable[socket.id]].interval);
         delete games[playersRoomTable[socket.id]];
+      } else if (!games[playersRoomTable[socket.id]].playing) {
+        startGame(playersRoomTable[socket.id]);
       }
       // remove data about player
       delete playersRoomTable[socket.id];

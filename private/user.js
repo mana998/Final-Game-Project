@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const db = require('../database/connection.js').connection;
+const db = require('../database/connection').connection;
 const bcrypt = require('bcrypt');
 
 // import utils class
@@ -12,8 +12,8 @@ const Utils = new Utilities();
 // hence the time and difficulty is increased while brute-forcing
 const saltRounds = 15;
 
-//Dagmara
-//check if username and password exists in db and return player id if not return message 
+// Dagmara
+// check if username and password exists in db and return player id if not return message
 router.post('/api/user/login', (req, res) => {
   db.query('SELECT * FROM player WHERE username=?;', [req.body.username], (error, result, fields) => {
     if (result && result.length === 1) {
@@ -37,8 +37,8 @@ router.post('/api/user/login', (req, res) => {
   });
 });
 
-//Dagmara
-//check if username and password are valid, check if username already exsts, add new player to db
+// Dagmara
+// check if username and password are valid, check if username already exsts, add new player to db
 router.post('/api/user/register', (req, res) => {
   const usernameValid = Utils.checkStringCharacters(req.body.username);
   const passwordValid = Utils.checkStringCharacters(req.body.password);

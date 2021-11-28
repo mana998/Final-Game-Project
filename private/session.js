@@ -3,10 +3,18 @@ const router = require('express').Router();
 //Dagmara
 //return playerId from session
 router.get('/getsession', (req, res) => {
+  if (req.session.playerId && req.session.username) {
+    res.send({
+      playerId: req.session.playerId,
+      username: req.session.username,
+    });
+    return;
+  }
   res.send({
-    playerId: req.session.playerId,
-    username: req.session.username,
+    message: "User not logged in.",
   });
+  return;
+  
 });
 
 //Dagmara

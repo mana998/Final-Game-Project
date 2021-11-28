@@ -1,4 +1,3 @@
-// setup canvas
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -50,7 +49,17 @@ function draw(data) {
         tempPlayer.y,
         tempPlayer.width,
         tempPlayer.height,
-        new Img(tempPlayer.img.src, tempPlayer.img.startRow, tempPlayer.img.startColumn, tempPlayer.img.rows, tempPlayer.img.columns, tempPlayer.img.speed, '', tempPlayer.img.currentRow, tempPlayer.img.currentColumn),
+        new Img(
+          tempPlayer.img.src,
+          tempPlayer.img.startRow,
+          tempPlayer.img.startColumn,
+          tempPlayer.img.rows,
+          tempPlayer.img.columns,
+          tempPlayer.img.speed,
+          '',
+          tempPlayer.img.currentRow,
+          tempPlayer.img.currentColumn,
+        ),
         tempPlayer.username,
       );
       compareToPlayer = spectatingPlayer;
@@ -74,7 +83,17 @@ function draw(data) {
         gamePlayer.y,
         gamePlayer.width,
         gamePlayer.height,
-        new Img(gamePlayer.img.src, gamePlayer.img.startRow, gamePlayer.img.startColumn, gamePlayer.img.rows, gamePlayer.img.columns, gamePlayer.img.speed, '', gamePlayer.img.currentRow, gamePlayer.img.currentColumn),
+        new Img(
+          gamePlayer.img.src,
+          gamePlayer.img.startRow,
+          gamePlayer.img.startColumn,
+          gamePlayer.img.rows,
+          gamePlayer.img.columns,
+          gamePlayer.img.speed,
+          '',
+          gamePlayer.img.currentRow,
+          gamePlayer.img.currentColumn,
+        ),
         gamePlayer.username,
       );
       // get data about other players from server
@@ -83,11 +102,61 @@ function draw(data) {
   });
 }
 
-// event listener for start of the movement
-window.addEventListener('keydown', movePlayer);
+// Marianna
+// update server if something on the client changed
+function updateServerPlayer() {
+  socket.emit('clientPlayerUpdated', {player});
+}
 
-// event listener for end of the movement
-window.addEventListener('keyup', stopPlayer);
+function handleMapCreated(data) {
+  map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
+  data.gameMap.coins.map(coin => {
+    coin = new Coin(0, 0, 32, 32, coin.value);
+  })
+  for (let i = 0; i < data.gameMap.gems.length; i++) {
+      map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
+  }
+  for (let i = 0; i < data.gameMap.traps.length; i++) {
+    map.traps[i] = getNewTrap(data.trapTypes[i], [data.gameMap.traps[i].img, data.gameMap.traps[i].value, data.gameMap.traps[i].speed]);
+  }
+}
+
+function handleMapUpdated(tiles) {
+  map.tiles = tiles;
+}
+
+// Marianna
+// Stop animation when player stops moving
+function stopPlayer(e) {
+  // stop if game is not in progress
+  if (!playing || player.isDone) return;
+  // update only if the key was for movement
+  if (e.key.match(/^[aAdDsSwW]|Arrow(Up|Down|Right|Left)$/)) {
+    // ensure middle position
+    player.img.startColumn += 1;
+    player.img.currentColumn = player.img.startColumn;
+    // stop animation movement
+    player.img.rows = 0;
+    player.img.columns = 0;
+    player.direction = '';
+    updateServerPlayer();
+  }
+}
+
+// Marianna
+// change animation based on the direction of the player
+function changeAnimation(direction) {
+  // only change animation when direction changes
+  if (player.direction !== direction) {
+    player.img.rows = animations[direction][2];
+    player.img.columns = animations[direction][3];
+    player.img.startRow = animations[direction][0];
+    player.img.startColumn = animations[direction][1];
+    player.img.currentRow = animations[direction][0];
+    player.img.currentColumn = animations[direction][1];
+    player.direction = direction;
+  }
+}
 
 // Marianna
 // key listeners to move the player
@@ -133,61 +202,11 @@ function movePlayer(e) {
   updateServerPlayer();
 }
 
-// Marianna
-// Stop animation when player stops moving
-function stopPlayer(e) {
-  // stop if game is not in progress
-  if (!playing || player.isDone) return;
-  // update only if the key was for movement
-  if (e.key.match(/^[aAdDsSwW]|Arrow(Up|Down|Right|Left)$/)) {
-    // ensure middle position
-    player.img.startColumn += 1;
-    player.img.currentColumn = player.img.startColumn;
-    // stop animation movement
-    player.img.rows = 0;
-    player.img.columns = 0;
-    player.direction = '';
-    updateServerPlayer();
-  }
-}
+// event listener for start of the movement
+window.addEventListener('keydown', movePlayer);
 
-// Marianna
-// change animation based on the direction of the player
-function changeAnimation(direction) {
-  // only change animation when direction changes
-  if (player.direction !== direction) {
-    player.img.rows = animations[direction][2];
-    player.img.columns = animations[direction][3];
-    player.img.startRow = animations[direction][0];
-    player.img.startColumn = animations[direction][1];
-    player.img.currentRow = animations[direction][0];
-    player.img.currentColumn = animations[direction][1];
-    player.direction = direction;
-  }
-}
-
-// Marianna
-// update server if something on the client changed
-function updateServerPlayer() {
-  socket.emit('clientPlayerUpdated', {player});
-}
-
-function handleMapCreated(data) {
-  map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
-  data.gameMap.coins.map(coin => {
-    coin = new Coin(0, 0, 32, 32, coin.value);
-  })
-  for (let i = 0; i < data.gameMap.gems.length; i++) {
-      map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
-  }
-  for (let i = 0; i < data.gameMap.traps.length; i++) {
-    map.traps[i] = getNewTrap(data.trapTypes[i], [data.gameMap.traps[i].img, data.gameMap.traps[i].value, data.gameMap.traps[i].speed]);
-  }
-}
-
-function handleMapUpdated(tiles) {
-  map.tiles = tiles;
-}
+// event listener for end of the movement
+window.addEventListener('keyup', stopPlayer);
 
 // Marianna
 // update game

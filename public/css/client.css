@@ -4,10 +4,6 @@ body {
     overflow: hidden;
 }
 
-#gameScreen {
-    display: none;
-}
-
 #menuScreen, #playMenu #loginAndRegister {
     background-position: center;
     height: 80vh;
@@ -118,6 +114,6 @@ canvas {
     top: 0;
 }
 
-#loginAndRegister {
+#menuOptions {
     display: none;
 }
