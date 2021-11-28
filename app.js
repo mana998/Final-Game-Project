@@ -232,6 +232,14 @@ io.on('connection', (socket) => {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('reversePlayerMovement');
   }
 
+  function handleReverseMovement() {
+    socket.broadcast.to(playersRoomTable[socket.id]).emit('reversePlayerMovement');
+  }
+
+  function handleHealPlayer() {
+    socket.broadcast.to(playersRoomTable[socket.id]).emit('healPlayers');
+  }
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -244,6 +252,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', handlePlayerDisconnect);
   socket.on('stopInterval', handleStopInterval);
   socket.on('reverseMovement', handleReverseMovement);
+  socket.on('healPlayer', handleHealPlayer);
 });
 
 const PORT = process.env.PORT || 8080;
