@@ -52,7 +52,7 @@ router.get('/api/highestscore/user/:userId', (req, res) => {
 router.get('/api/highestscores/:currentPage', (req, res) => {
   db.query('SELECT COUNT(high_score.high_score_id) AS scoresCount FROM high_score;',(error, result, fields) => {
     if (result && result.length) {
-      const pageLimit = 2;
+      const pageLimit = 10;
       const currentPage = req.params.currentPage;
       const scoresSize = result[0].scoresCount;
       const offset = (currentPage - 1) *pageLimit; //minus one because offset defines from which row we want to retrieve data
