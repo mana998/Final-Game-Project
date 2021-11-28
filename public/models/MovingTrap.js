@@ -7,6 +7,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 class MovingTrap extends Trap {
     constructor(x, y, width, height, img, value, speed, direction, startRow, endRow, startColumn, endColumn) {
         super(x, y, width, height, img, value);
+        this.values = [0.001, 0.002, 0.5, 0.005];
         this.speed = speed;
         this.startRow = startRow;
         this.startColumn = startColumn;

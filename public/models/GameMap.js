@@ -285,8 +285,9 @@ class GameMap {
                 }
               }
             }
-            //TO DO: change hardcoded values
-            this.traps.push(new MovingTrap('', '', '', '', movingTrap, 10, 1, '', startRow, endRow, startColumn, endColumn));
+            let newTrap = new MovingTrap('', '', '', '', movingTrap, 0, 1, '', startRow, endRow, startColumn, endColumn);
+            newTrap.value = newTrap.values[Utils.getRandomNumber(0, newTrap.values.length)];
+            this.traps.push(newTrap);
             break;
           } // else it falls down to dafault case
         default:
