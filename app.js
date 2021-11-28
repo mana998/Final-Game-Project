@@ -154,6 +154,8 @@ io.on('connection', (socket) => {
   function startGame(gameCode) {
     const gameState = games[gameCode];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
+    console.log(allPlayerrsReadyToPlay);
+    console.log(gameState.players.length);
     if (allPlayerrsReadyToPlay === gameState.players.length) {
       // send new player position to each player
       gameState.players.map((player) => gameState.map.setPlayerStartPosition(player));
@@ -205,6 +207,7 @@ io.on('connection', (socket) => {
         clearInterval(games[playersRoomTable[socket.id]].interval);
         delete games[playersRoomTable[socket.id]];
       }
+      socket.broadcast.emit('playGameAfterPlyerLeaves');
       // remove data about player
       delete playersRoomTable[socket.id];
     }

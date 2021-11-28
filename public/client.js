@@ -49,7 +49,6 @@ function handleWrongCode() {
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
   socket.emit("removePlayer");
-  socket.broadcast.emit('playGame', $('#codeInput').val());
   leaveGame();
   showMainMenu();
 }
@@ -161,6 +160,7 @@ socket.on('playersReady', playersReady);
 socket.on('createPlayer', createPlayer);
 socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
+socket.on('playGameAfterPlyerLeaves', playGame);
 
 $('#createNewGameButton').on('click', createGame);
 $('#usernameInput').on('change', handleCreateUsername);
