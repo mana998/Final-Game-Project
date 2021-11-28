@@ -220,5 +220,11 @@ socket.on('reversePlayerMovement', () => {
   new ReverseMovementGem().swapMovement(player);
 })
 
+//Dagmara
+//change players' speed
+socket.on('changePlayersSpeed', () => {
+  new SpeedGem().speed(player);
+})
+
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
