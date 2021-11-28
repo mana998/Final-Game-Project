@@ -16,7 +16,7 @@ class MovingTrap extends Trap {
         this.rows = this.endRow - this.startRow ;
         this.columns = this.endColumn - this.startColumn;
         if (!direction) {
-            if (this.endRow - this.startRow > 1) {
+            if (this.endRow - this.startRow >= 1) {
                 this.direction = 'vertical';
                 this.x += width/2;
             } else {

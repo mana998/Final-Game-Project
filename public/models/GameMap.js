@@ -258,6 +258,8 @@ class GameMap {
                 while (this.tiles[endRow + 1][startColumn] === 0 && this.tiles[endRow + 1][endColumn] === 0) {
                   endRow++;
                 }
+                //columns stay the same so reset them to 1 number
+                endColumn = startColumn;
                 break;
               case 1: //collumns
                 while (this.tiles[startRow][startColumn - 1] === 0 && this.tiles[endRow][startColumn - 1] === 0) {
@@ -267,6 +269,8 @@ class GameMap {
                 while (this.tiles[startRow][endColumn + 1] === 0 && this.tiles[endRow][endColumn + 1] === 0) {
                   endColumn++;
                 }
+                //rows stay the same so reset them to 1 number
+                endRow = startRow;
                 break;
             }
             let first = true;
