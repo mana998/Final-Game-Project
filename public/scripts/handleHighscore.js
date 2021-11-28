@@ -53,7 +53,6 @@ function changePage(pageNumber) {
 async function displayAllHighscores() {
   const response = await fetch(`/api/highestscores/${currentPage}`);
   const result = await response.json();
-  console.log(result);
   if (result.highscores && result.pages) {
     $('#highscorestableBody').empty();
     result.highscores.forEach((record) => $('#highscorestableBody').append(`
@@ -76,12 +75,16 @@ async function displayAllHighscores() {
         } 
         break;
       case result.pages:
-        for (let page = currentPage-2; page <= result.pages; page ++) {
+        let startPage = currentPage-2;
+        if (currentPage - visiblePageNumbers <= 0){
+          startPage  = 1;
+        }
+        for (let page = startPage; page <= result.pages; page ++) {
           $('#pages').append(`<button onclick = "changePage(${page})">${page}</button>`);
         }
         break;
       default:
-        for (let page = currentPage; page < currentPage+3; page ++) {
+        for (let page = currentPage; page < currentPage+visiblePageNumbers; page ++) {
           $('#pages').append(`<button onclick = "changePage(${page-1})">${page-1}</button>`);
         }
     }

@@ -56,7 +56,7 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
       const currentPage = req.params.currentPage;
       const scoresSize = result.length;
       const offset = (currentPage - 1) *pageLimit; //minus one because offset defines from which row we want to retrieve data
-      const fullPages = scoresSize/pageLimit;
+      const fullPages = parseInt(scoresSize/pageLimit);
       const reminderOfScores = scoresSize % pageLimit === 0 ? 0 : 1;
       const pages = fullPages + reminderOfScores;
       db.query(`SELECT high_score.high_score_id, player.username, high_score.score, high_score.date_time 
