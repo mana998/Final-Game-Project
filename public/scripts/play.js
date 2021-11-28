@@ -33,7 +33,6 @@ const animations = {
 // draw everything
 function draw(data) {
   // clear the canvas
-  //call new method for trap collisions.
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // set player that will be centered
   // by default it's your player
@@ -56,6 +55,8 @@ function draw(data) {
       );
       compareToPlayer = spectatingPlayer;
     }
+  } else {
+    player.isMovingTrapCollision(map, canvas.height, canvas.width)
   }
   // draw map
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
