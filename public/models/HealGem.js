@@ -11,9 +11,7 @@ class HealGem extends Gem { // Dagmara
     }
   
     onCollect(player) {
-      console.log(player.health);
       this.healPlayer(player);
-      console.log(player.health);
     }
   
     //decide whether to heal current player or other players
