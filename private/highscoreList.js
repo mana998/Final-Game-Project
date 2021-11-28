@@ -52,7 +52,7 @@ router.get('/api/highestscore/user/:userId', (req, res) => {
 router.get('/api/highestscores/:currentPage', (req, res) => {
   db.query('SELECT * FROM high_score;',(error, result, fields) => {
     if (result && result.length) {
-      const pageLimit = 1;
+      const pageLimit = 10;
       const currentPage = req.params.currentPage;
       const scoresSize = result.length;
       const offset = (currentPage - 1) *pageLimit; //minus one because offset defines from which row we want to retrieve data
@@ -63,14 +63,17 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
       FROM player 
       JOIN high_score
       ON player.player_id = high_score.player_id
+      ORDER BY high_score.score DESC
       LIMIT ?
-      OFFSET ?;`, [pageLimit,offset], (error, result2, fields) => {
-        if (result2 && result2.length) {
+      OFFSET ?;`, [pageLimit,offset], (error, result, fields) => {
+        if (result && result.length) {
           const highscores = [];
-          for (const highscore of result2) {
+          let index = (currentPage - 1) * pageLimit + 1.
+          for (const highscore of result) {
             highscores.push({
-              place: highscore.high_score_id, username: highscore.username, score: highscore.score, dateTime: highscore.date_time,
+              place: index, username: highscore.username, score: highscore.score, dateTime: highscore.date_time,
             });
+            index++;
           }
           res.send({
             highscores,
