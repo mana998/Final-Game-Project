@@ -99,30 +99,30 @@ function movePlayer(e) {
     case (e.key.match(player.movement.left)?.input):
       changeAnimation('left');
       // check for wall collision
-      if (!player.isBlockCollision(map, 'left', -player.speed, 0)) {
+      if (!player.isBlockCollision(map, 'left', '', '', -player.speed, 0)) {
         player.x -= player.speed;
-        player.isBlockCollision(map, 'left');
+        player.isBlockCollision(map, 'left', canvas.height, canvas.width);
       }
       break;
     case (e.key.match(player.movement.right)?.input):
       changeAnimation('right');
-      if (!player.isBlockCollision(map, 'right', player.speed, 0)) {
+      if (!player.isBlockCollision(map, 'right', '', '', player.speed, 0)) {
         player.x += player.speed;
-        player.isBlockCollision(map, 'right');
+        player.isBlockCollision(map, 'right', canvas.height, canvas.width);
       }
       break;
     case (e.key.match(player.movement.up)?.input):
       changeAnimation('up');
-      if (!player.isBlockCollision(map, 'up', 0, -player.speed)) {
+      if (!player.isBlockCollision(map, 'up', '', '', 0, -player.speed)) {
         player.y -= player.speed;
-        player.isBlockCollision(map, 'up');
+        player.isBlockCollision(map, 'up', canvas.height, canvas.width);
       }
       break;
     case (e.key.match(player.movement.down)?.input):
       changeAnimation('down');
-      if (!player.isBlockCollision(map, 'down', 0, player.speed)) {
+      if (!player.isBlockCollision(map, 'down', '', '', 0, player.speed)) {
         player.y += player.speed;
-        player.isBlockCollision(map, 'down');
+        player.isBlockCollision(map, 'down', canvas.height, canvas.width);
       }
       break;
     default:
