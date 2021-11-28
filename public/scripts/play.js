@@ -33,6 +33,7 @@ const animations = {
 // draw everything
 function draw(data) {
   // clear the canvas
+  //call new method for trap collisions.
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // set player that will be centered
   // by default it's your player

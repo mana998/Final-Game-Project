@@ -221,7 +221,7 @@ class GameMap {
 
   generateTraps(amount) {
     // for every trp, for now trap size is one block but we can change it
-    const trapValues = [1, 0.5, 2, 5, 9];
+    const trapValues = [0.1, 0.5, 0.2, 1, 0.9];
     for (let i = 0; i < amount; i++) {
       //const trapTypeKey = this.trapClasses[Utils.getRandomNumber(0, this.trapClasses.length)];
       const trapTypeKey = 'MovingTrap';
