@@ -222,7 +222,7 @@ socket.on('reversePlayerMovement', () => {
 
 //Dagmara
 //heal player
-socket.on('healPlayer', () => {
+socket.on('healPlayers', () => {
   new HealGem().heal(player);
 })
 
