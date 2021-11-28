@@ -5,6 +5,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   Coin = require('./Coin').Coin;
   Gem = require('./Gem').Gem;
   ReverseMovementGem = require('./ReverseMovementGem').ReverseMovementGem;
+  HealGem = require('./HealGem').HealGem;
   Trap = require('./Trap').Trap;
   MovingTrap = require('./MovingTrap').MovingTrap;
 }
@@ -39,7 +40,7 @@ class GameMap {
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
     this.gems = gems || [];
-    this.gemClasses = ['ReverseMovementGem'];
+    this.gemClasses = ['ReverseMovementGem', 'HealGem'];
     this.traps = traps || [];
     this.trapClasses = ['MovingTrap', 'Trap'];
   }
@@ -219,8 +220,10 @@ class GameMap {
       //add random type based on keys in gemTypes
       //get gem type key
       const gemTypeKey = this.gemClasses[Utils.getRandomNumber(0, this.gemClasses.length)];
+      console.log(gemTypeKey);
       this.tiles[row][column] = `5.${i}`;
       let newGem = getNewGem(gemTypeKey, [0, 0]);
+      console.log(newGem);
       const gemValue = newGem.values[Utils.getRandomNumber(0, newGem.values.length)];
       newGem.value = gemValue;
       newGem.affectsMe = Utils.getRandomNumber(0, 2);
@@ -332,14 +335,18 @@ class GameMap {
   }
 }
 
-if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { GameMap };
-
 function getNewGem(type, parameters) {
   let gem;
   switch (type) {
     case 'ReverseMovementGem':
       gem = new ReverseMovementGem(0, 0, 0, 0, ...parameters);
       return gem;
+      break;
+    case 'HealGem':
+      gem = new HealGem(0, 0, 0, 0, ...parameters);
+      console.log(gem);
+      return gem;
+      break;
   }
 }
 
@@ -356,3 +363,5 @@ function getNewTrap(type, parameters) {
       return trap;
   }
 }
+
+if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { GameMap };

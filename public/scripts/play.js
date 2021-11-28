@@ -220,5 +220,11 @@ socket.on('reversePlayerMovement', () => {
   new ReverseMovementGem().swapMovement(player);
 })
 
+//Dagmara
+//heal player
+socket.on('healPlayer', () => {
+  new HealGem().heal(player);
+})
+
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
