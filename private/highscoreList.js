@@ -70,8 +70,9 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
           const highscores = [];
           let index = (currentPage - 1) * pageLimit + 1.
           for (const highscore of result) {
+            //date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0];
             highscores.push({
-              place: index, username: highscore.username, score: highscore.score, dateTime: highscore.date_time,
+              place: index, username: highscore.username, score: highscore.score, dateTime: highscore.date_time.toISOString().slice(0, 19).replace('T', ' '),
             });
             index++;
           }
