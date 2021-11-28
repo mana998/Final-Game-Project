@@ -220,10 +220,8 @@ class GameMap {
       //add random type based on keys in gemTypes
       //get gem type key
       const gemTypeKey = this.gemClasses[Utils.getRandomNumber(0, this.gemClasses.length)];
-      console.log(gemTypeKey);
       this.tiles[row][column] = `5.${i}`;
       let newGem = getNewGem(gemTypeKey, [0, 0]);
-      console.log(newGem);
       const gemValue = newGem.values[Utils.getRandomNumber(0, newGem.values.length)];
       newGem.value = gemValue;
       newGem.affectsMe = Utils.getRandomNumber(0, 2);
@@ -344,7 +342,6 @@ function getNewGem(type, parameters) {
       break;
     case 'HealGem':
       gem = new HealGem(0, 0, 0, 0, ...parameters);
-      console.log(gem);
       return gem;
       break;
   }
