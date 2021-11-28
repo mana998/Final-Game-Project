@@ -48,7 +48,7 @@ function handleWrongCode() {
 //Dagmara
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
-  socket.emit("removePlayer");
+  socket.emit("removePlayer", true);
   leaveGame();
   showMainMenu();
 }

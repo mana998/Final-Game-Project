@@ -154,8 +154,6 @@ io.on('connection', (socket) => {
   function startGame(gameCode) {
     const gameState = games[gameCode];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
-    console.log(allPlayerrsReadyToPlay);
-    console.log(gameState.players.length);
     if (allPlayerrsReadyToPlay === gameState.players.length) {
       // send new player position to each player
       gameState.players.map((player) => gameState.map.setPlayerStartPosition(player));
@@ -196,7 +194,7 @@ io.on('connection', (socket) => {
   }
 
   // Marianna
-  function handlePlayerDisconnect() {
+  function handlePlayerDisconnect(beforeGameStart='false') {
     if (games[playersRoomTable[socket.id]]) {
       // remove player from room
       games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter((player) => player.socketId !== socket.id);
@@ -207,7 +205,10 @@ io.on('connection', (socket) => {
         clearInterval(games[playersRoomTable[socket.id]].interval);
         delete games[playersRoomTable[socket.id]];
       }
-      socket.broadcast.emit('playGameAfterPlyerLeaves');
+      if (beforeGameStart) {
+        socket.broadcast.emit('playGameAfterPlyerLeaves');
+      }
+      
       // remove data about player
       delete playersRoomTable[socket.id];
     }
