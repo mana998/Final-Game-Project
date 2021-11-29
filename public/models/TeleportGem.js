@@ -12,7 +12,6 @@ class TeleportGem extends Gem { // Marianna
 
   onCollect(player) {
     //decide whether to reverse for current player or other players
-    console.log('teleport', this.affectsMe);
     if (this.affectsMe) {
       this.teleport(player, map);
     } else {
