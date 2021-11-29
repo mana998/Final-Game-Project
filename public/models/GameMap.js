@@ -52,13 +52,13 @@ class GameMap {
   // draw map in relation to player
   draw(ctx, player, canvasWidth, canvasHeight) {
     //limit rendering to 5 blocks around player
-    let rowStart = Math.floor(player.y / this.tileHeight - 5);
+    let rowStart = Math.floor(player.y / this.tileHeight - 8);
     if (rowStart < 0) rowStart = 0;
-    let rowEnd = Math.floor(player.y / this.tileHeight + 5);
+    let rowEnd = Math.floor(player.y / this.tileHeight + 8);
     if (rowEnd > this.tiles.length) rowEnd = this.tiles.length;
-    let columnStart = Math.floor(player.x / this.tileWidth - 5);
+    let columnStart = Math.floor(player.x / this.tileWidth - 8);
     if (columnStart < 0) columnStart = 0;
-    let columnEnd = Math.floor(player.x / this.tileWidth + 5);
+    let columnEnd = Math.floor(player.x / this.tileWidth + 8);
     if (columnEnd > this.tiles[0].length) columnEnd = this.tiles[0].length;
     //temporary solution to avoid making moving traps hidden behind the path
     for (let row = rowStart; row < rowEnd; row++) {
