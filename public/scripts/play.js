@@ -153,35 +153,58 @@ function movePlayer(e) {
   //! !!!THINK ABOUT STORING BLOCK TYPES IN SOME GLOBAL VARIABLES!!!!
   // 3rd parameter in isBlockCollision
   if (!playing || player.isDone) return;
+  let currentSpeed = player.speed;
+  let denominator = 1;
   switch (e.key) {
     case (e.key.match(player.movement.left)?.input):
       changeAnimation('left');
       // check for wall collision
-      if (!player.isBlockCollision(map, 'left', '', '', -player.speed, 0)) {
-        player.x -= player.speed;
-        player.isBlockCollision(map, 'left', canvas.height, canvas.width);
-      }
+      do {
+        currentSpeed = currentSpeed / denominator;
+        if (!player.isBlockCollision(map, 'left','', '', -currentSpeed, 0)) {
+          player.x -= currentSpeed;
+          player.isBlockCollision(map, 'left', canvas.height, canvas.width);
+        } else {
+          denominator = 2;
+        }
+      }while (player.isBlockCollision(map, 'left','', '', -currentSpeed, 0));
       break;
     case (e.key.match(player.movement.right)?.input):
       changeAnimation('right');
-      if (!player.isBlockCollision(map, 'right', '', '', player.speed, 0)) {
-        player.x += player.speed;
-        player.isBlockCollision(map, 'right', canvas.height, canvas.width);
-      }
+      do {
+        currentSpeed = currentSpeed / denominator;
+        if (!player.isBlockCollision(map, 'right','', '', currentSpeed, 0)) {
+          player.x += currentSpeed;
+          player.isBlockCollision(map, 'right', canvas.height, canvas.width);
+        } else {
+          denominator = 2;
+        }
+      }while (player.isBlockCollision(map, 'right','', '', currentSpeed, 0));
+      
       break;
     case (e.key.match(player.movement.up)?.input):
       changeAnimation('up');
-      if (!player.isBlockCollision(map, 'up', '', '', 0, -player.speed)) {
-        player.y -= player.speed;
-        player.isBlockCollision(map, 'up', canvas.height, canvas.width);
-      }
+      do {
+        currentSpeed = currentSpeed / denominator
+        if (!player.isBlockCollision(map, 'up','', '', 0, -currentSpeed)) {
+          player.y -= currentSpeed;
+          player.isBlockCollision(map, 'up', canvas.height, canvas.width);
+        } else {
+          denominator = 2;
+        }
+      }while (player.isBlockCollision(map, 'up','', '', 0, -currentSpeed));
       break;
     case (e.key.match(player.movement.down)?.input):
       changeAnimation('down');
-      if (!player.isBlockCollision(map, 'down', '', '', 0, player.speed)) {
-        player.y += player.speed;
-        player.isBlockCollision(map, 'down', canvas.height, canvas.width);
-      }
+      do {
+        currentSpeed = currentSpeed / denominator;
+        if (!player.isBlockCollision(map, 'down','', '', 0, currentSpeed)) {
+          player.y += currentSpeed;
+          player.isBlockCollision(map, 'down', canvas.height, canvas.width);
+        } else {
+          denominator = 2;
+        }
+      }while (player.isBlockCollision(map, 'down','', '', 0, currentSpeed));
       break;
     default:
       // no need to update server if player didn't move
@@ -220,13 +243,19 @@ socket.on('newFrame', (data) => {
 //reverse movement
 socket.on('reversePlayerMovement', () => {
   new ReverseMovementGem().swapMovement(player);
-})
+});
 
 //Dagmara
+
+//change players' speed
+socket.on('changePlayersSpeed', () => {
+  new SpeedGem().speed(player);
+});
+
 //heal player
 socket.on('healPlayers', () => {
   new HealGem().heal(player);
-})
+});
 
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
