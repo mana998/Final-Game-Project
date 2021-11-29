@@ -269,5 +269,11 @@ socket.on('doubleCoins', () => {
   new DoubleCoinsGem().doubleCoins(player);
 })
 
+//Marianna
+//freeze player
+socket.on('freezePlayer', (value) => {
+  new FreezeGem().freezePlayer(player, value);
+})
+
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)

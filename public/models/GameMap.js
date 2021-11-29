@@ -9,6 +9,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   HealGem = require('./HealGem').HealGem;
   TeleportGem = require('./TeleportGem').TeleportGem;
   DoubleCoinsGem = require('./DoubleCoinsGem').DoubleCoinsGem;
+  FreezeGem = require('./FreezeGem').FreezeGem;
   Trap = require('./Trap').Trap;
   MovingTrap = require('./MovingTrap').MovingTrap;
   Utils = require('./Utils').Utils;
@@ -42,7 +43,7 @@ class GameMap {
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
     this.gems = gems || [];
-    this.gemClasses = ['ReverseMovementGem', 'HealGem', 'SpeedGem', 'TeleportGem', 'DoubleCoinsGem'];
+    this.gemClasses = ['ReverseMovementGem', 'HealGem', 'SpeedGem', 'TeleportGem', 'DoubleCoinsGem', 'FreezeGem'];
     this.traps = traps || [];
     this.trapClasses = ['MovingTrap', 'Trap'];
   }
@@ -51,13 +52,13 @@ class GameMap {
   // draw map in relation to player
   draw(ctx, player, canvasWidth, canvasHeight) {
     //limit rendering to 5 blocks around player
-    let rowStart = Math.floor(player.y / this.tileHeight - 5);
+    let rowStart = Math.floor(player.y / this.tileHeight - 8);
     if (rowStart < 0) rowStart = 0;
-    let rowEnd = Math.floor(player.y / this.tileHeight + 5);
+    let rowEnd = Math.floor(player.y / this.tileHeight + 8);
     if (rowEnd > this.tiles.length) rowEnd = this.tiles.length;
-    let columnStart = Math.floor(player.x / this.tileWidth - 5);
+    let columnStart = Math.floor(player.x / this.tileWidth - 8);
     if (columnStart < 0) columnStart = 0;
-    let columnEnd = Math.floor(player.x / this.tileWidth + 5);
+    let columnEnd = Math.floor(player.x / this.tileWidth + 8);
     if (columnEnd > this.tiles[0].length) columnEnd = this.tiles[0].length;
     //temporary solution to avoid making moving traps hidden behind the path
     for (let row = rowStart; row < rowEnd; row++) {
@@ -333,6 +334,9 @@ function getNewGem(type, parameters) {
       break;
     case 'DoubleCoinsGem':
       gem = new DoubleCoinsGem(0, 0, 0, 0, ...parameters);
+      break;
+    case 'FreezeGem':
+      gem = new FreezeGem(0, 0, 0, 0, ...parameters);
       break;
     default:
   }
