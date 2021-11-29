@@ -14,7 +14,6 @@ class SpeedGem extends Gem { // Dagmara
       this.changePlayersSpeed(player);
       setTimeout(() => {
         player.speed = 4;
-        console.log(player.speed);
       },this.value)
     }
   
@@ -23,20 +22,17 @@ class SpeedGem extends Gem { // Dagmara
       if (this.affectsMe) {
         this.speed(player);
       } else {
-        //socket.emit('changePlayersSpeed');
-        this.speed(player);
+        socket.emit('changePlayersSpeed');
       }
     }
   
     //heal player
     speed(player) {
-        const speedSign = true//Math.random() < 0.5;
-        console.log('speed');
+        const speedSign = Math.random() < 0.5;
         if (player.speed == 16 || player.speed == 2) {
             //message,: I can't change my speed!
         } else {
             player.speed = speedSign ? player.speed*2 : player.speed/2;
-            console.log(player.speed);
         }
       //
     }
