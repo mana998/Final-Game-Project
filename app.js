@@ -32,7 +32,7 @@ app.use(handleSession.router);
 // import game class
 const { Game } = require('./private/models/Game');
 // import utils class
-const Utilities = require('./private/models/Utils').Utils;
+const Utilities = require('./public/models/Utils').Utils;
 // create utils object
 const Utils = new Utilities();
 
@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
     // eslint-disable-next-line global-require
     const { GameMap } = require('./public/models/GameMap');
     const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
-    const map = new GameMap('', '', '', '', '', Utils);
+    const map = new GameMap('', '', '', '', '');
     // eslint-disable-next-line global-require
     map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require
     games[roomName].map = map;
@@ -232,12 +232,12 @@ io.on('connection', (socket) => {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('reversePlayerMovement');
   }
 
-  function handleReverseMovement() {
-    socket.broadcast.to(playersRoomTable[socket.id]).emit('reversePlayerMovement');
-  }
-
   function handleHealPlayer() {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('healPlayers');
+  }
+
+  function handleTeleportPlayer() {
+    socket.broadcast.to(playersRoomTable[socket.id]).emit('teleportPlayer');
   }
 
   socket.on('newGame', handleNewGameCreation);
@@ -253,6 +253,7 @@ io.on('connection', (socket) => {
   socket.on('stopInterval', handleStopInterval);
   socket.on('reverseMovement', handleReverseMovement);
   socket.on('healPlayer', handleHealPlayer);
+  socket.on('teleportPlayer', handleTeleportPlayer);
 });
 
 const PORT = process.env.PORT || 8080;

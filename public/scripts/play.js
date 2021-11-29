@@ -257,5 +257,11 @@ socket.on('healPlayers', () => {
   new HealGem().heal(player);
 });
 
+//Marianna
+//teleport player movement
+socket.on('teleportPlayer', () => {
+  new TeleportGem().teleport(player, map);
+})
+
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)

@@ -3,7 +3,7 @@ const db = require('../database/connection').connection;
 const bcrypt = require('bcrypt');
 
 // import utils class
-const Utilities = require('./models/Utils').Utils;
+const Utilities = require('../public/models/Utils').Utils;
 // create utils object
 const Utils = new Utilities();
 
