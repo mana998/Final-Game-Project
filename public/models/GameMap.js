@@ -221,7 +221,7 @@ class GameMap {
       //get gem type key
       const gemTypeKey = this.gemClasses[Utils.getRandomNumber(0, this.gemClasses.length)];
       this.tiles[row][column] = `5.${i}`;
-      let newGem = getNewGem(gemTypeKey, [0, 0]);
+      let newGem = getNewGem("SpeedGem", [0, 0]);
       const gemValue = newGem.values[Utils.getRandomNumber(0, newGem.values.length)];
       newGem.value = gemValue;
       newGem.affectsMe = Utils.getRandomNumber(0, 2);
