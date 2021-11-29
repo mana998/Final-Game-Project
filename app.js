@@ -240,6 +240,10 @@ io.on('connection', (socket) => {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('teleportPlayer');
   }
 
+  function handleDoubleCoins() {
+    socket.broadcast.to(playersRoomTable[socket.id]).emit('doubleCoins');
+  }
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -254,6 +258,7 @@ io.on('connection', (socket) => {
   socket.on('reverseMovement', handleReverseMovement);
   socket.on('healPlayer', handleHealPlayer);
   socket.on('teleportPlayer', handleTeleportPlayer);
+  socket.on('doubleCoins', handleDoubleCoins);
 });
 
 const PORT = process.env.PORT || 8080;
