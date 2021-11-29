@@ -6,6 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   Gem = require('./Gem').Gem;
   ReverseMovementGem = require('./ReverseMovementGem').ReverseMovementGem;
   SpeedGem = require('./SpeedGem').SpeedGem;
+  HealGem = require('./HealGem').HealGem;
   Trap = require('./Trap').Trap;
   MovingTrap = require('./MovingTrap').MovingTrap;
 }
@@ -40,7 +41,7 @@ class GameMap {
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
     this.gems = gems || [];
-    this.gemClasses = ['ReverseMovementGem', 'SpeedGem'];
+    this.gemClasses = ['ReverseMovementGem', 'HealGem', 'SpeedGem'];
     this.traps = traps || [];
     this.trapClasses = ['MovingTrap', 'Trap'];
   }
@@ -57,6 +58,18 @@ class GameMap {
     if (columnStart < 0) columnStart = 0;
     let columnEnd = Math.floor(player.x / this.tileWidth + 5);
     if (columnEnd > this.tiles[0].length) columnEnd = this.tiles[0].length;
+    //temporary solution to avoid making moving traps hidden behind the path
+    for (let row = rowStart; row < rowEnd; row++) {
+      for (let column = columnStart; column < columnEnd; column++) {
+        path.draw(
+          ctx,
+          (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
+          ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
+          this.tileWidth,
+          this.tileHeight,
+        );
+      }
+    }
     for (let row = rowStart; row < rowEnd; row++) {
       for (let column = columnStart; column < columnEnd; column++) {
         switch (this.tiles[row][column]) {
@@ -73,13 +86,6 @@ class GameMap {
             break;
             // coin match
           case String(this.tiles[row][column]).match(/^4/)?.input:
-            path.draw(
-              ctx,
-              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
-              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
-              this.tileWidth,
-              this.tileHeight,
-            );
             // take one coin to draw as they are the same
             coin.draw(
               ctx,
@@ -90,13 +96,6 @@ class GameMap {
             );
             break;
           case String(this.tiles[row][column]).match(/^5/)?.input:
-            path.draw(
-              ctx,
-              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
-              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
-              this.tileWidth,
-              this.tileHeight,
-            );
             // take one gem to draw as they are the same
             gem.draw(
               ctx,
@@ -107,13 +106,6 @@ class GameMap {
             );
             break;
           case String(this.tiles[row][column]).match(/^6/)?.input:
-            path.draw(
-              ctx,
-              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
-              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
-              this.tileWidth,
-              this.tileHeight,
-            );
             // take one trap to draw as they are the same, the traps image will be different but for now only one img
             //draw all traps but only first occurence of moving trap
             if (String(this.tiles[row][column]).match(/^(6\.\d+|6\.\d+\.1)$/)) {
@@ -231,9 +223,10 @@ class GameMap {
 
   generateTraps(amount) {
     // for every trp, for now trap size is one block but we can change it
-    const trapValues = [1, 0.5, 2, 5, 9];
+    const trapValues = [0.1, 0.5, 0.2, 1, 0.9];
     for (let i = 0; i < amount; i++) {
-      const trapTypeKey = this.trapClasses[Utils.getRandomNumber(0, this.trapClasses.length)];
+      //const trapTypeKey = this.trapClasses[Utils.getRandomNumber(0, this.trapClasses.length)];
+      const trapTypeKey = 'MovingTrap';
       switch (trapTypeKey) {
         case 'MovingTrap':
           //trap should spread at least through 2 tiles so player can avoid it
@@ -267,6 +260,8 @@ class GameMap {
                 while (this.tiles[endRow + 1][startColumn] === 0 && this.tiles[endRow + 1][endColumn] === 0) {
                   endRow++;
                 }
+                //columns stay the same so reset them to 1 number
+                endColumn = startColumn;
                 break;
               case 1: //collumns
                 while (this.tiles[startRow][startColumn - 1] === 0 && this.tiles[endRow][startColumn - 1] === 0) {
@@ -276,32 +271,10 @@ class GameMap {
                 while (this.tiles[startRow][endColumn + 1] === 0 && this.tiles[endRow][endColumn + 1] === 0) {
                   endColumn++;
                 }
+                //rows stay the same so reset them to 1 number
+                endRow = startRow;
                 break;
             }
-            //modify start column
-            /*let expandColumn = true;
-            while (expandColumn) {
-              for (let row = startRow; row <= endRow; row++) {
-                if (this.tiles[row][startColumn-1] !== 0) {
-                  expandColumn = false;
-                  break;
-                }
-              }
-              startColumn--;
-            }*/
-            //console.log('startcolumn', startColumn);
-            //modify end column
-            /*expandColumn = true;
-            while (expandColumn) {
-              for (let row = startRow; row <= endRow; row++) {
-                if (this.tiles[row][endColumn+1] !== 0) {
-                  expandColumn = false;
-                  break;
-                }
-              }
-              endColumn++;
-            }*/
-            //add trap to the map
             let first = true;
             for (let row = startRow; row <= endRow; row++) {
               for (let column = startColumn; column <= endColumn; column++) {
@@ -314,8 +287,9 @@ class GameMap {
                 }
               }
             }
-            //TO DO: change hardcoded values
-            this.traps.push(new MovingTrap('', '', '', '', movingTrap, 10, 10));
+            let newTrap = new MovingTrap('', '', '', '', movingTrap, 0, 1, '', startRow, endRow, startColumn, endColumn);
+            newTrap.value = newTrap.values[Utils.getRandomNumber(0, newTrap.values.length)];
+            this.traps.push(newTrap);
             break;
           } // else it falls down to dafault case
         default:
@@ -331,22 +305,31 @@ class GameMap {
       }
     }
   }
-}
 
-if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { GameMap };
+  checkCollision(obj1, obj2) {
+    //console.log('obj1', obj1, 'obj2', obj2);
+    return (obj1.x < obj2.x + obj2.width &&
+      obj1.x + obj1.width > obj2.x &&
+      obj1.y < obj2.y + obj2.height &&
+      obj1.height + obj1.y > obj2.y)
+  }
+}
 
 function getNewGem(type, parameters) {
   let gem;
   switch (type) {
     case 'ReverseMovementGem':
       gem = new ReverseMovementGem(0, 0, 0, 0, ...parameters);
-      return gem;
       break;
     case 'SpeedGem':
       gem = new SpeedGem(0, 0, 0, 0, ...parameters);
-      return gem;
       break;
+    case 'HealGem':
+      gem = new HealGem(0, 0, 0, 0, ...parameters);
+      break;
+    default:
   }
+  return gem;
 }
 
 function getNewTrap(type, parameters) {
@@ -362,3 +345,5 @@ function getNewTrap(type, parameters) {
       return trap;
   }
 }
+
+if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { GameMap };

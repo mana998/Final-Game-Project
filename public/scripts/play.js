@@ -64,6 +64,8 @@ function draw(data) {
       );
       compareToPlayer = spectatingPlayer;
     }
+  } else {
+    player.isMovingTrapCollision(map, canvas.height, canvas.width)
   }
   // draw map
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
@@ -106,19 +108,6 @@ function draw(data) {
 // update server if something on the client changed
 function updateServerPlayer() {
   socket.emit('clientPlayerUpdated', {player});
-}
-
-function handleMapCreated(data) {
-  map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
-  data.gameMap.coins.map(coin => {
-    coin = new Coin(0, 0, 32, 32, coin.value);
-  })
-  for (let i = 0; i < data.gameMap.gems.length; i++) {
-      map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
-  }
-  for (let i = 0; i < data.gameMap.traps.length; i++) {
-    map.traps[i] = getNewTrap(data.trapTypes[i], [data.gameMap.traps[i].img, data.gameMap.traps[i].value, data.gameMap.traps[i].speed]);
-  }
 }
 
 function handleMapUpdated(tiles) {
@@ -172,51 +161,50 @@ function movePlayer(e) {
       // check for wall collision
       do {
         currentSpeed = currentSpeed / denominator;
-        if (!player.isBlockCollision(map, 'left', -currentSpeed, 0)) {
+        if (!player.isBlockCollision(map, 'left','', '', -currentSpeed, 0)) {
           player.x -= currentSpeed;
-          player.isBlockCollision(map, 'left');
+          player.isBlockCollision(map, 'left', canvas.height, canvas.width);
         } else {
           denominator = 2;
         }
-      }while (player.isBlockCollision(map, 'left', -currentSpeed, 0));
+      }while (player.isBlockCollision(map, 'left','', '', -currentSpeed, 0));
       break;
     case (e.key.match(player.movement.right)?.input):
       changeAnimation('right');
       do {
         currentSpeed = currentSpeed / denominator;
-        if (!player.isBlockCollision(map, 'right', currentSpeed, 0)) {
+        if (!player.isBlockCollision(map, 'right','', '', currentSpeed, 0)) {
           player.x += currentSpeed;
-          player.isBlockCollision(map, 'right');
+          player.isBlockCollision(map, 'right', canvas.height, canvas.width);
         } else {
           denominator = 2;
         }
-      }while (player.isBlockCollision(map, 'right', currentSpeed, 0));
+      }while (player.isBlockCollision(map, 'right','', '', currentSpeed, 0));
       
       break;
     case (e.key.match(player.movement.up)?.input):
       changeAnimation('up');
       do {
         currentSpeed = currentSpeed / denominator
-        if (!player.isBlockCollision(map, 'up', 0, -currentSpeed)) {
+        if (!player.isBlockCollision(map, 'up','', '', 0, -currentSpeed)) {
           player.y -= currentSpeed;
-          player.isBlockCollision(map, 'up');
+          player.isBlockCollision(map, 'up', canvas.height, canvas.width);
         } else {
           denominator = 2;
         }
-      }while (player.isBlockCollision(map, 'up', 0, -currentSpeed));
+      }while (player.isBlockCollision(map, 'up','', '', 0, -currentSpeed));
       break;
     case (e.key.match(player.movement.down)?.input):
       changeAnimation('down');
       do {
         currentSpeed = currentSpeed / denominator;
-        if (!player.isBlockCollision(map, 'down', 0, currentSpeed)) {
+        if (!player.isBlockCollision(map, 'down','', '', 0, currentSpeed)) {
           player.y += currentSpeed;
-          player.isBlockCollision(map, 'down');
+          player.isBlockCollision(map, 'down', canvas.height, canvas.width);
         } else {
           denominator = 2;
         }
-      }while (player.isBlockCollision(map, 'down', 0, currentSpeed));
-      
+      }while (player.isBlockCollision(map, 'down','', '', 0, currentSpeed));
       break;
     default:
       // no need to update server if player didn't move
@@ -224,6 +212,19 @@ function movePlayer(e) {
   }
   // add update of server
   updateServerPlayer();
+}
+
+function handleMapCreated(data) {
+  map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
+  data.gameMap.coins.map(coin => {
+    coin = new Coin(0, 0, 32, 32, coin.value);
+  })
+  for (let i = 0; i < data.gameMap.gems.length; i++) {
+      map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
+  }
+  for (let i = 0; i < data.gameMap.traps.length; i++) {
+    map.traps[i] = getNewTrap(data.trapTypes[i], [data.gameMap.traps[i].img, data.gameMap.traps[i].value, data.gameMap.traps[i].speed, data.gameMap.traps[i].direction, data.gameMap.traps[i].startRow, data.gameMap.traps[i].endRow, data.gameMap.traps[i].startColumn, data.gameMap.traps[i].endColumn]);
+  }
 }
 
 // event listener for start of the movement
@@ -242,13 +243,19 @@ socket.on('newFrame', (data) => {
 //reverse movement
 socket.on('reversePlayerMovement', () => {
   new ReverseMovementGem().swapMovement(player);
-})
+});
 
 //Dagmara
+
 //change players' speed
 socket.on('changePlayersSpeed', () => {
   new SpeedGem().speed(player);
-})
+});
+
+//heal player
+socket.on('healPlayers', () => {
+  new HealGem().heal(player);
+});
 
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
