@@ -8,7 +8,10 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   HealGem = require('./HealGem').HealGem;
   Trap = require('./Trap').Trap;
   MovingTrap = require('./MovingTrap').MovingTrap;
+  Utils = require('./Utils').Utils;
 }
+
+let Utilities = new Utils();
 
 const wall = new Img('./assets/images/game/wall.png', 0, 0, 0, 0, 0, 1);
 const goal = new Img('./assets/images/game/goal.png', 0, 0, 0, 0, 0, 1);
@@ -19,12 +22,8 @@ const gem = new Img('./assets/images/game/gem.png', 0, 0, 0, 3, 5, 1);
 const trap = new Img('./assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
 const movingTrap = new Img('./assets/images/game/ninjaStar.png', 0, 0, 0, 0, 0, 1);
 
-let Utils;
-
 class GameMap {
-  constructor(tiles, timeLimit, coins, gems, traps, Utilities) {
-    // utils object - use new one if passed else keep the old one
-    Utils = Utilities || Utils;
+  constructor(tiles, timeLimit, coins, gems, traps) {
     // 0 path
     // 1 wall
     // 2 goal
@@ -150,8 +149,8 @@ class GameMap {
     // get random position for goal
     let [row, column] = [-1, -1];
     do {
-      row = Utils.getRandomNumber(0, this.tiles.length);
-      column = Utils.getRandomNumber(0, this.tiles[row].length);
+      row = Utilities.getRandomNumber(0, this.tiles.length);
+      column = Utilities.getRandomNumber(0, this.tiles[row].length);
     } while (this.tiles[row][column] !== 0);
     this.tiles[row][column] = 2;
     this.goalRow = row;
@@ -175,8 +174,8 @@ class GameMap {
   setPlayerStartPosition(player) {
     let [row, column] = [-1, -1];
     do {
-      row = Utils.getRandomNumber(0, this.tiles.length);
-      column = Utils.getRandomNumber(0, this.tiles[row].length);
+      row = Utilities.getRandomNumber(0, this.tiles.length);
+      column = Utilities.getRandomNumber(0, this.tiles[row].length);
       // at least third of the map away from the goal
     } while (Math.abs(row - this.goalRow) < this.tiles.length / 3 || Math.abs(column - this.goalColumn) < this.tiles[row].length / 3 || this.tiles[row][column] !== 0);
     this.tiles[row][column] = 3;
@@ -190,12 +189,12 @@ class GameMap {
     for (let i = 0; i < amount; i++) {
       let [row, column] = [-1, -1];
       do {
-        row = Utils.getRandomNumber(0, this.tiles.length);
-        column = Utils.getRandomNumber(0, this.tiles[row].length);
+        row = Utilities.getRandomNumber(0, this.tiles.length);
+        column = Utilities.getRandomNumber(0, this.tiles[row].length);
         // has to be empty block
       } while (this.tiles[row][column] !== 0);
       this.tiles[row][column] = `4.${i}`;
-      this.coins.push(new Coin(0, 0, 32, 32, coinValues[Utils.getRandomNumber(0, coinValues.length)]));
+      this.coins.push(new Coin(0, 0, 32, 32, coinValues[Utilities.getRandomNumber(0, coinValues.length)]));
     }
   }
 
@@ -204,18 +203,18 @@ class GameMap {
     for (let i = 0; i < amount; i++) {
       let [row, column] = [-1, -1];
       do {
-        row = Utils.getRandomNumber(0, this.tiles.length);
-        column = Utils.getRandomNumber(0, this.tiles[row].length);
+        row = Utilities.getRandomNumber(0, this.tiles.length);
+        column = Utilities.getRandomNumber(0, this.tiles[row].length);
         // has to be empty block
       } while (this.tiles[row][column] !== 0);
       //add random type based on keys in gemTypes
       //get gem type key
-      const gemTypeKey = this.gemClasses[Utils.getRandomNumber(0, this.gemClasses.length)];
+      const gemTypeKey = this.gemClasses[Utilities.getRandomNumber(0, this.gemClasses.length)];
       this.tiles[row][column] = `5.${i}`;
       let newGem = getNewGem(gemTypeKey, [0, 0]);
-      const gemValue = newGem.values[Utils.getRandomNumber(0, newGem.values.length)];
+      const gemValue = newGem.values[Utilities.getRandomNumber(0, newGem.values.length)];
       newGem.value = gemValue;
-      newGem.affectsMe = Utils.getRandomNumber(0, 2);
+      newGem.affectsMe = Utilities.getRandomNumber(0, 2);
       this.gems.push(newGem);
     }
   }
@@ -224,7 +223,7 @@ class GameMap {
     // for every trp, for now trap size is one block but we can change it
     const trapValues = [0.1, 0.5, 0.2, 1, 0.9];
     for (let i = 0; i < amount; i++) {
-      //const trapTypeKey = this.trapClasses[Utils.getRandomNumber(0, this.trapClasses.length)];
+      //const trapTypeKey = this.trapClasses[Utilities.getRandomNumber(0, this.trapClasses.length)];
       const trapTypeKey = 'MovingTrap';
       switch (trapTypeKey) {
         case 'MovingTrap':
@@ -235,8 +234,8 @@ class GameMap {
           let [startRow, endRow, startColumn, endColumn] = [-1, -1, -1, -1];
           do {
             //start row and collumn will have additional number in tilemap to trigger draw only once
-            startRow = Utils.getRandomNumber(0, this.tiles.length);
-            startColumn = Utils.getRandomNumber(0, this.tiles[startRow].length);
+            startRow = Utilities.getRandomNumber(0, this.tiles.length);
+            startColumn = Utilities.getRandomNumber(0, this.tiles[startRow].length);
             // has to be empty block
             tries++;
           } while (tries < maxTries && (this.tiles[startRow][startColumn] !== 0 || //current block needs to be 0
@@ -249,7 +248,7 @@ class GameMap {
             endRow = startRow + 1;
             endColumn = startColumn + 1;
             //decide on direction of the trap
-            const direction = Utils.getRandomNumber(0, 2);
+            const direction = Utilities.getRandomNumber(0, 2);
             switch (direction) {
               case 0: //rows
                 while (this.tiles[startRow - 1][startColumn] === 0 && this.tiles[startRow - 1][endColumn] === 0) {
@@ -287,19 +286,19 @@ class GameMap {
               }
             }
             let newTrap = new MovingTrap('', '', '', '', movingTrap, 0, 1, '', startRow, endRow, startColumn, endColumn);
-            newTrap.value = newTrap.values[Utils.getRandomNumber(0, newTrap.values.length)];
+            newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
             this.traps.push(newTrap);
             break;
           } // else it falls down to dafault case
         default:
           let [row, column] = [-1, -1];
           do {
-            row = Utils.getRandomNumber(0, this.tiles.length);
-            column = Utils.getRandomNumber(0, this.tiles[row].length);
+            row = Utilities.getRandomNumber(0, this.tiles.length);
+            column = Utilities.getRandomNumber(0, this.tiles[row].length);
             // has to be empty block
           } while (this.tiles[row][column] !== 0);
           this.tiles[row][column] = `6.${i}`;
-          this.traps.push(new Trap(0, 0, 32, 32, trap, trapValues[Utils.getRandomNumber(0, trapValues.length)]));
+          this.traps.push(new Trap(0, 0, 32, 32, trap, trapValues[Utilities.getRandomNumber(0, trapValues.length)]));
           break;
       }
     }

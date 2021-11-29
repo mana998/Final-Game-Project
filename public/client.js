@@ -1,6 +1,9 @@
 // control variable to check whether game is in-progress
 let playing = false;
 
+//global Utils object
+//const Utilities = new Utils();
+
 // setup socket
 const socket = io();
 
