@@ -263,5 +263,11 @@ socket.on('teleportPlayer', () => {
   new TeleportGem().teleport(player, map);
 })
 
+//Marianna
+//double player coins
+socket.on('doubleCoins', () => {
+  new DoubleCoinsGem().doubleCoins(player);
+})
+
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)

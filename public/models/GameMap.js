@@ -8,6 +8,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   SpeedGem = require('./SpeedGem').SpeedGem;
   HealGem = require('./HealGem').HealGem;
   TeleportGem = require('./TeleportGem').TeleportGem;
+  DoubleCoinsGem = require('./DoubleCoinsGem').DoubleCoinsGem;
   Trap = require('./Trap').Trap;
   MovingTrap = require('./MovingTrap').MovingTrap;
   Utils = require('./Utils').Utils;
@@ -41,7 +42,7 @@ class GameMap {
     this.timeLimit = timeLimit || 0;
     this.coins = coins || [];
     this.gems = gems || [];
-    this.gemClasses = ['ReverseMovementGem', 'HealGem', 'SpeedGem', 'TeleportGem'];
+    this.gemClasses = ['ReverseMovementGem', 'HealGem', 'SpeedGem', 'TeleportGem', 'DoubleCoinsGem'];
     this.traps = traps || [];
     this.trapClasses = ['MovingTrap', 'Trap'];
   }
@@ -329,6 +330,9 @@ function getNewGem(type, parameters) {
       break;
     case 'TeleportGem':
       gem = new TeleportGem(0, 0, 0, 0, ...parameters);
+      break;
+    case 'DoubleCoinsGem':
+      gem = new DoubleCoinsGem(0, 0, 0, 0, ...parameters);
       break;
     default:
   }
