@@ -14,6 +14,7 @@ class DoubleCoinsGem extends Gem { // Marianna
     //decide whether to reverse for current player or other players
     if (this.affectsMe) {
       this.doubleCoins(player);
+      super.onCollect();
     } else {
       socket.emit('doubleCoins');
     }

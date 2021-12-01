@@ -49,6 +49,7 @@ class MovingTrap extends Trap {
     }
 
     onCollision () {
+        super.onCollision();
         console.log("Ow no, moving this!");
     }
 

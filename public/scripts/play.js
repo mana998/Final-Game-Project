@@ -219,7 +219,6 @@ function handleMapCreated(data) {
   for (let i = 0; i < data.gameMap.coins.length; i++) {
     map.coins[i] = new Coin(0, 0, 32, 32, data.gameMap.coins[i].value);
   }
-  console.log(data.gameMap.coins);
   for (let i = 0; i < data.gameMap.gems.length; i++) {
       map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
   }

@@ -18,6 +18,7 @@ class HealGem extends Gem { // Dagmara
     healPlayer(player) {
       if (this.affectsMe) {
         this.heal(player);
+        super.onCollect();
       } else {
         socket.emit('healPlayer');
       }

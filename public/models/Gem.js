@@ -2,7 +2,10 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   // used on the server
   // eslint-disable-next-line global-require
   Collectible = require('./Collectible').Collectible;
+  Sound = require('./Sound').Sound;
 }
+
+const collectGemSound = new Sound('gem');
 
 class Gem extends Collectible { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
@@ -11,7 +14,7 @@ class Gem extends Collectible { // Marianna
   }
 
   onCollect() {
-    console.log('Better luck next time', this);
+    collectGemSound.play();
   }
 }
 

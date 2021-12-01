@@ -2,7 +2,10 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
     // used on the server
     // eslint-disable-next-line global-require
     GameObject = require('./GameObject').GameObject;
-  }
+    Sound = require('./Sound').Sound;
+}
+
+const trapSound = new Sound('hit');
 
 class Trap extends GameObject {
     constructor(x, y, width, height, img, value) {
@@ -12,6 +15,7 @@ class Trap extends GameObject {
 
     onCollision () {
         console.log("Ow no, trap!");
+        trapSound.play();
     }
 }
 
