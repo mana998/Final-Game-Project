@@ -220,11 +220,11 @@ class GameMap {
     // for every trp, for now trap size is one block but we can change it
     for (let i = 0; i < amount; i++) {
       const trapTypeKey = this.trapClasses[Utilities.getRandomNumber(0, this.trapClasses.length)];
-      const maxTries = 100; //try to find place 100 times before giving up 
-      let tries = 0;
-      let [startRow, endRow, startColumn, endColumn] = [-1, -1, -1, -1];
       switch (trapTypeKey) {
         case 'MovingTrap':
+          const maxTries = 100; //try to find place 100 times before giving up 
+          let tries = 0;
+          let [startRow, endRow, startColumn, endColumn] = [-1, -1, -1, -1];
           //trap should spread at least through 2 tiles so player can avoid it
           //it additionally needs  at least 2x2 area to not block paths with width 1
           do {
@@ -282,11 +282,13 @@ class GameMap {
             }
             let newTrap = new MovingTrap('', '', '', '', movingTrap, 0, 1, '', startRow, endRow, startColumn, endColumn);
             newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
-            console.log(newTrap);
             this.traps.push(newTrap);
             break;
           } // else it falls down to dafault case
         case 'OnOffTrap':
+          const maxTries2 = 100; //try to find place 100 times before giving up 
+          let tries2 = 0;
+          let [startRow2, endRow2, startColumn2, endColumn2] = [-1, -1, -1, -1];
           //direction
           const direction = Utilities.getRandomNumber(0, 2);
           //how long th trap will be active
@@ -297,39 +299,39 @@ class GameMap {
           switch (direction) {
             case 0: //rows
               do {
-                startRow = Utilities.getRandomNumber(0, this.tiles.length);
-                startColumn = Utilities.getRandomNumber(0, this.tiles[startRow].length);
-                tries++;
-              } while (tries < maxTries && (
-                this.tiles[startRow][startColumn] !== 0 || //current block needs to be 0
-                startRow + 1 >= this.tiles.length ||  //whether it is in te map
-                startRow - 1 >= this.tiles.length || 
-                this.tiles[startRow+1][startColumn] !== 0 ||
-                this.tiles[startRow-1][startColumn] !== 0)
+                startRow2 = Utilities.getRandomNumber(0, this.tiles.length);
+                startColumn2 = Utilities.getRandomNumber(0, this.tiles[startRow2].length);
+                tries2++;
+              } while (tries2 < maxTries2 && (
+                this.tiles[startRow2][startColumn2] !== 0 || //current block needs to be 0
+                startRow2 + 1 >= this.tiles.length ||  //whether it is in te map
+                startRow2 - 1 >= this.tiles.length || 
+                this.tiles[startRow2+1][startColumn2] !== 0 ||
+                this.tiles[startRow2-1][startColumn2] !== 0)
               );
-              endRow = startRow + 1;
-              endColumn = startColumn;
+              endRow2 = startRow2 + 1;
+              endColumn2 = startColumn2;
               break;
             case 1: //collumns
               do {
-                startRow = Utilities.getRandomNumber(0, this.tiles.length);
-                startColumn = Utilities.getRandomNumber(0, this.tiles[startRow].length);
-                tries++;
+                startRow2 = Utilities.getRandomNumber(0, this.tiles.length);
+                startColumn2 = Utilities.getRandomNumber(0, this.tiles[startRow2].length);
+                tries2++;
 
-              } while (tries < maxTries && (this.tiles[startRow][startColumn] !== 0 || //current block needs to be 0
-                startColumn + 1 >= this.tiles[startRow].length || 
-                startColumn - 1 >= this.tiles[startRow].length || 
-                this.tiles[startRow][startColumn + 1] !== 0 ||
-                this.tiles[startRow][startColumn - 1] !== 0)
+              } while (tries2 < maxTries2 && (this.tiles[startRow2][startColumn2] !== 0 || //current block needs to be 0
+                startColumn2 + 1 >= this.tiles[startRow2].length || 
+                startColumn2 - 1 >= this.tiles[startRow2].length || 
+                this.tiles[startRow2][startColumn2 + 1] !== 0 ||
+                this.tiles[startRow2][startColumn2 - 1] !== 0)
               );
-              endRow = startRow;
-              endColumn = startColumn + 1;
+              endRow2 = startRow2;
+              endColumn2 = startColumn2 + 1;
               break;
           }
 
-          if (tries < maxTries) {
-            for (let row = startRow; row <= endRow; row++) {
-              for (let column = startColumn; column <= endColumn; column++) {
+          if (tries2 < maxTries2) {
+            for (let row = startRow2; row <= endRow2; row++) {
+              for (let column = startColumn2; column <= endColumn2; column++) {
                 this.tiles[row][column] = `6.${i}`;
               }
             }
@@ -339,21 +341,25 @@ class GameMap {
           }
           break;
         default:
+          const maxTries3 = 100; //try to find place 100 times before giving up 
+          let tries3 = 0;
+          let [startRow3, endRow3, startColumn3, endColumn3] = [-1, -1, -1, -1];
           const trapTime = [1000, 2000, 5000, 4000, 3000];
           const activeTrapTime = trapTime[Utilities.getRandomNumber(0, trapTime.length)];
           //decide if the trap should appear on or off
           const isTrapActive = Utilities.getRandomNumber(0,2);
           do {
-            startRow = Utilities.getRandomNumber(0, this.tiles.length);
-            startColumn = Utilities.getRandomNumber(0, this.tiles[startRow].length);
+            startRow3 = Utilities.getRandomNumber(0, this.tiles.length);
+            startColumn3 = Utilities.getRandomNumber(0, this.tiles[startRow3].length);
           } while (
-            this.tiles[startRow][startColumn] !== 0 //current block needs to be 0  
+            this.tiles[startRow3][startColumn3] !== 0 //current block needs to be 0  
           );
 
-          this.tiles[startRow][startColumn] = `6.${i}`;
+          this.tiles[startRow3][startColumn3] = `6.${i}`;
           let newTrap = new OnOffTrap(0, 0, 32, 32, onOffTrap, '',activeTrapTime, isTrapActive);
           newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
           this.traps.push(newTrap);
+          break;
       }
     }
   }
