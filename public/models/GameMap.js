@@ -48,7 +48,7 @@ class GameMap {
     this.gems = gems || [];
     this.gemClasses = ['ReverseMovementGem', 'HealGem', 'SpeedGem', 'TeleportGem', 'DoubleCoinsGem', 'FreezeGem'];
     this.traps = traps || [];
-    this.trapClasses = ['MovingTrap', 'OnOffTrap'];
+    this.trapClasses = ['MovingTrap', 'OnOffTrap', 'Trap'];
   }
 
   // Marianna
@@ -78,18 +78,6 @@ class GameMap {
     for (let row = rowStart; row < rowEnd; row++) {
       for (let column = columnStart; column < columnEnd; column++) {
         switch (this.tiles[row][column]) {
-          case 0:
-            // draw path under the player
-          case 3:
-            path.draw(
-              ctx,
-              (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
-              ((canvasHeight - player.height) / 2) - player.y + (row + 1) * this.tileHeight,
-              this.tileWidth,
-              this.tileHeight,
-            );
-            break;
-            // coin match
           case String(this.tiles[row][column]).match(/^4/)?.input:
             // take one coin to draw as they are the same
             coin.draw(
@@ -115,6 +103,8 @@ class GameMap {
             //draw all traps but only first occurence of moving trap
             if (String(this.tiles[row][column]).match(/^(6\.\d+|6\.\d+\.1)$/)) {
               const blockValue = this.tiles[row][column].split('.');
+              //console.log(blockValue);
+              //console.log(this.tiles[row][column]);
               map.traps[parseInt(blockValue[1])].draw(
                 ctx,
                 (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
@@ -228,7 +218,6 @@ class GameMap {
 
   generateTraps(amount) {
     // for every trp, for now trap size is one block but we can change it
-    const trapValues = [0.1, 0.5, 0.2, 1, 0.9];
     for (let i = 0; i < amount; i++) {
       const trapTypeKey = this.trapClasses[Utilities.getRandomNumber(0, this.trapClasses.length)];
       const maxTries = 100; //try to find place 100 times before giving up 
@@ -293,6 +282,7 @@ class GameMap {
             }
             let newTrap = new MovingTrap('', '', '', '', movingTrap, 0, 1, '', startRow, endRow, startColumn, endColumn);
             newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
+            console.log(newTrap);
             this.traps.push(newTrap);
             break;
           } // else it falls down to dafault case
@@ -343,21 +333,27 @@ class GameMap {
                 this.tiles[row][column] = `6.${i}`;
               }
             }
-            let newTrap = new OnOffTrap(0, 0, 32, 32, onOffTrap, '',activeTime, isActive, startRow, endRow, startColumn, endColumn);
+            let newTrap = new OnOffTrap(0, 0, 32, 32, onOffTrap, '',activeTime, isActive);
             newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
             this.traps.push(newTrap);
           }
           break;
         default:
-          let [row, column] = [-1, -1];
+          const trapTime = [1000, 2000, 5000, 4000, 3000];
+          const activeTrapTime = trapTime[Utilities.getRandomNumber(0, trapTime.length)];
+          //decide if the trap should appear on or off
+          const isTrapActive = Utilities.getRandomNumber(0,2);
           do {
-            row = Utilities.getRandomNumber(0, this.tiles.length);
-            column = Utilities.getRandomNumber(0, this.tiles[row].length);
-            // has to be empty block
-          } while (this.tiles[row][column] !== 0);
-          this.tiles[row][column] = `6.${i}`;
-          this.traps.push(new Trap(0, 0, 32, 32, trap, trapValues[Utilities.getRandomNumber(0, trapValues.length)]));
-          break;
+            startRow = Utilities.getRandomNumber(0, this.tiles.length);
+            startColumn = Utilities.getRandomNumber(0, this.tiles[startRow].length);
+          } while (
+            this.tiles[startRow][startColumn] !== 0 //current block needs to be 0  
+          );
+
+          this.tiles[startRow][startColumn] = `6.${i}`;
+          let newTrap = new OnOffTrap(0, 0, 32, 32, onOffTrap, '',activeTrapTime, isTrapActive);
+          newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
+          this.traps.push(newTrap);
       }
     }
   }
@@ -405,11 +401,8 @@ function getNewTrap(type, parameters) {
     case 'MovingTrap':
       trap = new MovingTrap(0, 0, 16, 16, image, ...parameters);
       return trap;
-      case 'OnOffTrap':
-        trap = new OnOffTrap(0, 0, 32, 32, image, ...parameters);
-        return trap;
-    case 'Trap':
-      trap = new Trap(0, 0, 32, 32, image, ...parameters);
+    case 'OnOffTrap':
+      trap = new OnOffTrap(0, 0, 32, 32, image, ...parameters);
       return trap;
   }
 }
