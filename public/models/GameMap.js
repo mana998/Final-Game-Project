@@ -230,8 +230,7 @@ class GameMap {
     // for every trp, for now trap size is one block but we can change it
     const trapValues = [0.1, 0.5, 0.2, 1, 0.9];
     for (let i = 0; i < amount; i++) {
-      //const trapTypeKey = this.trapClasses[Utilities.getRandomNumber(0, this.trapClasses.length)];
-      const trapTypeKey = 'OnOffTrap';
+      const trapTypeKey = this.trapClasses[Utilities.getRandomNumber(0, this.trapClasses.length)];
       const maxTries = 100; //try to find place 100 times before giving up 
       let tries = 0;
       let [startRow, endRow, startColumn, endColumn] = [-1, -1, -1, -1];

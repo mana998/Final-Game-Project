@@ -22,10 +22,10 @@ class OnOffTrap extends Trap {
             const trapValue = this.value;
             setInterval(() => {
                 if (this.direction) {
-                    this.value = 0;
+                    this.value = trapValue;
                     this.direction = !this.direction
                 } else {
-                    this.value = trapValue;
+                    this.value = 0;
                     this.direction = !this.direction
                 }
             }, this.speed);
