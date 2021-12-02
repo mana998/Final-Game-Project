@@ -1,7 +1,8 @@
 const soundSrc = {
   coin : './assets/audio/soundfx/coin.wav',
   gem : './assets/audio/soundfx/gem.wav',
-  hit : './assets/audio/soundfx/hit.wav'
+  hit : './assets/audio/soundfx/hit.wav',
+  backgroundMusic: './assets/audio/soundfx/hit.wav'
 }
 
 //https://www.w3schools.com/graphics/game_sound.asp

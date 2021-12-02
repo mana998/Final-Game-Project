@@ -4,6 +4,9 @@ let playing = false;
 // setup socket
 const socket = io();
 
+const backgroundMusic = new Sound('backgroundMusic');
+backgroundMusic.sound.setAttribute("loop", "true");
+
 // Dagmara
 // hide game menu and show the game username input and play button
 function init() {
@@ -119,6 +122,7 @@ function playersReady(players) {
   canvas.style.display = 'block';
   $('.container').css('border', 'none');
   $('#viewBlock').css('display', 'block');
+  backgroundMusic.play();
 }
 
 // Dagmara
