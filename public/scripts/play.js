@@ -154,6 +154,7 @@ function movePlayer(e) {
   // 3rd parameter in isBlockCollision
   if (!playing || player.isDone) return;
   let currentSpeed = player.speed;
+  //used when speed is dirrent that 4 so the player is not stuck on turns
   let denominator = 1;
   switch (e.key) {
     case (e.key.match(player.movement.left)?.input):

@@ -33,10 +33,12 @@ class OnOffTrap extends Trap {
     draw(ctx, initX, initY) {
         let x = initX;
         let y = initY;
+        this.img.startColumn = 0;
+        this.img.currentColumn = 0;
         // object values are equal to 0 so when the direction is 0 turn off the trap
-        if (!this.direction) {
-            x = this.x;
-            y = this.y;
+        if (!this.direction) {      
+            this.img.startColumn = 1;
+            this.img.currentColumn = 1;
         }
         this.img.draw(ctx, x, y, this.width, this.height);
     }
