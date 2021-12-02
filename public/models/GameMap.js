@@ -286,6 +286,7 @@ class GameMap {
             break;
           } // else it falls down to dafault case
         case 'OnOffTrap':
+          const trapImg = [onOffTrap, trap][ Utilities.getRandomNumber(0, 2)];
           const maxTries2 = 100; //try to find place 100 times before giving up 
           let tries2 = 0;
           let [startRow2, endRow2, startColumn2, endColumn2] = [-1, -1, -1, -1];
@@ -335,12 +336,13 @@ class GameMap {
                 this.tiles[row][column] = `6.${i}`;
               }
             }
-            let newTrap = new OnOffTrap(0, 0, 32, 32, trap, '',activeTime, isActive);
+            let newTrap = new OnOffTrap(0, 0, 32, 32, trapImg, '',activeTime, isActive);
             newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
             this.traps.push(newTrap);
           }
           break;
         default:
+          const singleTrapImg = [onOffTrap, trap][ Utilities.getRandomNumber(0, 2)];
           const maxTries3 = 100; //try to find place 100 times before giving up 
           let tries3 = 0;
           let [startRow3, endRow3, startColumn3, endColumn3] = [-1, -1, -1, -1];
@@ -356,7 +358,7 @@ class GameMap {
           );
 
           this.tiles[startRow3][startColumn3] = `6.${i}`;
-          let newTrap = new OnOffTrap(0, 0, 32, 32, onOffTrap, '',activeTrapTime, isTrapActive);
+          let newTrap = new OnOffTrap(0, 0, 32, 32, singleTrapImg, '',activeTrapTime, isTrapActive);
           newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
           this.traps.push(newTrap);
           break;
