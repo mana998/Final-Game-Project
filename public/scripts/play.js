@@ -120,7 +120,7 @@ function stopPlayer(e) {
   // stop if game is not in progress
   if (!playing || player.isDone) return;
   // update only if the key was for movement
-  if (e.key.match(/^[aAdDsSwW]|Arrow(Up|Down|Right|Left)$/)) {
+  if (e.key.match(/^([aAdDsSwW]|Arrow(Up|Down|Right|Left))$/)) {
     // ensure middle position
     player.img.startColumn += 1;
     player.img.currentColumn = player.img.startColumn;
