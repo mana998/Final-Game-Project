@@ -6,6 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 }
 
 const collectCoinSound = new Sound('coin');
+collectCoinSound.sound.volume = 0.2;
 
 class Coin extends Collectible { // Marianna
   constructor(x, y, width, height, value, sound) {

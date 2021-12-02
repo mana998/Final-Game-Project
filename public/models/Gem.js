@@ -6,6 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 }
 
 const collectGemSound = new Sound('gem');
+collectGemSound.sound.volume = 0.2;
 
 class Gem extends Collectible { // Marianna
   constructor(x, y, width, height, value, affectsMe) {

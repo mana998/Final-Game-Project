@@ -6,6 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 }
 
 const trapSound = new Sound('hit');
+trapSound.sound.volume = 0.2;
 
 class Trap extends GameObject {
     constructor(x, y, width, height, img, value) {
