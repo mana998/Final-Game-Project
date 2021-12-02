@@ -14,7 +14,6 @@ class Coin extends Collectible { // Marianna
   
   onCollect (player) {
     player.score += this.value;
-    console.log('collect coin');
     collectCoinSound.play();
   }
 }

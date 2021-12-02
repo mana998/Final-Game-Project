@@ -11,6 +11,7 @@ class SpeedGem extends Gem { // Dagmara
     }
   
     onCollect(player) {
+      super.onCollect();
       this.changePlayersSpeed(player);
       setTimeout(() => {
         player.speed = 4;
@@ -20,7 +21,6 @@ class SpeedGem extends Gem { // Dagmara
     //decide whether to heal current player or other players
     changePlayersSpeed(player) {
       if (this.affectsMe) {
-        super.onCollect();
         this.speed(player);
       } else {
         socket.emit('changePlayersSpeed');

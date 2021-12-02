@@ -11,9 +11,9 @@ class FreezeGem extends Gem { // Marianna
   }
 
   onCollect(player) {
+    super.onCollect();
     if (this.affectsMe) {
       this.freezePlayer(player, this.value);
-      super.onCollect();
     } else {
       socket.emit('freezePlayer', this.value);
     }

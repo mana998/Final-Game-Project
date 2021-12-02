@@ -162,7 +162,6 @@ class Player extends GameObject { // Marianna
     map.tiles[row][column] = 0;
     updateServerMap(map.tiles);
     const blockValue = block.split('.');
-    console.log(map.coins[parseInt(blockValue[1])]);
     map.coins[parseInt(blockValue[1])].onCollect(this);
   }
 
