@@ -25,7 +25,7 @@ class Sound {
       this.sound.play();
     }
 
-    stop () {
+    pause () {
       this.sound.pause();
     }
 }
