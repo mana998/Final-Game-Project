@@ -11,6 +11,7 @@ class HealGem extends Gem { // Dagmara
     }
   
     onCollect(player) {
+      super.onCollect();
       this.healPlayer(player);
     }
   

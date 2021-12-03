@@ -9,6 +9,10 @@ class Collectible extends GameObject { // Marianna
     super(x, y, width, height);
     this.value = value;
   }
+
+  onCollect() {
+    console.log('collected');
+  }
 }
 
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { Collectible };

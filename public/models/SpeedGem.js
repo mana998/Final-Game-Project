@@ -11,6 +11,7 @@ class SpeedGem extends Gem { // Dagmara
     }
   
     onCollect(player) {
+      super.onCollect();
       this.changePlayersSpeed(player);
       setTimeout(() => {
         player.speed = 4;

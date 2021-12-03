@@ -162,7 +162,7 @@ class Player extends GameObject { // Marianna
     map.tiles[row][column] = 0;
     updateServerMap(map.tiles);
     const blockValue = block.split('.');
-    this.score += map.coins[parseInt(blockValue[1])].value;
+    map.coins[parseInt(blockValue[1])].onCollect(this);
   }
 
   handleGemCollision(block, row, column, map) {

@@ -120,7 +120,7 @@ function stopPlayer(e) {
   // stop if game is not in progress
   if (!playing || player.isDone) return;
   // update only if the key was for movement
-  if (e.key.match(/^[aAdDsSwW]|Arrow(Up|Down|Right|Left)$/)) {
+  if (e.key.match(/^([aAdDsSwW]|Arrow(Up|Down|Right|Left))$/)) {
     // ensure middle position
     player.img.startColumn += 1;
     player.img.currentColumn = player.img.startColumn;
@@ -217,9 +217,9 @@ function movePlayer(e) {
 
 function handleMapCreated(data) {
   map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
-  data.gameMap.coins.map(coin => {
-    coin = new Coin(0, 0, 32, 32, coin.value);
-  })
+  for (let i = 0; i < data.gameMap.coins.length; i++) {
+    map.coins[i] = new Coin(0, 0, 32, 32, data.gameMap.coins[i].value);
+  }
   for (let i = 0; i < data.gameMap.gems.length; i++) {
       map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
   }

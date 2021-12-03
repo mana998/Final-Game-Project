@@ -1,9 +1,6 @@
 // control variable to check whether game is in-progress
 let playing = false;
 
-//global Utils object
-//const Utilities = new Utils();
-
 // setup socket
 const socket = io();
 
@@ -122,6 +119,8 @@ function playersReady(players) {
   canvas.style.display = 'block';
   $('.container').css('border', 'none');
   $('#viewBlock').css('display', 'block');
+  backgroundMusic.play();
+  $('#backgroundMusicControl').css('display', 'block');
 }
 
 // Dagmara
