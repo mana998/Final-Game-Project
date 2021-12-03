@@ -1,3 +1,8 @@
+const walkingSound = new Sound('walk');
+walkingSound.sound.volume = 1;
+let delay = 10;
+let currentKey = '';
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -210,6 +215,21 @@ function movePlayer(e) {
       // no need to update server if player didn't move
       return;
   }
+  if (e.key === currentKey) {
+    if (!delay) {
+      walkingSound.play();
+      delay = 10;
+    }else {
+      delay--;
+    }
+  } else {
+    currentKey = e.key;
+    delay = 10;
+    walkingSound.play();
+  }
+   
+  
+
   // add update of server
   updateServerPlayer();
 }
