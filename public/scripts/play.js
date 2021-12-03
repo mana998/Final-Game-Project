@@ -1,7 +1,8 @@
 const walkingSound = new Sound('walk');
-walkingSound.sound.volume = 1;
-let delay = 10;
-let currentKey = '';
+walkingSound.sound.volume = 0.5;
+walkingSound.sound.loop = true;
+walkingSound.sound.setAttribute("id", "walk");
+
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -133,6 +134,7 @@ function stopPlayer(e) {
     player.img.rows = 0;
     player.img.columns = 0;
     player.direction = '';
+    walkingSound.pause();
     updateServerPlayer();
   }
 }
@@ -185,7 +187,6 @@ function movePlayer(e) {
           denominator = 2;
         }
       }while (player.isBlockCollision(map, 'right','', '', currentSpeed, 0));
-      
       break;
     case (e.key.match(player.movement.up)?.input):
       changeAnimation('up');
@@ -215,21 +216,7 @@ function movePlayer(e) {
       // no need to update server if player didn't move
       return;
   }
-  if (e.key === currentKey) {
-    if (!delay) {
-      walkingSound.play();
-      delay = 10;
-    }else {
-      delay--;
-    }
-  } else {
-    currentKey = e.key;
-    delay = 10;
-    walkingSound.play();
-  }
-   
-  
-
+  if (walkingSound.sound.paused) walkingSound.play();
   // add update of server
   updateServerPlayer();
 }
