@@ -14,9 +14,9 @@ function toggleBackgroundMusic() {
 function toggleSoundFx() {
   if ($('.soundfx').first().prop('volume') === 0) {
     $('.soundfx').prop('volume', 0.2);
-    $('#soundFxControl').css('background-image', "url('../assets/images/buttons/musicOn.svg')");
+    $('#soundFxControl').css('background-image', "url('../assets/images/buttons/soundFxOn.svg')");
   } else {
     $('.soundfx').prop('volume', 0);
-    $('#soundFxControl').css('background-image', "url('../assets/images/buttons/musicOff.svg')");
+    $('#soundFxControl').css('background-image', "url('../assets/images/buttons/soundFxOff.svg')");
   }
 }

@@ -141,7 +141,7 @@ canvas {
     width: 3em;
     height: 3em;
     display:none;
-    background-image: url('../assets/images/buttons/musicOn.svg');
+    background-image: url('../assets/images/buttons/soundFxOn.svg');
     background-repeat: no-repeat;
     background-size: contain;
 }
