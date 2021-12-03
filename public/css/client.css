@@ -131,3 +131,17 @@ canvas {
     background-repeat: no-repeat;
     background-size: contain;
 }
+
+#soundFxControl {
+    position: fixed;
+    top: 0;
+    right: 4em;
+    z-index: 4;
+    margin: 1em;
+    width: 3em;
+    height: 3em;
+    display:none;
+    background-image: url('../assets/images/buttons/musicOn.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
