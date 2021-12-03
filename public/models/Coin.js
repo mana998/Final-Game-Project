@@ -5,7 +5,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   Sound = require('./Sound').Sound;
 }
 
-const collectCoinSound = new Sound('coin');
+const collectCoinSound = new Sound('coin', 'soundfx');
 collectCoinSound.sound.volume = 0.2;
 
 class Coin extends Collectible { // Marianna

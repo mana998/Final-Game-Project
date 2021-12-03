@@ -5,7 +5,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
     Sound = require('./Sound').Sound;
 }
 
-const trapSound = new Sound('hit');
+const trapSound = new Sound('hit', 'soundfx');
 trapSound.sound.volume = 0.2;
 
 class Trap extends GameObject {

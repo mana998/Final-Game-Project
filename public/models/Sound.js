@@ -8,14 +8,16 @@ const soundSrc = {
 
 //https://www.w3schools.com/graphics/game_sound.asp
 class Sound {
-    constructor (src) {
+    constructor (src, className) {
       if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
         this.sound = '';
       } else {
+        this.className = className;
         this.sound = document.createElement("audio");
         this.sound.src = soundSrc[src];
         this.sound.setAttribute("preload", "auto");
         this.sound.setAttribute("controls", "none");
+        this.sound.setAttribute("class", this.className);
         this.sound.style.display = "none";
         document.body.appendChild(this.sound);
       }

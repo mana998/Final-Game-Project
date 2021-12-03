@@ -1,4 +1,4 @@
-const walkingSound = new Sound('walk');
+const walkingSound = new Sound('walk', 'soundfx');
 walkingSound.sound.volume = 0.5;
 walkingSound.sound.loop = true;
 walkingSound.sound.setAttribute("id", "walk");

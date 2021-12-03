@@ -121,6 +121,7 @@ function playersReady(players) {
   $('#viewBlock').css('display', 'block');
   backgroundMusic.play();
   $('#backgroundMusicControl').css('display', 'block');
+  $('#soundFxControl').css('display', 'block');
 }
 
 // Dagmara
