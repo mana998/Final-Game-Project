@@ -1,4 +1,4 @@
-const backgroundMusic = new Sound('backgroundMusic');
+const backgroundMusic = new Sound('backgroundMusic', 'bgMusic');
 backgroundMusic.sound.setAttribute("loop", "true");
 
 function toggleBackgroundMusic() {

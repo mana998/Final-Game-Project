@@ -5,7 +5,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
   Sound = require('./Sound').Sound;
 }
 
-const collectGemSound = new Sound('gem');
+const collectGemSound = new Sound('gem', 'soundfx');
 collectGemSound.sound.volume = 0.2;
 
 class Gem extends Collectible { // Marianna
