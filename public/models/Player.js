@@ -140,13 +140,17 @@ class Player extends GameObject { // Marianna
   // Marianna
   // set score when player finished the game
   // show score of all players and move to spectator mode
-  playerIsDone() {
+  playerIsDone(dead) {
     this.isDone = true;
     // maximum time - elapsed time
     let timeScore = map.timeLimit - (new Date().getTime() - startTime);
     // if final number is negative, set it to 0;
     timeScore = timeScore > 0 ? timeScore : 0;
     this.score += timeScore;
+    //reset score in case player dies
+    if (dead) {
+      this.score = 0;
+    }
     endScreen.setAttribute('style', 'display:block');
     socket.emit('playerFinished', this);
     this.draw = () => {};
@@ -185,6 +189,10 @@ class Player extends GameObject { // Marianna
       }
     }
     this.health -= map.traps[parseInt(blockValue[1])].value;
+    if (this.health <= 0) {
+      this.playerIsDone(1);
+      walkingSound.pause();
+    }
     map.traps[parseInt(blockValue[1])].onCollision();
   }
 }
