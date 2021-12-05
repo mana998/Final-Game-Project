@@ -191,7 +191,6 @@ class Player extends GameObject { // Marianna
     this.health -= map.traps[parseInt(blockValue[1])].value;
     if (this.health <= 0) {
       this.playerIsDone(1);
-      walkingSound.pause();
     }
     map.traps[parseInt(blockValue[1])].onCollision();
   }

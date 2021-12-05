@@ -8,7 +8,7 @@ class OnOffTrap extends Trap {
     constructor(x, y, width, height, img, value, activeTime, isActive) {
         super(x, y, width, height, img, value);
         this.value = value;
-        this.values = [0.001, 0.002, 0.05, 0.005];
+        this.values = [0.01, 0.02, 0.5, 0.05];
         this.direction = isActive;
         this.speed = activeTime;
 
