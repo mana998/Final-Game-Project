@@ -106,11 +106,11 @@ class Player extends GameObject { // Marianna
     if (this.y % map.tileHeight && String(map.tiles[row][column]).match(/^6/)) {
       this.handleCollision(map.tiles[row][column], row, column, '', map, canvasHeight, canvasWidth)
     }
-    if (this.x % map.tileWidth && String(map.tiles[row][column + 1]).match(/^6/)) {
-      this.handleCollision(map.tiles[row][column + 1], row, column, '', map, canvasHeight, canvasWidth)
-    }
-    if (this.y % map.tileHeight && this.x % map.tileWidth && String(map.tiles[row - 1][column + 1]).match(/^6/)) {
+    if (this.x % map.tileWidth && String(map.tiles[row - 1][column + 1]).match(/^6/)) {
       this.handleCollision(map.tiles[row - 1][column + 1], row, column, '', map, canvasHeight, canvasWidth)
+    }
+    if (this.y % map.tileHeight && this.x % map.tileWidth && String(map.tiles[row][column + 1]).match(/^6/)) {
+      this.handleCollision(map.tiles[row][column + 1], row, column, '', map, canvasHeight, canvasWidth)
     }
   }
 
@@ -120,14 +120,11 @@ class Player extends GameObject { // Marianna
     block = String(block);
     switch (block) {
       case '1':
-        // console.log("wall", row, column);
         return true;
       case '2':
-        // console.log("goal", row, column);
         this.playerIsDone();
         break;
       case (block.match(/^4/)?.input):
-        // console.log("coin", row, column);
         this.handleCoinCollision(block, row, column, map);
         break;
       case (block.match(/^5/)?.input):
