@@ -158,8 +158,8 @@ class GameMap {
     // 5 coins per 10x10
     this.generateCoins(this.tiles.length * this.tiles[0].length / 20);
     // generate gems
-    // 1 gemper 10x10
-    this.generateGems(this.tiles.length * this.tiles[0].length / 100);
+    // 3 gems per 10x10
+    this.generateGems(this.tiles.length * this.tiles[0].length / 30);
     //generate traps
     //1 trap 10x10
     this.generateTraps(this.tiles.length * this.tiles[0].length / 100);
