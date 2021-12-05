@@ -194,6 +194,25 @@ class Player extends GameObject { // Marianna
     }
     map.traps[parseInt(blockValue[1])].onCollision();
   }
+
+  //detect whether to initiate conversation
+  isNearPlayers(players) {
+      let isNear = false;
+      players.map(gamePlayer => {
+          if (this.username !== gamePlayer.username) {
+            if (map.checkCollision(gamePlayer, {
+              x: player.x - 2 * map.tileWidth,
+              y: player.y - 2 * map.tileHeight,
+              width: player.width * 5,
+              height: player.height * 5
+            })){
+              isNear = true;
+              return isNear;
+            }
+          }
+      })
+      return isNear;
+  }
 }
 
 function updateServerMap(tiles) {

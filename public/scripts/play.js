@@ -72,6 +72,7 @@ function draw(data) {
     }
   } else {
     player.isMovingTrapCollision(map, canvas.height, canvas.width)
+    player.isNearPlayers(data.players);
   }
   // draw map
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
