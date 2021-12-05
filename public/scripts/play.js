@@ -72,7 +72,6 @@ function draw(data) {
     }
   } else {
     player.isMovingTrapCollision(map, canvas.height, canvas.width)
-    player.isNearPlayers(data.players);
   }
   // draw map
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
@@ -109,6 +108,11 @@ function draw(data) {
       gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
     }
   });
+  if (!player.isDone && player.isNearPlayers(data.players)) {
+    //add currentMessage as property to player and send it to server and then draw it with every player
+    //menu will change the property in the object
+    displayText('Hello there', canvas.width / 2, (canvas.height - player.height) / 2 - 10)
+  };
 }
 
 // Marianna
@@ -233,6 +237,14 @@ function handleMapCreated(data) {
   for (let i = 0; i < data.gameMap.traps.length; i++) {
     map.traps[i] = getNewTrap(data.trapTypes[i], [data.gameMap.traps[i].img, data.gameMap.traps[i].value, data.gameMap.traps[i].speed, data.gameMap.traps[i].direction, data.gameMap.traps[i].startRow, data.gameMap.traps[i].endRow, data.gameMap.traps[i].startColumn, data.gameMap.traps[i].endColumn]);
   }
+}
+
+function displayText(text, x, y, align = 'center', color = 'white', size = 10, font = 'Helvetica') {
+  ctx.font = `${size}px ${font}`;
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.fillText(text, x, y);
+  console.log(x, y, text, font, align, size);
 }
 
 // event listener for start of the movement
