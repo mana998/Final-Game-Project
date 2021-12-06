@@ -84,10 +84,18 @@ io.on('connection', (socket) => {
     // eslint-disable-next-line global-require
     map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require
     games[roomName].map = map;
+    //get logged in player id
+    let id = '';
+    let response = await fetch(`${process.env.URL}getsession`);
+    let result = await response.json();
+    if (result.playerId) {
+      id = result.playerId;
+    }
     //load player interactions
-    //need to modify it based on player id
-    const response = await fetch(`${process.env.URL}api/interaction`);
-    const result = await response.json();
+    let url = `${process.env.URL}api/interaction`;
+    if (id) url += `?player_id=${id}`;
+    response = await fetch(url);
+    result = await response.json();
     games[roomName].interactions = result;
     socket.join(roomName);
     socket.emit('createPlayer', socket.id);
