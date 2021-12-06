@@ -1,5 +1,5 @@
 class Player extends GameObject { // Marianna
-  constructor(x, y, width, height, img, username, socketId) {
+  constructor(x, y, width, height, img, username, message, socketId) {
     super(x, y, width, height, img);
     this.username = username;
     this.coins = 0;
@@ -16,6 +16,7 @@ class Player extends GameObject { // Marianna
       up: /^([wW]|ArrowUp)$/,
       down: /^([sS]|ArrowDown)$/
     }
+    this.message = message || 'Hello';
   }
 
   // Block types
@@ -212,6 +213,11 @@ class Player extends GameObject { // Marianna
           }
       })
       return isNear;
+  }
+
+  draw (ctx, x, y) {
+    super.draw(ctx, x, y);
+    displayText(this.message, x + player.width/2, y - 10)
   }
 }
 

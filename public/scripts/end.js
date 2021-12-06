@@ -19,7 +19,7 @@ function changeSpectator(e) {
 // Marianna
 // setup player to spectate based on data from server
 function changeSpectatingPlayer(data) {
-  spectatingPlayer = new Player(
+  spectatingPlayer = (
     data.x,
     data.y,
     data.width,
