@@ -196,8 +196,8 @@ io.on('connection', (socket) => {
 
   // Marianna
   // when player finishes, update everyone in the room with their score
-  function handlePlayerFinished(player) {
-    io.to(playersRoomTable[socket.id]).emit('addPlayerScore', player);
+  function handlePlayerFinished(data) {
+    io.to(playersRoomTable[socket.id]).emit('addPlayerScore', {data});
     // give time till server updates with newest values
     setTimeout(() => {
       // check if all players finished to disable spectating mode

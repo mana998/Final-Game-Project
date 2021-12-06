@@ -153,7 +153,9 @@ class Player extends GameObject { // Marianna
       this.score = 0;
     }
     endScreen.setAttribute('style', 'display:block');
-    socket.emit('playerFinished', this);
+    let message = '';
+    socket.on('scoreMessage', () => { message = "New in top 100!" } );
+    socket.emit('playerFinished', {player:this, message: message});
     this.draw = () => {};
     // playing false so movement keys get disabled
     playing = false;
