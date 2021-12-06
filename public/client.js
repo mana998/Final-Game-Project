@@ -95,7 +95,7 @@ async function createPlayer(socketId) {
     username = result.username;
     enablePlayButton();
   }
-  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, socketId);
+  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', socketId);
   socket.emit('playerCreated', player);
 }
 

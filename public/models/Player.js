@@ -1,5 +1,5 @@
 class Player extends GameObject { // Marianna
-  constructor(x, y, width, height, img, username, socketId) {
+  constructor(x, y, width, height, img, username, message, socketId) {
     super(x, y, width, height, img);
     this.username = username;
     this.coins = 0;
@@ -16,6 +16,7 @@ class Player extends GameObject { // Marianna
       up: /^([wW]|ArrowUp)$/,
       down: /^([sS]|ArrowDown)$/
     }
+    this.message = message || '';
   }
 
   // Block types
@@ -193,6 +194,30 @@ class Player extends GameObject { // Marianna
       this.playerIsDone(1);
     }
     map.traps[parseInt(blockValue[1])].onCollision();
+  }
+
+  //detect whether to initiate conversation
+  isNearPlayers(players) {
+      let isNear = false;
+      players.map(gamePlayer => {
+          if (this.username !== gamePlayer.username) {
+            if (map.checkCollision(gamePlayer, {
+              x: player.x - 2 * map.tileWidth,
+              y: player.y - 2 * map.tileHeight,
+              width: player.width * 5,
+              height: player.height * 5
+            })){
+              isNear = true;
+              return isNear;
+            }
+          }
+      })
+      return isNear;
+  }
+
+  draw (ctx, x, y) {
+    super.draw(ctx, x, y);
+    displayText(this.message, x + player.width/2, y - 10)
   }
 }
 

@@ -19,6 +19,8 @@ app.use(express.json());
 // allow to pass form data
 app.use(express.urlencoded({ extended: true }));
 
+const fetch = require('node-fetch');
+
 // database setup
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -47,6 +49,10 @@ app.use(userRouter.router);
 const highscoreListRouter = require('./private/highscoreList.js');
 app.use(highscoreListRouter.router);
 
+// user interactions
+const interactionRouter = require('./private/interaction.js');
+app.use(interactionRouter.router);
+
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });
@@ -58,7 +64,7 @@ const playersRoomTable = {};
 const games = {};
 
 io.on('connection', (socket) => {
-  function handleNewGameCreation() {
+  async function handleNewGameCreation() {
     // create socketIO room and client that joins the game have to add the code which is roomId
     const roomName = Utils.createId(8); // function which creates id, we pass length of the id
 
@@ -77,6 +83,19 @@ io.on('connection', (socket) => {
     // eslint-disable-next-line global-require
     map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require
     games[roomName].map = map;
+    //get logged in player id
+    let id = '';
+    let response = await fetch(`${process.env.URL}getsession`);
+    let result = await response.json();
+    if (result.playerId) {
+      id = result.playerId;
+    }
+    //load player interactions
+    let url = `${process.env.URL}api/interaction`;
+    if (id) url += `?player_id=${id}`;
+    response = await fetch(url);
+    result = await response.json();
+    games[roomName].interactions = result;
     socket.join(roomName);
     socket.emit('createPlayer', socket.id);
   }
@@ -139,7 +158,6 @@ io.on('connection', (socket) => {
       socket.emit('FullRoom');
       return;
     }
-
     playersRoomTable[socket.id] = gameCode;
     socket.emit('roomName', gameCode);
     socket.join(gameCode);
@@ -248,6 +266,18 @@ io.on('connection', (socket) => {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('freezePlayer', value);
   }
 
+  function handleGetRandomMessage(type) {
+    const game = games[playersRoomTable[socket.id]];
+    const types = Object.keys(game.interactions);
+    //get random type
+    if (!type) {
+      type = types[Utils.getRandomNumber(0, types.length)];
+    }
+    //get random message
+    const message = game.interactions[type][Utils.getRandomNumber(0, game.interactions[type].length)];
+    socket.emit('changePlayerMessage', message);
+  }
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -264,6 +294,7 @@ io.on('connection', (socket) => {
   socket.on('teleportPlayer', handleTeleportPlayer);
   socket.on('doubleCoins', handleDoubleCoins);
   socket.on('freezePlayer', handleFreezePlayer);
+  socket.on('getRandomMessage', handleGetRandomMessage);
 });
 
 const PORT = process.env.PORT || 8080;

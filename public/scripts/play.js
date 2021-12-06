@@ -67,6 +67,7 @@ function draw(data) {
           tempPlayer.img.currentColumn,
         ),
         tempPlayer.username,
+        tempPlayer.message
       );
       compareToPlayer = spectatingPlayer;
     }
@@ -103,11 +104,18 @@ function draw(data) {
           gamePlayer.img.currentColumn,
         ),
         gamePlayer.username,
+        gamePlayer.message,
       );
       // get data about other players from server
       gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
     }
   });
+  if (!player.isDone && !player.message && player.isNearPlayers(data.players)) {
+    socket.emit('getRandomMessage');
+    //menu will change the property in the object
+  } else if (!player.isDone && player.message && !player.isNearPlayers(data.players)){
+    player.message = '';
+  };
 }
 
 // Marianna
@@ -234,6 +242,18 @@ function handleMapCreated(data) {
   }
 }
 
+function displayText(text, x, y, align = 'center', color = 'white', size = 10, font = 'Helvetica') {
+  ctx.font = `${size}px ${font}`;
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.fillText(text, x, y);
+}
+
+function handleChangePlayerMessage(message) {
+  player.message = message;
+  updateServerPlayer();
+}
+
 // event listener for start of the movement
 window.addEventListener('keydown', movePlayer);
 
@@ -284,3 +304,5 @@ socket.on('freezePlayer', (value) => {
 
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
+
+socket.on('changePlayerMessage', handleChangePlayerMessage)

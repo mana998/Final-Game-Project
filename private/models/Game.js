@@ -3,6 +3,7 @@ class Game {
     this.players = [];
     this.map = {};
     this.playing = false;
+    this.interactions = {}
   }
 }
 
