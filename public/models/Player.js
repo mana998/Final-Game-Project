@@ -16,7 +16,7 @@ class Player extends GameObject { // Marianna
       up: /^([wW]|ArrowUp)$/,
       down: /^([sS]|ArrowDown)$/
     }
-    this.message = message || 'Hello';
+    this.message = message || '';
   }
 
   // Block types

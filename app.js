@@ -139,7 +139,6 @@ io.on('connection', (socket) => {
       socket.emit('FullRoom');
       return;
     }
-
     playersRoomTable[socket.id] = gameCode;
     socket.emit('roomName', gameCode);
     socket.join(gameCode);
@@ -248,6 +247,18 @@ io.on('connection', (socket) => {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('freezePlayer', value);
   }
 
+  function handleGetRandomMessage(type) {
+    const game = games[playersRoomTable[socket.id]];
+    const types = Object.keys(game.interactions);
+    //get random type
+    if (!type) {
+      type = types[Utils.getRandomNumber(0, types.length)];
+    }
+    //get random message
+    const message = game.interactions[type][Utils.getRandomNumber(0, game.interactions[type].length)];
+    socket.emit('changePlayerMessage', message);
+  }
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -264,6 +275,7 @@ io.on('connection', (socket) => {
   socket.on('teleportPlayer', handleTeleportPlayer);
   socket.on('doubleCoins', handleDoubleCoins);
   socket.on('freezePlayer', handleFreezePlayer);
+  socket.on('getRandomMessage', handleGetRandomMessage);
 });
 
 const PORT = process.env.PORT || 8080;

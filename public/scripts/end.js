@@ -26,6 +26,7 @@ function changeSpectatingPlayer(data) {
     data.height,
     new Img(data.img.src, data.img.startRow, data.img.startColumn, data.img.rows, data.img.columns, data.img.speed, '', data.img.currentRow, data.img.currentColumn),
     data.username,
+    data.message
   );
 }
 

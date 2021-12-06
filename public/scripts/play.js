@@ -110,10 +110,11 @@ function draw(data) {
       gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
     }
   });
-  if (!player.isDone && player.isNearPlayers(data.players)) {
-    //add currentMessage as property to player and send it to server and then draw it with every player
+  if (!player.isDone && !player.message && player.isNearPlayers(data.players)) {
+    socket.emit('getRandomMessage');
     //menu will change the property in the object
-    displayText('Hello there', canvas.width / 2, (canvas.height - player.height) / 2 - 10)
+  } else if (!player.isDone && player.message && !player.isNearPlayers(data.players)){
+    player.message = '';
   };
 }
 
@@ -246,7 +247,11 @@ function displayText(text, x, y, align = 'center', color = 'white', size = 10, f
   ctx.fillStyle = color;
   ctx.textAlign = align;
   ctx.fillText(text, x, y);
-  console.log(x, y, text, font, align, size);
+}
+
+function handleChangePlayerMessage(message) {
+  player.message = message;
+  updateServerPlayer();
 }
 
 // event listener for start of the movement
@@ -299,3 +304,5 @@ socket.on('freezePlayer', (value) => {
 
 socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
+
+socket.on('changePlayerMessage', handleChangePlayerMessage)
