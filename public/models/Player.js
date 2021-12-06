@@ -151,6 +151,8 @@ class Player extends GameObject { // Marianna
     //reset score in case player dies
     if (dead) {
       this.score = 0;
+    } else {
+      socket.emit('savePlayer', this.score);
     }
     endScreen.setAttribute('style', 'display:block');
     socket.emit('playerFinished', this);
