@@ -278,14 +278,11 @@ io.on('connection', (socket) => {
     socket.emit('changePlayerMessage', message);
   }
 
-  async function handleSavePlayer(score) {
-    let response = await fetch(`${process.env.URL}getsession`);
-    let result = await response.json();
-    console.log(result);
-    if (true) {
+  async function handleSavePlayer(data) {
+    if (data.playerId) {
         response = await fetch(`${process.env.URL}api/highestscores`, {
         method: 'POST',
-        body: JSON.stringify({playerId: 5, score: score}),
+        body: JSON.stringify({playerId: data.playerId, score: data.score}),
         headers: { 'Content-Type': 'application/json' }
       });
       result = await response.json();

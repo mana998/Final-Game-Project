@@ -17,6 +17,7 @@ class Player extends GameObject { // Marianna
       down: /^([sS]|ArrowDown)$/
     }
     this.message = message || '';
+    this.playerId = '';
   }
 
   // Block types
@@ -152,7 +153,7 @@ class Player extends GameObject { // Marianna
     if (dead) {
       this.score = 0;
     } else {
-      socket.emit('savePlayer', this.score);
+      socket.emit('savePlayer', {score:this.score, playerId: this.playerId});
     }
     endScreen.setAttribute('style', 'display:block');
     socket.emit('playerFinished', this);
