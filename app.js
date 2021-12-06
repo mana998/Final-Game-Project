@@ -19,6 +19,8 @@ app.use(express.json());
 // allow to pass form data
 app.use(express.urlencoded({ extended: true }));
 
+const fetch = require('node-fetch');
+
 // database setup
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -47,6 +49,10 @@ app.use(userRouter.router);
 const highscoreListRouter = require('./private/highscoreList.js');
 app.use(highscoreListRouter.router);
 
+// user interactions
+const interactionRouter = require('./private/interaction.js');
+app.use(interactionRouter.router);
+
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });
@@ -58,7 +64,7 @@ const playersRoomTable = {};
 const games = {};
 
 io.on('connection', (socket) => {
-  function handleNewGameCreation() {
+  async function handleNewGameCreation() {
     // create socketIO room and client that joins the game have to add the code which is roomId
     const roomName = Utils.createId(8); // function which creates id, we pass length of the id
 
@@ -72,11 +78,17 @@ io.on('connection', (socket) => {
     // import map class
     // eslint-disable-next-line global-require
     const { GameMap } = require('./public/models/GameMap');
-    const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
+    //const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
+    const mapFile = `./private/assets/maps/map0.json`;
     const map = new GameMap('', '', '', '', '');
     // eslint-disable-next-line global-require
     map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require
     games[roomName].map = map;
+    //load player interactions
+    //need to modify it based on player id
+    const response = await fetch(`${process.env.URL}api/interaction`);
+    const result = await response.json();
+    games[roomName].interactions = result;
     socket.join(roomName);
     socket.emit('createPlayer', socket.id);
   }
