@@ -106,11 +106,11 @@ class Player extends GameObject { // Marianna
     if (this.y % map.tileHeight && String(map.tiles[row][column]).match(/^6/)) {
       this.handleCollision(map.tiles[row][column], row, column, '', map, canvasHeight, canvasWidth)
     }
-    if (this.x % map.tileWidth && String(map.tiles[row][column + 1]).match(/^6/)) {
-      this.handleCollision(map.tiles[row][column + 1], row, column, '', map, canvasHeight, canvasWidth)
-    }
-    if (this.y % map.tileHeight && this.x % map.tileWidth && String(map.tiles[row - 1][column + 1]).match(/^6/)) {
+    if (this.x % map.tileWidth && String(map.tiles[row - 1][column + 1]).match(/^6/)) {
       this.handleCollision(map.tiles[row - 1][column + 1], row, column, '', map, canvasHeight, canvasWidth)
+    }
+    if (this.y % map.tileHeight && this.x % map.tileWidth && String(map.tiles[row][column + 1]).match(/^6/)) {
+      this.handleCollision(map.tiles[row][column + 1], row, column, '', map, canvasHeight, canvasWidth)
     }
   }
 
@@ -120,14 +120,11 @@ class Player extends GameObject { // Marianna
     block = String(block);
     switch (block) {
       case '1':
-        // console.log("wall", row, column);
         return true;
       case '2':
-        // console.log("goal", row, column);
         this.playerIsDone();
         break;
       case (block.match(/^4/)?.input):
-        // console.log("coin", row, column);
         this.handleCoinCollision(block, row, column, map);
         break;
       case (block.match(/^5/)?.input):
@@ -143,13 +140,17 @@ class Player extends GameObject { // Marianna
   // Marianna
   // set score when player finished the game
   // show score of all players and move to spectator mode
-  playerIsDone() {
+  playerIsDone(dead) {
     this.isDone = true;
     // maximum time - elapsed time
     let timeScore = map.timeLimit - (new Date().getTime() - startTime);
     // if final number is negative, set it to 0;
     timeScore = timeScore > 0 ? timeScore : 0;
     this.score += timeScore;
+    //reset score in case player dies
+    if (dead) {
+      this.score = 0;
+    }
     endScreen.setAttribute('style', 'display:block');
     socket.emit('playerFinished', this);
     this.draw = () => {};
@@ -188,6 +189,9 @@ class Player extends GameObject { // Marianna
       }
     }
     this.health -= map.traps[parseInt(blockValue[1])].value;
+    if (this.health <= 0) {
+      this.playerIsDone(1);
+    }
     map.traps[parseInt(blockValue[1])].onCollision();
   }
 }

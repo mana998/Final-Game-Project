@@ -158,7 +158,6 @@ function changeAnimation(direction) {
 // key listeners to move the player
 function movePlayer(e) {
   //! !!!THINK ABOUT STORING BLOCK TYPES IN SOME GLOBAL VARIABLES!!!!
-  // 3rd parameter in isBlockCollision
   if (!playing || player.isDone) return;
   let currentSpeed = player.speed;
   //used when speed is dirrent that 4 so the player is not stuck on turns

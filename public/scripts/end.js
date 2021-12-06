@@ -3,7 +3,7 @@ const endScreen = document.getElementById('endScreen');
 // Marianna
 // when player finishes, add their score to the display
 function addScoreToDisplay(player) {
-  // might change to ajax
+  walkingSound.pause();
   endScreen.innerHTML += `<span class="playerEndScore">${player.username} : ${player.score}</span></br>`;
 }
 
