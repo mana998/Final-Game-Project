@@ -220,6 +220,11 @@ function movePlayer(e) {
         }
       }while (player.isBlockCollision(map, 'down','', '', 0, currentSpeed));
       break;
+    case "Enter":
+      //player is near other players - we don't need to check for collision again
+      if (player.message) {
+        $('#interactionMenu').css('display', 'block');
+      }
     default:
       // no need to update server if player didn't move
       return;
@@ -251,7 +256,7 @@ function displayText(text, x, y, align = 'center', color = 'white', size = 10, f
 
 function handleChangePlayerMessage(message) {
   player.message = message;
-  updateServerPlayer();
+  $('#interactionMenu').css('display', 'none');
 }
 
 // event listener for start of the movement
@@ -306,3 +311,7 @@ socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
 
 socket.on('changePlayerMessage', handleChangePlayerMessage)
+
+function selectInteraction(type) {
+  socket.emit('getRandomMessage', type);
+}
