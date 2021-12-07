@@ -3,6 +3,8 @@ walkingSound.sound.volume = 0.5;
 walkingSound.sound.loop = true;
 walkingSound.sound.setAttribute("id", "walk");
 
+let displayMessageCount = -1;
+const maxDisplayMessageCount = 60;
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -110,11 +112,18 @@ function draw(data) {
       gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
     }
   });
-  if (!player.isDone && !player.message && player.isNearPlayers(data.players)) {
-    socket.emit('getRandomMessage');
-    //menu will change the property in the object
-  } else if (!player.isDone && player.message && !player.isNearPlayers(data.players)){
-    player.message = '';
+  player.isNear = player.isNearPlayers(data.players);
+  if (!player.isDone) {
+    if (player.isNear) {
+      if (!player.message && displayMessageCount === -1) socket.emit('getRandomMessage');
+      displayMessageCount++
+    }
+    if (!player.isNear || displayMessageCount === maxDisplayMessageCount) {
+      player.message = '';
+      updateServerPlayer();
+      displayMessageCount = 0;
+      if (!player.isNear) displayMessageCount = -1;
+    }
   };
 }
 
@@ -220,6 +229,11 @@ function movePlayer(e) {
         }
       }while (player.isBlockCollision(map, 'down','', '', 0, currentSpeed));
       break;
+    case "Enter":
+      //player is near other players - we don't need to check for collision again
+      if (player.isNear) {
+        $('#interactionMenu').css('display', 'block');
+      }
     default:
       // no need to update server if player didn't move
       return;
@@ -252,6 +266,8 @@ function displayText(text, x, y, align = 'center', color = 'white', size = 10, f
 function handleChangePlayerMessage(message) {
   player.message = message;
   updateServerPlayer();
+  displayMessageCount++;
+  $('#interactionMenu').css('display', 'none');
 }
 
 // event listener for start of the movement
@@ -306,3 +322,7 @@ socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
 
 socket.on('changePlayerMessage', handleChangePlayerMessage)
+
+function selectInteraction(type) {
+  socket.emit('getRandomMessage', type);
+}
