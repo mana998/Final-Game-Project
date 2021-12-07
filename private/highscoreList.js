@@ -96,15 +96,19 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
 
 router.post('/api/highestscores', (req, res) => {
   db.query('SELECT COUNT(high_score.score) AS scoresCount FROM high_score;', (error, result, fields) => {
+    console.log(error);
     console.log(result);
     if (result && result[0].scoresCount > 100) {
+      console.log("if first");
       db.query('SELECT COUNT(high_score.score) AS highScoreCount FROM high_score WHERE high_score.score < ?;', [req.body.score], (error, result, fields) => {
         console.log(result[0].highScoreCount);
         if (result && !result[0].highScoreCount) {
           db.query('DELETE FROM high_score ORDER BY high_score.score ASC LIMIT 1',(error, result, fields) => {
             console.log(result);
+            console.log("after delete before insert");
             if (result && result.affectedRows === 1) {
               insertScore(req, res);
+              console.log("after insert");
             } else {
               res.send({
                 message: 'Something went wrong, last lowest score is not deleted!',
@@ -118,8 +122,10 @@ router.post('/api/highestscores', (req, res) => {
         }
       });
     } else if (result && result[0].scoresCount < 100) {
+      console.log("else if ");
       insertScore(req, res);
     } else {
+      console.log("else")
       res.send({
         message: 'No scores found.',
       });
@@ -134,6 +140,7 @@ function insertScore(req, res) {
         if (result && result.affectedRows === 1) {
           res.send({
             message: 'Your score is now in one of the best 100 in the game!',
+            isSaved: true,
           });
         } else {
           res.send({

@@ -2,9 +2,9 @@ const endScreen = document.getElementById('endScreen');
 
 // Marianna
 // when player finishes, add their score to the display
-function addScoreToDisplay(data) {
+function addScoreToDisplay(player) {
   walkingSound.pause();
-  endScreen.innerHTML += `<span class="playerEndScore">${data.player.username} : ${data.player.score}, ${data.message}</span></br>`;
+  endScreen.innerHTML += `<span class="playerEndScore">${player.username} : ${player.score}</span></br>`;
 }
 
 // Marianna

@@ -36,10 +36,12 @@ router.delete('/destroysession', (req, res) => {
     if (error) {
       res.send({
         message: 'Something went wrong',
+        isDestroyed: 0,
       });
     } else {
       res.send({
         message: 'Session destroyed',
+        isDestroyed: 1,
       });
     }
   });
