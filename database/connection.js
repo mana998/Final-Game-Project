@@ -16,7 +16,7 @@ function handleDbConnection() {
     (error) => {
       if (error) {
         console.log('There is an error when connecting to database:', error);
-        setTimeout(handleDbConnection, 1000);
+        setTimeout(handleDbConnection, 2000);
       }
     },
   );
