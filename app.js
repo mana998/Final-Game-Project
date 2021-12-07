@@ -278,6 +278,18 @@ io.on('connection', (socket) => {
     socket.emit('changePlayerMessage', message);
   }
 
+  async function handleSavePlayer(data) {
+    if (data.playerId) {
+        response = await fetch(`${process.env.URL}api/highestscores`, {
+        method: 'POST',
+        body: JSON.stringify({playerId: data.playerId, score: data.score}),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      result = await response.json();
+      console.log(result);
+    }
+  }
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -295,6 +307,7 @@ io.on('connection', (socket) => {
   socket.on('doubleCoins', handleDoubleCoins);
   socket.on('freezePlayer', handleFreezePlayer);
   socket.on('getRandomMessage', handleGetRandomMessage);
+  socket.on('savePlayer', handleSavePlayer);
 });
 
 const PORT = process.env.PORT || 8080;

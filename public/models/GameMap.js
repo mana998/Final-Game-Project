@@ -158,7 +158,7 @@ class GameMap {
     // 5 coins per 10x10
     this.generateCoins(this.tiles.length * this.tiles[0].length / 20);
     // generate gems
-    // 3 gems per 10x10
+    // 3 gemper 10x10
     this.generateGems(this.tiles.length * this.tiles[0].length / 30);
     //generate traps
     //1 trap 10x10
@@ -343,7 +343,9 @@ class GameMap {
           break;
         default:
           const singleTrapImg = [onOffTrap, trap][ Utilities.getRandomNumber(0, 2)];
-          let [startRow3, startColumn3] = [-1, -1];
+          const maxTries3 = 100; //try to find place 100 times before giving up 
+          let tries3 = 0;
+          let [startRow3, endRow3, startColumn3, endColumn3] = [-1, -1, -1, -1];
           const trapTime = [1000, 2000, 5000, 4000, 3000];
           const activeTrapTime = trapTime[Utilities.getRandomNumber(0, trapTime.length)];
           //decide if the trap should appear on or off

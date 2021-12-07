@@ -88,14 +88,17 @@ function enablePlayButton() {
 // Adds player to the game object
 async function createPlayer(socketId) {
   username = '';
+  let playerId = '';
   const result = await getSession();
-  if (result.username) {
+  if (result.username && result.playerId) {
     $('#usernameInput').val(result.username);
     $('#usernameInput').attr('disabled', 'true');
     username = result.username;
+    playerId = result.playerId;
     enablePlayButton();
   }
   player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', socketId);
+  player.playerId = playerId;
   socket.emit('playerCreated', player);
 }
 
