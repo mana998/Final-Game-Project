@@ -8,42 +8,6 @@ function showHighscores() {
   $('#gameScreen').css('display', 'none');
 }
 
-async function getUserHighestscore(playerId) {
-  if (playerId) {
-    const response = await fetch(`/api/highestscore/user/${playerId}`);
-    const result = await response.json();
-    if (result.highestscore) {
-      return result.highestscore;
-    }
-    $('#message').text(result.message);
-  } else {
-    showMainMenu();
-  }
-}
-
-//display 5 score before and after the users highest score
-async function displayHighscores(userHighestScore) {
-  if (!userHighestScore) {
-    $('#message').text('User does not have any saved score');
-    return;
-  }
-  const response = await fetch(`/api/highscores/user/${userHighestScore}`);
-  const result = await response.json();
-  if (result.highscores) {
-    $('#highscorestableBody').empty();
-    result.highscores.forEach((record) => $('#highscorestableBody').append(`
-        <tr>
-            <th>${record.place}</th>
-            <th>${record.username}</th>
-            <th>${record.score}</th>
-            <th>${record.dateTime}</th>
-        </tr>
-        `));
-  } else {
-    $('#message').text(result.message);
-  }
-}
-
 function changePage(pageNumber) {
   currentPage = pageNumber;
   displayAllHighscores();
