@@ -120,6 +120,7 @@ function playersReady(players) {
   // get start time for score tracking
   startTime = new Date().getTime();
   canvas.style.display = 'block';
+  $('#loggedInUser').css('display', 'none');
   $('.container').css('border', 'none');
   $('#viewBlock').css('display', 'block');
   backgroundMusic.play();
