@@ -1,60 +1,6 @@
 const router = require('express').Router();
 const pool = require('../database/connection.js').pool;
 
-router.get('/api/highscores/user/:userHighestScore', (req, res) => {
-  pool.getConnection(function(err, db) {
-    db.query(`(SELECT high_score.high_score_id, player.username, high_score.score, high_score.date_time 
-          FROM player JOIN high_score 
-          ON player.player_id = high_score.player_id 
-          WHERE score >= ?
-          ORDER BY score ASC
-          LIMIT 5)
-      
-      UNION ALL
-      
-      (SELECT high_score.high_score_id, player.username, high_score.score, high_score.date_time 
-          FROM player JOIN high_score 
-          ON player.player_id = high_score.player_id
-          WHERE score < ?
-          ORDER BY score DESC
-          LIMIT 5);`, [req.params.userHighestScore, req.params.userHighestScore], (error, result, fields) => {
-      if (result && result.length) {
-        const highscores = [];
-        for (const highscore of result) {
-          highscores.push({
-            place: highscore.high_score_id, username: highscore.username, score: highscore.score, dateTime: highscore.date_time,
-          });
-        }
-        res.send({
-          highscores,
-        });
-      } else {
-        res.send({
-          message: 'No scores found',
-        });
-      }
-    });
-    db.release();
-  });
-});
-
-router.get('/api/highestscore/user/:userId', (req, res) => {
-  pool.getConnection(function(err, db) {
-    db.query('SELECT score FROM high_score WHERE player_id = ? ORDER BY score DESC LIMIT 1;', [req.params.userId], (error, result, fields) => {
-      if (result && result.length) {
-        res.send({
-          highestscore: result[0].score,
-        });
-      } else {
-        res.send({
-          message: 'No scores found.',
-        });
-      }
-    });
-    db.release();
-  });
-});
-
 router.get('/api/highestscores/:currentPage', (req, res) => {
   pool.getConnection(function(err, db) {
     db.query('SELECT COUNT(high_score.high_score_id) AS scoresCount FROM high_score;',(error, result, fields) => {
@@ -106,13 +52,10 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
 router.post('/api/highestscores', (req, res) => {
   pool.getConnection(function(err, db) {
     db.query('SELECT COUNT(high_score.score) AS scoresCount FROM high_score;', (error, result, fields) => {
-      console.log(result);
       if (result && result[0].scoresCount > 100) {
         db.query('SELECT COUNT(high_score.score) AS highScoreCount FROM high_score WHERE high_score.score < ?;', [req.body.score], (error, result, fields) => {
-          console.log(result[0].highScoreCount);
           if (result && !result[0].highScoreCount) {
             db.query('DELETE FROM high_score ORDER BY high_score.score ASC LIMIT 1',(error, result, fields) => {
-              console.log(result);
               if (result && result.affectedRows === 1) {
                 insertScore(req, res);
               } else {
@@ -143,10 +86,10 @@ function insertScore(req, res) {
   pool.getConnection(function(err, db) {
     const date_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
         db.query('INSERT INTO high_score (player_id, score, date_time) VALUES (?, ?, ?);', [req.body.playerId, req.body.score, date_time], (error, result, fields) => {
-          console.log(result);
           if (result && result.affectedRows === 1) {
             res.send({
               message: 'Your score is now in one of the best 100 in the game!',
+              isSaved: true
             });
           } else {
             res.send({

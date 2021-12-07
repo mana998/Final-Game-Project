@@ -158,10 +158,22 @@ async function checkSession() {
   }
 }
 
-// Marianna
+//Dagmara
+async function destroySession() {
+  const response = await fetch('/destroysession', {
+    method: 'DELETE',
+  });
+  const result = await response.json();
+  if (!result.isDestroyed) {
+    await checkSession();
+  }
+  
+}
+
+// Marianna & Dagmara
 // check if session is set
 $(window).on('load', () => {
   $('#loginAndRegisterButton').on('click', openLoginAndRegistration);
   $('#highscoreButton').on('click', openHighscores);
-  checkSession();
+  destroySession();
 });

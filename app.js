@@ -286,7 +286,10 @@ io.on('connection', (socket) => {
         headers: { 'Content-Type': 'application/json' }
       });
       result = await response.json();
-      console.log(result);
+      if (result.isSaved) {
+        socket.emit("scoreMessage", data.playerId);
+      }
+      
     }
   }
 

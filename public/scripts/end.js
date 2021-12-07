@@ -4,7 +4,11 @@ const endScreen = document.getElementById('endScreen');
 // when player finishes, add their score to the display
 function addScoreToDisplay(player) {
   walkingSound.pause();
-  endScreen.innerHTML += `<span class="playerEndScore">${player.username} : ${player.score}</span></br>`;
+  endScreen.innerHTML += `<span id="${player.playerId}" class="playerEndScore">${player.username} : ${player.score}</span></br>`;
+}
+
+function addMessageToScore(playerId) {
+  $(`#${playerId}`).append(`<span class="playerEndScore"> | Score in top 100!</span>`);
 }
 
 // Marianna
@@ -46,3 +50,4 @@ function handleGameEnded() {
 socket.on('addPlayerScore', addScoreToDisplay);
 socket.on('changeSpectating', changeSpectatingPlayer);
 socket.on('gameEnded', handleGameEnded);
+socket.on('scoreMessage', addMessageToScore);
