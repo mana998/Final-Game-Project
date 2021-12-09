@@ -27,6 +27,30 @@ router.get('/api/interaction', (req, res) => {
   });
 });
 
+router.post('/api/interaction', (req, res) => {
+  pool.getConnection(function(err, db) {
+    //get messages
+    let query = 'INSERT interaction_message, interaction_category_id, player_id INTO interaction VALUES (?, ?, ?)';
+    let values = [req.query.interactions[0], req.query.interaction_category_id, req.query.player_id];
+    for (let i = 1; i < req.body.interactions.length; i++) {
+      query += ', VALUES (?, ?, ?)';
+      values.push(interactions[i], req.body.interaction_category_id, req.body.player_id);
+    }
+    db.query(query, values, (error, result, fields) => {
+      if (result && result.affectedRows) {
+        res.send({
+          message: "Interactions added"
+        });
+      } else {
+        res.send({
+          message: 'Something went wrong. Try again.'
+        });
+      }
+    });
+    db.release();
+  });
+});
+
 module.exports = {
   router,
 };
