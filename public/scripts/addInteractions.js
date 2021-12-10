@@ -2,7 +2,7 @@ async function changeInteractions(category, id) {
   let interactions = [];
   //get all messages
   $(`.input-${category}`).map(function() {
-    interactions.push($(this).attr('value'));
+    interactions.push($(this).val());
   })
   const response = await fetch('/api/interaction', {
     method: 'POST',
@@ -26,12 +26,15 @@ async function createInteractionsForm(id) {
   //split into smaller forms based on sections
   //need to check more how data is passed though form
   let url = `api/interaction?player_id=${id}`;
+  let response = await fetch(url);
+  let result = await response.json();
+  url = `api/interaction`;
   response = await fetch(url);
-  result = await response.json();
-  if (result.message) {
-    url = `api/interaction`;
-    response = await fetch(url);
-    result = await response.json();
+  let resultGeneral = await response.json();
+  for (category in resultGeneral) {
+    if (!result[category]) {
+      result[category] = resultGeneral[category];
+    }
   }
   for (category in result) {
     $('#interactionForm').append(`<form id="${category}Form">`);
@@ -50,6 +53,7 @@ async function showInteractions(playerId) {
   $('#menuOptions').css('display', 'block');
   $('#panel').css('display', 'none');
   $('#interactionForm').css('display', 'block');
+  $('#interactionForm').empty();
   $('#gameScreen').css('display', 'none');
   $('#highscore').css('display', 'none');
   createInteractionsForm(playerId);
