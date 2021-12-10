@@ -175,5 +175,6 @@ async function destroySession() {
 $(window).on('load', () => {
   $('#loginAndRegisterButton').on('click', openLoginAndRegistration);
   $('#highscoreButton').on('click', openHighscores);
+  $('#interactionsButton').on('click', openInteractions);
   destroySession();
 });

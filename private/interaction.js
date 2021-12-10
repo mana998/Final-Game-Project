@@ -18,9 +18,9 @@ router.get('/api/interaction', (req, res) => {
         }
         res.send(interactions);
       } else {
-        res.send(
-          'error'
-        );
+        res.send({
+          message: 'No results'
+        });
       }
     });
     db.release();
