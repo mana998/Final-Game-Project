@@ -1,5 +1,23 @@
+async function changeInteractions(category, id) {
+  let interactions = [];
+  //get all messages
+  $(`.input-${category}`).map(function() {
+    interactions.push($(this).attr('value'));
+  })
+  const response = await fetch('/api/interaction', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "player_id": id, "interaction_category": category, "interactions": interactions }),
+  });
+  const result = await response.json();
+  console.log("result", result);
+}
+
 function addInteractionField(category, interaction) {
-  return `<input type="text" class="form-control" value='${interaction}'>`;
+  return `<input type="text" class="form-control input-${category}" value='${interaction}'>`;
 }
 
 async function createInteractionsForm(id) {
@@ -21,7 +39,8 @@ async function createInteractionsForm(id) {
     result[category].map(interaction => {
       $(`#${category}Form`).append(addInteractionField(category, interaction));
     })
-    $(`#${category}Form`).append(`<input type="submit" value="Save">`);
+    $(`#${category}Form`).append(`<button type="button" id="submit${category}">Save</button>`);
+    $(`#submit${category}`).attr('onclick', `changeInteractions("${category}", "${id}")`);
     $('#interactionForm').append(`</form>`);
   }
 }
@@ -43,4 +62,5 @@ async function openInteractions() {
     return;
   }
   alert(result.message);
+  showInteractions(4);
 }
