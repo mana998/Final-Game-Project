@@ -13,7 +13,6 @@ async function changeInteractions(category, id) {
     body: JSON.stringify({ "player_id": id, "interaction_category": category, "interactions": interactions }),
   });
   const result = await response.json();
-  console.log("result", result);
 }
 
 function addInteractionField(category, interaction) {
@@ -30,6 +29,7 @@ async function createInteractionsForm(id) {
   let result = await response.json();
   url = `api/interaction`;
   response = await fetch(url);
+  if (result.message) delete result.message;
   let resultGeneral = await response.json();
   for (category in resultGeneral) {
     if (!result[category]) {

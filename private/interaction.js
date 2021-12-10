@@ -34,17 +34,27 @@ router.post('/api/interaction', (req, res) => {
     db.query('SELECT interaction_category_id FROM interaction_category WHERE interaction_category = ?', req.body.interaction_category, (error, result, fields) => {
       if (result && result.length === 1) {
         interaction_category_id = result[0].interaction_category_id;
-        //insert messages
-        let query = 'INSERT INTO interaction (interaction_message, interaction_category_id, player_id) VALUES (?, ?, ?)';
-        let values = [req.body.interactions[0], interaction_category_id, req.body.player_id];
-        for (let i = 1; i < req.body.interactions.length; i++) {
-          query += ', (?, ?, ?)';
-          values.push(req.body.interactions[i], interaction_category_id, req.body.player_id);
-        }
-        db.query(query, values, (error, result, fields) => {
-          if (result && result.affectedRows) {
-            res.send({
-              message: "Interactions added"
+        //delete messages
+        let query = 'DELETE FROM interaction WHERE interaction_category_id = ? &&  player_id = ?';
+        db.query(query, [interaction_category_id, req.body.player_id], (error, result, fields) => {
+          if (result && !error) {
+            //insert messages
+            let query = 'INSERT INTO interaction (interaction_message, interaction_category_id, player_id) VALUES (?, ?, ?)';
+            let values = [req.body.interactions[0], interaction_category_id, req.body.player_id];
+            for (let i = 1; i < req.body.interactions.length; i++) {
+              query += ', (?, ?, ?)';
+              values.push(req.body.interactions[i], interaction_category_id, req.body.player_id);
+            }
+            db.query(query, values, (error, result, fields) => {
+              if (result && result.affectedRows) {
+                res.send({
+                  message: "Interactions added"
+                });
+              } else {
+                res.send({
+                  message: 'Something went wrong. Try again.'
+                });
+              }
             });
           } else {
             res.send({
@@ -52,6 +62,7 @@ router.post('/api/interaction', (req, res) => {
             });
           }
         });
+       
       } else {
         res.send({
           message: 'Something went wrong. Try again.'
