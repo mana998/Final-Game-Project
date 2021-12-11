@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
       id = result.playerId;
     }
     //load player interactions
-    let url = `${process.env.URL}api/interaction`;
+    let url = `${process.env.URL}api/interactions`;
     if (id) url += `?player_id=${id}`;
     response = await fetch(url);
     result = await response.json();
