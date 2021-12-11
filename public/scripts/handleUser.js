@@ -76,7 +76,7 @@ function activateLogin() {
 async function login() {
   const username = $('#username').val();
   const password = $('#password').val();
-  const response = await fetch('/api/user/login', {
+  const response = await fetch('/api/users/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -106,7 +106,7 @@ async function register() {
     $('#message').text('Passwords have to match. Try again');
     return;
   }
-  const response = await fetch('/api/user/register', {
+  const response = await fetch('/api/users/register', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -114,9 +114,10 @@ async function register() {
     },
     body: JSON.stringify({ username, password }),
   });
-  resetLoginFields();
+  $('#repeatPassword').val('');
   const result = await response.json();
   $('#message').text(result.message);
+  activateLogin();
 }
 
 // Dagmara

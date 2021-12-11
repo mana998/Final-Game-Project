@@ -14,7 +14,7 @@ const saltRounds = 15;
 
 // Dagmara
 // check if username and password exists in db and return player id if not return message
-router.post('/api/user/login', (req, res) => {
+router.post('/api/users/login', (req, res) => {
   pool.getConnection(function(err, db) {
     db.query('SELECT * FROM player WHERE username=?;', [req.body.username], (error, result, fields) => {
       if (result && result.length === 1) {
@@ -42,7 +42,7 @@ router.post('/api/user/login', (req, res) => {
 
 // Dagmara
 // check if username and password are valid, check if username already exsts, add new player to db
-router.post('/api/user/register', (req, res) => {
+router.post('/api/users/register', (req, res) => {
   pool.getConnection(function(err, db) {
     const usernameValid = Utils.checkStringCharacters(req.body.username);
     const passwordValid = Utils.checkStringCharacters(req.body.password);
