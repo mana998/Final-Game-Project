@@ -50,8 +50,8 @@ const highscoreListRouter = require('./private/highscoreList.js');
 app.use(highscoreListRouter.router);
 
 // user interactions
-const interactionRouter = require('./private/interaction.js');
-app.use(interactionRouter.router);
+const interactionsRouter = require('./private/interactions.js');
+app.use(interactionsRouter.router);
 
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
