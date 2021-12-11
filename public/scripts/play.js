@@ -12,7 +12,7 @@ const ctx = canvas.getContext('2d');
 // global objects for map and player
 let map;
 let player;
-let spectatingPlayer;
+let spectatingPlayer = {};
 let startTime;
 
 // change canvas size on resize
@@ -50,7 +50,7 @@ function draw(data) {
     const tempPlayer = data.players.find((gamePlayer) => gamePlayer.username === username) || null;
     // if no player is defined to spectate, it asks server for next available one
     if (!tempPlayer || tempPlayer.isDone) {
-      socket.emit('changeSpectator', (spectatingPlayer) ? tempPlayer.username : '');
+      socket.emit('changeSpectator', (spectatingPlayer && tempPlayer) ? tempPlayer.username : '');
     } else { // else it sets the player
       spectatingPlayer = new Player(
         tempPlayer.x,

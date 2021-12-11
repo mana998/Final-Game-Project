@@ -204,7 +204,8 @@ class Player extends GameObject { // Marianna
       let isNear = false;
       players.map(gamePlayer => {
           if (this.username !== gamePlayer.username) {
-            if (map.checkCollision(gamePlayer, {
+            if (!gamePlayer.isDone &&
+              map.checkCollision(gamePlayer, {
               x: player.x - 2 * map.tileWidth,
               y: player.y - 2 * map.tileHeight,
               width: player.width * 5,

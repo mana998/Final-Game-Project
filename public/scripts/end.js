@@ -23,15 +23,7 @@ function changeSpectator(e) {
 // Marianna
 // setup player to spectate based on data from server
 function changeSpectatingPlayer(data) {
-  spectatingPlayer = (
-    data.x,
-    data.y,
-    data.width,
-    data.height,
-    new Img(data.img.src, data.img.startRow, data.img.startColumn, data.img.rows, data.img.columns, data.img.speed, '', data.img.currentRow, data.img.currentColumn),
-    data.username,
-    data.message
-  );
+  spectatingPlayer.username = data.username;
 }
 
 // Marianna
