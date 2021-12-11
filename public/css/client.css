@@ -157,3 +157,30 @@ canvas {
     transform: translate(-50%, 0);
     top: 30%
 }
+
+.characterLabel {
+    width: 32px;
+    height: 32px;
+    background-image:url('../assets/images/game/test.png');
+}
+
+.characterInput {
+    display: none;
+}
+
+.characterItem {
+    display: inline-block;
+    margin: 2% 0;
+    max-width: 20% !important;
+}
+
+#charactersContainer {
+    margin: 0;
+    width: 75%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#characters {
+    text-align: center;
+}

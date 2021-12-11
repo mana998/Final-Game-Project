@@ -103,6 +103,7 @@ io.on('connection', (socket) => {
   function addPlayerToGameObject(player) {
     const newPlayer = player;
     newPlayer.socketId = socket.id;
+    console.log(newPlayer.img);
     games[playersRoomTable[socket.id]].players.push(newPlayer);
   }
 
