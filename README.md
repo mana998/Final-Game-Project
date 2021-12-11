@@ -6,16 +6,15 @@ The main concept of this game is to get out of the maze as fast as possible and 
 
 # Features
 - Variety of characters that player can choose from
-- Randomly generated map with traps and collectibles
+- Various maps with traps and collectibles
 - Background music and sound effects
 - Customizable character dialogues
 - Multiplayer mode with rooms
 - Leaderboard
-- Various maps
 
 # Run the game
 There are two ways of running the game:
-- **online** via link: https://maze-game-project.herokuapp.com/. The game is hosted on claud platform Heroku, accessible at any time to play with you firends all over the world.
+- **online** via link: https://maze-game-project.herokuapp.com/. The game is hosted on cloud platform Heroku, accessible at any time to play with you firends all over the world.
 - **locally**. The local varsion allows you to run multiplayer game in different browsers but you need to figure out how to connect controls for more than one player. In order to run the game locally:
   - download the project from github
   - open terminal and change location to the game folder
