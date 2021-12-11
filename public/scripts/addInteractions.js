@@ -52,7 +52,7 @@ async function createInteractionsForm(id) {
       result[category] = resultGeneral[category];
     }
   }
-  for (category in result) {
+  Object.keys(result).sort().map(category => {
     $('#interactionForm').append(`<form id="${category}Form">`);
     $(`#${category}Form`).append(`<h2>${category}</h2>`);
     result[category].map(interaction => {
@@ -63,7 +63,7 @@ async function createInteractionsForm(id) {
     $(`#${category}Form`).append(`<button type="button" id="reset${category}">Reset</button>`);
     $(`#reset${category}`).attr('onclick', `resetInteractions("${id}", "${category}")`);
     $('#interactionForm').append(`</form>`);
-  }
+  });
   $(`#interactionForm`).append(`<button type="button" id="resetAll">Reset All</button>`);
   $(`#resetAll`).attr('onclick', `resetInteractions("${id}")`);
 }
