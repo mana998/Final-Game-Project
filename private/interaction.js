@@ -28,10 +28,6 @@ router.get('/api/interactions', (req, res) => {
 });
 
 router.post('/api/interactions', (req, res) => {
-  addInteractions(req, res);
-});
-
-function addInteractions(req, res) {
   pool.getConnection(async function(err, db) {
     let interaction_category_id;
     //get category id
@@ -67,7 +63,33 @@ function addInteractions(req, res) {
     }
     db.release();
   });
-}
+});
+
+router.delete('/api/interactions', (req, res) => {
+  pool.getConnection(async function(err, db) {
+    let interaction_category_id;
+    let result;
+    //get category id
+    if (req.body.interaction_category) {
+      result = await getCategoryId(db, req.body.interaction_category)
+      if (result && result.length === 1) interaction_category_id = result[0].interaction_category_id;
+    }
+    if (interaction_category_id || !req.body.interaction_category) {
+      //delete messages
+      let deleteReturn = await deleteInteraction(db, req.body.player_id, interaction_category_id);
+        if (deleteReturn.result && !deleteReturn.error) {
+          res.send({
+            message: 'Reset successful.'
+          });
+        } else {
+          res.send({
+            message: 'Something went wrong. Try again.'
+          });
+        }
+    }
+    db.release();
+  });
+});
 
 async function deleteInteraction (db, player_id, category_id) {
     //delete messages

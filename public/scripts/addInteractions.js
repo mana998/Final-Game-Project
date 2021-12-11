@@ -1,4 +1,4 @@
-async function changeInteractions(category, id) {
+async function changeInteractions(id, category) {
   let interactions = [];
   //get all messages
   $(`.input-${category}`).map(function() {
@@ -13,6 +13,22 @@ async function changeInteractions(category, id) {
     body: JSON.stringify({ "player_id": id, "interaction_category": category, "interactions": interactions }),
   });
   const result = await response.json();
+}
+
+async function resetInteractions(id, category) {
+  const response = await fetch('/api/interactions', {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "player_id": id, "interaction_category": category}),
+  });
+  const result = await response.json();
+  //reload the page
+  if (result.message.match(/success/)) {
+    showInteractions(id);
+  }
 }
 
 function addInteractionField(category, interaction) {
@@ -43,9 +59,13 @@ async function createInteractionsForm(id) {
       $(`#${category}Form`).append(addInteractionField(category, interaction));
     })
     $(`#${category}Form`).append(`<button type="button" id="submit${category}">Save</button>`);
-    $(`#submit${category}`).attr('onclick', `changeInteractions("${category}", "${id}")`);
+    $(`#submit${category}`).attr('onclick', `changeInteractions("${id}", "${category}")`);
+    $(`#${category}Form`).append(`<button type="button" id="reset${category}">Reset</button>`);
+    $(`#reset${category}`).attr('onclick', `resetInteractions("${id}", "${category}")`);
     $('#interactionForm').append(`</form>`);
   }
+  $(`#interactionForm`).append(`<button type="button" id="resetAll">Reset All</button>`);
+  $(`#resetAll`).attr('onclick', `resetInteractions("${id}")`);
 }
 
 async function showInteractions(playerId) {
