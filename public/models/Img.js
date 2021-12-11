@@ -1,3 +1,4 @@
+//Marianna
 class Img {
   //size parameter might be deleted
   constructor(src, startRow, startColumn, rows, columns, speed, size, currentRow, currentColumn) {

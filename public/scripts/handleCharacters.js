@@ -1,3 +1,4 @@
+//Dagmara
 const numberOfCharacters = 8;
 let selectedCharacter;
 

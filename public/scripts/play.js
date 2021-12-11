@@ -1,3 +1,4 @@
+//Dagmara & Marianna
 const walkingSound = new Sound('walk', 'soundfx');
 walkingSound.sound.volume = 0.5;
 walkingSound.sound.loop = true;
@@ -25,7 +26,7 @@ window.addEventListener('load', () => {
   canvas.height = window.innerHeight;
 });
 
-//Marianna & Dagmara 
+//Marianna
 //entry values are for character with value 0 (red player)
 let animations = {
   // startRow, startColumn, rows, columns value 
@@ -249,6 +250,7 @@ function movePlayer(e) {
   updateServerPlayer();
 }
 
+//Marianna
 function handleMapCreated(data) {
   map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
   for (let i = 0; i < data.gameMap.coins.length; i++) {
@@ -262,6 +264,7 @@ function handleMapCreated(data) {
   }
 }
 
+//Marianna
 function displayText(text, x, y, align = 'center', color = 'white', size = 10, font = 'Helvetica') {
   ctx.font = `${size}px ${font}`;
   ctx.fillStyle = color;
@@ -269,6 +272,7 @@ function displayText(text, x, y, align = 'center', color = 'white', size = 10, f
   ctx.fillText(text, x, y);
 }
 
+//Marianna
 function handleChangePlayerMessage(message) {
   player.message = message;
   updateServerPlayer();
@@ -293,12 +297,12 @@ socket.on('reversePlayerMovement', () => {
 });
 
 //Dagmara
-
 //change players' speed
 socket.on('changePlayersSpeed', () => {
   new SpeedGem().speed(player);
 });
 
+//Dagmara
 //heal player
 socket.on('healPlayers', () => {
   new HealGem().heal(player);
