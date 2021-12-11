@@ -86,5 +86,4 @@ async function openInteractions() {
     return;
   }
   alert(result.message);
-  showInteractions(4);
 }
