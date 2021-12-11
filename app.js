@@ -42,8 +42,8 @@ const Utils = new Utilities();
 const FRAME_RATE = 30;
 
 // user login and register
-const userRouter = require('./private/user.js');
-app.use(userRouter.router);
+const usersRouter = require('./private/users.js');
+app.use(usersRouter.router);
 
 // highscore list
 const highscoreListRouter = require('./private/highscoreList.js');
