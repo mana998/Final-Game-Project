@@ -27,17 +27,20 @@ router.get('/api/interaction', (req, res) => {
   });
 });
 
-router.post('/api/interaction', (req, res) => {
+router.post('/api/interaction', async (req, res) => {
+  await addInteractions(req, res);
+});
+
+function addInteractions(req, res) {
   pool.getConnection(function(err, db) {
     let interaction_category_id;
     //get category id
-    db.query('SELECT interaction_category_id FROM interaction_category WHERE interaction_category = ?', req.body.interaction_category, (error, result, fields) => {
+    db.query('SELECT interaction_category_id FROM interaction_category WHERE interaction_category = ?', req.body.interaction_category, async (error, result, fields) => {
       if (result && result.length === 1) {
         interaction_category_id = result[0].interaction_category_id;
         //delete messages
-        let query = 'DELETE FROM interaction WHERE interaction_category_id = ? &&  player_id = ?';
-        db.query(query, [interaction_category_id, req.body.player_id], (error, result, fields) => {
-          if (result && !error) {
+        let deleteReturn = await deleteInteraction(db, req.body.player_id, interaction_category_id);
+          if (deleteReturn.result && !deleteReturn.error) {
             //insert messages
             let query = 'INSERT INTO interaction (interaction_message, interaction_category_id, player_id) VALUES (?, ?, ?)';
             let values = [req.body.interactions[0], interaction_category_id, req.body.player_id];
@@ -61,17 +64,33 @@ router.post('/api/interaction', (req, res) => {
               message: 'Something went wrong. Try again.'
             });
           }
-        });
-       
-      } else {
-        res.send({
-          message: 'Something went wrong. Try again.'
-        });
       }
     });
     db.release();
   });
-});
+}
+
+async function deleteInteraction (db, player_id, category_id) {
+    //delete messages
+    let query = 'DELETE FROM interaction WHERE player_id = ?';
+    let values = [player_id];
+    if (category_id) {
+      query += " && interaction_category_id = ?";
+      values.push(category_id);
+    }
+    const returnObject = {};
+    let result = await new Promise((resolve, reject) => db.query(query, values, (error, result, fields) => {
+      if (error) {
+        reject(error)
+      } else {
+        returnObject.error = error;
+        returnObject.result = result;
+        returnObject.fields = fields;
+        resolve(returnObject)
+      }
+    }));
+    return result;
+};
 
 module.exports = {
   router,
