@@ -2,7 +2,7 @@ const router = require('express').Router();
 const pool = require('../database/connection').pool;
 
 // Marianna
-router.get('/api/interaction', (req, res) => {
+router.get('/api/interactions', (req, res) => {
   pool.getConnection(function(err, db) {
     let interactions = {};
     //get messages
@@ -27,7 +27,7 @@ router.get('/api/interaction', (req, res) => {
   });
 });
 
-router.post('/api/interaction', async (req, res) => {
+router.post('/api/interactions', async (req, res) => {
   await addInteractions(req, res);
 });
 

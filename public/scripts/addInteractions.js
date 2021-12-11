@@ -4,7 +4,7 @@ async function changeInteractions(category, id) {
   $(`.input-${category}`).map(function() {
     interactions.push($(this).val());
   })
-  const response = await fetch('/api/interaction', {
+  const response = await fetch('/api/interactions', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -24,10 +24,10 @@ async function createInteractionsForm(id) {
   //need to get category id and interaction id
   //split into smaller forms based on sections
   //need to check more how data is passed though form
-  let url = `api/interaction?player_id=${id}`;
+  let url = `api/interactions?player_id=${id}`;
   let response = await fetch(url);
   let result = await response.json();
-  url = `api/interaction`;
+  url = `api/interactions`;
   response = await fetch(url);
   if (result.message) delete result.message;
   let resultGeneral = await response.json();
