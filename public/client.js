@@ -63,11 +63,18 @@ function joinGame() {
 // starts the game for the user,
 // changes it's state to ready to play and if all players are ready starts the game
 function playGame() {
+  if (selectedCharacter > 3) {
+    player.img.startRow = 4;
+    player.img.startColumn = (selectedCharacter-4) * 3;
+  } else {
+    player.img.startColumn = selectedCharacter * 3;
+  }
   player.readyToPlay = true;
   $('#usernameInput').attr('disabled', 'true');
   updateServerPlayer();
   const gameCode = $('#displayGameCode').text();
   socket.emit('playGame', gameCode);
+  setAnimation(selectedCharacter);
 }
 
 // Dagmara
@@ -98,7 +105,7 @@ async function createPlayer(socketId) {
     playerId = result.playerId;
     enablePlayButton();
   }
-  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1,0,5), username, '', socketId);
+  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', socketId);
   player.playerId = playerId;
   socket.emit('playerCreated', player);
 }

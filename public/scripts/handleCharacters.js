@@ -1,4 +1,5 @@
 const numberOfCharacters = 8;
+let selectedCharacter;
 
 function generateChracterSelection() {
     $('#characters').append(
@@ -30,4 +31,5 @@ function generateChracterSelection() {
 function selectCharacter (characterNumber) {
     $(`#charactersContainer`).find("label").addClass('disabled');
     $(`#characterLabel-${characterNumber}`).removeClass('disabled');
+    selectedCharacter = characterNumber;
 }

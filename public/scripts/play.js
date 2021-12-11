@@ -25,14 +25,34 @@ window.addEventListener('load', () => {
   canvas.height = window.innerHeight;
 });
 
-// hardcoded animation values for now
-const animations = {
-  // startRow, startColumn, rows, columns
+//Marianna & Dagmara 
+//entry values are for character with value 0 (red player)
+let animations = {
+  // startRow, startColumn, rows, columns value 
   down: [0, 0, 0, 2],
   left: [1, 0, 0, 2],
   right: [2, 0, 0, 2],
   up: [3, 0, 0, 2],
 };
+
+//Dagmara
+//set right animaton for the character
+function setAnimation (value) {
+  //calculate the start position for each character
+  let startColumnPosition = value * 3; 
+  if (value > 3) {
+    //calculate the start position for each character in second row
+    startColumnPosition = (value - 4) *3;
+    animations.down[0] = animations.down[0] + 4;
+    animations.left[0] = animations.left[0] + 4;
+    animations.right[0] = animations.right[0] + 4;
+    animations.up[0] = animations.up[0] + 4;
+  }
+  animations.down[1] = startColumnPosition;
+  animations.left[1] =  startColumnPosition;
+  animations.right[1] =  startColumnPosition;
+  animations.up[1] =  startColumnPosition;
+}
 
 // Marianna
 // draw everything
