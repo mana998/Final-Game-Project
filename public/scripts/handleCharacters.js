@@ -19,7 +19,15 @@ function generateChracterSelection() {
         } else {
             $(`#characterLabel-${characterNumber}`).css("background-position", `left ${-32 - (characterNumber * 3 * 32)}px top 0px`);
         }
+
+        $(`#characterLabel-${characterNumber}`).attr("onclick", `selectCharacter(${characterNumber})`);
+
     }
     
     $('#characters').append(`</div>`);
+}
+
+function selectCharacter (characterNumber) {
+    $(`#charactersContainer`).find("label").addClass('disabled');
+    $(`#characterLabel-${characterNumber}`).removeClass('disabled');
 }
