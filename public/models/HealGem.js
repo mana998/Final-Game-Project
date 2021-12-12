@@ -6,7 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class HealGem extends Gem { // Dagmara
     constructor(x, y, width, height, value, affectsMe) {
-      super(x, y, width, height, value, affectsMe);
+      super(x, y, width, height, value, affectsMe, `Your health has increased by ${value}`);
       this.values = [0.5, 1, 2.5, 3, 4.5];
     }
   

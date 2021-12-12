@@ -6,7 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class SpeedGem extends Gem { // Dagmara
     constructor(x, y, width, height, value, affectsMe) {
-      super(x, y, width, height, value, affectsMe);
+      super(x, y, width, height, value, affectsMe, `Your speed has been changed for ${value / 1000} seconds`);
       this.values = [5000, 10000, 15000, 20000];
     }
   

@@ -186,3 +186,13 @@ canvas {
     clip: rect(0.4em, 5em, 5em, 0);
     left: 0;
 }
+
+#gemEffectMessage {
+    position: fixed;
+    top: 5em;
+    font-size: 2em;
+    color: white;
+    z-index: 4;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

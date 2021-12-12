@@ -6,7 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class DoubleCoinsGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
-    super(x, y, width, height, value, affectsMe);
+    super(x, y, width, height, value, affectsMe, 'Your coins have been doubled');
     this.values = [0];
   }
 

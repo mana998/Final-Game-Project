@@ -6,7 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class TeleportGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
-    super(x, y, width, height, value, affectsMe);
+    super(x, y, width, height, value, affectsMe, `You have been teleported`);
     this.values = [0];
   }
 
