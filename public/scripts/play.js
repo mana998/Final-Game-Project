@@ -6,6 +6,9 @@ walkingSound.sound.setAttribute("id", "walk");
 let displayMessageCount = -1;
 const maxDisplayMessageCount = 60;
 
+const healthOutline = new Img('./assets/images/game/healthOutline.png', 0, 0, 0, 0, 0, 1);
+const healthFill = new Img('./assets/images/game/healthFill.png', 0, 0, 0, 0, 0, 1);
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
