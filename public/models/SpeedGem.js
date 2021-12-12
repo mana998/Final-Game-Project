@@ -10,21 +10,21 @@ class SpeedGem extends Gem { // Dagmara
       this.values = [5000, 10000, 15000, 20000];
     }
   
-    onCollect(player) {
+    onCollect(player, position, affectsMe) {
       super.onCollect();
-      this.changePlayersSpeed(player);
-      setTimeout(() => {
-        player.speed = 4;
-      },this.value)
+      if (this.affectsMe || affectsMe) { //force affectsMe value
+        this.changePlayersSpeed(player, position, affectsMe);
+      } else {
+        socket.emit('gemAffectsOthers', position);
+      }
     }
   
     //decide whether to heal current player or other players
-    changePlayersSpeed(player) {
-      if (this.affectsMe) {
-        this.speed(player);
-      } else {
-        socket.emit('changePlayersSpeed');
-      }
+    changePlayersSpeed(player, position, affectsMe) {
+      this.speed(player);
+      setTimeout(() => {
+        player.speed = 4;
+      },this.value)
     }
   
     //heal player

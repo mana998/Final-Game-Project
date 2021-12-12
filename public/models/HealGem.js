@@ -10,17 +10,12 @@ class HealGem extends Gem { // Dagmara
       this.values = [0.5, 1, 2.5, 3, 4.5];
     }
   
-    onCollect(player) {
+    onCollect(player, position, affectsMe) {
       super.onCollect();
-      this.healPlayer(player);
-    }
-  
-    //decide whether to heal current player or other players
-    healPlayer(player) {
-      if (this.affectsMe) {
+      if (this.affectsMe || affectsMe) { //force affectsMe value
         this.heal(player);
       } else {
-        socket.emit('healPlayer');
+        socket.emit('gemAffectsOthers', position);
       }
     }
   

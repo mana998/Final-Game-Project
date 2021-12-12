@@ -174,7 +174,7 @@ class Player extends GameObject { // Marianna
     map.tiles[row][column] = 0;
     updateServerMap(map.tiles);
     const blockValue = block.split('.');
-    map.gems[parseInt(blockValue[1])].onCollect(this);
+    map.gems[parseInt(blockValue[1])].onCollect(this, parseInt(blockValue[1]));
   }
 
   handleTrapCollision(block, row, column, map, canvasHeight, canvasWidth) {

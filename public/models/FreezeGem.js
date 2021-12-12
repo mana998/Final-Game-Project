@@ -10,12 +10,12 @@ class FreezeGem extends Gem { // Marianna
     this.values = [5000, 10000, 15000, 20000];
   }
 
-  onCollect(player) {
+  onCollect(player, position, affectsMe) {
     super.onCollect();
-    if (this.affectsMe) {
+    if (this.affectsMe || affectsMe) { //force affectsMe value
       this.freezePlayer(player, this.value);
     } else {
-      socket.emit('freezePlayer', this.value);
+      socket.emit('gemAffectsOthers', position);
     }
   }
 

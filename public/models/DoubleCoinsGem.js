@@ -10,13 +10,13 @@ class DoubleCoinsGem extends Gem { // Marianna
     this.values = [0];
   }
 
-  onCollect(player) {
+  onCollect(player, position, affectsMe) {
     super.onCollect();
     //decide whether to reverse for current player or other players
-    if (this.affectsMe) {
+    if (this.affectsMe || affectsMe) { //force affectsMe value
       this.doubleCoins(player);
     } else {
-      socket.emit('doubleCoins');
+      socket.emit('gemAffectsOthers', position);
     }
   }
 

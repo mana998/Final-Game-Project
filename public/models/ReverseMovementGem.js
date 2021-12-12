@@ -10,23 +10,23 @@ class ReverseMovementGem extends Gem { // Marianna
     this.values = [5000, 10000, 15000, 20000];
   }
 
-  onCollect(player) {
+  onCollect(player, position, affectsMe) {
     super.onCollect();
-    this.reverseMovement(player)
-    //reverse back after period of time
-    setTimeout ( () => {
-      this.reverseMovement(player);
-    }, this.value);
+    if (this.affectsMe || affectsMe) { //force affectsMe value
+      this.reverseMovement(player, position, affectsMe)
+    } else {
+      socket.emit('gemAffectsOthers', position);
+    }
   }
 
   //decide whether to reverse for current player or other players
-  reverseMovement(player) {
+  reverseMovement(player, position, affectsMe) {
     super.displayMessage();
-    if (this.affectsMe) {
+    this.swapMovement(player);
+    //reverse back after period of time
+    setTimeout ( () => {
       this.swapMovement(player);
-    } else {
-      socket.emit('reverseMovement');
-    }
+    }, this.value);
   }
 
   //swap movement for passed player
