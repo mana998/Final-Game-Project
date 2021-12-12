@@ -27,11 +27,11 @@
 <body>
     <script src="/socket.io/socket.io.js"></script>
     <div id="viewBlock"></div>
-    <div class="container">
+    <div class="container-fluid">
         <div id="menuScreen">
             <span id="loggedInUser"></span>
             <div id="panel">
-                <h1 id="gameTitle">GAME</h1>
+                <h1 class="gameTitle">GAME NAME</h1>
                 <div>
                     <button type="button" class="btn" id="createNewGameButton">
                         <span>New Game</span>
@@ -82,7 +82,7 @@
             <div id="menuOptions">
                 <div id="loginAndRegister">
                     <div id="loginAndRegisterBody">
-                        <h1 id="loginAndRegisterHeadder">Login</h1>
+                        <h1 id="loginAndRegisterHeadder" class="gameTitle">LOGIN</h1>
                         <form>
                             <input placeholder="username" type="text" id="username" name="username"><br>
                             <input placeholder="password" type="password" id="password" name="password"><br>

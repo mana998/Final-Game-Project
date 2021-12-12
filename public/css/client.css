@@ -4,38 +4,24 @@ body {
     overflow: hidden;
 }
 
-#menuScreen, #playMenu #loginAndRegister {
-    background-position: center;
-    height: 80vh;
-}
-
 #repeatPassword {
     display: none;
 }
-.container {
+.container-fluid {
     text-align: center;
     vertical-align: middle;
-    max-height: 100vh;
-    max-width: 100vw;
-    margin: 5%;
     z-index: 10;
-    position: fixed;
-    left: 50%;
-    transform: translate(-50%, 0);
+    padding: 0 !important;
+    height: 100vh;
+    background-position: center;
+    background-image: url("../assets/images/backgrounds/background.png");
 }
 
-#panel, #playMenu #loginAndRegister {
-    padding-top: 5vh;
-}
-
-#gameTitle {
-    text-shadow: 2px 2px;
+.gameTitle {
     font-family: 'Press Start 2P';
-    font-size: 8vw;
-    font-weight: bold;
-    margin-top: 5vw;
-    margin-bottom: 6vw;
-    
+    font-size: 9vw;
+    padding: 6vw 0; 
+    color: #412824;
 }
 
 #codeDisplay {

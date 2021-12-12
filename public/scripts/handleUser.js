@@ -25,7 +25,7 @@ function showMainMenu() {
 // Dagmara
 // begin register procedure
 function activateRegistartion() {
-  $('#loginAndRegisterHeadder').text('Register');
+  $('#loginAndRegisterHeadder').text('REGISTER');
   $('#registerButton').attr('onclick', 'register()');
   $('#repeatPassword').css('display', 'inline-block');
   $('#loginButton').attr('onclick', 'activateLogin()');
@@ -35,7 +35,7 @@ function activateRegistartion() {
 // begin logout procedure
 function changeButtonToLogout() {
   $('#loginAndRegister').css('display', 'none');
-  $('#loginAndRegisterHeadder').text('Logout');
+  $('#loginAndRegisterHeadder').text('LOGOUT');
   $('#loginButton').text('Logout');
   $('#loginButton').attr('onclick', 'logout()');
 }
@@ -44,7 +44,7 @@ function changeButtonToLogout() {
 // begin login procedure
 function changeButtonToLogin() {
   $('#repeatPassword').css('display', 'none');
-  $('#loginAndRegisterHeadder').text('Login');
+  $('#loginAndRegisterHeadder').text('LOGIN');
   $('#loginButton').text('Login');
   $('#loginButton').attr('onclick', 'login()');
   $('#registerButton').attr('onclick', 'activateRegistartion()');
