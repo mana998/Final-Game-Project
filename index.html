@@ -87,9 +87,12 @@
                             <input placeholder="USERNAME" type="text" id="username" name="username"><br>
                             <input placeholder="PASSWORD" type="password" id="password" name="password"><br>
                             <input placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"><br>
-                        </form> 
-                        <button type="button" id="loginButton" class="btn btn-primary" onClick="login()">Login</button>
-                        <button type="button" id="registerButton" class="btn btn-secondary" onClick="activateRegistartion()">Register</button>
+                        </form>
+                        <div id="buttonControl">
+                            <button type="button" id="loginButton" class="btn" onClick="login()">LOGIN</button>
+                            <button type="button" id="registerButton" class="btn" onClick="activateRegistartion()">REGISTER</button>
+                        </div> 
+                        
                         <p id="message"></p> 
                     </div>
                 </div>

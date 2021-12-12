@@ -36,7 +36,7 @@ function activateRegistartion() {
 function changeButtonToLogout() {
   $('#loginAndRegister').css('display', 'none');
   $('#loginAndRegisterHeadder').text('LOGOUT');
-  $('#loginButton').text('Logout');
+  $('#loginButton').text('LOGUT');
   $('#loginButton').attr('onclick', 'logout()');
 }
 
@@ -45,7 +45,7 @@ function changeButtonToLogout() {
 function changeButtonToLogin() {
   $('#repeatPassword').css('display', 'none');
   $('#loginAndRegisterHeadder').text('LOGIN');
-  $('#loginButton').text('Login');
+  $('#loginButton').text('LOGIN');
   $('#loginButton').attr('onclick', 'login()');
   $('#registerButton').attr('onclick', 'activateRegistartion()');
 }
