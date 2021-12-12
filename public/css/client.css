@@ -18,7 +18,6 @@ body {
     max-height: 100vh;
     max-width: 100vw;
     margin: 5%;
-    border: black solid 10px;
     z-index: 10;
     position: fixed;
     left: 50%;
