@@ -1,3 +1,7 @@
+* {
+    font-family: 'Press Start 2P';
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -18,9 +22,8 @@ body {
 }
 
 .gameTitle {
-    font-family: 'Press Start 2P';
     font-size: 9vw;
-    padding: 6vw 0; 
+    padding: 6vw 0 4vw 0; 
     color: #412824;
 }
 
@@ -230,4 +233,24 @@ canvas {
     color: white;
     z-index: 4;
     margin: 1em;
+}
+
+/*login register */
+
+#username, #password, #repeatPassword {
+    background-image: url("../assets/images/buttons/brownButtonBig.png");
+    background-position: center;
+    text-align: center;
+    margin: 1%;
+    max-width: 50vw;
+    font-size: 3vw;
+    color: #574741;
+    -webkit-box-shadow:2px 2px #574741 inset;
+    box-shadow: 5px 5px 1px #574741 inset, -5px -5px 1px #4d3e38 inset;
+    border: 1px solid black;
+    height: 7vw;
+}
+
+::placeholder {
+    color: #574741;
 }
