@@ -29,6 +29,7 @@ class SpeedGem extends Gem { // Dagmara
   
     //heal player
     speed(player) {
+        super.displayMessage();
         const speedSign = Math.random() < 0.5;
         if (player.speed == 16 || player.speed == 2) {
             //message,: I can't change my speed!

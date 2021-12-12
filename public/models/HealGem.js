@@ -26,6 +26,7 @@ class HealGem extends Gem { // Dagmara
   
     //heal player
     heal(player) {
+      super.displayMessage();
       player.health += this.value;
       if (player.health >= 10) {
         player.health = 10;

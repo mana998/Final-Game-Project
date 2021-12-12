@@ -21,6 +21,7 @@ class FreezeGem extends Gem { // Marianna
 
   //decide whether to reverse for current player or other players
   freezePlayer(player, value) {
+    super.displayMessage();
     let originalSpeed = player.speed;
     player.speed = 0;
     //reverse back after period of time

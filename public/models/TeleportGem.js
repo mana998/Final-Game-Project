@@ -22,6 +22,7 @@ class TeleportGem extends Gem { // Marianna
 
   //swap movement for passed player
   teleport(player, map) {
+    super.displayMessage();
     let [row, column] = [-1, -1];
     do {
       row = Utilities.getRandomNumber(0, map.tiles.length);

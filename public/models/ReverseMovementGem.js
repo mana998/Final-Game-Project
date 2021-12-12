@@ -21,6 +21,7 @@ class ReverseMovementGem extends Gem { // Marianna
 
   //decide whether to reverse for current player or other players
   reverseMovement(player) {
+    super.displayMessage();
     if (this.affectsMe) {
       this.swapMovement(player);
     } else {
