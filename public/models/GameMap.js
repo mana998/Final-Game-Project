@@ -206,8 +206,7 @@ class GameMap {
       } while (this.tiles[row][column] !== 0);
       //add random type based on keys in gemTypes
       //get gem type key
-      //const gemTypeKey = this.gemClasses[Utilities.getRandomNumber(0, this.gemClasses.length)];
-      let gemTypeKey = 'HealGem';
+      const gemTypeKey = this.gemClasses[Utilities.getRandomNumber(0, this.gemClasses.length)];
       this.tiles[row][column] = `5.${i}`;
       let newGem = getNewGem(gemTypeKey, [0, 0]);
       const gemValue = newGem.values[Utilities.getRandomNumber(0, newGem.values.length)];
