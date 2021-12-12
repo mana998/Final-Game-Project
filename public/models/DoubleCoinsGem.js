@@ -23,6 +23,7 @@ class DoubleCoinsGem extends Gem { // Marianna
   //double player coins
   doubleCoins(player) {
     player.score *= 2;
+    $('#scoreValue').text(player.score);
   }
 }
 

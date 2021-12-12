@@ -196,3 +196,12 @@ canvas {
     left: 50%;
     transform: translate(-50%, 0);
 }
+
+#score {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    color: white;
+    z-index: 4;
+    margin: 1em;
+}
