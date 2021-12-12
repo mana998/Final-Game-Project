@@ -1,10 +1,9 @@
+//Dagmara & Marianna
 const walkingSound = new Sound('walk', 'soundfx');
 walkingSound.sound.volume = 0.5;
 walkingSound.sound.loop = true;
 walkingSound.sound.setAttribute("id", "walk");
 
-let displayMessageCount = -1;
-const maxDisplayMessageCount = 60;
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -12,7 +11,7 @@ const ctx = canvas.getContext('2d');
 // global objects for map and player
 let map;
 let player;
-let spectatingPlayer = {};
+let spectatingPlayer;
 let startTime;
 
 // change canvas size on resize
@@ -27,14 +26,34 @@ window.addEventListener('load', () => {
   canvas.height = window.innerHeight;
 });
 
-// hardcoded animation values for now
-const animations = {
-  // startRow, startColumn, rows, columns
+//Marianna
+//entry values are for character with value 0 (red player)
+let animations = {
+  // startRow, startColumn, rows, columns value 
   down: [0, 0, 0, 2],
   left: [1, 0, 0, 2],
   right: [2, 0, 0, 2],
   up: [3, 0, 0, 2],
 };
+
+//Dagmara
+//set right animaton for the character
+function setAnimation (value) {
+  //calculate the start position for each character
+  let startColumnPosition = value * 3; 
+  if (value > 3) {
+    //calculate the start position for each character in second row
+    startColumnPosition = (value - 4) *3;
+    animations.down[0] = animations.down[0] + 4;
+    animations.left[0] = animations.left[0] + 4;
+    animations.right[0] = animations.right[0] + 4;
+    animations.up[0] = animations.up[0] + 4;
+  }
+  animations.down[1] = startColumnPosition;
+  animations.left[1] =  startColumnPosition;
+  animations.right[1] =  startColumnPosition;
+  animations.up[1] =  startColumnPosition;
+}
 
 // Marianna
 // draw everything
@@ -50,7 +69,7 @@ function draw(data) {
     const tempPlayer = data.players.find((gamePlayer) => gamePlayer.username === username) || null;
     // if no player is defined to spectate, it asks server for next available one
     if (!tempPlayer || tempPlayer.isDone) {
-      socket.emit('changeSpectator', (spectatingPlayer && tempPlayer) ? tempPlayer.username : '');
+      socket.emit('changeSpectator', (spectatingPlayer) ? tempPlayer.username : '');
     } else { // else it sets the player
       spectatingPlayer = new Player(
         tempPlayer.x,
@@ -112,18 +131,11 @@ function draw(data) {
       gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
     }
   });
-  player.isNear = player.isNearPlayers(data.players);
-  if (!player.isDone) {
-    if (player.isNear) {
-      if (!player.message && displayMessageCount === -1) socket.emit('getRandomMessage');
-      displayMessageCount++
-    }
-    if (!player.isNear || displayMessageCount === maxDisplayMessageCount) {
-      player.message = '';
-      updateServerPlayer();
-      displayMessageCount = 0;
-      if (!player.isNear) displayMessageCount = -1;
-    }
+  if (!player.isDone && !player.message && player.isNearPlayers(data.players)) {
+    socket.emit('getRandomMessage');
+    //menu will change the property in the object
+  } else if (!player.isDone && player.message && !player.isNearPlayers(data.players)){
+    player.message = '';
   };
 }
 
@@ -229,11 +241,6 @@ function movePlayer(e) {
         }
       }while (player.isBlockCollision(map, 'down','', '', 0, currentSpeed));
       break;
-    case "Enter":
-      //player is near other players - we don't need to check for collision again
-      if (player.isNear) {
-        $('#interactionMenu').css('display', 'block');
-      }
     default:
       // no need to update server if player didn't move
       return;
@@ -243,6 +250,7 @@ function movePlayer(e) {
   updateServerPlayer();
 }
 
+//Marianna
 function handleMapCreated(data) {
   map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
   for (let i = 0; i < data.gameMap.coins.length; i++) {
@@ -256,6 +264,7 @@ function handleMapCreated(data) {
   }
 }
 
+//Marianna
 function displayText(text, x, y, align = 'center', color = 'white', size = 10, font = 'Helvetica') {
   ctx.font = `${size}px ${font}`;
   ctx.fillStyle = color;
@@ -263,11 +272,10 @@ function displayText(text, x, y, align = 'center', color = 'white', size = 10, f
   ctx.fillText(text, x, y);
 }
 
+//Marianna
 function handleChangePlayerMessage(message) {
   player.message = message;
   updateServerPlayer();
-  displayMessageCount++;
-  $('#interactionMenu').css('display', 'none');
 }
 
 // event listener for start of the movement
@@ -289,12 +297,12 @@ socket.on('reversePlayerMovement', () => {
 });
 
 //Dagmara
-
 //change players' speed
 socket.on('changePlayersSpeed', () => {
   new SpeedGem().speed(player);
 });
 
+//Dagmara
 //heal player
 socket.on('healPlayers', () => {
   new HealGem().heal(player);
@@ -322,7 +330,3 @@ socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
 
 socket.on('changePlayerMessage', handleChangePlayerMessage)
-
-function selectInteraction(type) {
-  socket.emit('getRandomMessage', type);
-}

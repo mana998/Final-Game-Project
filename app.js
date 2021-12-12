@@ -64,6 +64,7 @@ const playersRoomTable = {};
 const games = {};
 
 io.on('connection', (socket) => {
+  //Marianna & Dagmara
   async function handleNewGameCreation() {
     // create socketIO room and client that joins the game have to add the code which is roomId
     const roomName = Utils.createId(8); // function which creates id, we pass length of the id
@@ -100,12 +101,14 @@ io.on('connection', (socket) => {
     socket.emit('createPlayer', socket.id);
   }
 
+  //Dagmara
   function addPlayerToGameObject(player) {
     const newPlayer = player;
     newPlayer.socketId = socket.id;
     games[playersRoomTable[socket.id]].players.push(newPlayer);
   }
 
+  //Marianna
   function handleClientPlayerUpdate(data) {
     // update the player object with new data
     const updatedPlayer = games[playersRoomTable[socket.id]].players
@@ -119,11 +122,13 @@ io.on('connection', (socket) => {
     games[playersRoomTable[socket.id]].players[index] = data.player;
   }
 
+  //Marianna
   function handleClientMapUpdate(tiles) {
       games[playersRoomTable[socket.id]].map.tiles = tiles;
       io.to(playersRoomTable[socket.id]).emit('mapUpdated', tiles);
   }
 
+  //Dagmara
   function handleCreateUsername(initialData) {
     const data = initialData;
     const usernameValid = Utils.checkStringCharacters(data.username);
@@ -143,6 +148,7 @@ io.on('connection', (socket) => {
     socket.emit('updatePlayer', data.player);
   }
 
+  //Dagmara
   function handleJoinGame(gameCode) {
     const desiredRoom = io.sockets.adapter.rooms.get(gameCode);
     if (!desiredRoom) {
@@ -170,6 +176,7 @@ io.on('connection', (socket) => {
     }, 1000 / FRAME_RATE);
   }
 
+  //Dagmara & Marianna
   function startGame(gameCode) {
     const gameState = games[gameCode];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
@@ -207,6 +214,7 @@ io.on('connection', (socket) => {
     }, 100);
   }
 
+  //Marianna
   function changeSpectatingPlayer(username) {
     // get player list
     const { players } = games[playersRoomTable[socket.id]];
@@ -266,6 +274,7 @@ io.on('connection', (socket) => {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('freezePlayer', value);
   }
 
+  //Marianna
   function handleGetRandomMessage(type) {
     const game = games[playersRoomTable[socket.id]];
     const types = Object.keys(game.interactions);
@@ -278,6 +287,8 @@ io.on('connection', (socket) => {
     socket.emit('changePlayerMessage', message);
   }
 
+  //Dagmara
+  //save player score to database
   async function handleSavePlayer(data) {
     if (data.playerId) {
         response = await fetch(`${process.env.URL}api/highestscores`, {
