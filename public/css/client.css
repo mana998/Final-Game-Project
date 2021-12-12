@@ -19,6 +19,10 @@ body {
     max-width: 100vw;
     margin: 5%;
     border: black solid 10px;
+    z-index: 10;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 #panel, #playMenu #loginAndRegister {
@@ -125,7 +129,7 @@ canvas {
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 4;
+    z-index: 6;
     margin: 1em;
     width: 3em;
     height: 3em;
@@ -139,7 +143,7 @@ canvas {
     position: fixed;
     top: 0;
     right: 4em;
-    z-index: 4;
+    z-index: 6;
     margin: 1em;
     width: 3em;
     height: 3em;
@@ -151,9 +155,31 @@ canvas {
 
 #interactionMenu {
     position: fixed;
-    z-index: 4;
+    z-index: 6;
     display:none;
     left: 50%;
     transform: translate(-50%, 0);
     top: 30%
+}
+
+#inGameElements {
+    position: fixed;
+    z-index: 5;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+#healthOutline {
+    margin: 2em;
+    height: 7%;
+}
+
+#healthFill {
+    margin: 2em;
+    height: 7%;
+    z-index: 4;
+    position: fixed;
+    left: 0;
 }
