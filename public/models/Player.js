@@ -174,7 +174,7 @@ class Player extends GameObject { // Marianna
     map.tiles[row][column] = 0;
     updateServerMap(map.tiles);
     const blockValue = block.split('.');
-    map.gems[parseInt(blockValue[1])].onCollect(this);
+    map.gems[parseInt(blockValue[1])].onCollect(this, parseInt(blockValue[1]));
   }
 
   handleTrapCollision(block, row, column, map, canvasHeight, canvasWidth) {
@@ -192,11 +192,10 @@ class Player extends GameObject { // Marianna
         return;
       }
     }
-    this.health -= map.traps[parseInt(blockValue[1])].value;
+    map.traps[parseInt(blockValue[1])].onCollision(player);
     if (this.health <= 0) {
       this.playerIsDone(1);
     }
-    map.traps[parseInt(blockValue[1])].onCollision();
   }
 
   //detect whether to initiate conversation

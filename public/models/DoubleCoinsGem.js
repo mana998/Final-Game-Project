@@ -6,23 +6,25 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class DoubleCoinsGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
-    super(x, y, width, height, value, affectsMe);
+    super(x, y, width, height, value, affectsMe, 'Your coins have been doubled');
     this.values = [0];
   }
 
-  onCollect(player) {
+  onCollect(player, position, affectsMe) {
     super.onCollect();
     //decide whether to reverse for current player or other players
-    if (this.affectsMe) {
+    if (this.affectsMe || affectsMe) { //force affectsMe value
       this.doubleCoins(player);
     } else {
-      socket.emit('doubleCoins');
+      socket.emit('gemAffectsOthers', position);
     }
   }
 
   //double player coins
   doubleCoins(player) {
+    super.displayMessage();
     player.score *= 2;
+    $('#scoreValue').text(player.score);
   }
 }
 

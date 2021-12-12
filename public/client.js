@@ -138,6 +138,7 @@ function playersReady(players) {
   backgroundMusic.play();
   $('#backgroundMusicControl').css('display', 'block');
   $('#soundFxControl').css('display', 'block');
+  $('#inGameElements').css('display', 'block');
 }
 
 // Dagmara
