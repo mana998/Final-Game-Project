@@ -31,7 +31,7 @@ function changeUsername(message = '') {
 function createGame() {
   socket.emit('newGame');
   init();
-  generateChracterSelection();
+  generateCharacterSelection();
 }
 
 // Dagmara
@@ -57,6 +57,7 @@ function removePlayerAndGoToMainMenu() {
 function joinGame() {
   const code = $('#codeInput').val();
   socket.emit('joinGame', code);
+  generateCharacterSelection();
 }
 
 // Dagmara
@@ -64,10 +65,13 @@ function joinGame() {
 // changes it's state to ready to play and if all players are ready starts the game
 function playGame() {
   if (selectedCharacter > 3) {
+    player.img.currentRow = 4;
     player.img.startRow = 4;
-    player.img.startColumn = (selectedCharacter-4) * 3;
+    player.img.currentColumn = (selectedCharacter-4) * 3;
+    player.img.startColumn = player.img.currentColumn
   } else {
-    player.img.startColumn = selectedCharacter * 3;
+    player.img.currentColumn = selectedCharacter * 3;
+    player.img.startColumn = player.img.currentColumn
   }
   player.readyToPlay = true;
   $('#usernameInput').attr('disabled', 'true');

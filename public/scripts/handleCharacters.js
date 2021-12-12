@@ -2,7 +2,7 @@
 const numberOfCharacters = 8;
 let selectedCharacter;
 
-function generateChracterSelection() {
+function generateCharacterSelection() {
     $('#characters').append(
         `<p>Select your character:</p>
          <div class="row" id ='charactersContainer' style="list-style-type:none">`);
