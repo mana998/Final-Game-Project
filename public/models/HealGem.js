@@ -26,12 +26,12 @@ class HealGem extends Gem { // Dagmara
   
     //heal player
     heal(player) {
-      let playerHealth = player.health;
-      if (playerHealth === 10){
-        //maybe the character will have a message above the head saying: My health is full. or smth like that
-      } else {
-        playerHealth += this.value;
+      player.health += this.value;
+      if (player.health >= 10) {
+        player.health = 10;
       }
+      let healthCutout = 4.54 - 4.1 * player.health * 0.1; //4.54 - 0.4 = max - min, full value * percentage of health + min value
+      $('#healthFill').css('clip', `rect(${healthCutout}em, 5em, 5em, 0)`)
     }
 }
   

@@ -182,7 +182,7 @@ canvas {
     height: 5em;
     z-index: 4;
     position: absolute;
-    /*4.5em = nothing, 0.4em = full heart*/
+    /*4.54em = nothing, 0.4em = full heart*/
     clip: rect(0.4em, 5em, 5em, 0);
     left: 0;
 }
