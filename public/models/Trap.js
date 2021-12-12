@@ -14,7 +14,8 @@ class Trap extends GameObject {
         this.value = value;
     }
 
-    onCollision () {
+    onCollision (player) {
+        player.health -= this.value;
         console.log("Ow no, trap!");
         trapSound.play();
     }

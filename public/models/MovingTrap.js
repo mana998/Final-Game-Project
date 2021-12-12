@@ -48,8 +48,8 @@ class MovingTrap extends Trap {
         }
     }
 
-    onCollision () {
-        super.onCollision();
+    onCollision (player) {
+        super.onCollision(player);
         console.log("Ow no, moving this!");
     }
 
