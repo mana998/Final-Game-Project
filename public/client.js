@@ -14,6 +14,25 @@ function init() {
   $('#gameScreen').css('display', 'block');
   $('#returnToMainMenuButton').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
+  createUsernameScreen();
+}
+
+function createUsernameScreen() {
+  if (!$('#playMenu').children().length) {
+      $('#playMenu').append(`
+          <h1 class="gameTitle" id = "displayGameCode"></h1>
+          <div id="characters"></div>
+          <form>
+            <input type="text" placeholder="USERNAME" id="usernameInput">
+          </form>
+          <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span></br>
+          <button type="button" class="btn" id="playGameButton" disabled>PLAY GAME</button></br>
+          <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
+      `);
+  } else {
+      $('#playMenu').css('display', 'block');
+  }
+  
 }
 
 // Dagmara
@@ -135,7 +154,7 @@ function playersReady(players) {
 // Display game code
 function handleGameCodeDisplay(gameCode) {
   init();
-  $('#displayGameCode').text(gameCode);
+  $('#displayGameCode').text(`ROOM CODE: ${gameCode}`);
 }
 
 // Dagmara

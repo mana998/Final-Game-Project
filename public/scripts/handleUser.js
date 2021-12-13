@@ -19,7 +19,7 @@ function createLoginAndgisterScreen() {
           <input placeholder="PASSWORD" type="password" id="password" name="password"><br>
           <input placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"><br>
       </form>
-      <div id="buttonControl">
+      <div class="buttonControl">
           <button type="button" id="loginButton" class="btn" onClick="login()">LOGIN</button>
           <button type="button" id="registerButton" class="btn" onClick="activateRegistartion()">REGISTER</button>
       </div> 

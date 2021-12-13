@@ -26,13 +26,8 @@ body {
     margin: 0;
 }
 
-#codeDisplay {
-    text-shadow: 2px 2px;
-    font-family: 'Press Start 2P';
+#displayGameCode {
     font-size: 5vw;
-    font-weight: bold;
-    margin-top: 5vw;
-    margin-bottom: 6vw;
 }
 
 /* main menu*/
@@ -233,7 +228,7 @@ canvas {
     display: none;
 }
 
-#username, #password, #repeatPassword, #codeInput {
+#username, #password, #repeatPassword, #codeInput, #usernameInput {
     background-image: url("../assets/images/buttons/brownButtonBig.png");
     background-position: center;
     text-align: center;
@@ -250,7 +245,7 @@ canvas {
     color: #574741;
 }
 
-#loginButton, #registerButton, #joinGameButtonAFterCodeInput {
+#loginButton, #registerButton, #joinGameButtonAFterCodeInput, #playGameButton {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
     color: #73340e;
@@ -262,7 +257,7 @@ canvas {
     background-size: cover;
 }
 
-#buttonControl {
+.buttonControl {
     max-width: 30vw;
     margin: auto;
     text-align: center;
@@ -270,7 +265,7 @@ canvas {
     justify-content: space-between;
 }
 
-#returnToMainMenuButton {
+#returnToMainMenuButton, #removePlayerAndGoToMainMenu {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
     background-position: center;
     color: #4c4a49;
@@ -282,7 +277,8 @@ canvas {
 }
 
 /* code screen */
-#joinGameButtonAFterCodeInput {
+#joinGameButtonAFterCodeInput, #playGameButton {
     width: auto;
     height: auto;
+    margin: 1% 0 0 0;
 }
