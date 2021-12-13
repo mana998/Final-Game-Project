@@ -8,9 +8,6 @@ body {
     overflow: hidden;
 }
 
-#repeatPassword {
-    display: none;
-}
 .container-fluid {
     text-align: center;
     vertical-align: middle;
@@ -38,13 +35,28 @@ body {
     margin-bottom: 6vw;
 }
 
-.btn {
-    padding: 1% 3%;
-    border-radius: 100px 100px 100px 100px;
-    font-size: 2vw;
-    cursor: pointer;
-}
+/* main menu*/
 
+#createNewGameButton, #joinGameButton, #loginAndRegisterButton, #highscoreButton, #interactionsButton {
+    background-image: url("../assets/images/buttons/orangeButtonBig.png");
+    background-position: center;
+    text-align: center;
+    margin: 1%;
+    font-size: 2.5vw;
+    color: #73340e;
+    box-shadow: 5px 5px 1px #73340e inset, -5px -5px 1px #58280a inset;
+    height: 5vw;
+    background-size: cover;
+    display: block;
+    width: 30vw;
+    margin-left: 35vw;
+    margin-right: 35vw;
+} 
+
+#panel {
+    align-items: center;
+}
+/**/
 #playGameButton {
     margin: 2vw;
 }
@@ -52,22 +64,9 @@ body {
 #joinRoomToPlay {
     margin-bottom: 1%;
 }
-#createNewGameButton {
-    margin-bottom: 1%;
-}
-
-.iconSettings {
-    height: inherit;
-    width: inherit;
-}
 
 #canvas {
     display: none;
-}
-
-.arrowIcon {
-    width: 2vw;
-    height: 2vw;
 }
 
 .form-control {
@@ -153,6 +152,7 @@ canvas {
     top: 30%
 }
 
+/* character select*/
 .characterLabel {
     width: 32px;
     height: 32px;
@@ -191,6 +191,7 @@ canvas {
 .disabled {
     filter: grayscale(100%);
 }
+/**/
 
 #inGameElements {
     display: none;
@@ -239,6 +240,9 @@ canvas {
 }
 
 /*login register */
+#repeatPassword {
+    display: none;
+}
 
 #username, #password, #repeatPassword {
     background-image: url("../assets/images/buttons/brownButtonBig.png");
@@ -248,9 +252,7 @@ canvas {
     max-width: 30vw;
     font-size: 2.5vw;
     color: #574741;
-    -webkit-box-shadow:2px 2px #574741 inset;
     box-shadow: 5px 5px 1px #574741 inset, -5px -5px 1px #4d3e38 inset;
-    border: 1px solid black;
     height: 5vw;
     background-size: cover;
 }
@@ -263,7 +265,6 @@ canvas {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
     color: #73340e;
-    border: 1px solid black;
     border-radius: 0;
     box-shadow: 5px 5px 1px #73340e inset, -5px -5px 2px #58280a inset;
     font-size: 1.5vw;
@@ -288,8 +289,6 @@ canvas {
     font-size: 1.5vw;
     border-radius: 0;
     margin-top: 1%;
-    border: 1px solid black;
-    max-width: 30vw;
-    height: 3vw;
     background-size: cover;
 }
+

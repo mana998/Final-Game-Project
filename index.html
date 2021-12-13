@@ -32,52 +32,15 @@
             <span id="loggedInUser"></span>
             <div id="panel">
                 <h1 class="gameTitle">GAME NAME</h1>
-                <div>
-                    <button type="button" class="btn" id="createNewGameButton">
-                        <span>New Game</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
-                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                        </svg>
-                    </button>
+                <button type="button" class="btn" id="createNewGameButton">NEW GAME</button>
+                <div class='' id="joinRoomToPlay">
+                    <input type="text" class="form-control" placeholder="Enter game code:" id="codeInput">
+                    <span id="wrongGameCode"></span>
                 </div>
-                <div>
-                    <div class='' id="joinRoomToPlay">
-                        <input type="text" class="form-control" placeholder="Enter game code:" id="codeInput">
-                        <span id="wrongGameCode"></span>
-                    </div>
-                    <button type="button" class="btn" class="" id="joinGameButton">
-                        <div id="iconBox">
-                            <span>Join Game</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
-                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                            </svg>
-                        </div>
-                    </button>
-                </div>
-                <div>
-                    <button type="button" class="btn" id="loginAndRegisterButton">
-                        <span>Login/Register</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
-                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                        </svg>
-                    </button>
-                </div>
-                <div>
-                    <button type="button" class="btn" id="highscoreButton">
-                        <span>View Highscores</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
-                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                        </svg>
-                    </button>
-                </div>
-                <div>
-                    <button type="button" class="btn" id="interactionsButton">
-                        <span>Change interactions</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill arrowIcon" viewBox="0 0 16 12">
-                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                        </svg>
-                    </button>
-                </div>
+                <button type="button" class="btn" class="" id="joinGameButton">JOIN GAME</button>
+                <button type="button" class="btn" id="loginAndRegisterButton">SIGN IN/UP</button>
+                <button type="button" class="btn" id="highscoreButton">HIGHSCORES</button>
+                <button type="button" class="btn" id="interactionsButton">INTRACTIONS</button>
             </div>
             <div id="menuOptions">
                 <div id="loginAndRegister">
