@@ -33,31 +33,13 @@
             <div id="panel">
                 <h1 class="gameTitle">GAME NAME</h1>
                 <button type="button" class="btn" id="createNewGameButton">NEW GAME</button>
-                <div class='' id="joinRoomToPlay">
-                    <input type="text" class="form-control" placeholder="Enter game code:" id="codeInput">
-                    <span id="wrongGameCode"></span>
-                </div>
                 <button type="button" class="btn" class="" id="joinGameButton">JOIN GAME</button>
                 <button type="button" class="btn" id="loginAndRegisterButton">SIGN IN/UP</button>
                 <button type="button" class="btn" id="highscoreButton">HIGHSCORES</button>
                 <button type="button" class="btn" id="interactionsButton">INTRACTIONS</button>
             </div>
             <div id="menuOptions">
-                <div id="loginAndRegister">
-                    <div id="loginAndRegisterBody">
-                        <h1 id="loginAndRegisterHeadder" class="gameTitle">LOGIN</h1>
-                        <form>
-                            <input placeholder="USERNAME" type="text" id="username" name="username"><br>
-                            <input placeholder="PASSWORD" type="password" id="password" name="password"><br>
-                            <input placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"><br>
-                        </form>
-                        <div id="buttonControl">
-                            <button type="button" id="loginButton" class="btn" onClick="login()">LOGIN</button>
-                            <button type="button" id="registerButton" class="btn" onClick="activateRegistartion()">REGISTER</button>
-                        </div> 
-                        
-                        <p id="message"></p> 
-                    </div>
+                <div id="loginAndRegister"> 
                 </div>
                 <div id="highscore">
                     <div id="highscoreBody">
@@ -97,6 +79,7 @@
                         <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">Main Menu</button>
                     </div>
                 </div>
+                <div id="roomCodeScreen"></div>
                 <button type="button" class="btn" id="returnToMainMenuButton" onClick = "showMainMenu()">MAIN MENU</button>
             </div>
         </div>
@@ -145,6 +128,7 @@
     <script src="./scripts/end.js"></script>
     <script src="./scripts/addInteractions.js"></script>
     <script src="./scripts/handleUser.js"></script>
+    <script src="./scripts/roomCode.js"></script>
     <script src="./scripts/handleHighscore.js"></script>
     <script src="./scripts/handleCharacters.js"></script>
     

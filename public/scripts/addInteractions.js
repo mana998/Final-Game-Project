@@ -76,6 +76,7 @@ async function showInteractions(playerId) {
   $('#interactionForm').empty();
   $('#gameScreen').css('display', 'none');
   $('#highscore').css('display', 'none');
+  $('#roomCodeScreen').css('display', 'none');
   createInteractionsForm(playerId);
 }
 

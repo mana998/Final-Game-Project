@@ -13,6 +13,7 @@ function init() {
   $('#highscore').css('display', 'none');
   $('#gameScreen').css('display', 'block');
   $('#returnToMainMenuButton').css('display', 'none');
+  $('#roomCodeScreen').css('display', 'none');
 }
 
 // Dagmara
@@ -40,24 +41,12 @@ function updatePlayer(updatedPlayer) {
   player.username = updatedPlayer.username;
 }
 
-// Dagmara
-// display message if the code is wrong
-function handleWrongCode() {
-  $('#wrongGameCode').text("Incorrect game code, the room doesn't exists");
-}
 
 //Dagmara
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
   leaveGame();
   showMainMenu();
-}
-// Dagmara
-// if the room code is valid it allows player to join existing game
-function joinGame() {
-  const code = $('#codeInput').val();
-  socket.emit('joinGame', code);
-  generateCharacterSelection();
 }
 
 // Dagmara
@@ -156,24 +145,7 @@ function playerNotExists() {
   showMenuScreen();
 }
 
-// Dagmara
-// In case the room is empty notify and return to game menu
-function handleEmptyRoom() {
-  alert("The room doesn't exists!");
-  showMenuScreen();
-}
-
-// Dagmara
-// In case the room is full notify user and return to game menu
-function handleFullRoom() {
-  alert('This room is full');
-  showMenuScreen();
-}
-
 socket.on('roomName', handleGameCodeDisplay);
-socket.on('EmptyRoom', handleEmptyRoom);
-socket.on('FullRoom', handleFullRoom);
-socket.on('wrongCode', handleWrongCode);
 socket.on('usernameAdded', enablePlayButton);
 socket.on('playersNotReady', playersNotReady);
 socket.on('playersReady', playersReady);
@@ -183,5 +155,4 @@ socket.on('updatePlayer', updatePlayer);
 
 $('#createNewGameButton').on('click', createGame);
 $('#usernameInput').on('change', handleCreateUsername);
-$('#joinGameButton').on('click', joinGame);
 $('#playGameButton').on('click', playGame);

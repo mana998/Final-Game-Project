@@ -53,24 +53,13 @@ body {
     margin-right: 35vw;
 } 
 
-#panel {
-    align-items: center;
-}
 /**/
 #playGameButton {
     margin: 2vw;
 }
 
-#joinRoomToPlay {
-    margin-bottom: 1%;
-}
-
 #canvas {
     display: none;
-}
-
-.form-control {
-    font-size: 2vw;
 }
 
 /*Score endscreen*/
@@ -244,7 +233,7 @@ canvas {
     display: none;
 }
 
-#username, #password, #repeatPassword {
+#username, #password, #repeatPassword, #codeInput {
     background-image: url("../assets/images/buttons/brownButtonBig.png");
     background-position: center;
     text-align: center;
@@ -261,7 +250,7 @@ canvas {
     color: #574741;
 }
 
-#loginButton, #registerButton {
+#loginButton, #registerButton, #joinGameButtonAFterCodeInput {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
     color: #73340e;
@@ -292,3 +281,8 @@ canvas {
     background-size: cover;
 }
 
+/* code screen */
+#joinGameButtonAFterCodeInput {
+    width: auto;
+    height: auto;
+}

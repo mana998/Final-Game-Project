@@ -6,7 +6,29 @@ function openLoginAndRegistration() {
   $('#panel').css('display', 'none');
   $('#highscore').css('display', 'none');
   $('#gameScreen').css('display', 'none');
+  $('#roomCodeScreen').css('display', 'none');
+  createLoginAndgisterScreen();
 }
+
+function createLoginAndgisterScreen() {
+  if (!$("#loginAndRegister").children().length) {
+  $("#loginAndRegister").append(`
+      <h1 id="loginAndRegisterHeadder" class="gameTitle">LOGIN</h1>
+      <form>
+          <input placeholder="USERNAME" type="text" id="username" name="username"><br>
+          <input placeholder="PASSWORD" type="password" id="password" name="password"><br>
+          <input placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"><br>
+      </form>
+      <div id="buttonControl">
+          <button type="button" id="loginButton" class="btn" onClick="login()">LOGIN</button>
+          <button type="button" id="registerButton" class="btn" onClick="activateRegistartion()">REGISTER</button>
+      </div> 
+      <p id="message"></p>
+    `)
+  }
+  
+}
+
 
 // Dagmara
 // reset fields
