@@ -134,6 +134,7 @@ function playersReady(players) {
   canvas.style.display = 'block';
   $('#loggedInUser').css('display', 'none');
   $('.container').css('border', 'none');
+  $('.container-fluid').css('display', 'none');
   $('#viewBlock').css('display', 'block');
   backgroundMusic.play();
   $('#backgroundMusicControl').css('display', 'block');
