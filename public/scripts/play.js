@@ -319,3 +319,7 @@ socket.on('mapUpdated', handleMapUpdated)
 socket.on('mapCreated', handleMapCreated)
 
 socket.on('changePlayerMessage', handleChangePlayerMessage)
+
+function selectInteraction(type) {
+  socket.emit('getRandomMessage', type);
+}
