@@ -26,8 +26,8 @@ router.get('/api/interactions', (req, res) => {
           });
         }
       });
+      db.release();
     }
-    db.release();
   });
 });
 
