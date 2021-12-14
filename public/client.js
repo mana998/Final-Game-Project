@@ -2,7 +2,8 @@
 let playing = false;
 
 // setup socket
-const socket = io({ transports: ["websocket", "polling"] })
+const socket = io()
+socket.io.opts.transports = ["websocket", "polling"];
 socket.on("connect_error", () => {
   // revert to classic upgrade
   socket.io.opts.transports = ["polling", "websocket"];
