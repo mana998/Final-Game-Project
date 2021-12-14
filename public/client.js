@@ -3,11 +3,6 @@ let playing = false;
 
 // setup socket
 const socket = io()
-socket.io.opts.transports = ["websocket", "polling"];
-socket.on("connect_error", () => {
-  // revert to classic upgrade
-  socket.io.opts.transports = ["polling", "websocket"];
-});
 
 // Dagmara
 // hide game menu and show the game username input and play button
