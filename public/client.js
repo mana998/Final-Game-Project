@@ -154,7 +154,7 @@ function playersReady(players) {
 // Display game code
 function handleGameCodeDisplay(gameCode) {
   init();
-  $('#displayGameCode').text(`ROOM CODE: ${gameCode}`);
+  $('#displayGameCode').text(gameCode);
 }
 
 // Dagmara
