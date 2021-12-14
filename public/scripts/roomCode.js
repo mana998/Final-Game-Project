@@ -49,7 +49,6 @@ function handleFullRoom() {
 function joinGame() {
     const code = $('#codeInput').val();
     socket.emit('joinGame', code);
-    generateCharacterSelection();
 }
 
 socket.on('EmptyRoom', handleEmptyRoom);

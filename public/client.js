@@ -29,6 +29,7 @@ function createUsernameScreen() {
           <button type="button" class="btn" id="playGameButton" disabled>PLAY GAME</button></br>
           <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
       `);
+      generateCharacterSelection();
   } else {
       $('#playMenu').css('display', 'block');
   }
@@ -51,7 +52,6 @@ function changeUsername(message = '') {
 function createGame() {
   socket.emit('newGame');
   init();
-  generateCharacterSelection();
 }
 
 // Dagmara
