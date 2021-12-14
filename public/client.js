@@ -2,7 +2,9 @@
 let playing = false;
 
 // setup socket
-const socket = io();
+const socket = io.connect(host, {
+  transports: ['websocket']
+});
 
 // Dagmara
 // hide game menu and show the game username input and play button
