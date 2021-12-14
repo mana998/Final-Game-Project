@@ -14,7 +14,10 @@ class Trap extends GameObject {
         this.value = value;
     }
 
-    onCollision () {
+    onCollision (player) {
+        player.health -= this.value;
+        let healthCutout = 4.54 - 4.14 * player.health * 0.1; //4.54 - 0.4 = max - min, full value * percentage of health + min value
+        $('#healthFill').css('clip', `rect(${healthCutout}em, 5em, 5em, 0)`)
         console.log("Ow no, trap!");
         trapSound.play();
     }

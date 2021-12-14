@@ -6,6 +6,7 @@ function showHighscores() {
   $('#panel').css('display', 'none');
   $('#highscore').css('display', 'block');
   $('#gameScreen').css('display', 'none');
+  $('#roomCodeScreen').css('display', 'none');
 }
 
 function changePage(pageNumber) {

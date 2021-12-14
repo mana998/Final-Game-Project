@@ -1,83 +1,60 @@
+* {
+    font-family: 'Press Start 2P';
+}
+
 body {
     margin: 0;
     padding: 0;
     overflow: hidden;
 }
 
-#menuScreen, #playMenu #loginAndRegister {
-    background-position: center;
-    height: 80vh;
-}
-
-#repeatPassword {
-    display: none;
-}
-.container {
+.container-fluid {
     text-align: center;
     vertical-align: middle;
-    max-height: 100vh;
-    max-width: 100vw;
-    margin: 5%;
-    border: black solid 10px;
+    z-index: 10;
+    padding: 0 !important;
+    height: 100vh;
+    background-position: center;
+    background-image: url("../assets/images/backgrounds/background.png");
 }
 
-#panel, #playMenu #loginAndRegister {
-    padding-top: 5vh;
-}
-
-#gameTitle {
-    text-shadow: 2px 2px;
-    font-family: 'Press Start 2P';
+.gameTitle {
+    text-shadow: 0.2vw 0.2vw #2e1c19;
     font-size: 8vw;
-    font-weight: bold;
-    margin-top: 5vw;
-    margin-bottom: 6vw;
-    
+    padding: 3vw 0 1vw 0; 
+    color: #412824;
+    margin: 0;
 }
 
-#codeDisplay {
-    text-shadow: 2px 2px;
-    font-family: 'Press Start 2P';
+#displayGameCode {
     font-size: 5vw;
-    font-weight: bold;
-    margin-top: 5vw;
-    margin-bottom: 6vw;
 }
 
-.btn {
-    padding: 1% 3%;
-    border-radius: 100px 100px 100px 100px;
-    font-size: 2vw;
-    cursor: pointer;
-}
+/* main menu*/
 
+#createNewGameButton, #joinGameButton, #loginAndRegisterButton, #highscoreButton, #interactionsButton {
+    background-image: url("../assets/images/buttons/orangeButtonBig.png");
+    background-position: center;
+    text-align: center;
+    margin: 1%;
+    font-size: 2.5vw;
+    color: #73340e;
+    box-shadow: 5px 5px 1px #73340e inset, -5px -5px 1px #58280a inset;
+    height: 5vw;
+    background-size: cover;
+    display: block;
+    width: 30vw;
+    margin-left: 35vw;
+    margin-right: 35vw;
+} 
+
+/**/
 #playGameButton {
     margin: 2vw;
 }
 
-#joinRoomToPlay {
-    margin-bottom: 1%;
-}
-#createNewGameButton {
-    margin-bottom: 1%;
-}
-
-.iconSettings {
-    height: inherit;
-    width: inherit;
-}
-
 #canvas {
     display: none;
-}
-
-.arrowIcon {
-    width: 2vw;
-    height: 2vw;
-}
-
-.form-control {
-    font-size: 2vw;
 }
 
 /*Score endscreen*/
@@ -91,7 +68,8 @@ body {
     margin-right: auto;
     box-shadow: 0 0 1em 0.1em #00000048;
     border-radius: 1em;
-    z-index: 5;
+    z-index: 7;
+    text-align: center;
 }
 
 #leaveGameButton {
@@ -125,7 +103,7 @@ canvas {
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 4;
+    z-index: 6;
     margin: 1em;
     width: 3em;
     height: 3em;
@@ -139,7 +117,7 @@ canvas {
     position: fixed;
     top: 0;
     right: 4em;
-    z-index: 4;
+    z-index: 6;
     margin: 1em;
     width: 3em;
     height: 3em;
@@ -151,13 +129,14 @@ canvas {
 
 #interactionMenu {
     position: fixed;
-    z-index: 4;
+    z-index: 6;
     display:none;
     left: 50%;
     transform: translate(-50%, 0);
     top: 30%
 }
 
+/* character select*/
 .characterLabel {
     width: 32px;
     height: 32px;
@@ -195,4 +174,111 @@ canvas {
 
 .disabled {
     filter: grayscale(100%);
+}
+/**/
+
+#inGameElements {
+    display: none;
+    position: fixed;
+    z-index: 5;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+#healthOutline {
+    margin: 2em;
+    height: 5em;
+}
+
+#healthFill {
+    margin: 2em;
+    height: 5em;
+    z-index: 4;
+    position: absolute;
+    /*4.54em = nothing, 0.4em = full heart*/
+    clip: rect(0.4em, 5em, 5em, 0);
+    left: 0;
+}
+
+#gemEffectMessage {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    top: 5em;
+    font-size: 2em;
+    color: white;
+    z-index: 4;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#score {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    color: white;
+    z-index: 4;
+    margin: 1em;
+}
+
+/*login register */
+#repeatPassword {
+    display: none;
+}
+
+#username, #password, #repeatPassword, #codeInput, #usernameInput {
+    background-image: url("../assets/images/buttons/brownButtonBig.png");
+    background-position: center;
+    text-align: center;
+    margin: 1%;
+    max-width: 30vw;
+    font-size: 2.5vw;
+    color: #574741;
+    box-shadow: 5px 5px 1px #574741 inset, -5px -5px 1px #4d3e38 inset;
+    height: 5vw;
+    background-size: cover;
+}
+
+::placeholder {
+    color: #574741;
+}
+
+#loginButton, #registerButton, #joinGameButtonAFterCodeInput, #playGameButton {
+    background-image: url("../assets/images/buttons/orangeButtonSmall.png");
+    background-position: center;
+    color: #73340e;
+    border-radius: 0;
+    box-shadow: 5px 5px 1px #73340e inset, -5px -5px 2px #58280a inset;
+    font-size: 1.5vw;
+    width: 45%;
+    height: 3vw;
+    background-size: cover;
+}
+
+.buttonControl {
+    max-width: 30vw;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+#returnToMainMenuButton, #removePlayerAndGoToMainMenu {
+    background-image: url("../assets/images/buttons/grayButtonSmall.png");
+    background-position: center;
+    color: #4c4a49;
+    box-shadow: 5px 5px 1px #4c4a49 inset, -5px -5px 2px #444241 inset;
+    font-size: 1.5vw;
+    border-radius: 0;
+    margin-top: 1%;
+    background-size: cover;
+}
+
+/* code screen */
+#joinGameButtonAFterCodeInput, #playGameButton {
+    width: auto;
+    height: auto;
+    margin: 1% 0 0 0;
 }

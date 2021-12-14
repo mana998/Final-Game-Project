@@ -6,21 +6,22 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class FreezeGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
-    super(x, y, width, height, value, affectsMe);
+    super(x, y, width, height, value, affectsMe, `You have been frozen for ${value / 1000} seconds`);
     this.values = [5000, 10000, 15000, 20000];
   }
 
-  onCollect(player) {
+  onCollect(player, position, affectsMe) {
     super.onCollect();
-    if (this.affectsMe) {
+    if (this.affectsMe || affectsMe) { //force affectsMe value
       this.freezePlayer(player, this.value);
     } else {
-      socket.emit('freezePlayer', this.value);
+      socket.emit('gemAffectsOthers', position);
     }
   }
 
   //decide whether to reverse for current player or other players
   freezePlayer(player, value) {
+    super.displayMessage();
     let originalSpeed = player.speed;
     player.speed = 0;
     //reverse back after period of time

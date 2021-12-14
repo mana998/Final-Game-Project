@@ -26,9 +26,9 @@ class OnOffTrap extends Trap {
         }
     }
 
-    onCollision () {
+    onCollision (player) {
         if (this.direction) {
-            super.onCollision();
+            super.onCollision(player);
         }
         console.log("Ow no, on off trap!");
     }

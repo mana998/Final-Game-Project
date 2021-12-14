@@ -6,7 +6,29 @@ function openLoginAndRegistration() {
   $('#panel').css('display', 'none');
   $('#highscore').css('display', 'none');
   $('#gameScreen').css('display', 'none');
+  $('#roomCodeScreen').css('display', 'none');
+  createLoginAndgisterScreen();
 }
+
+function createLoginAndgisterScreen() {
+  if (!$("#loginAndRegister").children().length) {
+  $("#loginAndRegister").append(`
+      <h1 id="loginAndRegisterHeadder" class="gameTitle">LOGIN</h1>
+      <form>
+          <input placeholder="USERNAME" type="text" id="username" name="username"><br>
+          <input placeholder="PASSWORD" type="password" id="password" name="password"><br>
+          <input placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"><br>
+      </form>
+      <div class="buttonControl">
+          <button type="button" id="loginButton" class="btn" onClick="login()">LOGIN</button>
+          <button type="button" id="registerButton" class="btn" onClick="activateRegistartion()">REGISTER</button>
+      </div> 
+      <p id="message"></p>
+    `)
+  }
+  
+}
+
 
 // Dagmara
 // reset fields
@@ -25,7 +47,7 @@ function showMainMenu() {
 // Dagmara
 // begin register procedure
 function activateRegistartion() {
-  $('#loginAndRegisterHeadder').text('Register');
+  $('#loginAndRegisterHeadder').text('REGISTER');
   $('#registerButton').attr('onclick', 'register()');
   $('#repeatPassword').css('display', 'inline-block');
   $('#loginButton').attr('onclick', 'activateLogin()');
@@ -35,8 +57,8 @@ function activateRegistartion() {
 // begin logout procedure
 function changeButtonToLogout() {
   $('#loginAndRegister').css('display', 'none');
-  $('#loginAndRegisterHeadder').text('Logout');
-  $('#loginButton').text('Logout');
+  $('#loginAndRegisterHeadder').text('LOGOUT');
+  $('#loginButton').text('LOGUT');
   $('#loginButton').attr('onclick', 'logout()');
 }
 
@@ -44,8 +66,8 @@ function changeButtonToLogout() {
 // begin login procedure
 function changeButtonToLogin() {
   $('#repeatPassword').css('display', 'none');
-  $('#loginAndRegisterHeadder').text('Login');
-  $('#loginButton').text('Login');
+  $('#loginAndRegisterHeadder').text('LOGIN');
+  $('#loginButton').text('LOGIN');
   $('#loginButton').attr('onclick', 'login()');
   $('#registerButton').attr('onclick', 'activateRegistartion()');
 }

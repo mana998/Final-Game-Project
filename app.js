@@ -254,24 +254,8 @@ io.on('connection', (socket) => {
     clearInterval(games[playersRoomTable[socket.id]].interval);
   }
 
-  function handleReverseMovement() {
-    socket.broadcast.to(playersRoomTable[socket.id]).emit('reversePlayerMovement');
-  }
-
-  function handleHealPlayer() {
-    socket.broadcast.to(playersRoomTable[socket.id]).emit('healPlayers');
-  }
-
-  function handleTeleportPlayer() {
-    socket.broadcast.to(playersRoomTable[socket.id]).emit('teleportPlayer');
-  }
-
-  function handleDoubleCoins() {
-    socket.broadcast.to(playersRoomTable[socket.id]).emit('doubleCoins');
-  }
-
-  function handleFreezePlayer(value) {
-    socket.broadcast.to(playersRoomTable[socket.id]).emit('freezePlayer', value);
+  function handleGemAffectsOthers(value) {
+    socket.broadcast.to(playersRoomTable[socket.id]).emit('gemEffect', value);
   }
 
   //Marianna
@@ -315,11 +299,7 @@ io.on('connection', (socket) => {
   socket.on('changeSpectator', changeSpectatingPlayer);
   socket.on('disconnect', handlePlayerDisconnect);
   socket.on('stopInterval', handleStopInterval);
-  socket.on('reverseMovement', handleReverseMovement);
-  socket.on('healPlayer', handleHealPlayer);
-  socket.on('teleportPlayer', handleTeleportPlayer);
-  socket.on('doubleCoins', handleDoubleCoins);
-  socket.on('freezePlayer', handleFreezePlayer);
+  socket.on('gemAffectsOthers', handleGemAffectsOthers);
   socket.on('getRandomMessage', handleGetRandomMessage);
   socket.on('savePlayer', handleSavePlayer);
 });
