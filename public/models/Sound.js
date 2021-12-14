@@ -4,6 +4,8 @@ const soundSrc = {
   hit : './assets/audio/soundfx/hit.wav',
   backgroundMusic: './assets/audio/music/backgroundMusic.mp3',
   walk: './assets/audio/soundfx/walk.wav',
+  talk1: './assets/audio/soundfx/blabla1.mp3',
+  talk2: './assets/audio/soundfx/blabla2.mp3',
 }
 
 //https://www.w3schools.com/graphics/game_sound.asp

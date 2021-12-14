@@ -30,6 +30,8 @@ function createUsernameScreen() {
           <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
       `);
       generateCharacterSelection();
+      $('#usernameInput').on('change', handleCreateUsername);
+      $('#playGameButton').on('click', playGame);
   } else {
       $('#playMenu').css('display', 'block');
   }
@@ -173,5 +175,3 @@ socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
 
 $('#createNewGameButton').on('click', createGame);
-$('#usernameInput').on('change', handleCreateUsername);
-$('#playGameButton').on('click', playGame);
