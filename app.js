@@ -24,7 +24,6 @@ const fetch = require('node-fetch');
 // database setup
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-io.set('transports', ['websocket']);
 const db = require('./database/connection').connection;
 
 const handleSession = require('./private/session.js');
