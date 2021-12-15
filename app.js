@@ -304,6 +304,11 @@ io.on('connection', (socket) => {
   socket.on('savePlayer', handleSavePlayer);
 });
 
+server.on('clientError', (err, socket) => {
+  console.error(err);
+  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+});
+
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, (error) => {
   if (error) {
