@@ -175,3 +175,4 @@ socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
 
 $('#createNewGameButton').on('click', createGame);
+
