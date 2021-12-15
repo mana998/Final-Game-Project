@@ -1,13 +1,14 @@
 // Dagmara
 require('dotenv').config();
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
-const pool  = mysql.createPool({
-  connectionLimit : 10,
-  host: process.env.HOST,
+const pool  = mysql.createPool(
+  process.env.CLEARDB_DATABASE_URL, {
+  connectionLimit : 5,
+  /*host: process.env.HOST,
   database: process.env.DATABASE,
   user: process.env.USER,
-  password: process.env.PASSWORD,
+  password: process.env.PASSWORD,*/
 });
 
 module.exports = {
