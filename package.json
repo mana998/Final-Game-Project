@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "node --trace-warnings app.js"
+        "start": "node app.js"
     },
     "dependencies": {
         "bcrypt": "^5.0.1",
