@@ -4,9 +4,7 @@ const pool = require('../database/connection').pool;
 // Marianna
 router.get('/api/interactions', (req, res) => {
   pool.getConnection(function(err, db) {
-    if (err) { 
-      console.log("error", err);
-    } else {
+    
       let interactions = {};
       //get messages
       let query = 'SELECT interaction_message, interaction_category FROM interaction  JOIN interaction_category ON interaction.interaction_category_id = interaction_category.interaction_category_id WHERE player_id ';
@@ -27,7 +25,7 @@ router.get('/api/interactions', (req, res) => {
         }
       });
       db.release();
-    }
+    
   });
 });
 
