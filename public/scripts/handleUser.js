@@ -7,6 +7,7 @@ function openLoginAndRegistration() {
   $('#highscore').css('display', 'none');
   $('#gameScreen').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
+  $('#interactionForm').css('display', 'none');
   createLoginAndgisterScreen();
 }
 
