@@ -26,20 +26,30 @@ function closeHelpWindow() {
 
 function showBasicInfo() {
   console.log('showBasicInfo');
+  $('#leftArrow').attr('onclick', "showTraps()");
+  $('#rightArrow').attr('onclick', "showControls()");
 };
 
 function showControls() {
   console.log('showControls');
+  $('#leftArrow').attr('onclick', "showBasicInfo()");
+  $('#rightArrow').attr('onclick', "showCollectibles()");
 };
 
 function showCollectibles() {
   console.log('showCollectibles');
+  $('#leftArrow').attr('onclick', "showControls()");
+  $('#rightArrow').attr('onclick', "showGemTypes()");
 };
 
 function showGemTypes() {
   console.log('showGemTypes');
+  $('#leftArrow').attr('onclick', "showCollectibles()");
+  $('#rightArrow').attr('onclick', "showTraps()");
 };
 
 function showTraps() {
   console.log('showTraps');
+  $('#leftArrow').attr('onclick', "showGemTypes()");
+  $('#rightArrow').attr('onclick', "showBasicInfo()");
 };
