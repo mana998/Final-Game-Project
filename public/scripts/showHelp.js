@@ -74,6 +74,22 @@ function showCollectibles() {
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showControls()");
   $('#rightArrow').attr('onclick', "showGemTypes()");
+  $('#helpContent').append(`<p class='helpContentText'>in this game, there are multiple collectibles. you collect
+  them by going through them.</p>`);
+  $('#helpContent').append(`<div class="collectiblesExplanationAll"><div class="collectiblesExplanationText"><h2 class='helpContentHeader' id="coinsHeader">Coins</h2>
+  <p class='helpContentText' id="movementExplanation">Each coin will add certain amount to your score. 
+  Collect as many as you can to be in top 100.</p></div>
+  <img class="helpImage" id="coinImage" src="../assets/images/helpScreen/coin.png">
+  </div>`);
+  $('#helpContent').append(`<div class="collectiblesExplanationAll"><div class="collectiblesExplanationText"><h2 class='helpContentHeader' id="gemsHeader">Gems</h2>
+  <p class='helpContentText' id="movementExplanation">Each gem has 50/50 chance to either affect you 
+  or all other players. You can encounter
+  different types of gems, but you won't know 
+  the type until you collect them.
+  </p></div>
+  <img class="helpImage" id="gemImage" src="../assets/images/helpScreen/gem.png">
+  </div>`);
+  
 };
 
 function showGemTypes() {

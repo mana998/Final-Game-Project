@@ -384,8 +384,17 @@ canvas {
     width: 50%;
 }
 
-#wasdMovementImage, #arrowsMovementImage {
+#wasdMovementImage, #arrowsMovementImage, #coinImage, #gemImage {
     vertical-align: baseline;
     height: 7em;
     margin-left: 1.5em;
+}
+
+#coinImage, #gemImage {
+    height: 8em;
+}
+
+.collectiblesExplanationText {
+    display: inline-block;
+    width: 80%;
 }
