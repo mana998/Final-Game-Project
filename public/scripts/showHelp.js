@@ -1,5 +1,6 @@
 function showHelpWindow() {
   $('#helpWindow').css('display', 'block');
+  $('div').not('#helpWindow').css('filter', 'blur(0.1em)');
   if ($('#helpWindow').is(':empty')) {
     showInitialWindow();
   }
