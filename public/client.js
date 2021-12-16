@@ -33,9 +33,8 @@ function createUsernameScreen() {
           <h1 class="gameTitle" id = "displayGameCode"></h1>
           <div id="characters"></div>
           <form>
-            <input type="text" placeholder="USERNAME" id="usernameInput">
+            <input type="text" placeholder="USERNAME" id="usernameInput" pattern="^[a-zA-Z\d]*$" title="Please, use one or more characters from: A-Z and 0-9.">
           </form>
-          <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span></br>
           <button type="button" class="btn" id="playGameButton" disabled>PLAY GAME</button></br>
           <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
       `);
@@ -52,11 +51,15 @@ function createUsernameScreen() {
 // If username is invalid the user is promped to enter different username
 function changeUsername(message = '') {
   if (message) {
-    $('#usernameMessage').text(message);
+    if ($("#usernameMessage")){
+      $("#usernameMessage").remove();
+    }
     $('#playGameButton').attr('disabled', 'true');
     return;
   }
-  $('#usernameMessage').text('Username already exists, input new username!');
+  if (!$("#usernameMessage").text()) {
+    $('#playMenu form').append('</br><span id="usernameMessage">Username already exists, input new username!</span>');
+  }
 }
 
 // Dagmara
