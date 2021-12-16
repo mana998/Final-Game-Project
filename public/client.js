@@ -30,7 +30,8 @@ function init() {
 function createUsernameScreen() {
   if (!$('#playMenu').children().length) {
       $('#playMenu').append(`
-          <h1 class="gameTitle" id = "displayGameCode"></h1>
+          <h1 class="usernameScreenTitle">GAME CODE: </h1>
+          <h1 class="usernameScreenTitle" id = "displayGameCode"></h1>
           <div id="characters"></div>
           <form>
             <input type="text" placeholder="USERNAME" id="usernameInput" pattern="^[a-zA-Z\d]*$" title="Please, use one or more characters from: A-Z and 0-9.">

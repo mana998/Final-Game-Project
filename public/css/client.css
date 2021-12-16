@@ -26,8 +26,12 @@ body {
     margin: 0;
 }
 
-#displayGameCode {
+.usernameScreenTitle {
+    text-shadow: 0.2vw 0.2vw #2e1c19;
     font-size: 5vw;
+    padding: 3vw 0 1vw 0; 
+    color: #412824;
+    margin: 0;
 }
 
 /* main menu*/
