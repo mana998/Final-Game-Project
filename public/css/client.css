@@ -53,6 +53,16 @@ body {
     margin: 2vw;
 }
 
+#loggedInUserIcon {
+    background-image: url("../assets/images/buttons/logout.png");
+    background-position: center;
+    background-size: cover;
+    height: 4vw;
+    width: 4vw;
+    cursor: pointer;
+    display: none;
+}
+
 #canvas {
     display: none;
 }

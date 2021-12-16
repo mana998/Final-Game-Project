@@ -154,6 +154,7 @@ function playersReady(players) {
   startTime = new Date().getTime();
   canvas.style.display = 'block';
   $('#loggedInUser').css('display', 'none');
+  $('#loggedInUserIcon').css('display', 'none');
   $('.container').css('border', 'none');
   $('.container-fluid').css('display', 'none');
   $('#viewBlock').css('display', 'block');

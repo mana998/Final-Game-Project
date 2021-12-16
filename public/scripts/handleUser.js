@@ -111,7 +111,8 @@ async function login() {
   if (result.playerId && result.username) {
     const sessionResult = await setSession(result.playerId, result.username);
     if (sessionResult.playerId && sessionResult.username) {
-      $('#loggedInUser').text(`Logged: ${sessionResult.username}`);
+      $('#loggedInUser').text(`Hey ${sessionResult.username}, welcome back`);
+      $('#loggedInUserIcon').css('display','block');
       showMainMenu();
       changeButtonToLogout();
     }
@@ -153,6 +154,7 @@ async function logout() {
     leaveGame();
     changeButtonToLogin();
     $('#loggedInUser').text('');
+    $('#loggedInUserIcon').css('display, none');
   } else {
     alert(result.message);
   }
@@ -160,7 +162,7 @@ async function logout() {
 
 // Dagmara
 // add listener for span element in main menu to logout user
-$('#loggedInUser').on('click', logout);
+$('#loggedInUserIcon').on('click', logout);
 
 // Dagmara
 async function getSession() {
@@ -173,11 +175,13 @@ async function getSession() {
 async function checkSession() {
   const result = await getSession();
   if (result.playerId && result.username) {
-    $('#loggedInUser').text(`Logged: ${result.username}`);
+    $('#loggedInUser').text(`Hey ${sessionResult.username}, welcome back`);
+    $('#loggedInUserIcon').css('display','block');
     changeButtonToLogout();
   } else {
     changeButtonToLogin();
     $('#loggedInUser').text('');
+    $('#loggedInUserIcon').css('display, none');
   }
 }
 
