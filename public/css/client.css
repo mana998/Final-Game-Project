@@ -404,6 +404,15 @@ canvas {
     grid-template-columns: 50% 50%;
 }
 
-.gridItem {
+.onOffHeader {
+    text-align: center;
+}
 
+.trapImages {
+    justify-items: center;
+    display: inline-grid;
+}
+
+.trapImage {
+    margin: 0;
 }

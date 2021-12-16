@@ -28,7 +28,6 @@ function closeHelpWindow() {
 }
 
 function showBasicInfo() {
-  console.log('showBasicInfo');
   $('#helpHeader').text("Basic Info");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showTraps()");
@@ -69,7 +68,6 @@ function showControls() {
 };
 
 function showCollectibles() {
-  console.log('showCollectibles');
   $('#helpHeader').text("Collectibles");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showControls()");
@@ -92,7 +90,6 @@ function showCollectibles() {
 };
 
 function showGemTypes() {
-  console.log('showGemTypes');
   $('#helpHeader').text("Gem Types");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showCollectibles()");
@@ -120,9 +117,27 @@ function showGemTypes() {
 };
 
 function showTraps() {
-  console.log('showTraps');
   $('#helpHeader').text("Traps");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showGemTypes()");
   $('#rightArrow').attr('onclick', "showBasicInfo()");
+  let traps = `<h2 class='helpContentHeader'>Moving Traps</h2>`;
+  traps += `<img class="helpImage" id="movingTrapImage" src="../assets/images/helpScreen/movingTrap.png">`;
+  traps += `<p class='helpContentText'>These traps are moving at set speed Across set tiles. 
+  Look closely and time your next move to avoid them.</p>`;
+  traps += `<h2 class='helpContentHeader'>On and Off Traps</h2>`;
+  traps += `<p class='helpContentText'>These traps have 2 states. On and OFF. They will hurt you
+  only when they are in their On state. Observer them and
+  wait for the opportunity to run across them.</p>`;
+  traps += `<div class="gridContainer">`;
+    traps += `<h2 class='helpContentHeader gridItem onOffHeader'>On</h2>`;
+    traps += `<h2 class='helpContentHeader gridItem onOffHeader'>Off</h2>`;
+    traps += `<div id="onPictures" class="gridItem trapImages">`;
+      traps += `<img class="helpImage trapImage" src="../assets/images/helpScreen/onTrap.png">`;
+      traps += `</div>`;
+    traps += `<div id="offPictures" class="gridItem trapImages">`;
+      traps += `<img class="helpImage trapImage" src="../assets/images/helpScreen/offTrap.png">`;
+      traps += `</div>`;
+  traps += `</div>`;
+  $('#helpContent').append(traps);
 };
