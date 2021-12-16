@@ -38,6 +38,9 @@ function createUsernameScreen() {
           <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span></br>
           <button type="button" class="btn" id="playGameButton" disabled>PLAY GAME</button></br>
           <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
+          <div id="lobby">
+            <p id="lobbyText">IN LOBBY</p>
+          </div>
       `);
       generateCharacterSelection();
       $('#usernameInput').on('change', handleCreateUsername);
@@ -46,6 +49,12 @@ function createUsernameScreen() {
       $('#playMenu').css('display', 'block');
   }
   
+}
+
+//Dagmara
+function setNumberOfPlayersInTheRoom(numberOfPlayers) {
+  numberOfPlayersInTheRoom = numberOfPlayers;
+  $('#lobby').append(`<p class="gameTitle">${numberOfPlayers}/4</p>`)
 }
 
 // Dagmara
@@ -183,6 +192,7 @@ socket.on('playersReady', playersReady);
 socket.on('createPlayer', createPlayer);
 socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
+socket.on('numberOfPlayersInTheRoom', setNumberOfPlayersInTheRoom);
 
 $('#createNewGameButton').on('click', createGame);
 
