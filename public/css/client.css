@@ -313,6 +313,22 @@ canvas {
     text-align: center;
     text-shadow: 0.2vw 0.2vw #2e1c19;
     color: #412824;
+    font-size: 3em;
+}
+
+.helpContentHeader { 
+    display: inline-block;
+    text-shadow: 0.2vw 0.2vw #2e1c19;
+    color: #412824;
+    text-transform: uppercase;
+    vertical-align: text-top;
+    font-size: 2em;
+}
+
+.helpContentText { 
+    color: #574741;
+    text-transform: uppercase;
+    font-size: 1.25em;
 }
 
 #closeHelp, #helpContent, #leftArrow, #rightArrow {
@@ -345,4 +361,10 @@ canvas {
     width: 5%;
     background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
 }
-  
+
+#chestImage, #healthImage {
+    margin-left: 2.5em;
+    height: 20%;
+    vertical-align: -webkit-baseline-middle;
+    padding: 0.5em;
+}
