@@ -20,7 +20,7 @@ async function displayAllHighscores() {
   const response = await fetch(`/api/highestscores/${currentPage}`);
   const result = await response.json();
   if (result.highscores && result.pages) {
-    $('#highscorestableBody').empty();
+    //$('#highscorestableBody').empty();
     result.highscores.forEach((record) => $('#highscorestableBody').append(`
         <tr>
             <th>${record.place}</th>

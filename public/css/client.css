@@ -20,14 +20,6 @@ body {
 
 .gameTitle {
     text-shadow: 0.2vw 0.2vw #2e1c19;
-    font-size: 8vw;
-    padding-bottom: 1vw; 
-    color: #412824;
-    margin: 0;
-}
-
-.usernameScreenTitle {
-    text-shadow: 0.2vw 0.2vw #2e1c19;
     font-size: 5vw;
     padding-bottom: 1vw; 
     color: #412824;
@@ -292,7 +284,7 @@ canvas {
 }
 
 #menuScreen {
-    transform: scale(0.7);
+    transform: scale(0.9);
 }
 
 /* highscore */
@@ -303,28 +295,29 @@ canvas {
     font-size: 1.5vw;
     border-radius: 0;
     margin-top: 1%;
-    background-size: contain, cover;
+    background-size: cover;
     margin-left: auto;
     margin-right: auto;
     width: 75%;
 }
 #highscoreList thead {
-    font-size: 2vw;
+    font-size: 1.5vw;
 }
 
-#highscoreList th {
+#highscoreList tbody th {
     padding: 1%;
+    font-size: 1vw;
 }
 
 .highscoreReturnToMainButton {
     left: 50%;
     transform: translate(50%, 0);
 }
+
 #pages {
     margin-left: auto;
     margin-right: auto;
     width: 75%;
-
 }
 
 #pages button {
@@ -336,5 +329,5 @@ canvas {
     float: right;
     height: 4vw;
     width: 4vw;
-    font-size: 2vw;
+    font-size: 1.5vw;
 }
