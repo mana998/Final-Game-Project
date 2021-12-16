@@ -305,7 +305,7 @@ canvas {
     left: 50%;
     transform: translate(-50%, 0);
     width: 85%;
-    height: 75%;
+    height: fit-content;
     z-index: 7;
 }
 
@@ -339,7 +339,7 @@ canvas {
 
 #closeHelp {
     position: fixed;
-    top: 3%;
+    top: 1.6em;
     right: 0;
     height: 7%;
     width: 4.5%;
@@ -358,14 +358,34 @@ canvas {
 #leftArrow, #rightArrow {
     color: #73340e;
     float: right;
-    height: 9%;
+    height: 3em;
     width: 5%;
     background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
 }
 
-#chestImage, #healthImage {
+.helpImage {
     margin-left: 2.5em;
-    height: 20%;
+    height: 5em;
     vertical-align: -webkit-baseline-middle;
     padding: 0.5em;
+}
+
+/*#movementExplanation {
+    width: 50%;
+    display: inline-block;
+}*/
+
+#movementExplanationHeader {
+    display: block;
+}
+
+#movementExplanationText {
+    display: inline-block;
+    width: 50%;
+}
+
+#wasdMovementImage, #arrowsMovementImage {
+    vertical-align: baseline;
+    height: 7em;
+    margin-left: 1.5em;
 }

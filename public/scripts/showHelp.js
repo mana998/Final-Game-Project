@@ -34,13 +34,13 @@ function showBasicInfo() {
   $('#leftArrow').attr('onclick', "showTraps()");
   $('#rightArrow').attr('onclick', "showControls()");
   $('#helpContent').append(`<h2 class='helpContentHeader'>Goal</h2>`);
-  $('#helpContent').append(`<img id="chestImage" src="../assets/images/helpScreen/chest.png">`);
+  $('#helpContent').append(`<img class="helpImage" id="chestImage" src="../assets/images/helpScreen/chest.png">`);
   $('#helpContent').append(`<p class='helpContentText'>goal of this game is to collect as many coins as possible
   and get to the goal as fast as possible. You will get
   additional score based on your time. Goal is represented
   as a chest of gold.</p>`);
   $('#helpContent').append(`<h2 class='helpContentHeader'>Health</h2>`);
-  $('#helpContent').append(`<img id="healthImage" src="../assets/images/helpScreen/healthHelp.png">`);
+  $('#helpContent').append(`<img class="helpImage" id="healthImage" src="../assets/images/helpScreen/healthHelp.png">`);
   $('#helpContent').append(`<p class='helpContentText'>you need to be careful. There are multiple traps placed
   across the maze that will hurt you. You can see your
   remaining health in the top left corner.
@@ -48,11 +48,24 @@ function showBasicInfo() {
 };
 
 function showControls() {
-  console.log('showControls');
   $('#helpHeader').text("Controls");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showBasicInfo()");
   $('#rightArrow').attr('onclick', "showCollectibles()");
+  $('#helpContent').append(`<div id="movementExplanationAll"><div id="movementExplanationText"><h2 class='helpContentHeader' id="movementExplanationHeader">Movement</h2>
+  <p class='helpContentText' id="movementExplanation">you can choose between using
+  arrows or WASD</p></div>
+  <img class="helpImage" id="wasdMovementImage" src="../assets/images/helpScreen/controlsWASD.png">
+  <img class="helpImage" id="arrowsMovementImage" src="../assets/images/helpScreen/controlsArrows.png"></div>`);
+  $('#helpContent').append(`<h2 class='helpContentHeader'>Player Interaction</h2>`);
+  $('#helpContent').append(`<img class="helpImage" id="interactionImage" src="../assets/images/helpScreen/interactionButton.png">`);
+  $('#helpContent').append(`<p class='helpContentText'>when you are close to another player, this small
+  icon will pop up. By pressing enter and clicking on one
+  of the categories, you can answer them.</p>`);
+  $('#helpContent').append(`<h2 class='helpContentHeader'>Sound</h2>`);
+  $('#helpContent').append(`<img class="helpImage" id="soundImage" src="../assets/images/helpScreen/soundHelp.png">`);
+  $('#helpContent').append(`<p class='helpContentText'>To disable music or sound effects, click on these icons
+  in top right corner.</p>`);
 };
 
 function showCollectibles() {
