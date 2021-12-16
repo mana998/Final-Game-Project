@@ -359,3 +359,56 @@ canvas {
     height: 2em;
     margin: 0 2em 1em 0em;
 }
+
+.categoryTitle {
+    text-shadow: 0.2vw 0.2vw #2e1c19;
+    font-size: 4vw;
+    padding: 0 0 1vw 0; 
+    color: #412824;
+    margin: 0;
+}
+
+.longInput {
+    background-image: url('../assets/images/buttons/brownButtonLong.png');
+    background-size: cover, contain;
+    color: #574741 !important; 
+    border: none !important;
+    display: block !important;
+    width: 100% !important;
+    height: 4em !important;
+}
+
+.interactionForm {
+    width: 75%;
+    display: block;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+}
+
+.submitButton, .resetButton, #resetAll {
+    position: relative;
+    height: 2.5em;
+    float: right;
+    background-image: url('../assets/images/buttons/orangeButtonSmall.png');
+    background-size: cover;
+    color: #73340e;
+    border: none;
+    width: 10em;
+}
+
+#resetAll {
+    right: 12.5%;
+    background-size: cover, contain;
+    height: 3em;
+    width: 12em;
+}
+
+#interactionForms {
+    overflow-y: scroll;
+    height: 50vh;
+}
+
+.categoryButtons {
+    display: inline-block;
+    width: 100%;
+}
