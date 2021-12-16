@@ -49,6 +49,7 @@ function showBasicInfo() {
 
 function showControls() {
   console.log('showControls');
+  $('#helpHeader').text("Controls");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showBasicInfo()");
   $('#rightArrow').attr('onclick', "showCollectibles()");
@@ -56,6 +57,7 @@ function showControls() {
 
 function showCollectibles() {
   console.log('showCollectibles');
+  $('#helpHeader').text("Collectibles");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showControls()");
   $('#rightArrow').attr('onclick', "showGemTypes()");
@@ -63,6 +65,7 @@ function showCollectibles() {
 
 function showGemTypes() {
   console.log('showGemTypes');
+  $('#helpHeader').text("Gem Types");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showCollectibles()");
   $('#rightArrow').attr('onclick', "showTraps()");
@@ -70,6 +73,7 @@ function showGemTypes() {
 
 function showTraps() {
   console.log('showTraps');
+  $('#helpHeader').text("Traps");
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showGemTypes()");
   $('#rightArrow').attr('onclick', "showBasicInfo()");
