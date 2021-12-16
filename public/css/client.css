@@ -306,6 +306,7 @@ canvas {
     transform: translate(-50%, 0);
     width: 85%;
     height: 75%;
+    z-index: 7;
 }
 
   
