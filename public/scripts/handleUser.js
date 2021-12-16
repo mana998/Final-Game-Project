@@ -40,8 +40,10 @@ function resetLoginFields() {
 // Dagmara
 // hide login and register show main menu
 function showMainMenu() {
+
   $('#panel').css('display', 'block');
   $('#menuOptions').css('display', 'none');
+  $('returnToMainMenuButton').removeClass('highscoreReturnToMainButton');
 }
 
 // Dagmara

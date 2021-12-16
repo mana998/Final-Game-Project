@@ -21,7 +21,7 @@ body {
 .gameTitle {
     text-shadow: 0.2vw 0.2vw #2e1c19;
     font-size: 8vw;
-    padding: 3vw 0 1vw 0; 
+    padding-bottom: 1vw; 
     color: #412824;
     margin: 0;
 }
@@ -29,7 +29,7 @@ body {
 .usernameScreenTitle {
     text-shadow: 0.2vw 0.2vw #2e1c19;
     font-size: 5vw;
-    padding: 3vw 0 1vw 0; 
+    padding-bottom: 1vw; 
     color: #412824;
     margin: 0;
 }
@@ -231,6 +231,7 @@ canvas {
 /*login register */
 #repeatPassword {
     display: none;
+    margin-bottom: 1%;
 }
 
 #username, #password, #repeatPassword, #codeInput, #usernameInput {
@@ -291,7 +292,7 @@ canvas {
 }
 
 #menuScreen {
-    transform: scale(0.8);
+    transform: scale(0.7);
 }
 
 /* highscore */
@@ -302,18 +303,28 @@ canvas {
     font-size: 1.5vw;
     border-radius: 0;
     margin-top: 1%;
-    background-size: cover;
+    background-size: contain, cover;
     margin-left: auto;
     margin-right: auto;
+    width: 75%;
+}
+#highscoreList thead {
+    font-size: 2vw;
 }
 
-#highscoreList tr {
-    height: 40px;
+#highscoreList th {
+    padding: 1%;
 }
 
+.highscoreReturnToMainButton {
+    left: 50%;
+    transform: translate(50%, 0);
+}
 #pages {
-    margin: 1%;
-    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+
 }
 
 #pages button {
@@ -322,4 +333,8 @@ canvas {
     background-position: center;
     background-size: cover;
     border: none;
+    float: right;
+    height: 4vw;
+    width: 4vw;
+    font-size: 2vw;
 }
