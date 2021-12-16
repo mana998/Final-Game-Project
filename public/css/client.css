@@ -346,4 +346,16 @@ canvas {
     width: 5%;
     background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
 }
-  
+
+#interactionsButton {
+    background-image: url('../assets/images/buttons/interactionPixelart.png');
+    background-size: cover;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    border: none;
+    box-shadow: none;
+    width: 2em;
+    height: 2em;
+    margin: 0 2em 1em 0em;
+}
