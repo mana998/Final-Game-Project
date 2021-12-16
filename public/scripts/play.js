@@ -139,6 +139,7 @@ function draw(data) {
   player.isNear = player.isNearPlayers(data.players);
   if (!player.isDone) {
     if (player.isNear) {
+      $('#enterButton').css('display', 'block');
       if (!player.message && displayMessageCount === -1) socket.emit('getRandomMessage');
       displayMessageCount++
     }
@@ -146,7 +147,10 @@ function draw(data) {
       player.message = '';
       updateServerPlayer();
       displayMessageCount = 0;
-      if (!player.isNear) displayMessageCount = -1;
+      if (!player.isNear) {
+        displayMessageCount = -1;
+        $('#enterButton').css('display', 'none');
+      }
     }
   };
 }

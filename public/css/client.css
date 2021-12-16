@@ -416,3 +416,12 @@ canvas {
 .trapImage {
     margin: 0;
 }
+
+#enterButton {
+    display: none;
+    position: absolute;
+    left: 52%;
+    top: 55%;
+    height: 6%;
+    opacity: 0.35;
+}
