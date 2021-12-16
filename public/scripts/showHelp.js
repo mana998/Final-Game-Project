@@ -89,7 +89,6 @@ function showCollectibles() {
   </p></div>
   <img class="helpImage" id="gemImage" src="../assets/images/helpScreen/gem.png">
   </div>`);
-  
 };
 
 function showGemTypes() {
@@ -98,6 +97,26 @@ function showGemTypes() {
   $('#helpContent').empty();
   $('#leftArrow').attr('onclick', "showCollectibles()");
   $('#rightArrow').attr('onclick', "showTraps()");
+  let block = `<div class="gridContainer">`;
+  block += `<h2 class='helpContentHeader gridItem'>Freeze</h2>`;
+  block += `<h2 class='helpContentHeader  gridItem'>Double score</h2>`;
+  block += `<p class='helpContentText gridItem'>block your movement
+  for certain amount of time</p>`;
+  block += `<p class='helpContentText gridItem'>double your score
+  (really powerful)</p>`;
+  block += `<h2 class='helpContentHeader gridItem'>Reverse Movement</h2>`;
+  block += `<h2 class='helpContentHeader gridItem'>Heal</h2>`;
+  block += `<p class='helpContentText gridItem'>reverse your movement keys
+  for certain amount of time</p>`;
+  block += `<p class='helpContentText gridItem'>increase your health
+  by certain amount</p>`;
+  block += `<h2 class='helpContentHeader gridItem'>Teleport</h2>`;
+  block += `<h2 class='helpContentHeader gridItem'>Speed Change</h2>`;
+  block += `<p class='helpContentText gridItem'>teleport you to random
+  location on the map</p>`;
+  block += `<p class='helpContentText gridItem'>increase or decrease your
+  speed for certain amount of time</p></div>`;
+  $('#helpContent').append(block);
 };
 
 function showTraps() {
