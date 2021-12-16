@@ -233,7 +233,7 @@ canvas {
     background-image: url("../assets/images/buttons/brownButtonBig.png");
     background-position: center;
     text-align: center;
-    margin: 1%;
+    margin-top: 1%;
     max-width: 40vw;
     font-size: 2.5vw;
     color: #574741;
