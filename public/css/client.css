@@ -102,7 +102,7 @@ canvas {
 #backgroundMusicControl {
     position: fixed;
     top: 0;
-    right: 0;
+    right: 4em;
     z-index: 6;
     margin: 1em;
     width: 3em;
@@ -116,13 +116,27 @@ canvas {
 #soundFxControl {
     position: fixed;
     top: 0;
-    right: 4em;
+    right: 8em;
     z-index: 6;
     margin: 1em;
     width: 3em;
     height: 3em;
     display:none;
     background-image: url('../assets/images/buttons/soundFxOn.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#showHelp {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 6;
+    margin: 1em;
+    width: 3em;
+    height: 3em;
+    display:none;
+    background-image: url('../assets/images/buttons/helpButton.png');
     background-repeat: no-repeat;
     background-size: contain;
 }
