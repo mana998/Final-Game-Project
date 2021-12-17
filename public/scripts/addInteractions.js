@@ -32,7 +32,9 @@ async function resetInteractions(id, category) {
 }
 
 function addInteractionField(category, interaction) {
-  return `<input type="text" class="longInput form-control input-${category}" value='${interaction}'>`;
+  return `<div class="longInput longButton backgroundPicture">
+  <input type="text" class="inputButtonText input-${category}" value='${interaction}'>
+  </div>`;
 }
 
 async function createInteractionsForm(id) {
@@ -58,15 +60,15 @@ async function createInteractionsForm(id) {
       $(`#${category}Form`).append(addInteractionField(category, interaction));
     })
     let buttons = `<div class="categoryButtons">`;
-    buttons += `<button type="button" id="submit${category}" class="submitButton">Save</button>`;
-    buttons += `<button type="button" id="reset${category}" class="resetButton">Reset</button>`;
+    buttons += `<button type="button" id="submit${category}" class="submitButton backgroundPicture smallButton"><span class="buttonText orangeText">Save</span></button>`;
+    buttons += `<button type="button" id="reset${category}" class="resetButton backgroundPicture smallButton"><span class="buttonText orangeText">Reset</span></button>`;
     buttons += `</div>`;
     $(`#${category}Form`).append(buttons);
     $(`#submit${category}`).attr('onclick', `changeInteractions("${id}", "${category}")`);
     $(`#reset${category}`).attr('onclick', `resetInteractions("${id}", "${category}")`);
     $('#interactionForms').append(`</form>`);
   });
-  $(`#interactionForm`).append(`<br><button type="button" id="resetAll" class="resetAllButton">Reset All</button>`);
+  $(`#interactionForm`).append(`<br><button type="button" id="resetAll" class="resetAllButton backgroundPicture smallButton"><span class="buttonText orangeText">Reset All</span></button>`);
   $(`#resetAll`).attr('onclick', `resetInteractions("${id}")`);
   $(`#interactionForm`).append(`</div>`);
 }

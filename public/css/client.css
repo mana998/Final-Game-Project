@@ -36,16 +36,14 @@ body {
     background-image: url("../assets/images/buttons/orangeButtonBig.png");
     background-position: center;
     text-align: center;
-    margin: 1%;
     font-size: 2.5vw;
-    color: #73340e;
-    box-shadow: 5px 5px 1px #73340e inset, -5px -5px 1px #58280a inset;
-    height: 5vw;
-    background-size: cover;
+    background-size: contain;
     display: block;
-    width: 30vw;
-    margin-left: 35vw;
-    margin-right: 35vw;
+    width: 40%;
+    margin:0 auto;
+    border: none;
+    margin-top: 1%;
+    background-color: transparent;
 } 
 
 /**/
@@ -370,12 +368,11 @@ canvas {
 
 .longInput {
     background-image: url('../assets/images/buttons/brownButtonLong.png');
-    background-size: cover, contain;
+    background-size: contain;
     color: #574741 !important; 
     border: none !important;
     display: block !important;
-    width: 100% !important;
-    height: 4em !important;
+    padding: 0 !important;
 }
 
 .interactionForm {
@@ -386,21 +383,25 @@ canvas {
 }
 
 .submitButton, .resetButton, #resetAll {
+    background-color: transparent;
+    width: 15% !important;
     position: relative;
-    height: 2.5em;
     float: right;
     background-image: url('../assets/images/buttons/orangeButtonSmall.png');
-    background-size: cover;
+    background-size: contain;
     color: #73340e;
     border: none;
-    width: 10em;
 }
+
+.orangeText {
+    color: #73340e;
+}
+
+
 
 #resetAll {
     right: 12.5%;
-    background-size: cover, contain;
-    height: 3em;
-    width: 12em;
+    font-size: 110%;
 }
 
 #interactionForms {
@@ -411,4 +412,59 @@ canvas {
 .categoryButtons {
     display: inline-block;
     width: 100%;
+}
+
+.backgroundPicture {
+    width: 100%;
+    background-repeat: no-repeat;
+}
+
+.longButton {
+    aspect-ratio: 1481/94;
+}
+
+.bigButton {
+    aspect-ratio: 781/126;
+}
+
+.smallButton {
+    aspect-ratio: 368/93;
+}
+
+.squareButton {
+    aspect-ratio: 109/93;
+}
+
+.smallTable {
+    aspect-ratio: 1481/572;
+}
+
+.bigTable {
+    aspect-ratio: 1481/714;
+}
+
+.buttonText, .inputButtonText{
+    background: none;
+    border: none;
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 96%;
+    height: 100%;
+}
+
+.buttonText {
+    text-align: center;
+}
+
+.inputButtonText {
+    text-align: left;
+    color: #574741
+}
+
+*:focus {
+    outline: 0;
+}
+
+*, ::before, ::after {
+    box-sizing: content-box !important;
 }
