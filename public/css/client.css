@@ -48,6 +48,20 @@ body {
     margin: 2vw;
 }
 
+#lobby {
+    position: absolute;
+    bottom: 0%;
+    right: 1%;
+}
+
+#lobbyText {
+    text-shadow: 0.2vw 0.2vw #2e1c19;
+    font-size: 2vw;
+    padding-bottom: 1vw; 
+    color: #412824;
+    margin: 0;
+}
+
 #canvas {
     display: none;
 }

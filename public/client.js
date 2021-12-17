@@ -38,6 +38,9 @@ function createUsernameScreen() {
           </form>
           <button type="button" class="btn" id="playGameButton" disabled>PLAY GAME</button></br>
           <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
+          <div id="lobby">
+            <p id="lobbyText">IN LOBBY</p>
+          </div>
       `);
       generateCharacterSelection();
       $('#usernameInput').on('change', handleCreateUsername);
@@ -45,6 +48,16 @@ function createUsernameScreen() {
   } else {
       $('#playMenu').css('display', 'block');
   }
+  
+}
+
+//Dagmara
+function setNumberOfPlayersInTheRoom(numberOfPlayers) {
+  numberOfPlayersInTheRoom = numberOfPlayers;
+  if ($('#lobby').children().length === 2) {
+    $('#lobby p.gameTitle').remove();
+  }
+  $('#lobby').append(`<p class="gameTitle">${numberOfPlayers}/4</p>`);
   
 }
 
@@ -187,6 +200,7 @@ socket.on('playersReady', playersReady);
 socket.on('createPlayer', createPlayer);
 socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
+socket.on('numberOfPlayersInTheRoom', setNumberOfPlayersInTheRoom);
 
 $('#createNewGameButton').on('click', createGame);
 
