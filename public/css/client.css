@@ -20,14 +20,10 @@ body {
 
 .gameTitle {
     text-shadow: 0.2vw 0.2vw #2e1c19;
-    font-size: 8vw;
-    padding: 3vw 0 1vw 0; 
+    font-size: 5vw;
+    padding-bottom: 1vw; 
     color: #412824;
     margin: 0;
-}
-
-#displayGameCode {
-    font-size: 5vw;
 }
 
 /* main menu*/
@@ -39,7 +35,6 @@ body {
     margin: 1%;
     font-size: 2.5vw;
     color: #73340e;
-    box-shadow: 5px 5px 1px #73340e inset, -5px -5px 1px #58280a inset;
     height: 5vw;
     background-size: cover;
     display: block;
@@ -64,6 +59,21 @@ body {
     position: absolute;
     right: 1%;
 }
+
+#lobby {
+    position: absolute;
+    bottom: 0%;
+    right: 1%;
+}
+
+#lobbyText {
+    text-shadow: 0.2vw 0.2vw #2e1c19;
+    font-size: 2vw;
+    padding-bottom: 1vw; 
+    color: #412824;
+    margin: 0;
+}
+
 
 #canvas {
     display: none;
@@ -167,6 +177,8 @@ canvas {
     width: 32px;
     height: 32px;
     background-image:url('../assets/images/game/test.png');
+    transform: scale(2);
+    margin-top: 20%;
 }
 
 .characterInput {
@@ -189,7 +201,7 @@ canvas {
 
 #charactersContainer {
     margin: 0;
-    width: 75%;
+    width: 50%;
     display: inline-block;
     vertical-align: middle;
 }
@@ -252,56 +264,59 @@ canvas {
 /*login register */
 #repeatPassword {
     display: none;
+    margin-bottom: 1%;
 }
 
 #username, #password, #repeatPassword, #codeInput, #usernameInput {
     background-image: url("../assets/images/buttons/brownButtonBig.png");
     background-position: center;
     text-align: center;
-    margin: 1%;
-    max-width: 30vw;
+    margin-top: 1%;
+    max-width: 40vw;
     font-size: 2.5vw;
     color: #574741;
-    box-shadow: 5px 5px 1px #574741 inset, -5px -5px 1px #4d3e38 inset;
-    height: 5vw;
+    height: 6vw;
     background-size: cover;
+    border: none;
 }
 
 ::placeholder {
     color: #574741;
 }
 
-#loginButton, #registerButton, #joinGameButtonAFterCodeInput, #playGameButton {
+#loginButton, #registerButton, #joinGameButtonAFterCodeInput {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
     color: #73340e;
     border-radius: 0;
-    box-shadow: 5px 5px 1px #73340e inset, -5px -5px 2px #58280a inset;
     font-size: 1.5vw;
-    width: 45%;
-    height: 3vw;
+    width: 49%;
+    height: 5vw;
     background-size: cover;
 }
 
 .buttonControl {
-    max-width: 30vw;
+    max-width: 40vw;
     margin: auto;
     text-align: center;
     display: flex;
     justify-content: space-between;
 }
 
-#returnToMainMenuButton, #removePlayerAndGoToMainMenu {
+#returnToMainMenuButton, #removePlayerAndGoToMainMenu, #playGameButton {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
     background-position: center;
     color: #4c4a49;
-    box-shadow: 5px 5px 1px #4c4a49 inset, -5px -5px 2px #444241 inset;
     font-size: 1.5vw;
     border-radius: 0;
     margin-top: 1%;
     background-size: cover;
+    height: 4vw;
 }
-
+#playGameButton {
+    background-image: url("../assets/images/buttons/orangeButtonSmall.png");
+    color: #73340e;
+}
 /* code screen */
 #joinGameButtonAFterCodeInput, #playGameButton {
     width: auto;
@@ -359,3 +374,56 @@ canvas {
     background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
 }
   
+=======
+#menuScreen {
+    transform: scale(0.9);
+}
+
+/* highscore */
+#highscoreList {
+    background-image: url("../assets/images/buttons/brownTable.png");
+    background-position: center;
+    color: #574741;
+    font-size: 1.5vw;
+    border-radius: 0;
+    margin-top: 1%;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+#highscoreList thead {
+    font-size: 1.5vw;
+}
+
+#highscoreList tbody th {
+    padding: 1%;
+    font-size: 1vw;
+}
+
+.highscoreReturnToMainButton {
+    left: 50%;
+    transform: translate(50%, 0);
+}
+
+#pagesContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+
+#pages {
+    float: right;
+}
+
+#pages button {
+    background-image: url("../assets/images/buttons/orangeButtonSquare.png");
+    color: #73340e;
+    background-position: center;
+    background-size: cover;
+    border: none;
+    height: 4vw;
+    width: 4vw;
+    font-size: 1.5vw;
+}
+

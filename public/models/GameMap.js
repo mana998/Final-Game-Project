@@ -78,7 +78,7 @@ class GameMap {
     for (let row = rowStart; row < rowEnd; row++) {
       for (let column = columnStart; column < columnEnd; column++) {
         switch (this.tiles[row][column]) {
-          case String(this.tiles[row][column]).match(/^4/)?.input:
+          case String(this.tiles[row][column]).match(/^4/):
             // take one coin to draw as they are the same
             coin.draw(
               ctx,
@@ -88,7 +88,7 @@ class GameMap {
               this.tileHeight,
             );
             break;
-          case String(this.tiles[row][column]).match(/^5/)?.input:
+          case String(this.tiles[row][column]).match(/^5/):
             // take one gem to draw as they are the same
             gem.draw(
               ctx,
@@ -98,7 +98,7 @@ class GameMap {
               this.tileHeight,
             );
             break;
-          case String(this.tiles[row][column]).match(/^6/)?.input:
+          case String(this.tiles[row][column]).match(/^6/):
             // take one trap to draw as they are the same, the traps image will be different but for now only one img
             //draw all traps but only first occurence of moving trap
             if (String(this.tiles[row][column]).match(/^(6\.\d+|6\.\d+\.1)$/)) {

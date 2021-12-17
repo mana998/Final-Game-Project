@@ -41,11 +41,13 @@ function resetLoginFields() {
 // Dagmara
 // hide login and register show main menu
 function showMainMenu() {
+
   $('#panel').css('display', 'block');
   $('#menuOptions').css('display', 'none');
   if ($('#loggedInUser').text() !== '') {
     $('#loggedInUserIcon').css('display', 'block');
   }
+  $('returnToMainMenuButton').removeClass('highscoreReturnToMainButton');
 }
 
 // Dagmara
