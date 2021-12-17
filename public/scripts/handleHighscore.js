@@ -8,6 +8,7 @@ function showHighscores() {
   $('#gameScreen').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
   $('#interactionForm').css('display', 'none');
+  $('#returnToMainMenuButton').addClass('highscoreReturnToMainButton');
 }
 
 function changePage(pageNumber) {
@@ -57,7 +58,9 @@ async function displayAllHighscores() {
       
      
   } else {
-    $('#message').text(result.message);
+    if (!$("#message").text()) {
+      $('#highscoreBody form').append(`</br><span id="message">${result.message}</span>`);
+    }
   }
 }
 
