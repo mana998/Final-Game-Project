@@ -28,9 +28,10 @@
     <script src="/socket.io/socket.io.js"></script>
     <div id="viewBlock"></div>
     <div class="container-fluid">
+        <div id="loggedInUserIcon"></div>
         <div id="menuScreen">
-            
             <div id="panel">
+                <span id="loggedInUser"></span>
                 <h1 class="gameTitle">GAME NAME</h1>
                 <button type="button" class="btn" id="createNewGameButton">NEW GAME</button>
                 <button type="button" class="btn" class="" id="joinGameButton">JOIN GAME</button>
@@ -80,6 +81,7 @@
     </div>
     <button type="button" class="btn" id="backgroundMusicControl" onClick = "toggleBackgroundMusic()"></button>
     <button type="button" class="btn" id="soundFxControl" onClick = "toggleSoundFx()"></button>
+    <button type="button" class="btn" id="showHelp" onClick = "showHelpWindow()"></button>
     <div id="inGameElements">
         <span id="gemEffectMessage"></span>
         <span id="score">Score: <span id="scoreValue">0</span></span>
@@ -92,6 +94,7 @@
         <button type="button" class="btn" id="byeInteraction" onClick = "selectInteraction('bye')">bye</button>
         <button type="button" class="btn" id="complainInteraction" onClick = "selectInteraction('complain')">complain</button>
     </div>
+    <div id="helpWindow"></div>
     <canvas id ="canvas" width="500", height="500"></canvas>
     <script src="./models/Utils.js"></script>
     <script src="./models/Img.js"></script>
@@ -120,6 +123,6 @@
     <script src="./scripts/handleHighscore.js"></script>
     <script src="./scripts/handleCharacters.js"></script>
     <script src="./scripts/roomCode.js"></script>
-    
+    <script src="./scripts/showHelp.js"></script>
 </body>
 </html>
