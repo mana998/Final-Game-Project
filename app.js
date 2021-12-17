@@ -282,7 +282,7 @@ io.on('connection', (socket) => {
       });
       result = await response.json();
       if (result.isSaved) {
-        socket.emit("scoreMessage", data.playerId);
+        io.to(playersRoomTable[socket.id]).emit("scoreMessage", data.playerId);
       }
       
     }
