@@ -369,7 +369,6 @@ canvas {
 
 .longInput {
     background-image: url('../assets/images/buttons/brownButtonLong.png');
-    background-size: contain;
     color: #574741 !important; 
     border: none !important;
     display: block !important;
@@ -478,3 +477,10 @@ canvas {
     box-sizing: content-box !important;
 }
 
+#usernameInput {
+    text-align: center !important;
+}
+
+.returnToMainMenuCharacterSelection {
+    width: 32.5% !important;
+}

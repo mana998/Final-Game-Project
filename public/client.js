@@ -34,11 +34,11 @@ function createUsernameScreen() {
           <h1 class="gameTitle" id = "displayGameCode"></h1>
           <div id="characters"></div>
           <form>
-            <input type="text" placeholder="USERNAME" id="usernameInput">
+            <div id="usernameInputDiv" class="inputBigButton bigButton backgroundPicture"><input class="inputButtonText brownText"type="text" placeholder="USERNAME" id="usernameInput"></div>
           </form>
           <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span></br>
-          <button type="button" class="btn" id="playGameButton" disabled>PLAY GAME</button></br>
-          <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
+          <button type="button" class="backgroundPicture bigButton" id="playGameButton" disabled><span class="buttonText orangeText">PLAY GAME</span></button></br>
+          <button type="button" class="returnToMainMenuCharacterSelection backgroundPicture bigButton" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()"><span class="buttonText grayText">MAIN MENU</span></button>
       `);
       generateCharacterSelection();
       $('#usernameInput').on('change', handleCreateUsername);
