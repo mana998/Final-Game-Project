@@ -145,7 +145,15 @@ canvas {
     display:none;
     left: 50%;
     transform: translate(-50%, 0);
-    top: 30%
+    top: 30%;
+    width: 63%;
+}
+
+.interactionButton {
+    background-image: url("../assets/images/buttons/grayButtonSmall.png");
+    width: 22% !important;
+    border:none;
+    font-size: 110%;
 }
 
 /* character select*/
@@ -465,3 +473,4 @@ canvas {
 *, ::before, ::after {
     box-sizing: content-box !important;
 }
+
