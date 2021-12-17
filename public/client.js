@@ -78,7 +78,7 @@ function updatePlayer(updatedPlayer) {
 //Dagmara
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
-  leaveGame();
+  socket.on('leaveBeforeGameStarts');
   showMainMenu();
 }
 

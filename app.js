@@ -302,6 +302,7 @@ io.on('connection', (socket) => {
   socket.on('gemAffectsOthers', handleGemAffectsOthers);
   socket.on('getRandomMessage', handleGetRandomMessage);
   socket.on('savePlayer', handleSavePlayer);
+  socket.on('leaveBeforeGameStarts', handlePlayerDisconnect);
 });
 
 const PORT = process.env.PORT || 8080;
