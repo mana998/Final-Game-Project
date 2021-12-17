@@ -64,6 +64,7 @@ body {
 
 /*Score endscreen*/
 #currentScores {
+    width: fit-content;
     background-image: url("../assets/images/buttons/brownTable.png");
     width: 37%;
     margin: 0 auto;
@@ -86,18 +87,12 @@ body {
 }
 
 #currentScoresTable td {
-    padding: 1em;
+    padding: 0.5em;
 }
 
-#currentScoresTable td:first-child {
-    text-align: right;
-}
-
-#currentScoresTable td:nth-child(2) {
-    text-align: left;
-}
 
 .highscoreText {
+    font-size: 0.75em;
     text-shadow: 0.1vw 0.1vw #2e1c19;
     color: #412824;
 }
