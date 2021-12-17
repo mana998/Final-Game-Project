@@ -8,6 +8,7 @@ function openLoginAndRegistration() {
   $('#gameScreen').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
   createLoginAndgisterScreen();
+  $('#loggedInUserIcon').css('display', 'none');
 }
 
 function createLoginAndgisterScreen() {
@@ -42,6 +43,10 @@ function resetLoginFields() {
 function showMainMenu() {
   $('#panel').css('display', 'block');
   $('#menuOptions').css('display', 'none');
+  console.log($('#loggedInUser').css('display') === 'block');
+  if ($('#loggedInUser').text() !== '') {
+    $('#loggedInUserIcon').css('display', 'block');
+  }
 }
 
 // Dagmara

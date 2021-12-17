@@ -26,6 +26,7 @@ function init() {
   $('#roomCodeScreen').css('display', 'none');
   createUsernameScreen();
   $('#showHelp').css('display', 'block');
+  $('#loggedInUserIcon').css('display', 'none');
 }
 
 function createUsernameScreen() {
