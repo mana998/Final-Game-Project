@@ -314,10 +314,14 @@ canvas {
     transform: translate(50%, 0);
 }
 
-#pages {
+#pagesContainer {
     margin-left: auto;
     margin-right: auto;
     width: 75%;
+}
+
+#pages {
+    float: right;
 }
 
 #pages button {
@@ -326,7 +330,6 @@ canvas {
     background-position: center;
     background-size: cover;
     border: none;
-    float: right;
     height: 4vw;
     width: 4vw;
     font-size: 1.5vw;
