@@ -4,8 +4,10 @@ function codeScreen () {
     $('#panel').css('display', 'none');
     $('#highscore').css('display', 'none');
     $('#gameScreen').css('display', 'none');
-    createRoomCodeScreen();
+    $('#interactionForm').css('display', 'none');
+    createRoomCodeScreen();  
     $('#loggedInUserIcon').css('display', 'none');
+
 }
 
 function createRoomCodeScreen() {

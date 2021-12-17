@@ -24,6 +24,7 @@ function init() {
   $('#gameScreen').css('display', 'block');
   $('#returnToMainMenuButton').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
+  $('#interactionForm').css('display', 'none');
   createUsernameScreen();
   $('#showHelp').css('display', 'block');
   $('#loggedInUserIcon').css('display', 'none');
