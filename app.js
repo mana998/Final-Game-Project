@@ -98,6 +98,7 @@ io.on('connection', (socket) => {
     result = await response.json();
     games[roomName].interactions = result;
     socket.join(roomName);
+    socket.emit('numberOfPlayersInTheRoom', 1);
     socket.emit('createPlayer', socket.id);
   }
 
@@ -156,7 +157,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    const totalPlayersInRoom = desiredRoom.size;
+    let totalPlayersInRoom = desiredRoom.size;
     if (totalPlayersInRoom === 0) {
       socket.emit('EmptyRoom');
       return;
@@ -167,6 +168,9 @@ io.on('connection', (socket) => {
     playersRoomTable[socket.id] = gameCode;
     socket.emit('roomName', gameCode);
     socket.join(gameCode);
+    //send number of players in the room
+    totalPlayersInRoom = desiredRoom.size;
+    io.sockets.in(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
     socket.emit('createPlayer', socket.id);
   }
 
@@ -302,6 +306,7 @@ io.on('connection', (socket) => {
   socket.on('gemAffectsOthers', handleGemAffectsOthers);
   socket.on('getRandomMessage', handleGetRandomMessage);
   socket.on('savePlayer', handleSavePlayer);
+  socket.on('leaveBeforeGameStarts', handlePlayerDisconnect);
 });
 
 const PORT = process.env.PORT || 8080;
