@@ -55,24 +55,69 @@ body {
     display: none;
 }
 
-/*Score endscreen*/
 #endScreen {
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 2em;
+    z-index: 6;
+    width: 100%;
+    position: fixed;
+    height: 100%;
+}
+
+/*Score endscreen*/
+#currentScores {
+    background-image: url("../assets/images/buttons/brownTable.png");
+    width: 37%;
+    margin: 0 auto;
     position: relative;
-    top: 5em;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+    top: 15%;
+    opacity: 0.5;
     box-shadow: 0 0 1em 0.1em #00000048;
-    border-radius: 1em;
-    z-index: 7;
     text-align: center;
 }
 
+#currentScoresHeader {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 2em;
+}
+
+#currentScoresTable {
+    width: 100%;
+}
+
+#currentScoresTable td {
+    padding: 1em;
+}
+
+#currentScoresTable td:first-child {
+    text-align: right;
+}
+
+#currentScoresTable td:nth-child(2) {
+    text-align: left;
+}
+
+.highscoreText {
+    text-shadow: 0.1vw 0.1vw #2e1c19;
+    color: #412824;
+}
+
+#spectateAnotherPlayer {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 63%;
+    text-shadow: 0.1vw 0.1vw #0f0d0d;
+}
+
 #leaveGameButton {
-    position: relative;
-    z-index: 6;
+    width: 16%;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 70%;
+    border: none;
+    background-image: url("../assets/images/buttons/grayButtonSmall.png");
 }
 
 #viewBlock {
