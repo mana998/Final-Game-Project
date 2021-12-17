@@ -236,21 +236,18 @@ canvas {
 }
 
 /*login register */
-#repeatPassword {
+#repeatPasswordDiv {
     display: none;
 }
 
-#username, #password, #repeatPassword, #codeInput, #usernameInput {
+.inputBigButton {
     background-image: url("../assets/images/buttons/brownButtonBig.png");
     background-position: center;
     text-align: center;
-    margin: 1%;
-    max-width: 30vw;
+    margin: 0 auto;
+    width: 40% !important;
+    margin-top: 1%;
     font-size: 2.5vw;
-    color: #574741;
-    box-shadow: 5px 5px 1px #574741 inset, -5px -5px 1px #4d3e38 inset;
-    height: 5vw;
-    background-size: cover;
 }
 
 ::placeholder {
@@ -260,32 +257,24 @@ canvas {
 #loginButton, #registerButton, #joinGameButtonAFterCodeInput, #playGameButton {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
-    color: #73340e;
-    border-radius: 0;
-    box-shadow: 5px 5px 1px #73340e inset, -5px -5px 2px #58280a inset;
-    font-size: 1.5vw;
-    width: 45%;
-    height: 3vw;
-    background-size: cover;
+    font-size: 140%;
+    margin-top: 1%;
+    width: 41%;
+    border: none;
 }
 
 .buttonControl {
-    max-width: 30vw;
-    margin: auto;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
+    width: 45%;
+    margin: 0 auto;
 }
 
 #returnToMainMenuButton, #removePlayerAndGoToMainMenu {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
     background-position: center;
-    color: #4c4a49;
-    box-shadow: 5px 5px 1px #4c4a49 inset, -5px -5px 2px #444241 inset;
-    font-size: 1.5vw;
-    border-radius: 0;
+    font-size: 120%;
     margin-top: 1%;
-    background-size: cover;
+    width: 20.5%;
+    border: none;
 }
 
 /* code screen */
@@ -397,6 +386,13 @@ canvas {
     color: #73340e;
 }
 
+.brownText {
+    color: #574741;
+}
+
+.grayText {
+    color: #4c4a49;
+}
 
 
 #resetAll {
@@ -417,6 +413,8 @@ canvas {
 .backgroundPicture {
     width: 100%;
     background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
 }
 
 .longButton {
@@ -458,7 +456,6 @@ canvas {
 
 .inputButtonText {
     text-align: left;
-    color: #574741
 }
 
 *:focus {

@@ -33,7 +33,7 @@ async function resetInteractions(id, category) {
 
 function addInteractionField(category, interaction) {
   return `<div class="longInput longButton backgroundPicture">
-  <input type="text" class="inputButtonText input-${category}" value='${interaction}'>
+  <input type="text" class="inputButtonText brownText input-${category}" value='${interaction}'>
   </div>`;
 }
 

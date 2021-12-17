@@ -15,13 +15,13 @@ function createLoginAndgisterScreen() {
   $("#loginAndRegister").append(`
       <h1 id="loginAndRegisterHeadder" class="gameTitle">LOGIN</h1>
       <form>
-          <input placeholder="USERNAME" type="text" id="username" name="username"><br>
-          <input placeholder="PASSWORD" type="password" id="password" name="password"><br>
-          <input placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"><br>
+          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="USERNAME" type="text" id="username" name="username"></div>
+          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="PASSWORD" type="password" id="password" name="password"></div>
+          <div id="repeatPasswordDiv"class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"></div>
       </form>
       <div class="buttonControl">
-          <button type="button" id="loginButton" class="btn" onClick="login()">LOGIN</button>
-          <button type="button" id="registerButton" class="btn" onClick="activateRegistartion()">REGISTER</button>
+          <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()"><span class="buttonText orangeText">LOGIN</span></button>
+          <button type="button" id="registerButton" class="backgroundPicture smallButton" onClick="activateRegistartion()"><span class="buttonText orangeText">REGISTER</span></button>
       </div> 
       <p id="message"></p>
     `)
@@ -49,7 +49,7 @@ function showMainMenu() {
 function activateRegistartion() {
   $('#loginAndRegisterHeadder').text('REGISTER');
   $('#registerButton').attr('onclick', 'register()');
-  $('#repeatPassword').css('display', 'inline-block');
+  $('#repeatPasswordDiv').css('display', 'inline-block');
   $('#loginButton').attr('onclick', 'activateLogin()');
 }
 
@@ -65,7 +65,7 @@ function changeButtonToLogout() {
 // Dagmara
 // begin login procedure
 function changeButtonToLogin() {
-  $('#repeatPassword').css('display', 'none');
+  $('#repeatPasswordDiv').css('display', 'none');
   $('#loginAndRegisterHeadder').text('LOGIN');
   $('#loginButton').text('LOGIN');
   $('#loginButton').attr('onclick', 'login()');
