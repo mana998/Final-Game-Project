@@ -170,7 +170,7 @@ io.on('connection', (socket) => {
     socket.join(gameCode);
     //send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
-    socket.emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
+    io.sockets.in(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
     socket.emit('createPlayer', socket.id);
   }
 

@@ -54,7 +54,11 @@ function createUsernameScreen() {
 //Dagmara
 function setNumberOfPlayersInTheRoom(numberOfPlayers) {
   numberOfPlayersInTheRoom = numberOfPlayers;
-  $('#lobby').append(`<p class="gameTitle">${numberOfPlayers}/4</p>`)
+  if ($('#lobby').children().length === 2) {
+    $('#lobby p.gameTitle').remove();
+  }
+  $('#lobby').append(`<p class="gameTitle">${numberOfPlayers}/4</p>`);
+  
 }
 
 // Dagmara
