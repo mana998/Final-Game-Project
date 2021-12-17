@@ -25,6 +25,8 @@ function init() {
   $('#returnToMainMenuButton').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
   createUsernameScreen();
+  $('#showHelp').css('display', 'block');
+  $('#loggedInUserIcon').css('display', 'none');
 }
 
 function createUsernameScreen() {
@@ -93,7 +95,7 @@ function updatePlayer(updatedPlayer) {
 //Dagmara
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
-  leaveGame();
+  socket.on('leaveBeforeGameStarts');
   showMainMenu();
 }
 
@@ -170,6 +172,7 @@ function playersReady(players) {
   startTime = new Date().getTime();
   canvas.style.display = 'block';
   $('#loggedInUser').css('display', 'none');
+  $('#loggedInUserIcon').css('display', 'none');
   $('.container').css('border', 'none');
   $('.container-fluid').css('display', 'none');
   $('#viewBlock').css('display', 'block');

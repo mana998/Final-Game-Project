@@ -48,6 +48,18 @@ body {
     margin: 2vw;
 }
 
+#loggedInUserIcon {
+    background-image: url("../assets/images/buttons/logout.png");
+    background-position: center;
+    background-size: cover;
+    height: 4vw;
+    width: 4vw;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    right: 1%;
+}
+
 #lobby {
     position: absolute;
     bottom: 0%;
@@ -61,6 +73,7 @@ body {
     color: #412824;
     margin: 0;
 }
+
 
 #canvas {
     display: none;
@@ -111,7 +124,7 @@ canvas {
 #backgroundMusicControl {
     position: fixed;
     top: 0;
-    right: 0;
+    right: 4em;
     z-index: 6;
     margin: 1em;
     width: 3em;
@@ -125,13 +138,27 @@ canvas {
 #soundFxControl {
     position: fixed;
     top: 0;
-    right: 4em;
+    right: 8em;
     z-index: 6;
     margin: 1em;
     width: 3em;
     height: 3em;
     display:none;
     background-image: url('../assets/images/buttons/soundFxOn.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#showHelp {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 6;
+    margin: 1em;
+    width: 3em;
+    height: 3em;
+    display:none;
+    background-image: url('../assets/images/buttons/helpButton.png');
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -297,6 +324,57 @@ canvas {
     margin: 1% 0 0 0;
 }
 
+#helpWindow {
+    display: none;
+    position: fixed;
+    top: 12.5%;
+    z-index: 4;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 85%;
+    height: 75%;
+    background-color: white;
+}
+
+  
+#helpHeader { 
+    text-align: center;
+    text-shadow: 0.2vw 0.2vw #2e1c19;
+    color: #412824;
+}
+
+#closeHelp, #helpContent, #leftArrow, #rightArrow {
+    background-size: cover;
+    border: none;
+}
+
+#closeHelp {
+    position: fixed;
+    top: 3%;
+    right: 0;
+    height: 7%;
+    width: 4.5%;
+    color: #4c4a49;
+    background-image:  url("../assets/images/buttons/grayButtonSquare.png");
+}
+
+#helpContent { 
+    padding: 1em;
+    display: inline-block;
+    height: 80%;
+    width: 100%;
+    background-image: url("../assets/images/buttons/brownTableBig.png");
+}
+
+#leftArrow, #rightArrow {
+    color: #73340e;
+    float: right;
+    height: 9%;
+    width: 5%;
+    background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
+}
+  
+=======
 #menuScreen {
     transform: scale(0.9);
 }
@@ -348,3 +426,4 @@ canvas {
     width: 4vw;
     font-size: 1.5vw;
 }
+
