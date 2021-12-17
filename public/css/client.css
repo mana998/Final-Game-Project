@@ -262,7 +262,7 @@ canvas {
     color: #574741;
 }
 
-#loginButton, #registerButton, #joinGameButtonAFterCodeInput, #playGameButton {
+#loginButton, #registerButton, #joinGameButtonAfterCodeInput, #playGameButton {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
     font-size: 140%;
@@ -286,10 +286,14 @@ canvas {
 }
 
 /* code screen */
-#joinGameButtonAFterCodeInput, #playGameButton {
-    width: auto;
-    height: auto;
+#joinGameButtonAfterCodeInput, #playGameButton {
+    width: 32%;
     margin: 1% 0 0 0;
+    border: none;
+}
+
+#codeInput {
+    border: none;
 }
 
 #helpWindow {
