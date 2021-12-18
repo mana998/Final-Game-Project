@@ -698,3 +698,7 @@ canvas {
 .col-3 {
     width: 15% !important;
 }
+
+button:hover, input:hover, input:focus {
+    filter: brightness(85%);
+}
