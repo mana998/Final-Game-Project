@@ -49,6 +49,7 @@ function showMainMenu() {
     $('#loggedInUserIcon').css('display', 'block');
   }
   $('returnToMainMenuButton').removeClass('highscoreReturnToMainButton');
+  $('#returnToMainMenuButton').css('display', 'block');
 }
 
 // Dagmara
