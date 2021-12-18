@@ -42,7 +42,7 @@ function handleGameEnded() {
 }
 
 function showEndScreen() {
-  $("#endScreen").append(`<h1 id="currentScoresHeader" class="gameTitle">Current scores:</h1>`);
+  $("#endScreen").append(`<h1 id="currentScoresHeader" class="gameTitle">CURRENT SCORES:</h1>`);
   $("#endScreen").append(`<div id="currentScores" class="backgroundPicture brownText smallTable">
     <table id="currentScoresTable">
     </table>

@@ -38,7 +38,7 @@ function addInteractionField(category, interaction) {
 }
 
 async function createInteractionsForm(id) {
-  $('#interactionForm').append(`<h1 class="gameTitle">Interactions</h1>`);
+  $('#interactionForm').append(`<h1 class="gameTitle">INTERACTIONS</h1>`);
   $('#interactionForm').append(`<div id="interactionForms">`);
   //load player interactions
   let url = `api/interactions?player_id=${id}`;
@@ -82,6 +82,7 @@ async function showInteractions(playerId) {
   $('#gameScreen').css('display', 'none');
   $('#highscore').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
+  $('#returnToMainMenuButton').addClass('interactionsReturnToMainButton');
   createInteractionsForm(playerId);
 }
 
