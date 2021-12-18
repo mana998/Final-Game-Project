@@ -11,7 +11,6 @@ function codeScreen () {
 }
 
 function createRoomCodeScreen() {
-    console.log($('#roomCodeScreen').children().length);
     if (!$('#roomCodeScreen').children().length) {
         $('#roomCodeScreen').append(`
             <h1 class="gameTitle">ENTER ROOM CODE:</h1>
