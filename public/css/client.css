@@ -434,6 +434,8 @@ canvas {
 
 #contentText {
     padding: 2vw;
+    width: 76vw;
+    height: 34vw;
 }
 
 #leftArrow, #rightArrow {

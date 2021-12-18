@@ -14,9 +14,9 @@ function showInitialWindow() {
   content += `<div id='helpContent' class="backgroundPicture bigTable">`;
   content +=`<button id='closeHelp' class="backgroundPicture squareButton"><span class="buttonText grayText">X</span></button>`;
   content += `<div id="contentText"></div>`;
+  content += `</div>`;
   content += `<button id='rightArrow' class="backgroundPicture squareButton"><span class="buttonText orangeText">-&gt;</span></button>`;
   content += `<button id='leftArrow' class="backgroundPicture squareButton"><span class="buttonText orangeText">&lt;-</span></button>`;
-  content += `</div>`;
   
   $('#helpWindow').append(content);
   $('#closeHelp').on('click', closeHelpWindow);
