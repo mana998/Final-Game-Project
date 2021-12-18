@@ -21,10 +21,8 @@ function createRoomCodeScreen() {
                 <button type="button" class="backgroundPicture bigButton" onClick="joinGame()" id="joinGameButtonAfterCodeInput"><span class="buttonText orangeText">JOIN GAME</span></button>
             </div>
         `);
-    } else {
-        $('#roomCodeScreen').css('display', 'block');
-    }
-    
+    } 
+    $('#roomCodeScreen').css('display', 'block');  
 }
 
 // Dagmara
