@@ -20,10 +20,11 @@ body {
 
 .gameTitle {
     text-shadow: 0.2vw 0.2vw #2e1c19;
-    font-size: 5vw;
+    font-size: 4vw;
     padding-bottom: 1vw; 
     color: #412824;
     margin: 0;
+    padding-top: 1vw;
 }
 
 /* main menu*/
@@ -342,7 +343,7 @@ canvas {
     margin: 0 auto;
 }
 
-#returnToMainMenuButton, #removePlayerAndGoToMainMenu, #playGameButton {
+#returnToMainMenuButton, #removePlayerAndGoToMainMenu {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
     background-position: center;
     font-size: 120%;
@@ -630,10 +631,6 @@ canvas {
     opacity: 0.5;
 }
 
-#menuScreen {
-    transform: scale(0.9);
-}
-
 /* highscore */
 #highscoreList {
     background-image: url("../assets/images/buttons/brownTable.png");
@@ -680,4 +677,8 @@ canvas {
     height: 4vw;
     width: 4vw;
     font-size: 1.5vw;
+}
+
+.col-3 {
+    width: 15% !important;
 }

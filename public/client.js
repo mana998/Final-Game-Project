@@ -33,8 +33,7 @@ function init() {
 function createUsernameScreen() {
   if (!$('#playMenu').children().length) {
       $('#playMenu').append(`
-          <h1 class="gameTitle">GAME CODE: </h1>
-          <h1 class="gameTitle" id = "displayGameCode"></h1>
+          <h1 class="gameTitle">GAME CODE: <span class="gameTitle" id = "displayGameCode"></span></h1>
           <div id="characters"></div>
           <form>
             <div id="usernameInputDiv" class="inputBigButton bigButton backgroundPicture">
