@@ -388,6 +388,7 @@ canvas {
 }
   
 #helpHeader { 
+    text-transform: uppercase;
     text-align: center;
     text-shadow: 0.2vw 0.2vw #2e1c19;
     color: #412824;
@@ -473,6 +474,7 @@ canvas {
     padding: 0 0 1vw 0; 
     color: #412824;
     margin: 0;
+    text-transform: uppercase;
 }
 
 .longInput {

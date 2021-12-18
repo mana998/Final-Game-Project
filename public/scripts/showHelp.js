@@ -10,7 +10,7 @@ function showHelpWindow() {
 }
 
 function showInitialWindow() {
-  let content = `<h1 id='helpHeader'>Placeholder</h1>`;
+  let content = `<h1 id='helpHeader'></h1>`;
   content += `<div id='helpContent' class="backgroundPicture bigTable">`;
   content +=`<button id='closeHelp' class="backgroundPicture squareButton"><span class="buttonText grayText">X</span></button>`;
   content += `<div id="contentText"></div>`;
