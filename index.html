@@ -33,11 +33,11 @@
             <div id="panel">
                 <span id="loggedInUser"></span>
                 <h1 class="gameTitle">GAME NAME</h1>
-                <button type="button" class="btn" id="createNewGameButton">NEW GAME</button>
-                <button type="button" class="btn" class="" id="joinGameButton">JOIN GAME</button>
-                <button type="button" class="btn" id="loginAndRegisterButton">SIGN IN/UP</button>
-                <button type="button" class="btn" id="highscoreButton">HIGHSCORES</button>
-                <button type="button" class="btn" id="interactionsButton">INTRACTIONS</button>
+                <button type="button" class="backgroundPicture bigButton" id="createNewGameButton"><span class="buttonText orangeText">NEW GAME</span></button>
+                <button type="button" class="backgroundPicture bigButton" id="joinGameButton"><span class="buttonText orangeText">JOIN GAME</span></button>
+                <button type="button" class="backgroundPicture bigButton" id="loginAndRegisterButton"><span class="buttonText orangeText">SIGN IN/UP</span></button>
+                <button type="button" class="backgroundPicture bigButton" id="highscoreButton"><span class="buttonText orangeText">HIGHSCORES</span></button>
+                <button type="button" class="btn" id="interactionsButton"></button>
             </div>
             <div id="menuOptions">
                 <div id="loginAndRegister">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div id="roomCodeScreen"></div>
-                <button type="button" class="btn" id="returnToMainMenuButton" onClick = "showMainMenu()">MAIN MENU</button>
+                <button type="button" class="backgroundPicture smallButton" id="returnToMainMenuButton" onClick = "showMainMenu()"><span class="grayText buttonText">MAIN MENU</span></button>
             </div>
         </div>
     </div>
@@ -90,10 +90,10 @@
         <img src="./assets/images/buttons/enterButton.png" id="enterButton">
     </div>
     <div id="interactionMenu">
-        <button type="button" class="btn" id="bragInteraction" onClick = "selectInteraction('brag')">brag</button>
-        <button type="button" class="btn" id="greetInteraction" onClick = "selectInteraction('greet')">greet</button>
-        <button type="button" class="btn" id="byeInteraction" onClick = "selectInteraction('bye')">bye</button>
-        <button type="button" class="btn" id="complainInteraction" onClick = "selectInteraction('complain')">complain</button>
+        <button type="button" class="backgroundPicture smallButton interactionButton" id="bragInteraction" onClick = "selectInteraction('brag')"><span class="buttonText grayText">brag</span></button>
+        <button type="button" class="backgroundPicture smallButton interactionButton" id="greetInteraction" onClick = "selectInteraction('greet')"><span class="buttonText grayText">greet</span></button>
+        <button type="button" class="backgroundPicture smallButton interactionButton" id="byeInteraction" onClick = "selectInteraction('bye')"><span class="buttonText grayText">bye</span></button>
+        <button type="button" class="backgroundPicture smallButton interactionButton" id="complainInteraction" onClick = "selectInteraction('complain')"><span class="buttonText grayText">complain</span></button>
     </div>
     <div id="helpWindow"></div>
     <canvas id ="canvas" width="500", height="500"></canvas>

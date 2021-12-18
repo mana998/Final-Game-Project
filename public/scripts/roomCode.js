@@ -15,10 +15,10 @@ function createRoomCodeScreen() {
         $('#roomCodeScreen').append(`
             <h1 class="gameTitle">ENTER ROOM CODE:</h1>
             <div class='' id="joinRoomToPlay">
-                <form>
-                    <input type="text" placeholder="CODE" id="codeInput">
-                </form>
-                <button type="button" class="btn" onClick="joinGame()" id="joinGameButtonAFterCodeInput">JOIN GAME</button>
+            <form>
+                <div><input class="inputBigButton backgroundPicture bigButton" type="text" placeholder="CODE" id="codeInput"></div>
+            </form>
+                <button type="button" class="backgroundPicture bigButton" onClick="joinGame()" id="joinGameButtonAfterCodeInput"><span class="buttonText orangeText">JOIN GAME</span></button>
             </div>
         `);
     } else {

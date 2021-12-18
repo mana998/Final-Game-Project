@@ -37,10 +37,12 @@ function createUsernameScreen() {
           <h1 class="gameTitle" id = "displayGameCode"></h1>
           <div id="characters"></div>
           <form>
-            <input type="text" placeholder="USERNAME" id="usernameInput" pattern="^[a-zA-Z\d]*$" title="Please, use one or more characters from: A-Z and 0-9.">
+            <div id="usernameInputDiv" class="inputBigButton bigButton backgroundPicture">
+              <input type="text" placeholder="USERNAME" class="inputButtonText brownText" id="usernameInput" pattern="^[a-zA-Z\d]*$" title="Please, use one or more characters from: A-Z and 0-9.">
+            </div>
           </form>
-          <button type="button" class="btn" id="playGameButton" disabled>PLAY GAME</button></br>
-          <button type="button" class="btn" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()">MAIN MENU</button>
+          <button type="button" class="backgroundPicture bigButton" id="playGameButton" disabled><span class="buttonText orangeText">PLAY GAME</span></button></br>
+          <button type="button" class="returnToMainMenuCharacterSelection backgroundPicture bigButton" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()"><span class="buttonText grayText">MAIN MENU</span></button>
           <div id="lobby">
             <p id="lobbyText">IN LOBBY</p>
           </div>
