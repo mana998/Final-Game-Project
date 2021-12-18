@@ -154,7 +154,7 @@ io.on('connection', (socket) => {
     const desiredRoom = io.sockets.adapter.rooms.get(data.gameCode);
     if (!desiredRoom) {
       socket.emit('wrongCode', 'Invalid room code.');
-      return; //does this work????????
+      return;
     }
 
     const uniqueUsername = games[data.gameCode].players
