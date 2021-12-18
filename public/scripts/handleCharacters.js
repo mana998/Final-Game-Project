@@ -1,6 +1,6 @@
 //Dagmara
 const numberOfCharacters = 8;
-let selectedCharacter = 0;
+let selectedCharacter;
 
 function generateCharacterSelection() {
     $('#characters').append(
