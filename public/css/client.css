@@ -366,15 +366,14 @@ canvas {
 #helpWindow {
     display: none;
     position: fixed;
-    top: 12.5%;
+    top: 2vw;
     z-index: 4;
     left: 50%;
     transform: translate(-50%, 0);
-    width: 85%;
+    width: 80vw;
     height: fit-content;
     z-index: 7;
 }
-
   
 #helpHeader { 
     text-align: center;
@@ -388,44 +387,56 @@ canvas {
     text-shadow: 0.2vw 0.2vw #2e1c19;
     color: #412824;
     text-transform: uppercase;
-    vertical-align: text-top;
-    font-size: 2em;
+    vertical-align: bottom;
+    font-size: 2vw;
+    margin-bottom: 1.5vw;
 }
 
 .helpContentText { 
     color: #574741;
     text-transform: uppercase;
-    font-size: 1.25em;
+    font-size: 1.5vw;
 }
 
 #closeHelp, #helpContent, #leftArrow, #rightArrow {
-    background-size: cover;
     border: none;
 }
 
 #closeHelp {
-    position: fixed;
-    top: 1.6em;
-    right: 0;
-    height: 7%;
-    width: 4.5%;
+    padding: 0;
+    position: relative;
+    float: right;
+    top: -2.5vw;
+    width: 3vw;
+    font-size: 1.5vw;
     color: #4c4a49;
     background-image:  url("../assets/images/buttons/grayButtonSquare.png");
 }
 
-#helpContent { 
-    padding: 1em;
+#closeButtonWrapper {
     display: inline-block;
-    height: 80%;
+    width: calc(100% + 4vw);
+    height: 5%;
+    margin: 0 auto;
+}
+
+#helpContent { 
+    display: inline-block;
     width: 100%;
     background-image: url("../assets/images/buttons/brownTableBig.png");
 }
 
+#contentText {
+    padding: 2vw;
+}
+
 #leftArrow, #rightArrow {
+    font-size: 1.5vw;
+    padding: 0;
     color: #73340e;
     float: right;
-    height: 3em;
-    width: 5%;
+    position: relative;
+    width: 4vw;
     background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
 }
 
@@ -569,10 +580,10 @@ canvas {
 }
 
 .helpImage {
-    margin-left: 2.5em;
-    height: 5em;
+    margin-left: 2.5vw;
+    height: 5vw;
     vertical-align: -webkit-baseline-middle;
-    padding: 0.5em;
+    padding: 0.5vw;
 }
 
 /*#movementExplanation {
@@ -591,17 +602,17 @@ canvas {
 
 #wasdMovementImage, #arrowsMovementImage, #coinImage, #gemImage {
     vertical-align: baseline;
-    height: 7em;
+    height: 7vw;
     margin-left: 1.5em;
 }
 
 #coinImage, #gemImage {
-    height: 8em;
+    height: 8vw;
 }
 
 .collectiblesExplanationText {
     display: inline-block;
-    width: 80%;
+    width: 60vw;
 }
 
 .gridContainer {
