@@ -38,7 +38,7 @@ function createUsernameScreen() {
           <div id="characters"></div>
           <form>
             <div id="usernameInputDiv" class="inputBigButton bigButton backgroundPicture">
-              <input type="text" placeholder="USERNAME" class="inputButtonText brownText" id="usernameInput" pattern="^[a-zA-Z\d]*$" title="Please, use one or more characters from: A-Z and 0-9.">
+              <input type="text" placeholder="USERNAME" class="inputButtonText brownText" id="usernameInput" pattern="^[a-zA-Z\d]{1,25}$" title="Please, use 1 to 25 characters from: A-Z and 0-9.">
             </div>
           </form>
           <button type="button" class="backgroundPicture bigButton" id="playGameButton" disabled><span class="buttonText orangeText">PLAY GAME</span></button></br>
