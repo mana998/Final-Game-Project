@@ -11,6 +11,7 @@ function codeScreen () {
 }
 
 function createRoomCodeScreen() {
+    console.log($('#roomCodeScreen').children().length);
     if (!$('#roomCodeScreen').children().length) {
         $('#roomCodeScreen').append(`
             <h1 class="gameTitle">ENTER ROOM CODE:</h1>
@@ -21,10 +22,8 @@ function createRoomCodeScreen() {
                 <button type="button" class="backgroundPicture bigButton" onClick="joinGame()" id="joinGameButtonAfterCodeInput"><span class="buttonText orangeText">JOIN GAME</span></button>
             </div>
         `);
-    } else {
-        $('#roomCodeScreen').css('display', 'block');
-    }
-    
+    } 
+    $('#roomCodeScreen').css('display', 'block');  
 }
 
 // Dagmara
