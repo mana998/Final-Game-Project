@@ -4,7 +4,10 @@ function codeScreen () {
     $('#panel').css('display', 'none');
     $('#highscore').css('display', 'none');
     $('#gameScreen').css('display', 'none');
+    $('#interactionForm').css('display', 'none');
     createRoomCodeScreen();  
+    $('#loggedInUserIcon').css('display', 'none');
+
 }
 
 function createRoomCodeScreen() {
@@ -15,7 +18,6 @@ function createRoomCodeScreen() {
             <form>
                 <div><input class="inputBigButton backgroundPicture bigButton" type="text" placeholder="CODE" id="codeInput"></div>
             </form>
-                <span id="wrongGameCode"></span></br>
                 <button type="button" class="backgroundPicture bigButton" onClick="joinGame()" id="joinGameButtonAfterCodeInput"><span class="buttonText orangeText">JOIN GAME</span></button>
             </div>
         `);
@@ -28,7 +30,9 @@ function createRoomCodeScreen() {
 // Dagmara
 // display message if the code is wrong
 function handleWrongCode() {
-    $('#wrongGameCode').text("Incorrect game code, the room doesn't exists");
+    if (!$("#wrongGameCode").text()) {
+        $('#joinRoomToPlay form').append("</br><span id='wrongGameCode'>Incorrect game code, the room doesn't exists</span>");
+      }
 }
 // Dagmara
 // In case the room is empty notify and return to game menu

@@ -24,21 +24,28 @@ function init() {
   $('#gameScreen').css('display', 'block');
   $('#returnToMainMenuButton').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
+  $('#interactionForm').css('display', 'none');
   createUsernameScreen();
   $('#showHelp').css('display', 'block');
+  $('#loggedInUserIcon').css('display', 'none');
 }
 
 function createUsernameScreen() {
   if (!$('#playMenu').children().length) {
       $('#playMenu').append(`
+          <h1 class="gameTitle">GAME CODE: </h1>
           <h1 class="gameTitle" id = "displayGameCode"></h1>
           <div id="characters"></div>
           <form>
-            <div id="usernameInputDiv" class="inputBigButton bigButton backgroundPicture"><input class="inputButtonText brownText"type="text" placeholder="USERNAME" id="usernameInput"></div>
+            <div id="usernameInputDiv" class="inputBigButton bigButton backgroundPicture">
+              <input type="text" placeholder="USERNAME" class="inputButtonText brownText" id="usernameInput" pattern="^[a-zA-Z\d]*$" title="Please, use one or more characters from: A-Z and 0-9.">
+            </div>
           </form>
-          <span id = "usernameMessage">Please, use one or more characters from: A-Z and 0-9.</span></br>
           <button type="button" class="backgroundPicture bigButton" id="playGameButton" disabled><span class="buttonText orangeText">PLAY GAME</span></button></br>
           <button type="button" class="returnToMainMenuCharacterSelection backgroundPicture bigButton" id="removePlayerAndGoToMainMenu" onClick = "removePlayerAndGoToMainMenu()"><span class="buttonText grayText">MAIN MENU</span></button>
+          <div id="lobby">
+            <p id="lobbyText">IN LOBBY</p>
+          </div>
       `);
       generateCharacterSelection();
       $('#usernameInput').on('change', handleCreateUsername);
@@ -49,15 +56,29 @@ function createUsernameScreen() {
   
 }
 
+//Dagmara
+function setNumberOfPlayersInTheRoom(numberOfPlayers) {
+  numberOfPlayersInTheRoom = numberOfPlayers;
+  if ($('#lobby').children().length === 2) {
+    $('#lobby p.gameTitle').remove();
+  }
+  $('#lobby').append(`<p class="gameTitle">${numberOfPlayers}/4</p>`);
+  
+}
+
 // Dagmara
 // If username is invalid the user is promped to enter different username
 function changeUsername(message = '') {
   if (message) {
-    $('#usernameMessage').text(message);
+    if ($("#usernameMessage")){
+      $("#usernameMessage").remove();
+    }
     $('#playGameButton').attr('disabled', 'true');
     return;
   }
-  $('#usernameMessage').text('Username already exists, input new username!');
+  if (!$("#usernameMessage").text()) {
+    $('#playMenu form').append('</br><span id="usernameMessage">Username already exists, input new username!</span>');
+  }
 }
 
 // Dagmara
@@ -77,7 +98,7 @@ function updatePlayer(updatedPlayer) {
 //Dagmara
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
-  leaveGame();
+  socket.on('leaveBeforeGameStarts');
   showMainMenu();
 }
 
@@ -154,6 +175,7 @@ function playersReady(players) {
   startTime = new Date().getTime();
   canvas.style.display = 'block';
   $('#loggedInUser').css('display', 'none');
+  $('#loggedInUserIcon').css('display', 'none');
   $('.container').css('border', 'none');
   $('.container-fluid').css('display', 'none');
   $('#viewBlock').css('display', 'block');
@@ -184,6 +206,7 @@ socket.on('playersReady', playersReady);
 socket.on('createPlayer', createPlayer);
 socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
+socket.on('numberOfPlayersInTheRoom', setNumberOfPlayersInTheRoom);
 
 $('#createNewGameButton').on('click', createGame);
 
