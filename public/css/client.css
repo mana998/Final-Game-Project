@@ -57,7 +57,13 @@ body {
     cursor: pointer;
     display: none;
     position: absolute;
-    right: 1%;
+    right: 1vw;
+    top: 1vw;
+}
+
+#loggedInUser {
+    display: block;
+    padding-top: 1vw;
 }
 
 #lobby {
