@@ -693,6 +693,12 @@ canvas {
 }
 
 .highscoreReturnToMainButton {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.interactionsReturnToMainButton {
     left: 50%;
     transform: translate(50%, 0);
 }
