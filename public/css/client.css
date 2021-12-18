@@ -253,6 +253,10 @@ canvas {
     filter: grayscale(0%);
 }
 
+.characterItem label.fullyDisabled:hover {
+    filter: grayscale(100%) !important;
+}
+
 #charactersContainer {
     margin: 0;
     width: 50%;
