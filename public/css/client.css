@@ -54,11 +54,11 @@ body {
     background-size: cover;
     height: 4vw;
     width: 4vw;
-    cursor: pointer;
     display: none;
     position: absolute;
     right: 1vw;
     top: 1vw;
+    border: none;
 }
 
 #loggedInUser {
