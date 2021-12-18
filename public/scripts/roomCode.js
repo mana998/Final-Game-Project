@@ -16,7 +16,7 @@ function createRoomCodeScreen() {
             <h1 class="gameTitle">ENTER ROOM CODE:</h1>
             <div class='' id="joinRoomToPlay">
             <form>
-                <div><input class="inputBigButton backgroundPicture bigButton" type="text" placeholder="CODE" id="codeInput"></div>
+                <div><input class="inputBigButton backgroundPicture bigButton brownText" type="text" placeholder="CODE" id="codeInput"></div>
             </form>
                 <button type="button" class="backgroundPicture bigButton" onClick="joinGame()" id="joinGameButtonAfterCodeInput"><span class="buttonText orangeText">JOIN GAME</span></button>
             </div>
