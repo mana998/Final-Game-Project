@@ -546,6 +546,10 @@ canvas {
     aspect-ratio: 1481/714;
 }
 
+.highscoreTable {
+    aspect-ratio: 1481/792;
+}
+
 .buttonText, .inputButtonText{
     background: none;
     border: none;
@@ -644,19 +648,20 @@ canvas {
 
 /* highscore */
 #highscoreList {
-    background-image: url("../assets/images/buttons/brownTable.png");
+    background-image: url("../assets/images/buttons/brownTableBig.png");
     background-position: center;
-    color: #574741;
     font-size: 1.5vw;
     border-radius: 0;
     margin-top: 1%;
-    background-size: cover;
     margin-left: auto;
     margin-right: auto;
     width: 75%;
 }
 #highscoreList thead {
     font-size: 1.5vw;
+}
+#highscoreList th {
+    padding: 1vw;
 }
 
 #highscoreList tbody th {
