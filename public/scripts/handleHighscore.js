@@ -38,7 +38,7 @@ async function displayAllHighscores() {
           visiblePageNumbers = result.pages;
         }
         for (let page = currentPage; page <= visiblePageNumbers; page ++) {
-          $('#pages').append(`<button onclick = "changePage(${page})">${page}</button>`);
+          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page})"><span class="buttonText orangeText">${page}</span></button>`);
         } 
         break;
       case result.pages:
@@ -47,12 +47,12 @@ async function displayAllHighscores() {
           startPage  = 1;
         }
         for (let page = startPage; page <= result.pages; page ++) {
-          $('#pages').append(`<button onclick = "changePage(${page})">${page}</button>`);
+          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page})"><span class="buttonText orangeText">${page}</span></button>`);
         }
         break;
       default:
         for (let page = currentPage; page < currentPage+visiblePageNumbers; page ++) {
-          $('#pages').append(`<button onclick = "changePage(${page-1})">${page-1}</button>`);
+          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page-1})"><span class="buttonText orangeText">${page-1}</span></button>`);
         }
     }
       

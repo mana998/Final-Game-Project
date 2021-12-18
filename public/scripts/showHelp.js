@@ -1,7 +1,7 @@
 function showHelpWindow() {
   $('#helpWindow').css('display', 'block');
   $('.container-fluid').css('filter', 'blur(0.5em)');
-  $('.container-fluid').css('transform', 'scale(1.1)');
+  $('.container-fluid').css('transform', 'scale(1.5)');
   //$('div').not('#helpWindow').css('filter', 'blur(0.2em)');
   if ($('#helpWindow').is(':empty')) {
     showInitialWindow();
@@ -10,17 +10,21 @@ function showHelpWindow() {
 }
 
 function showInitialWindow() {
-  $('#helpWindow').append(`<h1 id='helpHeader'>Placeholder</h1>`);
-  $('#helpWindow').append(`<button id='closeHelp'>X</button>`);
-  $('#helpWindow').append(`<div id='helpContent'>content</div>`);
-  $('#helpWindow').append(`<button id='rightArrow'>-&gt;</button>`);
-  $('#helpWindow').append(`<button id='leftArrow'>&lt;-</button>`);
+  let content = `<h1 id='helpHeader'>Placeholder</h1>`;
+  content += `<div id='helpContent' class="backgroundPicture bigTable">`;
+  content +=`<button id='closeHelp' class="backgroundPicture squareButton"><span class="buttonText grayText">X</span></button>`;
+  content += `<div id="contentText"></div>`;
+  content += `</div>`;
+  content += `<button id='rightArrow' class="backgroundPicture squareButton"><span class="buttonText orangeText">-&gt;</span></button>`;
+  content += `<button id='leftArrow' class="backgroundPicture squareButton"><span class="buttonText orangeText">&lt;-</span></button>`;
+  
+  $('#helpWindow').append(content);
   $('#closeHelp').on('click', closeHelpWindow);
 }
 
 function closeHelpWindow() {
   //empty content
-  $('#helpContent').empty();
+  $('#contentText').empty();
   //close window
   $('#helpWindow').css('display', 'none');
   $('.container-fluid').css('filter', 'blur(0em)');
@@ -29,18 +33,18 @@ function closeHelpWindow() {
 
 function showBasicInfo() {
   $('#helpHeader').text("Basic Info");
-  $('#helpContent').empty();
+  $('#contentText').empty();
   $('#leftArrow').attr('onclick', "showTraps()");
   $('#rightArrow').attr('onclick', "showControls()");
-  $('#helpContent').append(`<h2 class='helpContentHeader'>Goal</h2>`);
-  $('#helpContent').append(`<img class="helpImage" id="chestImage" src="../assets/images/helpScreen/chest.png">`);
-  $('#helpContent').append(`<p class='helpContentText'>goal of this game is to collect as many coins as possible
+  $('#contentText').append(`<h2 class='helpContentHeader'>Goal</h2>`);
+  $('#contentText').append(`<img class="helpImage" id="chestImage" src="../assets/images/helpScreen/chest.png">`);
+  $('#contentText').append(`<p class='helpContentText'>goal of this game is to collect as many coins as possible
   and get to the goal as fast as possible. You will get
   additional score based on your time. Goal is represented
   as a chest of gold.</p>`);
-  $('#helpContent').append(`<h2 class='helpContentHeader'>Health</h2>`);
-  $('#helpContent').append(`<img class="helpImage" id="healthImage" src="../assets/images/helpScreen/healthHelp.png">`);
-  $('#helpContent').append(`<p class='helpContentText'>you need to be careful. There are multiple traps placed
+  $('#contentText').append(`<h2 class='helpContentHeader'>Health</h2>`);
+  $('#contentText').append(`<img class="helpImage" id="healthImage" src="../assets/images/helpScreen/healthHelp.png">`);
+  $('#contentText').append(`<p class='helpContentText'>you need to be careful. There are multiple traps placed
   across the maze that will hurt you. You can see your
   remaining health in the top left corner.
   If your health reaches 0, you cannot continue the game</p>`);
@@ -48,38 +52,38 @@ function showBasicInfo() {
 
 function showControls() {
   $('#helpHeader').text("Controls");
-  $('#helpContent').empty();
+  $('#contentText').empty();
   $('#leftArrow').attr('onclick', "showBasicInfo()");
   $('#rightArrow').attr('onclick', "showCollectibles()");
-  $('#helpContent').append(`<div id="movementExplanationAll"><div id="movementExplanationText"><h2 class='helpContentHeader' id="movementExplanationHeader">Movement</h2>
+  $('#contentText').append(`<div id="movementExplanationAll"><div id="movementExplanationText"><h2 class='helpContentHeader' id="movementExplanationHeader">Movement</h2>
   <p class='helpContentText' id="movementExplanation">you can choose between using
   arrows or WASD</p></div>
   <img class="helpImage" id="wasdMovementImage" src="../assets/images/helpScreen/controlsWASD.png">
   <img class="helpImage" id="arrowsMovementImage" src="../assets/images/helpScreen/controlsArrows.png"></div>`);
-  $('#helpContent').append(`<h2 class='helpContentHeader'>Player Interaction</h2>`);
-  $('#helpContent').append(`<img class="helpImage" id="interactionImage" src="../assets/images/helpScreen/interactionButton.png">`);
-  $('#helpContent').append(`<p class='helpContentText'>when you are close to another player, this small
+  $('#contentText').append(`<h2 class='helpContentHeader'>Player Interaction</h2>`);
+  $('#contentText').append(`<img class="helpImage" id="interactionImage" src="../assets/images/helpScreen/interactionButton.png">`);
+  $('#contentText').append(`<p class='helpContentText'>when you are close to another player, this small
   icon will pop up. By pressing enter and clicking on one
   of the categories, you can answer them.</p>`);
-  $('#helpContent').append(`<h2 class='helpContentHeader'>Sound</h2>`);
-  $('#helpContent').append(`<img class="helpImage" id="soundImage" src="../assets/images/helpScreen/soundHelp.png">`);
-  $('#helpContent').append(`<p class='helpContentText'>To disable music or sound effects, click on these icons
+  $('#contentText').append(`<h2 class='helpContentHeader'>Sound</h2>`);
+  $('#contentText').append(`<img class="helpImage" id="soundImage" src="../assets/images/helpScreen/soundHelp.png">`);
+  $('#contentText').append(`<p class='helpContentText'>To disable music or sound effects, click on these icons
   in top right corner.</p>`);
 };
 
 function showCollectibles() {
   $('#helpHeader').text("Collectibles");
-  $('#helpContent').empty();
+  $('#contentText').empty();
   $('#leftArrow').attr('onclick', "showControls()");
   $('#rightArrow').attr('onclick', "showGemTypes()");
-  $('#helpContent').append(`<p class='helpContentText'>in this game, there are multiple collectibles. you collect
+  $('#contentText').append(`<p class='helpContentText'>in this game, there are multiple collectibles. you collect
   them by going through them.</p>`);
-  $('#helpContent').append(`<div class="collectiblesExplanationAll"><div class="collectiblesExplanationText"><h2 class='helpContentHeader' id="coinsHeader">Coins</h2>
+  $('#contentText').append(`<div class="collectiblesExplanationAll"><div class="collectiblesExplanationText"><h2 class='helpContentHeader' id="coinsHeader">Coins</h2>
   <p class='helpContentText' id="movementExplanation">Each coin will add certain amount to your score. 
   Collect as many as you can to be in top 100.</p></div>
   <img class="helpImage" id="coinImage" src="../assets/images/helpScreen/coin.png">
   </div>`);
-  $('#helpContent').append(`<div class="collectiblesExplanationAll"><div class="collectiblesExplanationText"><h2 class='helpContentHeader' id="gemsHeader">Gems</h2>
+  $('#contentText').append(`<div class="collectiblesExplanationAll"><div class="collectiblesExplanationText"><h2 class='helpContentHeader' id="gemsHeader">Gems</h2>
   <p class='helpContentText' id="movementExplanation">Each gem has 50/50 chance to either affect you 
   or all other players. You can encounter
   different types of gems, but you won't know 
@@ -91,7 +95,7 @@ function showCollectibles() {
 
 function showGemTypes() {
   $('#helpHeader').text("Gem Types");
-  $('#helpContent').empty();
+  $('#contentText').empty();
   $('#leftArrow').attr('onclick', "showCollectibles()");
   $('#rightArrow').attr('onclick', "showTraps()");
   let block = `<div class="gridContainer">`;
@@ -113,12 +117,12 @@ function showGemTypes() {
   location on the map</p>`;
   block += `<p class='helpContentText gridItem'>increase or decrease your
   speed for certain amount of time</p></div>`;
-  $('#helpContent').append(block);
+  $('#contentText').append(block);
 };
 
 function showTraps() {
   $('#helpHeader').text("Traps");
-  $('#helpContent').empty();
+  $('#contentText').empty();
   $('#leftArrow').attr('onclick', "showGemTypes()");
   $('#rightArrow').attr('onclick', "showBasicInfo()");
   let traps = `<h2 class='helpContentHeader'>Moving Traps</h2>`;
@@ -126,9 +130,9 @@ function showTraps() {
   traps += `<p class='helpContentText'>These traps are moving at set speed Across set tiles. 
   Look closely and time your next move to avoid them.</p>`;
   traps += `<h2 class='helpContentHeader'>On and Off Traps</h2>`;
-  traps += `<p class='helpContentText'>These traps have 2 states. On and OFF. They will hurt you
-  only when they are in their On state. Observer them and
-  wait for the opportunity to run across them.</p>`;
+  traps += `<p class='helpContentText'>There are 2 trap states (On, OFF). These traps hurt you
+  only in their "On" state. Observe them and
+  wait for the opportunity to pass them.</p>`;
   traps += `<div class="gridContainer">`;
     traps += `<h2 class='helpContentHeader gridItem onOffHeader'>On</h2>`;
     traps += `<h2 class='helpContentHeader gridItem onOffHeader'>Off</h2>`;
@@ -139,5 +143,5 @@ function showTraps() {
       traps += `<img class="helpImage trapImage" src="../assets/images/helpScreen/offTrap.png">`;
       traps += `</div>`;
   traps += `</div>`;
-  $('#helpContent').append(traps);
+  $('#contentText').append(traps);
 };

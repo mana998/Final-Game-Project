@@ -297,7 +297,7 @@ function displayText(text, x, y, align = 'center', color = 'white', size = 10, f
 function handleChangePlayerMessage(message) {
   player.message = message;
   updateServerPlayer();
-  displayMessageCount++;
+  displayMessageCount = 0;
   $('#interactionMenu').css('display', 'none');
 }
 

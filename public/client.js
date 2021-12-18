@@ -33,8 +33,7 @@ function init() {
 function createUsernameScreen() {
   if (!$('#playMenu').children().length) {
       $('#playMenu').append(`
-          <h1 class="gameTitle">GAME CODE: </h1>
-          <h1 class="gameTitle" id = "displayGameCode"></h1>
+          <h1 class="gameTitle">GAME CODE: <span class="gameTitle" id = "displayGameCode"></span></h1>
           <div id="characters"></div>
           <form>
             <div id="usernameInputDiv" class="inputBigButton bigButton backgroundPicture">
@@ -103,6 +102,9 @@ function removePlayerAndGoToMainMenu() {
 // starts the game for the user,
 // changes it's state to ready to play and if all players are ready starts the game
 function playGame() {
+  if (!selectedCharacter) {
+    selectCharacter(0)
+  }
   if (selectedCharacter > 3) {
     player.img.currentRow = 4;
     player.img.startRow = 4;
@@ -113,6 +115,9 @@ function playGame() {
     player.img.startColumn = player.img.currentColumn
   }
   player.readyToPlay = true;
+  //disable character selection
+  $('.characterLabel').not(`#characterLabel-${selectedCharacter}`).addClass('fullyDisabled');
+  $('.characterLabel').removeAttr('onClick');
   $('#usernameInput').attr('disabled', 'true');
   updateServerPlayer();
   const gameCode = $('#displayGameCode').text();

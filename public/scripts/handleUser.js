@@ -22,7 +22,7 @@ function createLoginAndgisterScreen() {
           <div id="repeatPasswordDiv"class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"></div>
       </form>
       <div class="buttonControl">
-          <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()"><span class="buttonText orangeText">LOGIN</span></button>
+          <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()"><span id="loginButtonText" class="buttonText orangeText">LOGIN</span></button>
           <button type="button" id="registerButton" class="backgroundPicture smallButton" onClick="activateRegistartion()"><span class="buttonText orangeText">REGISTER</span></button>
       </div> 
       <p id="message"></p>
@@ -48,6 +48,7 @@ function showMainMenu() {
   if ($('#loggedInUser').text() !== '') {
     $('#loggedInUserIcon').css('display', 'block');
   }
+  $('#showHelp').css('display', 'none');
   $('returnToMainMenuButton').removeClass('highscoreReturnToMainButton');
   $('#returnToMainMenuButton').css('display', 'block');
 }
@@ -66,7 +67,7 @@ function activateRegistartion() {
 function changeButtonToLogout() {
   $('#loginAndRegister').css('display', 'none');
   $('#loginAndRegisterHeadder').text('LOGOUT');
-  $('#loginButton').text('LOGUT');
+  $('#loginButtonText').text('LOGOUT');
   $('#loginButton').attr('onclick', 'logout()');
 }
 
@@ -75,7 +76,7 @@ function changeButtonToLogout() {
 function changeButtonToLogin() {
   $('#repeatPasswordDiv').css('display', 'none');
   $('#loginAndRegisterHeadder').text('LOGIN');
-  $('#loginButton').text('LOGIN');
+  $('#loginButtonText').text('LOGIN');
   $('#loginButton').attr('onclick', 'login()');
   $('#registerButton').attr('onclick', 'activateRegistartion()');
 }

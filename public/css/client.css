@@ -20,10 +20,11 @@ body {
 
 .gameTitle {
     text-shadow: 0.2vw 0.2vw #2e1c19;
-    font-size: 5vw;
+    font-size: 4vw;
     padding-bottom: 1vw; 
     color: #412824;
     margin: 0;
+    padding-top: 1vw;
 }
 
 /* main menu*/
@@ -53,10 +54,16 @@ body {
     background-size: cover;
     height: 4vw;
     width: 4vw;
-    cursor: pointer;
     display: none;
     position: absolute;
-    right: 1%;
+    right: 1vw;
+    top: 1vw;
+    border: none;
+}
+
+#loggedInUser {
+    display: block;
+    padding-top: 1vw;
 }
 
 #lobby {
@@ -92,7 +99,7 @@ body {
     width: 37%;
     margin: 0 auto;
     position: relative;
-    top: 15%;
+    top: 13vw;
     opacity: 0.5;
     box-shadow: 0 0 1em 0.1em #00000048;
     text-align: center;
@@ -102,7 +109,8 @@ body {
     position: fixed;
     left: 50%;
     transform: translate(-50%, 0);
-    font-size: 2em;
+    font-size: 3vw;
+    top:7vw
 }
 
 #currentScoresTable {
@@ -115,7 +123,7 @@ body {
 
 
 .highscoreText {
-    font-size: 0.75em;
+    font-size: 1vw;
     text-shadow: 0.1vw 0.1vw #2e1c19;
     color: #412824;
 }
@@ -216,7 +224,7 @@ canvas {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
     width: 22% !important;
     border:none;
-    font-size: 110%;
+    font-size: 1.5vw;
 }
 
 /* character select*/
@@ -244,6 +252,10 @@ canvas {
 
 .characterItem label:hover {
     filter: grayscale(0%);
+}
+
+.characterItem label.fullyDisabled:hover {
+    filter: grayscale(100%) !important;
 }
 
 #charactersContainer {
@@ -292,8 +304,8 @@ canvas {
     width: 100%;
     text-align: center;
     top: 5em;
-    font-size: 2em;
-    color: white;
+    font-size: 2vw;
+    color: rgb(190, 190, 190);
     z-index: 4;
     left: 50%;
     transform: translate(-50%, 0);
@@ -331,7 +343,7 @@ canvas {
 #loginButton, #registerButton, #joinGameButtonAfterCodeInput, #playGameButton {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
-    font-size: 140%;
+    font-size: 2vw;
     margin-top: 1%;
     width: 41%;
     border: none;
@@ -342,12 +354,12 @@ canvas {
     margin: 0 auto;
 }
 
-#returnToMainMenuButton, #removePlayerAndGoToMainMenu, #playGameButton {
+#returnToMainMenuButton, #removePlayerAndGoToMainMenu {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
     background-position: center;
-    font-size: 120%;
+    font-size: 2vw;
     margin-top: 1%;
-    width: 20.5%;
+    width: 20vw;
     border: none;
 }
 
@@ -365,21 +377,20 @@ canvas {
 #helpWindow {
     display: none;
     position: fixed;
-    top: 12.5%;
+    top: 2vw;
     z-index: 4;
     left: 50%;
     transform: translate(-50%, 0);
-    width: 85%;
+    width: 80vw;
     height: fit-content;
     z-index: 7;
 }
-
   
 #helpHeader { 
     text-align: center;
     text-shadow: 0.2vw 0.2vw #2e1c19;
     color: #412824;
-    font-size: 3em;
+    font-size: 5vw;
 }
 
 .helpContentHeader { 
@@ -387,44 +398,58 @@ canvas {
     text-shadow: 0.2vw 0.2vw #2e1c19;
     color: #412824;
     text-transform: uppercase;
-    vertical-align: text-top;
-    font-size: 2em;
+    vertical-align: bottom;
+    font-size: 2vw;
+    margin-bottom: 1.5vw;
 }
 
 .helpContentText { 
     color: #574741;
     text-transform: uppercase;
-    font-size: 1.25em;
+    font-size: 1.5vw;
 }
 
 #closeHelp, #helpContent, #leftArrow, #rightArrow {
-    background-size: cover;
     border: none;
 }
 
 #closeHelp {
-    position: fixed;
-    top: 1.6em;
-    right: 0;
-    height: 7%;
-    width: 4.5%;
+    padding: 0;
+    position: relative;
+    float: right;
+    top: -2.5vw;
+    width: 3vw;
+    font-size: 1.5vw;
     color: #4c4a49;
     background-image:  url("../assets/images/buttons/grayButtonSquare.png");
 }
 
-#helpContent { 
-    padding: 1em;
+#closeButtonWrapper {
     display: inline-block;
-    height: 80%;
+    width: calc(100% + 4vw);
+    height: 5%;
+    margin: 0 auto;
+}
+
+#helpContent { 
+    display: inline-block;
     width: 100%;
     background-image: url("../assets/images/buttons/brownTableBig.png");
 }
 
+#contentText {
+    padding: 2vw;
+    width: 76vw;
+    height: 34vw;
+}
+
 #leftArrow, #rightArrow {
+    font-size: 1.5vw;
+    padding: 0;
     color: #73340e;
     float: right;
-    height: 3em;
-    width: 5%;
+    position: relative;
+    width: 4vw;
     background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
 }
 
@@ -473,6 +498,12 @@ canvas {
     background-size: contain;
     color: #73340e;
     border: none;
+    padding: 0;
+}
+
+#resetAll {
+    top: 1.3vw;
+    width: 20vw !important;
 }
 
 .orangeText {
@@ -490,7 +521,7 @@ canvas {
 
 #resetAll {
     right: 12.5%;
-    font-size: 110%;
+    font-size: 2vw;
 }
 
 #interactionForms {
@@ -534,6 +565,10 @@ canvas {
     aspect-ratio: 1481/714;
 }
 
+.highscoreTable {
+    aspect-ratio: 1481/792;
+}
+
 .buttonText, .inputButtonText{
     background: none;
     border: none;
@@ -541,6 +576,7 @@ canvas {
     padding-right: 2%;
     width: 96%;
     height: 100%;
+    padding-bottom: 0;
 }
 
 .buttonText {
@@ -568,10 +604,10 @@ canvas {
 }
 
 .helpImage {
-    margin-left: 2.5em;
-    height: 5em;
+    margin-left: 2.5vw;
+    height: 5vw;
     vertical-align: -webkit-baseline-middle;
-    padding: 0.5em;
+    padding: 0.5vw;
 }
 
 /*#movementExplanation {
@@ -590,17 +626,17 @@ canvas {
 
 #wasdMovementImage, #arrowsMovementImage, #coinImage, #gemImage {
     vertical-align: baseline;
-    height: 7em;
+    height: 7vw;
     margin-left: 1.5em;
 }
 
 #coinImage, #gemImage {
-    height: 8em;
+    height: 8vw;
 }
 
 .collectiblesExplanationText {
     display: inline-block;
-    width: 80%;
+    width: 60vw;
 }
 
 .gridContainer {
@@ -630,25 +666,22 @@ canvas {
     opacity: 0.5;
 }
 
-#menuScreen {
-    transform: scale(0.9);
-}
-
 /* highscore */
 #highscoreList {
-    background-image: url("../assets/images/buttons/brownTable.png");
+    background-image: url("../assets/images/buttons/brownTableBig.png");
     background-position: center;
-    color: #574741;
     font-size: 1.5vw;
     border-radius: 0;
     margin-top: 1%;
-    background-size: cover;
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    width: 70%;
 }
 #highscoreList thead {
     font-size: 1.5vw;
+}
+#highscoreList th {
+    padding: 1vw;
 }
 
 #highscoreList tbody th {
@@ -664,7 +697,7 @@ canvas {
 #pagesContainer {
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    width: 70%;
 }
 
 #pages {
@@ -680,4 +713,12 @@ canvas {
     height: 4vw;
     width: 4vw;
     font-size: 1.5vw;
+}
+
+.col-3 {
+    width: 15% !important;
+}
+
+button:hover, input:hover, input:focus {
+    filter: brightness(85%);
 }
