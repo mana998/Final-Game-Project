@@ -69,16 +69,13 @@ function setNumberOfPlayersInTheRoom(numberOfPlayers) {
 // Dagmara
 // If username is invalid the user is promped to enter different username
 function changeUsername(message = '') {
+  if ($("#usernameMessage")){
+    $("#usernameMessage").remove();
+  }
   if (message) {
-    if ($("#usernameMessage")){
-      $("#usernameMessage").remove();
-    }
-    $('#playGameButton').attr('disabled', 'true');
-    return;
+    $('#playMenu form').append('<span id="usernameMessage">Username already exists, input new username!</span>');
   }
-  if (!$("#usernameMessage").text()) {
-    $('#playMenu form').append('</br><span id="usernameMessage">Username already exists, input new username!</span>');
-  }
+
 }
 
 // Dagmara

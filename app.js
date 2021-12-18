@@ -134,13 +134,13 @@ io.on('connection', (socket) => {
     const data = initialData;
     const usernameValid = Utils.checkStringCharacters(data.username);
     if (!usernameValid) {
-      socket.emit('usernameDeclined', 'Please, use one or more characters from: A-Z and 0-9.');
+      socket.emit('usernameDeclined');
       return;
     }
     const uniqueUsername = games[playersRoomTable[socket.id]].players
       .every((player) => player.username !== data.username);
     if (!uniqueUsername) {
-      socket.emit('usernameDeclined');
+      socket.emit('usernameDeclined', 'Username is already taken!');
       return;
     }
     data.player.username = data.username;
@@ -150,10 +150,18 @@ io.on('connection', (socket) => {
   }
 
   //Dagmara
-  function handleJoinGame(gameCode) {
-    const desiredRoom = io.sockets.adapter.rooms.get(gameCode);
+  function handleJoinGame(data) {
+    const desiredRoom = io.sockets.adapter.rooms.get(data.gameCode);
     if (!desiredRoom) {
-      socket.emit('wrongCode');
+      socket.emit('wrongCode', 'Invalid room code.');
+      return;
+    }
+
+    const uniqueUsername = games[data.gameCode].players
+    .every((player) => player.username !== data.logged);
+
+    if (!uniqueUsername) {
+      socket.emit('wrongCode', 'Player with your username is already in the game!');
       return;
     }
 
@@ -165,13 +173,13 @@ io.on('connection', (socket) => {
       socket.emit('FullRoom');
       return;
     }
-    playersRoomTable[socket.id] = gameCode;
-    socket.emit('roomName', gameCode);
-    socket.join(gameCode);
+    playersRoomTable[socket.id] = data.gameCode;
+    socket.emit('roomName', data.gameCode);
+    socket.join(data.gameCode);
     //send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
     io.sockets.in(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
-    socket.emit('createPlayer', socket.id);
+    socket.emit('createPlayer', socket.id); 
   }
 
   function startGameInterval(gameCode, gameState) {

@@ -1,4 +1,6 @@
 function codeScreen () {
+    $('#codeInput').val('');
+    $('#wrongGameCode').remove();
     $('#loginAndRegister').css('display', 'none');
     $('#menuOptions').css('display', 'block');
     $('#panel').css('display', 'none');
@@ -27,9 +29,9 @@ function createRoomCodeScreen() {
 
 // Dagmara
 // display message if the code is wrong
-function handleWrongCode() {
+function handleWrongCode(message) {
     if (!$("#wrongGameCode").text()) {
-        $('#joinRoomToPlay form').append("</br><span id='wrongGameCode'>Incorrect game code, the room doesn't exists</span>");
+        $('#joinRoomToPlay form').append(`</br><span id='wrongGameCode'>${message}</span>`);
       }
 }
 // Dagmara
@@ -48,9 +50,14 @@ function handleFullRoom() {
 
 // Dagmara
 // if the room code is valid it allows player to join existing game
-function joinGame() {
-    const code = $('#codeInput').val();
-    socket.emit('joinGame', code);
+async function joinGame() {
+    const gameCode = $('#codeInput').val();
+    const result = await getSession();
+    if (result.username && result.playerId) {
+        socket.emit('joinGame', {gameCode:gameCode, logged:result.username});
+    } else {
+        socket.emit('joinGame', {gameCode});
+    } 
 }
 
 socket.on('EmptyRoom', handleEmptyRoom);
