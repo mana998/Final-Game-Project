@@ -48,6 +48,7 @@ function showMainMenu() {
   if ($('#loggedInUser').text() !== '') {
     $('#loggedInUserIcon').css('display', 'block');
   }
+  $('#showHelp').css('display', 'none');
   $('returnToMainMenuButton').removeClass('highscoreReturnToMainButton');
 }
 
