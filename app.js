@@ -192,8 +192,6 @@ io.on('connection', (socket) => {
   function startGame(gameCode) {
     const gameState = games[gameCode];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
-    console.log('allPlayerrsReadyToPlay');
-    console.log(allPlayerrsReadyToPlay);
     if (allPlayerrsReadyToPlay === gameState.players.length) {
       //send map to each player
       const gemTypes = [];
