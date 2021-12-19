@@ -61,7 +61,7 @@ function setNumberOfPlayersInTheRoom(numberOfPlayers) {
   if ($('#lobby').children().length === 2) {
     $('#lobby p.gameTitle').remove();
   }
-  $('#lobby').append(`<p class="gameTitle">${numberOfPlayers}/4</p>`);
+  $('#lobby').append(`<p id = "lobbyCount" class="gameTitle">${numberOfPlayers}/4</p>`);
   
 }
 
@@ -94,7 +94,8 @@ function updatePlayer(updatedPlayer) {
 //Dagmara
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
-  socket.on('leaveBeforeGameStarts');
+  socket.emit('updateLobby', Number($('#lobbyCount').text().split('/')[0]) - 1);
+  leaveGame();
   showMainMenu();
 }
 
