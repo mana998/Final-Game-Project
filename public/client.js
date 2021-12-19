@@ -181,6 +181,14 @@ function playersReady(players) {
   $('#loggedInUserIcon').css('display', 'none');
   $('.container').css('border', 'none');
   $('.container-fluid').css('display', 'none');
+  //handle game difficulty 
+  if (map.difficulty === 0) {
+    //change to easy mode
+    $('#viewBlock').css('background', 'radial-gradient(circle at 50% 50%, transparent 200px, black calc(640px - 32px))');
+  } else {
+    //change to hard mode
+    $('#viewBlock').css('background', 'radial-gradient(circle at 50% 50%,transparent 100px,black calc(320px - 32px))');
+  }
   $('#viewBlock').css('display', 'block');
   backgroundMusic.play();
   $('#backgroundMusicControl').css('display', 'block');

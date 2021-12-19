@@ -79,7 +79,8 @@ io.on('connection', (socket) => {
     // import map class
     // eslint-disable-next-line global-require
     const { GameMap } = require('./public/models/GameMap');
-    const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
+    //const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
+    const mapFile = `./private/assets/maps/map0.json`;
     const map = new GameMap('', '', '', '', '', difficulty);
     // eslint-disable-next-line global-require
     map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require

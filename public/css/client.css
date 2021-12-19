@@ -146,6 +146,10 @@ body {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
 }
 
+canvas {
+    background: url('../assets/images/game/wall.png') repeat;
+}
+
 #viewBlock {
     display: none;
     position: fixed;
