@@ -151,6 +151,9 @@ async function register() {
   const repeatPassword = $('#repeatPassword').val();
   if (password !== repeatPassword) {
     invalidInput('Passwords have to match. Try again');
+    $('#loginMessage').css('padding-top', '0');
+    resetLoginFields();
+    $('#repeatPassword').val('');
     return;
   }
   const response = await fetch('/api/users/register', {
@@ -168,6 +171,7 @@ async function register() {
   } else {
     resetLoginFields();
     invalidInput(result.message);
+    $('#loginMessage').css('padding-top', '0');
   }
 }
 
