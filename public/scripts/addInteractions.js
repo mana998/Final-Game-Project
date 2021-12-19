@@ -82,6 +82,7 @@ async function showInteractions(playerId) {
   $('#gameScreen').css('display', 'none');
   $('#highscore').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
+  $('#difficultySelection').css('display', 'none');
   $('#returnToMainMenuButton').addClass('interactionsReturnToMainButton');
   createInteractionsForm(playerId);
 }

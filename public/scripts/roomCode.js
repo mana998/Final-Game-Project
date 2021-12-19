@@ -7,6 +7,7 @@ function codeScreen () {
     $('#highscore').css('display', 'none');
     $('#gameScreen').css('display', 'none');
     $('#interactionForm').css('display', 'none');
+    $('#difficultySelection').css('display', 'none');
     createRoomCodeScreen();  
     $('#loggedInUserIcon').css('display', 'none');
 

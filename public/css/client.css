@@ -340,7 +340,7 @@ canvas {
     color: #574741;
 }
 
-#loginButton, #registerButton, #joinGameButtonAfterCodeInput, #playGameButton {
+#loginButton, #registerButton, #joinGameButtonAfterCodeInput, #playGameButton, .difficultyButton {
     background-image: url("../assets/images/buttons/orangeButtonSmall.png");
     background-position: center;
     font-size: 2vw;
@@ -348,6 +348,16 @@ canvas {
     width: 41%;
     border: none;
 }
+.difficultyButton {
+    width: 20vw !important;
+    margin: 1% auto 0;
+    display: block;
+}
+
+/*#difficultyButtons {
+    margin: 0 auto;
+    width: 50%;
+}*/
 
 .buttonControl {
     width: 45%;

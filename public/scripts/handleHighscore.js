@@ -8,6 +8,7 @@ function showHighscores() {
   $('#gameScreen').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
   $('#interactionForm').css('display', 'none');
+  $('#difficultySelection').css('display', 'none');
   $('#returnToMainMenuButton').addClass('highscoreReturnToMainButton');
 }
 

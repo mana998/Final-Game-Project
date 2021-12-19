@@ -25,6 +25,7 @@ function init() {
   $('#returnToMainMenuButton').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
   $('#interactionForm').css('display', 'none');
+  $('#difficultySelection').css('display', 'none');
   createUsernameScreen();
   $('#showHelp').css('display', 'block');
   $('#loggedInUserIcon').css('display', 'none');
@@ -209,6 +210,4 @@ socket.on('createPlayer', createPlayer);
 socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
 socket.on('numberOfPlayersInTheRoom', setNumberOfPlayersInTheRoom);
-
-$('#createNewGameButton').on('click', createGame);
 
