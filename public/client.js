@@ -95,7 +95,7 @@ function updatePlayer(updatedPlayer) {
 //removes player from game object and changes interface back to main menu
 function removePlayerAndGoToMainMenu() {
   socket.emit('updateLobby', Number($('#lobbyCount').text().split('/')[0]) - 1);
-  leaveGame();
+  socket.emit('removePlayerAndGoToMainMenu');
   showMainMenu();
 }
 

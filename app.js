@@ -247,6 +247,7 @@ io.on('connection', (socket) => {
   function handlePlayerDisconnect() {
     if (games[playersRoomTable[socket.id]]) {
       // remove player from room
+      socket.leave(playersRoomTable[socket.id]);
       games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter((player) => player.socketId !== socket.id);
       // empty room
       // remove data about room
@@ -321,6 +322,7 @@ function updateLobby(currentNumber) {
   socket.on('getRandomMessage', handleGetRandomMessage);
   socket.on('savePlayer', handleSavePlayer);
   socket.on('updateLobby', updateLobby);
+  socket.on('removePlayerAndGoToMainMenu', handlePlayerDisconnect);
 });
 
 const PORT = process.env.PORT || 8080;
