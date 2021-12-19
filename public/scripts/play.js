@@ -273,7 +273,7 @@ function movePlayer(e) {
 
 //Marianna
 function handleMapCreated(data) {
-  map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps);
+  map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps, data.gameMap.difficulty);
   for (let i = 0; i < data.gameMap.coins.length; i++) {
     map.coins[i] = new Coin(0, 0, 32, 32, data.gameMap.coins[i].value);
   }

@@ -155,6 +155,10 @@ class Player extends GameObject { // Marianna
     if (dead) {
       this.score = 0;
     } else {
+      if (map.difficulty === 0) {
+        this.score /= 2;
+      }
+      this.score = Math.floor(this.score/2);
       socket.emit('savePlayer', {score:this.score, playerId: this.playerId});
     }
     endScreen.setAttribute('style', 'display:block');

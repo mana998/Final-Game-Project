@@ -26,6 +26,7 @@ function init() {
   $('#returnToMainMenuButton').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
   $('#interactionForm').css('display', 'none');
+  $('#difficultySelection').css('display', 'none');
   createUsernameScreen();
   $('#showHelp').css('display', 'block');
   $('#loggedInUserIcon').css('display', 'none');
@@ -79,8 +80,8 @@ function usernameMessage(message = '') {
 
 // Dagmara
 // creates the room and game state
-function createGame() {
-  socket.emit('newGame');
+function createGame(difficulty) {
+  socket.emit('newGame', difficulty);
   init();
 }
 
@@ -174,6 +175,14 @@ function playersReady(players) {
   $('#loggedInUserIcon').css('display', 'none');
   $('.container').css('border', 'none');
   $('.container-fluid').css('display', 'none');
+  //handle game difficulty 
+  if (map.difficulty === 0) {
+    //change to easy mode
+    $('#viewBlock').css('background', 'radial-gradient(circle at 50% 50%, transparent 200px, black calc(640px - 32px))');
+  } else {
+    //change to hard mode
+    $('#viewBlock').css('background', 'radial-gradient(circle at 50% 50%,transparent 100px,black calc(320px - 32px))');
+  }
   $('#viewBlock').css('display', 'block');
   backgroundMusic.play();
   $('#backgroundMusicControl').css('display', 'block');
@@ -203,6 +212,4 @@ socket.on('createPlayer', createPlayer);
 socket.on('noPlayer', playerNotExists);
 socket.on('updatePlayer', updatePlayer);
 socket.on('numberOfPlayersInTheRoom', setNumberOfPlayersInTheRoom);
-
-$('#createNewGameButton').on('click', createGame);
 

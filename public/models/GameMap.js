@@ -30,7 +30,7 @@ const movingTrap = new Img('./assets/images/game/ninjaStar.png', 0, 0, 0, 0, 0, 
 const onOffTrap = new Img('./assets/images/game/onOffTrap.png', 0, 0, 0, 0, 0, 1);
 
 class GameMap {
-  constructor(tiles, timeLimit, coins, gems, traps) {
+  constructor(tiles, timeLimit, coins, gems, traps, difficulty) {
     // 0 path
     // 1 wall
     // 2 goal
@@ -49,6 +49,10 @@ class GameMap {
     this.gemClasses = ['ReverseMovementGem', 'HealGem', 'SpeedGem', 'TeleportGem', 'DoubleCoinsGem', 'FreezeGem'];
     this.traps = traps || [];
     this.trapClasses = ['MovingTrap', 'OnOffTrap', 'Trap'];
+    //difficulty
+    // 0 - easy
+    // 1 - hard
+    this.difficulty = difficulty || 0;
   }
 
   // Marianna

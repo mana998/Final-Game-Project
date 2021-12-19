@@ -65,7 +65,7 @@ const games = {};
 
 io.on('connection', (socket) => {
   //Marianna & Dagmara
-  async function handleNewGameCreation() {
+  async function handleNewGameCreation(difficulty) {
     // create socketIO room and client that joins the game have to add the code which is roomId
     const roomName = Utils.createId(8); // function which creates id, we pass length of the id
 
@@ -80,7 +80,7 @@ io.on('connection', (socket) => {
     // eslint-disable-next-line global-require
     const { GameMap } = require('./public/models/GameMap');
     const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
-    const map = new GameMap('', '', '', '', '');
+    const map = new GameMap('', '', '', '', '', difficulty);
     // eslint-disable-next-line global-require
     map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require
     games[roomName].map = map;
