@@ -209,7 +209,7 @@ io.on('connection', (socket) => {
       io.to(gameCode).emit('playersReady', gameState.players);
       startGameInterval(gameCode, gameState);
     } else {
-      socket.emit('playersNotReady');
+      socket.emit('playersNotReady', 'Other players are still not ready, give them another minute!');
     }
   }
 
