@@ -1,6 +1,7 @@
 // Dgmara
 // show div for login and register hide menu
 function openLoginAndRegistration() {
+  $("#loginMessage").remove();
   $('#loginAndRegister').css('display', 'block');
   $('#menuOptions').css('display', 'block');
   $('#panel').css('display', 'none');
@@ -25,12 +26,21 @@ function createLoginAndgisterScreen() {
           <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()"><span id="loginButtonText" class="buttonText orangeText">LOGIN</span></button>
           <button type="button" id="registerButton" class="backgroundPicture smallButton" onClick="activateRegistartion()"><span class="buttonText orangeText">REGISTER</span></button>
       </div> 
-      <p id="message"></p>
     `)
   }
   
 }
 
+// Dagmara
+// If username is invalid the user is promped to enter different username
+function invalidInput(message = '') {
+  if ($("#loginMessage")){
+    $("#loginMessage").remove();
+  }
+  if (message) {
+    $('#loginAndRegister form').append(`<span id="loginMessage">${message}</span>`);
+  }
+}
 
 // Dagmara
 // reset fields
@@ -42,7 +52,6 @@ function resetLoginFields() {
 // Dagmara
 // hide login and register show main menu
 function showMainMenu() {
-
   $('#panel').css('display', 'block');
   $('#menuOptions').css('display', 'none');
   if ($('#loggedInUser').text() !== '') {
@@ -57,9 +66,10 @@ function showMainMenu() {
 // Dagmara
 // begin register procedure
 function activateRegistartion() {
+  $("#loginMessage").remove();
   $('#loginAndRegisterHeadder').text('REGISTER');
   $('#registerButton').attr('onclick', 'register()');
-  $('#repeatPasswordDiv').css('display', 'inline-block');
+  $('#repeatPasswordDiv').css('display', 'block');
   $('#loginButton').attr('onclick', 'activateLogin()');
 }
 
@@ -126,17 +136,21 @@ async function login() {
       showMainMenu();
       changeButtonToLogout();
     }
+  } else {
+    invalidInput(result.message);
   }
+
 }
 
 // Dagmara
 // funtion to register new user and send request to server to check and add user to db
 async function register() {
+  $("#loginMessage").remove();
   const username = $('#username').val();
   const password = $('#password').val();
   const repeatPassword = $('#repeatPassword').val();
   if (password !== repeatPassword) {
-    $('#message').text('Passwords have to match. Try again');
+    invalidInput('Passwords have to match. Try again');
     return;
   }
   const response = await fetch('/api/users/register', {
@@ -149,8 +163,12 @@ async function register() {
   });
   $('#repeatPassword').val('');
   const result = await response.json();
-  $('#message').text(result.message);
-  activateLogin();
+  if (result.message === 'User added successfully.') {
+    activateLogin();
+  } else {
+    resetLoginFields();
+    invalidInput(result.message);
+  }
 }
 
 // Dagmara
