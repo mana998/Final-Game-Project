@@ -4,11 +4,37 @@ function showHighscores() {
   $('#loginAndRegister').css('display', 'none');
   $('#menuOptions').css('display', 'block');
   $('#panel').css('display', 'none');
-  $('#highscore').css('display', 'block');
   $('#gameScreen').css('display', 'none');
   $('#roomCodeScreen').css('display', 'none');
   $('#interactionForm').css('display', 'none');
   $('#returnToMainMenuButton').addClass('highscoreReturnToMainButton');
+  createHighscoreScreen();
+}
+
+function createHighscoreScreen() {
+  if (!$('#highscore').children().length) {
+      $('#highscore').append(`
+      <div id="highscoreBody">
+        <h1 id="highscoreHeadder" class="gameTitle">HIGHSCORE</h1>
+        <table id="highscoreList" class="backgroundPicture bigTable brownText">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>USERNAME</th>
+                    <th>SCORE</th>
+                    <th>DATE</th>
+                </tr>
+            </thead>
+            <tbody id="highscorestableBody">
+            </tbody>
+        </table>
+        <div id = "pagesContainer">
+            <div id = "pages"></div>
+        </div>
+      </div>
+      `);
+  } 
+  $('#highscore').css('display', 'block');  
 }
 
 function changePage(pageNumber) {
