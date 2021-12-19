@@ -320,6 +320,11 @@ canvas {
     margin: 1em;
 }
 
+#usernameMessage {
+    display: block;
+    padding-top: 1%;
+}
+
 /*login register */
 #repeatPasswordDiv {
     display: none;
