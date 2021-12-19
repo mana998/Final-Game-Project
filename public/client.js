@@ -74,7 +74,6 @@ function changeUsername(message = '') {
   if (message) {
     $('#playMenu form').append('<span id="usernameMessage">Username already exists, input new username!</span>');
   }
-
 }
 
 // Dagmara

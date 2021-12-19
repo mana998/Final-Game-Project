@@ -326,6 +326,10 @@ canvas {
     margin-bottom: 1%;
 }
 
+#loginMessage {
+    padding-top: 1%;
+    display: block;
+}
 .inputBigButton {
     background-image: url("../assets/images/buttons/brownButtonBig.png");
     background-position: center;
