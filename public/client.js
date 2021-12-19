@@ -80,8 +80,8 @@ function changeUsername(message = '') {
 
 // Dagmara
 // creates the room and game state
-function createGame() {
-  socket.emit('newGame');
+function createGame(difficulty) {
+  socket.emit('newGame', difficulty);
   init();
 }
 
