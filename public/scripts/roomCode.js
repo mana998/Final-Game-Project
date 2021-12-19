@@ -32,7 +32,7 @@ function createRoomCodeScreen() {
 // display message if the code is wrong
 function handleWrongCode(message) {
     if (!$("#wrongGameCode").text()) {
-        $('#joinRoomToPlay form').append(`</br><span id='wrongGameCode'>${message}</span>`);
+        $('#joinRoomToPlay form').append(`<span id='wrongGameCode'>${message}</span>`);
       }
 }
 // Dagmara
