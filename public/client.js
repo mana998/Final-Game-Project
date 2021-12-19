@@ -17,6 +17,7 @@ socket.io.on("close", tryReconnect);
 // Dagmara
 // hide game menu and show the game username input and play button
 function init() {
+  $('#usernameInput').val('');
   $('#loginAndRegister').css('display', 'none');
   $('#menuOptions').css('display', 'block');
   $('#panel').css('display', 'none');
@@ -67,12 +68,12 @@ function setNumberOfPlayersInTheRoom(numberOfPlayers) {
 
 // Dagmara
 // If username is invalid the user is promped to enter different username
-function changeUsername(message = '') {
+function usernameMessage(message = '') {
   if ($("#usernameMessage")){
     $("#usernameMessage").remove();
   }
   if (message) {
-    $('#playMenu form').append('<span id="usernameMessage">Username already exists, input new username!</span>');
+    $('#playMenu form').append(`<span id="usernameMessage">${message}</span>`);
   }
 }
 
@@ -129,7 +130,7 @@ function playGame() {
 function handleCreateUsername() {
   username = $('#usernameInput').val();
   socket.emit('createUsername', ({ player, username }));
-  socket.on('usernameDeclined', changeUsername);
+  socket.on('usernameDeclined', usernameMessage);
 }
 
 // Dagmara
@@ -155,12 +156,6 @@ async function createPlayer(socketId) {
   player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', socketId);
   player.playerId = playerId;
   socket.emit('playerCreated', player);
-}
-
-// Dagmara
-// informs players that not all players are ready to play
-function playersNotReady() {
-  $('#usernameMessage').text('Other players are still not ready, give them another minute!');
 }
 
 // Marianna + Dagmara
@@ -202,7 +197,7 @@ function playerNotExists() {
 
 socket.on('roomName', handleGameCodeDisplay);
 socket.on('usernameAdded', enablePlayButton);
-socket.on('playersNotReady', playersNotReady);
+socket.on('playersNotReady', usernameMessage);
 socket.on('playersReady', playersReady);
 socket.on('createPlayer', createPlayer);
 socket.on('noPlayer', playerNotExists);
