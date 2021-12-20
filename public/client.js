@@ -8,6 +8,9 @@ const tryReconnect = () => {
     socket.io.open((err) => {
       if (err) {
         tryReconnect();
+      } else {
+        updateServerPlayer();
+        updateServerMap();
       }
     });
   }, 2000);
