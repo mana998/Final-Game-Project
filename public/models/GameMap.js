@@ -343,8 +343,8 @@ class GameMap {
             let newTrap = new OnOffTrap(0, 0, 32, 32, trapImg, '',activeTime, isActive);
             newTrap.value = newTrap.values[Utilities.getRandomNumber(0, newTrap.values.length)];
             this.traps.push(newTrap);
+            break;
           }
-          break;
         default:
           const singleTrapImg = [onOffTrap, trap][ Utilities.getRandomNumber(0, 2)];
           const maxTries3 = 100; //try to find place 100 times before giving up 
