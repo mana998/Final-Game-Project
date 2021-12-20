@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
   }
 
   //Marianna
-  function handleClientPlayerUpdate(data) {
+  async function handleClientPlayerUpdate(data) {
     if (!playersRoomTable[socket.id]) {
       handleServerRestart(data);
     }
@@ -120,9 +120,9 @@ io.on('connection', (socket) => {
     const index = games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer);
 
     if (index < 0) {
-      handleServerRestartAddPlayer(data);
-      socket.emit('noPlayer');
-      return;
+      await handleServerRestartAddPlayer(data);
+      //socket.emit('noPlayer');
+      //return;
     }
     games[playersRoomTable[socket.id]].players[index] = data.player;
   }
