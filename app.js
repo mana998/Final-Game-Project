@@ -310,6 +310,7 @@ function handleServerRestartAddMap(tiles) {
 
   //Marianna
   function handleGetRandomMessage(type) {
+    if (!games[playersRoomTable[socket.id]]) return;
     const game = games[playersRoomTable[socket.id]];
     const types = Object.keys(game.interactions);
     //get random type
