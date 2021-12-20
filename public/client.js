@@ -144,7 +144,7 @@ function enablePlayButton() {
 
 // Dagmara
 // Adds player to the game object
-async function createPlayer(socketId) {
+async function createPlayer(data) {
   username = '';
   let playerId = '';
   const result = await getSession();
@@ -155,7 +155,7 @@ async function createPlayer(socketId) {
     playerId = result.playerId;
     enablePlayButton();
   }
-  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', socketId);
+  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', data.socket, data.room);
   player.playerId = playerId;
   socket.emit('playerCreated', player);
 }

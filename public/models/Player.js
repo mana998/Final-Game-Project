@@ -1,7 +1,7 @@
 const talkSound = [new Sound('talk1', 'soundfx'), new Sound('talk2', 'soundfx')];
 
 class Player extends GameObject { // Marianna
-  constructor(x, y, width, height, img, username, message, socketId) {
+  constructor(x, y, width, height, img, username, message, socketId, roomCode) {
     super(x, y, width, height, img);
     this.username = username;
     this.coins = 0;
@@ -20,6 +20,7 @@ class Player extends GameObject { // Marianna
     }
     this.message = message || '';
     this.playerId = '';
+    this.roomCode = roomCode || '';
   }
 
   // Block types

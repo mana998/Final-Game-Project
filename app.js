@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
     games[roomName].interactions = result;
     socket.join(roomName);
     socket.emit('numberOfPlayersInTheRoom', 1);
-    socket.emit('createPlayer', socket.id);
+    socket.emit('createPlayer', {socket: socket.id, room: roomName});
   }
 
   //Dagmara
@@ -179,7 +179,7 @@ io.on('connection', (socket) => {
     //send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
     io.to(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
-    socket.emit('createPlayer', socket.id); 
+    socket.emit('createPlayer', {socket: socket.id, room: data.gameCode});
   }
 
   function startGameInterval(gameCode, gameState) {
