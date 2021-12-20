@@ -200,7 +200,9 @@ class Player extends GameObject { // Marianna
     }
     map.traps[parseInt(blockValue[1])].onCollision(player);
     if (this.health <= 0) {
-      this.playerIsDone(1);
+      if (!this.isDone) {
+        this.playerIsDone(1);
+      }
     }
   }
 
