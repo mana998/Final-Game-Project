@@ -178,7 +178,7 @@ io.on('connection', (socket) => {
     socket.join(data.gameCode);
     //send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
-    io.sockets.in(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
+    io.to(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
     socket.emit('createPlayer', socket.id); 
   }
 
@@ -244,9 +244,10 @@ io.on('connection', (socket) => {
   }
 
   // Marianna
-  function handlePlayerDisconnect(beforeGameStart='false') {
+  function handlePlayerDisconnect() {
     if (games[playersRoomTable[socket.id]]) {
       // remove player from room
+      socket.leave(playersRoomTable[socket.id]);
       games[playersRoomTable[socket.id]].players = games[playersRoomTable[socket.id]].players.filter((player) => player.socketId !== socket.id);
       // empty room
       // remove data about room
@@ -300,6 +301,12 @@ io.on('connection', (socket) => {
     }
   }
 
+// Dagmara
+//update lobby on player cleave
+function updateLobby(currentNumber) {
+  io.to(playersRoomTable[socket.id]).emit("numberOfPlayersInTheRoom", currentNumber);
+}
+
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
   socket.on('createUsername', handleCreateUsername);
@@ -314,7 +321,8 @@ io.on('connection', (socket) => {
   socket.on('gemAffectsOthers', handleGemAffectsOthers);
   socket.on('getRandomMessage', handleGetRandomMessage);
   socket.on('savePlayer', handleSavePlayer);
-  socket.on('leaveBeforeGameStarts', handlePlayerDisconnect);
+  socket.on('updateLobby', updateLobby);
+  socket.on('removePlayerAndGoToMainMenu', handlePlayerDisconnect);
 });
 
 const PORT = process.env.PORT || 8080;
