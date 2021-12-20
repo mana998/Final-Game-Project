@@ -331,7 +331,7 @@ canvas {
     margin-bottom: 1%;
 }
 
-#loginMessage {
+#loginMessage, #wrongGameCode {
     padding-top: 1%;
     display: block;
 }
