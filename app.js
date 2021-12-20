@@ -291,7 +291,7 @@ function handleServerRestartAddMap(tiles) {
         // stop timer
         clearInterval(games[playersRoomTable[socket.id]].interval);
         delete games[playersRoomTable[socket.id]];
-      } else if (!games[playersRoomTable[socket.id]].playing) {
+      } else if (games[playersRoomTable[socket.id]] && !games[playersRoomTable[socket.id]].playing) {
         startGame(playersRoomTable[socket.id]);
       }
       // remove data about player
