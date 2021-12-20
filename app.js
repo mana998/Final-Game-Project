@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
   //Marianna
   async function handleClientPlayerUpdate(data) {
     if (!playersRoomTable[socket.id]) {
-      handleServerRestart(data);
+      await handleServerRestart(data);
     }
     // update the player object with new data
     const updatedPlayer = games[playersRoomTable[socket.id]].players
