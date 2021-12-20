@@ -225,7 +225,8 @@ function handleServerRestartAddMap(tiles) {
   }
 
   //Dagmara & Marianna
-  function startGame(gameCode) {
+  function startGame(gameCode, disconnect = false) {
+    if (disconnect) return;
     const gameState = games[gameCode];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
     if (allPlayerrsReadyToPlay === gameState.players.length) {
@@ -292,7 +293,7 @@ function handleServerRestartAddMap(tiles) {
         clearInterval(games[playersRoomTable[socket.id]].interval);
         delete games[playersRoomTable[socket.id]];
       } else if (games[playersRoomTable[socket.id]] && !games[playersRoomTable[socket.id]].playing) {
-        startGame(playersRoomTable[socket.id]);
+        startGame(playersRoomTable[socket.id], true);
       }
       // remove data about player
       delete playersRoomTable[socket.id];
