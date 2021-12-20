@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
 
     // import map class
     // eslint-disable-next-line global-require
-    const { GameMap } = require('./public/models/GameMap');
+    const {GameMap} = require('./public/models/GameMap');
     const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
     const map = new GameMap('', '', '', '', '', difficulty);
     // eslint-disable-next-line global-require
@@ -111,20 +111,56 @@ io.on('connection', (socket) => {
 
   //Marianna
   function handleClientPlayerUpdate(data) {
+    if (!playersRoomTable[socket.id]) {
+      handleServerRestart(data);
+    }
     // update the player object with new data
     const updatedPlayer = games[playersRoomTable[socket.id]].players
       .find((player) => player.socketId === socket.id);
     const index = games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer);
 
     if (index < 0) {
+      handleServerRestartAddPlayer(data);
       socket.emit('noPlayer');
       return;
     }
     games[playersRoomTable[socket.id]].players[index] = data.player;
   }
 
+async function handleServerRestart(data) {
+  roomName = data.player.roomCode;
+  playersRoomTable[socket.id] = roomName;
+  games[roomName] = new Game();
+  //figure out the creator id in order to get interactions
+      //get logged in player id
+      let id = '';
+      let response = await fetch(`${process.env.URL}getsession`);
+      let result = await response.json();
+      if (result.playerId) {
+        id = result.playerId;
+      }
+      //load player interactions
+      let url = `${process.env.URL}api/interactions`;
+      if (id) url += `?player_id=${id}`;
+      response = await fetch(url);
+      result = await response.json();
+      games[roomName].interactions = result;
+  games[roomName].players.push(data.player);
+}
+
+function handleServerRestartAddPlayer(data) {
+  games[roomName].players.push(data.player);
+}
+
+function handleServerRestartAddMap(tiles) {
+  games[roomName].map = new GameMap(tiles);
+}
+
   //Marianna
   function handleClientMapUpdate(tiles) {
+    if (!playersRoomTable[socket.id]) {
+      handleServerRestartAddMap(tiles);
+    }
       games[playersRoomTable[socket.id]].map.tiles = tiles;
       io.to(playersRoomTable[socket.id]).emit('mapUpdated', tiles);
   }
