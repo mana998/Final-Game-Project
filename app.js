@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
     games[roomName].interactions = result;
     socket.join(roomName);
     socket.emit('numberOfPlayersInTheRoom', 1);
-    socket.emit('createPlayer', {socket: socket.id, room: roomName});
+    socket.emit('createPlayer', socket.id);
   }
 
   //Dagmara
@@ -110,57 +110,21 @@ io.on('connection', (socket) => {
   }
 
   //Marianna
-  async function handleClientPlayerUpdate(data) {
-    if (!playersRoomTable[socket.id]) {
-      await handleServerRestart(data);
-    }
+  function handleClientPlayerUpdate(data) {
     // update the player object with new data
     const updatedPlayer = games[playersRoomTable[socket.id]].players
       .find((player) => player.socketId === socket.id);
     const index = games[playersRoomTable[socket.id]].players.indexOf(updatedPlayer);
 
     if (index < 0) {
-      await handleServerRestartAddPlayer(data);
-      //socket.emit('noPlayer');
-      //return;
+      socket.emit('noPlayer');
+      return;
     }
     games[playersRoomTable[socket.id]].players[index] = data.player;
   }
 
-async function handleServerRestart(data) {
-  roomName = data.player.roomCode;
-  playersRoomTable[socket.id] = roomName;
-  games[roomName] = new Game();
-  //figure out the creator id in order to get interactions
-      //get logged in player id
-      let id = '';
-      let response = await fetch(`${process.env.URL}getsession`);
-      let result = await response.json();
-      if (result.playerId) {
-        id = result.playerId;
-      }
-      //load player interactions
-      let url = `${process.env.URL}api/interactions`;
-      if (id) url += `?player_id=${id}`;
-      response = await fetch(url);
-      result = await response.json();
-      games[roomName].interactions = result;
-  games[roomName].players.push(data.player);
-}
-
-function handleServerRestartAddPlayer(data) {
-  games[roomName].players.push(data.player);
-}
-
-function handleServerRestartAddMap(tiles) {
-  games[roomName].map = new GameMap(tiles);
-}
-
   //Marianna
   function handleClientMapUpdate(tiles) {
-    if (!playersRoomTable[socket.id]) {
-      handleServerRestartAddMap(tiles);
-    }
       games[playersRoomTable[socket.id]].map.tiles = tiles;
       io.to(playersRoomTable[socket.id]).emit('mapUpdated', tiles);
   }
@@ -215,7 +179,7 @@ function handleServerRestartAddMap(tiles) {
     //send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
     io.to(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
-    socket.emit('createPlayer', {socket: socket.id, room: data.gameCode});
+    socket.emit('createPlayer', socket.id);
   }
 
   function startGameInterval(gameCode, gameState) {
@@ -225,8 +189,7 @@ function handleServerRestartAddMap(tiles) {
   }
 
   //Dagmara & Marianna
-  function startGame(gameCode, disconnect = false) {
-    if (disconnect) return;
+  function startGame(gameCode) {
     const gameState = games[gameCode];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
     if (allPlayerrsReadyToPlay === gameState.players.length) {
@@ -292,8 +255,8 @@ function handleServerRestartAddMap(tiles) {
         // stop timer
         clearInterval(games[playersRoomTable[socket.id]].interval);
         delete games[playersRoomTable[socket.id]];
-      } else if (games[playersRoomTable[socket.id]] && !games[playersRoomTable[socket.id]].playing) {
-        startGame(playersRoomTable[socket.id], true);
+      } else if (!games[playersRoomTable[socket.id]].playing) {
+        startGame(playersRoomTable[socket.id]);
       }
       // remove data about player
       delete playersRoomTable[socket.id];
@@ -310,7 +273,6 @@ function handleServerRestartAddMap(tiles) {
 
   //Marianna
   function handleGetRandomMessage(type) {
-    if (!games[playersRoomTable[socket.id]]) return;
     const game = games[playersRoomTable[socket.id]];
     const types = Object.keys(game.interactions);
     //get random type

@@ -8,9 +8,6 @@ const tryReconnect = () => {
     socket.io.open((err) => {
       if (err) {
         tryReconnect();
-      } else {
-        updateServerPlayer();
-        updateServerMap();
       }
     });
   }, 2000);
@@ -147,7 +144,7 @@ function enablePlayButton() {
 
 // Dagmara
 // Adds player to the game object
-async function createPlayer(data) {
+async function createPlayer(socketId) {
   username = '';
   let playerId = '';
   const result = await getSession();
@@ -158,7 +155,7 @@ async function createPlayer(data) {
     playerId = result.playerId;
     enablePlayButton();
   }
-  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', data.socket, data.room);
+  player = new Player(64, 64, 32, 32, new Img('./assets/images/game/test.png', 0, 0, 0, 2, 5, 1), username, '', socketId);
   player.playerId = playerId;
   socket.emit('playerCreated', player);
 }
