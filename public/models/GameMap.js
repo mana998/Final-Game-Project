@@ -407,7 +407,7 @@ function getNewGem(type, parameters) {
 
 function getNewTrap(type, parameters) {
   let trap;
-  let image = new Img(parameters[0].src, parameters[0].startRow, parameters[0].startColumn, parameters[0].rows, parameters[0].columns, parameters[0].speed, parameters[0].size);
+  let image = new Img(parameters[4].src, parameters[4].startRow, parameters[4].startColumn, parameters[4].rows, parameters[4].columns, parameters[4].speed, parameters[4].size);
   parameters.shift();
   switch (type) {
     case 'MovingTrap':
