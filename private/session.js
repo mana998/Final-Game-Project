@@ -8,13 +8,11 @@ router.get('/getsession', (req, res) => {
       playerId: req.session.playerId,
       username: req.session.username,
     });
-    return;
+  } else {
+    res.send({
+      message: "User not logged in.",
+    });
   }
-  res.send({
-    message: "User not logged in.",
-  });
-  return;
-  
 });
 
 //Dagmara
