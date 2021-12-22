@@ -163,10 +163,10 @@ class Player extends GameObject { // Marianna
     endScreen.setAttribute('style', 'display:block');
     socket.emit('playerFinished', this);
     updateServerPlayer();
-    this.draw = () => {};
     // playing false so movement keys get disabled
     playing = false;
     window.addEventListener('keyup', changeSpectator);
+    showEndScreen();
   }
 
   handleCoinCollision(block, row, column, map) {

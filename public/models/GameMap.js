@@ -408,7 +408,10 @@ function getNewGem(type, parameters) {
 function getNewTrap(type, parameters) {
   let trap;
   let image = new Img(parameters[4].src, parameters[4].startRow, parameters[4].startColumn, parameters[4].rows, parameters[4].columns, parameters[4].speed, parameters[4].size);
-  parameters.shift();
+  //remove first 1 values because they are hardcoded
+  parameters.splice(0,5);
+  //remove values parameter
+  parameters.splice(1,1);
   switch (type) {
     case 'MovingTrap':
       trap = new MovingTrap(0, 0, 16, 16, image, ...parameters);

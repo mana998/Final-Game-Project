@@ -43,6 +43,8 @@ function handleGameEnded() {
 }
 
 function showEndScreen() {
+  $("#endScreen").css('display', 'block');
+  $("#endScreen").empty();
   $("#endScreen").append(`<h1 id="currentScoresHeader" class="gameTitle">CURRENT SCORES:</h1>`);
   $("#endScreen").append(`<div id="currentScores" class="backgroundPicture brownText smallTable">
     <table id="currentScoresTable">
@@ -56,4 +58,3 @@ socket.on('addPlayerScore', addScoreToDisplay);
 socket.on('changeSpectating', changeSpectatingPlayer);
 socket.on('gameEnded', handleGameEnded);
 socket.on('scoreMessage', addMessageToScore);
-showEndScreen();

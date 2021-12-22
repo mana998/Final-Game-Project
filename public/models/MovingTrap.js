@@ -9,11 +9,11 @@ class MovingTrap extends Trap {
     constructor(x, y, width, height, img, value, speed, direction, startRow, endRow, startColumn, endColumn) {
         super(x, y, width, height, img, value);
         this.speed = speed;
-        this.startRow = startRow;
-        this.startColumn = startColumn;
-        this.endRow = endRow;
-        this.endColumn = endColumn;
         this.direction = direction;
+        this.startRow = startRow;
+        this.endRow = endRow;
+        this.startColumn = startColumn;
+        this.endColumn = endColumn;
         this.rows = this.endRow - this.startRow ;
         this.columns = this.endColumn - this.startColumn;
         if (!direction) {

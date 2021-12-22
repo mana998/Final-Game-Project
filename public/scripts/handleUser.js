@@ -20,7 +20,7 @@ function createLoginAndgisterScreen() {
       </form>
       <div class="buttonControl">
           <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()"><span id="loginButtonText" class="buttonText orangeText">LOGIN</span></button>
-          <button type="button" id="registerButton" class="backgroundPicture smallButton" onClick="activateRegistartion()"><span class="buttonText orangeText">REGISTER</span></button>
+          <button type="button" id="registerButton" class="backgroundPicture smallButton" onClick="activateRegistration()"><span class="buttonText orangeText">REGISTER</span></button>
       </div> 
     `)
   }
@@ -48,9 +48,11 @@ function resetLoginFields() {
 // Dagmara
 // hide login and register show main menu
 function showMainMenu() {
+  $('.container-fluid').css('display', 'block');
   $('#mainMenu').css('display', 'block');
   if ($('#loggedInUser').text() !== '') {
     $('#loggedInUserIcon').css('display', 'block');
+    $('#loggedInUser').css('display', 'block');
   }
   $('#returnToMainMenuButton').removeClass('highscoreReturnToMainButton');
   $('#returnToMainMenuButton').removeClass('interactionsReturnToMainButton');
@@ -64,11 +66,15 @@ function showMainMenu() {
   $('#roomCodeScreen').css('display', 'none');
   $('#interactionForm').css('display', 'none');
   $('#difficultySelection').css('display', 'none');
+  $('#game').css('display', 'none');
+  $('#endScreen').css('display', 'none');
+  pauseBackgroundMusic();
+  pauseSoundFx();
 }
 
 // Dagmara
 // begin register procedure
-function activateRegistartion() {
+function activateRegistration() {
   $("#loginMessage").remove();
   $('#loginAndRegisterHeadder').text('REGISTER');
   $('#registerButton').attr('onclick', 'register()');
@@ -92,7 +98,7 @@ function changeButtonToLogin() {
   $('#loginAndRegisterHeadder').text('LOGIN');
   $('#loginButtonText').text('LOGIN');
   $('#loginButton').attr('onclick', 'login()');
-  $('#registerButton').attr('onclick', 'activateRegistartion()');
+  $('#registerButton').attr('onclick', 'activateRegistration()');
 }
 
 // Dagmara
@@ -186,18 +192,14 @@ async function logout() {
   });
   const result = await response.json();
   if (result.message === 'Session destroyed') {
-    leaveGame();
+    showMainMenu();
     changeButtonToLogin();
     $('#loggedInUser').text('');
-    $('#loggedInUserIcon').css('display, none');
+    $('#loggedInUserIcon').css('display', 'none');
   } else {
     alert(result.message);
   }
 }
-
-// Dagmara
-// add listener for span element in main menu to logout user
-$('#loggedInUserIcon').on('click', logout);
 
 // Dagmara
 async function getSession() {
@@ -216,26 +218,12 @@ async function checkSession() {
   } else {
     changeButtonToLogin();
     $('#loggedInUser').text('');
-    $('#loggedInUserIcon').css('display, none');
-  }
-}
-
-//Dagmara
-async function destroySession() {
-  const response = await fetch('/destroysession', {
-    method: 'DELETE',
-  });
-  const result = await response.json();
-  if (!result.isDestroyed) {
-    await checkSession();
+    $('#loggedInUserIcon').css('display', 'none');
   }
 }
 
 // Marianna & Dagmara
 // check if session is set
 $(window).on('load', () => {
-  $('#loginAndRegisterButton').on('click', openLoginAndRegistration);
-  $('#highscoreButton').on('click', openHighscores);
-  $('#interactionsButton').on('click', openInteractions);
-  destroySession();
+  checkSession();
 });

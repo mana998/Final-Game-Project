@@ -27,16 +27,16 @@
 <body>
     <script src="/socket.io/socket.io.js"></script>
     <div class="container-fluid">
-        <button class="backgroundPicture" id="loggedInUserIcon"></button>
+        <button class="backgroundPicture" id="loggedInUserIcon" onClick="logout()"></button>
         <div id="menuScreen">
             <div id="mainMenu">
                 <span id="loggedInUser"></span>
                 <h1 class="gameTitle">UNDERGROUND</h1>
                 <button type="button" class="backgroundPicture bigButton" id="createNewGameButton"><span class="buttonText orangeText">NEW GAME</span></button>
                 <button type="button" class="backgroundPicture bigButton" id="joinGameButton"><span class="buttonText orangeText">JOIN GAME</span></button>
-                <button type="button" class="backgroundPicture bigButton" id="loginAndRegisterButton"><span class="buttonText orangeText">SIGN IN/UP</span></button>
-                <button type="button" class="backgroundPicture bigButton" id="highscoreButton"><span class="buttonText orangeText">HIGHSCORES</span></button>
-                <button type="button" class="btn" id="interactionsButton"></button>
+                <button type="button" class="backgroundPicture bigButton" id="loginAndRegisterButton" onClick="openLoginAndRegistration()"><span class="buttonText orangeText">SIGN IN/UP</span></button>
+                <button type="button" class="backgroundPicture bigButton" id="highscoreButton" onClick="openHighscores()"><span class="buttonText orangeText">HIGHSCORES</span></button>
+                <button type="button" class="btn" id="interactionsButton" onClick="openInteractions()"></button>
             </div>
             <div id="menuOptions">
                 <div id="loginAndRegister">
@@ -55,8 +55,6 @@
             </div>
         </div>
     </div>
-    <div id="endScreen" style="display: none">
-    </div>
     <button type="button" class="btn" id="showHelp" onClick = "showHelpWindow()"></button>
     <div id="helpWindow"></div>
     <div id="game">
@@ -74,6 +72,8 @@
             <button type="button" class="backgroundPicture smallButton interactionButton" id="greetInteraction" onClick = "selectInteraction('greet')"><span class="buttonText grayText">greet</span></button>
             <button type="button" class="backgroundPicture smallButton interactionButton" id="byeInteraction" onClick = "selectInteraction('bye')"><span class="buttonText grayText">bye</span></button>
             <button type="button" class="backgroundPicture smallButton interactionButton" id="complainInteraction" onClick = "selectInteraction('complain')"><span class="buttonText grayText">complain</span></button>
+        </div>
+        <div id="endScreen" style="display: none">
         </div>
         <button type="button" class="btn" id="backgroundMusicControl" onClick = "toggleBackgroundMusic()"></button>
         <button type="button" class="btn" id="soundFxControl" onClick = "toggleSoundFx()"></button>

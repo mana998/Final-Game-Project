@@ -49,10 +49,15 @@ function setAnimation (value) {
   if (value > 3) {
     //calculate the start position for each character in second row
     startColumnPosition = (value - 4) *3;
-    animations.down[0] = animations.down[0] + 4;
-    animations.left[0] = animations.left[0] + 4;
-    animations.right[0] = animations.right[0] + 4;
-    animations.up[0] = animations.up[0] + 4;
+    animations.down[0] = 4;
+    animations.left[0] = 5;
+    animations.right[0] = 6;
+    animations.up[0] = 7;
+  } else {
+    animations.down[0] = 0;
+    animations.left[0] = 1;
+    animations.right[0] = 2;
+    animations.up[0] = 3;
   }
   animations.down[1] = startColumnPosition;
   animations.left[1] =  startColumnPosition;
@@ -104,36 +109,38 @@ function draw(data) {
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
   // draw all players
   data.players.map((gamePlayer) => {
-    if (player.username === gamePlayer.username) {
-      // draw your player - center camera
-      player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
-    } else if (spectatingPlayer && spectatingPlayer.username === gamePlayer.username) {
-      // or draw spectating player - center camera
-      spectatingPlayer.draw(ctx, (canvas.width - spectatingPlayer.width) / 2, (canvas.height - spectatingPlayer.height) / 2);
-    } else if (!gamePlayer.isDone) {
-      // or draw all other players in relation to spectating player
-      // transform data into proper object
-      gamePlayer = new Player(
-        gamePlayer.x,
-        gamePlayer.y,
-        gamePlayer.width,
-        gamePlayer.height,
-        new Img(
-          gamePlayer.img.src,
-          gamePlayer.img.startRow,
-          gamePlayer.img.startColumn,
-          gamePlayer.img.rows,
-          gamePlayer.img.columns,
-          gamePlayer.img.speed,
-          '',
-          gamePlayer.img.currentRow,
-          gamePlayer.img.currentColumn,
-        ),
-        gamePlayer.username,
-        gamePlayer.message,
-      );
-      // get data about other players from server
-      gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
+    if (!gamePlayer.isDone) {
+      if (player.username === gamePlayer.username) {
+        // draw your player - center camera
+        player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
+      } else if (spectatingPlayer && spectatingPlayer.username === gamePlayer.username) {
+        // or draw spectating player - center camera
+        spectatingPlayer.draw(ctx, (canvas.width - spectatingPlayer.width) / 2, (canvas.height - spectatingPlayer.height) / 2);
+      } else if (!gamePlayer.isDone) {
+        // or draw all other players in relation to spectating player
+        // transform data into proper object
+        gamePlayer = new Player(
+          gamePlayer.x,
+          gamePlayer.y,
+          gamePlayer.width,
+          gamePlayer.height,
+          new Img(
+            gamePlayer.img.src,
+            gamePlayer.img.startRow,
+            gamePlayer.img.startColumn,
+            gamePlayer.img.rows,
+            gamePlayer.img.columns,
+            gamePlayer.img.speed,
+            '',
+            gamePlayer.img.currentRow,
+            gamePlayer.img.currentColumn,
+          ),
+          gamePlayer.username,
+          gamePlayer.message,
+        );
+        // get data about other players from server
+        gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
+      }
     }
   });
   player.isNear = player.isNearPlayers(data.players);

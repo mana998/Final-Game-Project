@@ -45,6 +45,11 @@ function createUsernameScreen() {
       generateCharacterSelection();
       $('#usernameInput').on('change', handleCreateUsername);
       $('#playGameButton').on('click', playGame);
+  } else {
+    $('#usernameInput').removeAttr('disabled');
+    $('#playGameButton').attr('disabled', 'true');
+    $('#characters').empty();
+    generateCharacterSelection();
   };
 }
 
@@ -104,6 +109,8 @@ function playGame() {
     player.img.currentColumn = (selectedCharacter-4) * 3;
     player.img.startColumn = player.img.currentColumn
   } else {
+    player.img.currentRow = 0;
+    player.img.startRow = 0;
     player.img.currentColumn = selectedCharacter * 3;
     player.img.startColumn = player.img.currentColumn
   }
@@ -116,6 +123,9 @@ function playGame() {
   const gameCode = $('#displayGameCode').text();
   socket.emit('playGame', gameCode);
   setAnimation(selectedCharacter);
+  $('#game').css('display', 'block');
+  startBackgroundMusic();
+  startSoundFx();
 }
 
 // Dagmara
@@ -165,7 +175,6 @@ function playersReady(players) {
   canvas.style.display = 'block';
   $('#loggedInUser').css('display', 'none');
   $('#loggedInUserIcon').css('display', 'none');
-  $('.container').css('border', 'none');
   $('.container-fluid').css('display', 'none');
   //handle game difficulty 
   if (map.difficulty === 0) {
