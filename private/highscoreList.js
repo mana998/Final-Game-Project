@@ -1,3 +1,4 @@
+//Marianna & Dagmara
 const router = require('express').Router();
 const pool = require('../database/connection.js').pool;
 
@@ -7,7 +8,8 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
       if (result && result.length) {
         const pageLimit = 10;
         const scoresSize = result[0].scoresCount;
-        const offset = (req.params.currentPage - 1) *pageLimit; //minus one because offset defines from which row we want to retrieve data
+        //minus one because offset defines from which row we want to retrieve data
+        const offset = (req.params.currentPage - 1) *pageLimit;
         const pages = Math.ceil(scoresSize/pageLimit);
         db.query(`SELECT high_score.high_score_id, player.username, high_score.score, high_score.date_time 
         FROM player 
@@ -18,6 +20,7 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
         OFFSET ?;`, [pageLimit,offset], (error, result, fields) => {
           if (result && result.length) {
             const highscores = [];
+            // calculate which posisition player have on the list
             let index = offset + 1.
             for (const highscore of result) {
               highscores.push({
