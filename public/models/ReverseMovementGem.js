@@ -6,7 +6,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class ReverseMovementGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
-    super(x, y, width, height, value, affectsMe, `You movement has been reversed for ${value / 1000} seconds`);
+    super(x, y, width, height, value, affectsMe, `Your movement has been reversed for ${value / 1000} seconds`);
     this.values = [5000, 10000, 15000, 20000];
   }
 

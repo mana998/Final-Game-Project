@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
 
     // import map class
     // eslint-disable-next-line global-require
-    const { GameMap } = require('./public/models/GameMap');
+    const {GameMap} = require('./public/models/GameMap');
     const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
     const map = new GameMap('', '', '', '', '', difficulty);
     // eslint-disable-next-line global-require
@@ -179,7 +179,7 @@ io.on('connection', (socket) => {
     //send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
     io.to(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
-    socket.emit('createPlayer', socket.id); 
+    socket.emit('createPlayer', socket.id);
   }
 
   function startGameInterval(gameCode, gameState) {

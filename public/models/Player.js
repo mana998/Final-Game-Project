@@ -1,4 +1,4 @@
-const talkSound = [new Sound('talk1', 'soundfx'), new Sound('talk2', 'soundfx')];
+const talkSound = new Sound('talk', 'soundfx');
 
 class Player extends GameObject { // Marianna
   constructor(x, y, width, height, img, username, message, socketId) {
@@ -230,9 +230,8 @@ class Player extends GameObject { // Marianna
   draw (ctx, x, y) {
     super.draw(ctx, x, y);
     displayText(this.message, x + player.width/2, y - 10)
-    //console.log("this.message", this.message, "0", talkSound[0].sound.isPaused, "1", talkSound[1].sound.isPaused)
-    if (this.message && talkSound[0].sound.paused && talkSound[1].sound.paused) {
-      talkSound[Utilities.getRandomNumber(0, talkSound.length)].play();
+    if (this.message && talkSound.sound.paused) {
+      talkSound.play();
     }
 
   }
