@@ -13,30 +13,29 @@ class SpeedGem extends Gem { // Dagmara
     onCollect(player, position, affectsMe) {
       super.onCollect();
       if (this.affectsMe || affectsMe) { //force affectsMe value
-        this.changePlayersSpeed(player, position, affectsMe);
+        this.changePlayersSpeed(player);
       } else {
         socket.emit('gemAffectsOthers', position);
       }
     }
   
     //decide whether to heal current player or other players
-    changePlayersSpeed(player, position, affectsMe) {
+    changePlayersSpeed(player) {
       this.speed(player);
       setTimeout(() => {
         player.speed = 4;
       },this.value)
     }
   
-    //heal player
     speed(player) {
         super.displayMessage();
         const speedSign = Math.random() < 0.5;
         if (player.speed == 16 || player.speed == 2) {
-            //message,: I can't change my speed!
+            //if the speed is 16 than reduce speed if speed is 2 multiply speed
+            player.speed = player.speed == 16 ? player.speed/2 : player.speed*2;
         } else {
             player.speed = speedSign ? player.speed*2 : player.speed/2;
         }
-      //
     }
 }
   

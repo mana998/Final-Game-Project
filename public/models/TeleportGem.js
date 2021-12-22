@@ -7,12 +7,12 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 class TeleportGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
     super(x, y, width, height, value, affectsMe, `You have been teleported`);
-    this.values = [0];
+    this.values = [];
   }
 
   onCollect(player, position, affectsMe) {
     super.onCollect();
-    //decide whether to reverse for current player or other players
+    //decide whether to teleport current player or other players
     if (this.affectsMe || affectsMe) { //force affectsMe value
       this.teleport(player, map);
     } else {

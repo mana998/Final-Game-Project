@@ -31,7 +31,8 @@ function changeSpectatingPlayer(data) {
 // Marianna
 function leaveGame() {
   // reload the page to reset the socket
-  window.location.reload();
+  socket.emit('removePlayerAndGoToMainMenu');
+  showMainMenu();
 }
 
 // Marianna

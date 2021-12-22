@@ -1,3 +1,4 @@
+//Marianna
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
   // used on the server
   // eslint-disable-next-line global-require
@@ -13,14 +14,14 @@ class ReverseMovementGem extends Gem { // Marianna
   onCollect(player, position, affectsMe) {
     super.onCollect();
     if (this.affectsMe || affectsMe) { //force affectsMe value
-      this.reverseMovement(player, position, affectsMe)
+      this.reverseMovement(player)
     } else {
       socket.emit('gemAffectsOthers', position);
     }
   }
 
   //decide whether to reverse for current player or other players
-  reverseMovement(player, position, affectsMe) {
+  reverseMovement(player) {
     super.displayMessage();
     this.swapMovement(player);
     //reverse back after period of time

@@ -1,3 +1,4 @@
+//Marianna
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
     // used on the server
     // eslint-disable-next-line global-require
@@ -7,7 +8,6 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 class MovingTrap extends Trap {
     constructor(x, y, width, height, img, value, speed, direction, startRow, endRow, startColumn, endColumn) {
         super(x, y, width, height, img, value);
-        this.values = [0.01, 0.02, 0.5, 0.05];
         this.speed = speed;
         this.startRow = startRow;
         this.startColumn = startColumn;
@@ -50,7 +50,6 @@ class MovingTrap extends Trap {
 
     onCollision (player) {
         super.onCollision(player);
-        console.log("Ow no, moving this!");
     }
 
     draw(ctx, initX, initY) {

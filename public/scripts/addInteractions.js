@@ -1,3 +1,4 @@
+//Marianna
 async function changeInteractions(id, category) {
   let interactions = [];
   //get all messages
@@ -40,15 +41,18 @@ function addInteractionField(category, interaction) {
 async function createInteractionsForm(id) {
   $('#interactionForm').append(`<h1 class="gameTitle">INTERACTIONS</h1>`);
   $('#interactionForm').append(`<div id="interactionForms">`);
-  //load player interactions
+  //load player custom interactions
   let url = `api/interactions?player_id=${id}`;
   let response = await fetch(url);
   let result = await response.json();
+  // deletes message bc we are looping through categories
+  if (result.message) delete result.message;
+  // load default interactions
   url = `api/interactions`;
   response = await fetch(url);
-  if (result.message) delete result.message;
   let resultGeneral = await response.json();
-  for (category in resultGeneral) {
+  //compare player and default interaction s if player is missing the category it's tsken from default
+  for (let category in resultGeneral) {
     if (!result[category]) {
       result[category] = resultGeneral[category];
     }

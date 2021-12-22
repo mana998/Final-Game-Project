@@ -11,7 +11,7 @@ class Collectible extends GameObject { // Marianna
   }
 
   onCollect() {
-    console.log('collected');
+    //method stays for future implementations
   }
 }
 

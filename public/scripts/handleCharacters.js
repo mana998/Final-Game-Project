@@ -21,11 +21,8 @@ function generateCharacterSelection() {
         } else {
             $(`#characterLabel-${characterNumber}`).css("background-position", `left ${-32 - (characterNumber * 3 * 32)}px top 0px`);
         }
-
         $(`#characterLabel-${characterNumber}`).attr("onclick", `selectCharacter(${characterNumber})`);
-
     }
-    
     $('#characters').append(`</div>`);
 }
 

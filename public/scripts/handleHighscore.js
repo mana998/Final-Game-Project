@@ -76,9 +76,7 @@ async function displayAllHighscores() {
         for (let page = currentPage; page < currentPage+visiblePageNumbers; page ++) {
           $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page-1})"><span class="buttonText orangeText">${page-1}</span></button>`);
         }
-    }
-      
-     
+    }  
   } else {
     if (!$("#message").text()) {
       $('#highscoreBody form').append(`</br><span id="message">${result.message}</span>`);

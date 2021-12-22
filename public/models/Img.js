@@ -1,3 +1,4 @@
+//code taken from previous project
 //Marianna
 class Img {
   //size parameter might be deleted

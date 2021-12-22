@@ -1,3 +1,4 @@
+//Dagmara
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
     // used on the server
     // eslint-disable-next-line global-require
@@ -8,29 +9,27 @@ class OnOffTrap extends Trap {
     constructor(x, y, width, height, img, value, activeTime, isActive) {
         super(x, y, width, height, img, value);
         this.value = value;
-        this.values = [0.01, 0.02, 0.5, 0.05];
-        this.direction = isActive;
+        this.isActive = isActive;
         this.speed = activeTime;
 
         if (! (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports)) {
             const trapValue = this.value;
             setInterval(() => {
-                if (this.direction) {
+                if (this.isActive) {
                     this.value = 0;
-                    this.direction = !this.direction
+                    this.isActive = !this.isActive
                 } else {
                     this.value = trapValue;
-                    this.direction = !this.direction
+                    this.isActive = !this.isActive
                 }
             }, this.speed);
         }
     }
 
     onCollision (player) {
-        if (this.direction) {
+        if (this.isActive) {
             super.onCollision(player);
         }
-        console.log("Ow no, on off trap!");
     }
 
     draw(ctx, initX, initY) {
@@ -38,8 +37,8 @@ class OnOffTrap extends Trap {
         let y = initY;
         this.img.startColumn = 0;
         this.img.currentColumn = 0;
-        // object values are equal to 0 so when the direction is 0 turn off the trap
-        if (!this.direction) {      
+        // object values are equal to 0 so when the isActive is 0 turn off the trap
+        if (!this.isActive) {      
             this.img.startColumn = 1;
             this.img.currentColumn = 1;
         }
