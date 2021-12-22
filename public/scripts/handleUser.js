@@ -3,15 +3,10 @@
 function openLoginAndRegistration() {
   $("#loginMessage").remove();
   $('#loginAndRegister').css('display', 'block');
-  $('#menuOptions').css('display', 'block');
-  $('#panel').css('display', 'none');
-  $('#highscore').css('display', 'none');
-  $('#gameScreen').css('display', 'none');
-  $('#roomCodeScreen').css('display', 'none');
-  $('#interactionForm').css('display', 'none');
-  $('#difficultySelection').css('display', 'none');
+  $('#mainMenu').css('display', 'none');
   createLoginAndgisterScreen();
   $('#loggedInUserIcon').css('display', 'none');
+  $('#returnToMainMenuButton').css('display', 'block');
 }
 
 function createLoginAndgisterScreen() {
@@ -53,15 +48,22 @@ function resetLoginFields() {
 // Dagmara
 // hide login and register show main menu
 function showMainMenu() {
-  $('#panel').css('display', 'block');
-  $('#menuOptions').css('display', 'none');
+  $('#mainMenu').css('display', 'block');
   if ($('#loggedInUser').text() !== '') {
     $('#loggedInUserIcon').css('display', 'block');
   }
   $('#returnToMainMenuButton').removeClass('highscoreReturnToMainButton');
   $('#returnToMainMenuButton').removeClass('interactionsReturnToMainButton');
   $('#showHelp').css('display', 'none');
-  $('#returnToMainMenuButton').css('display', 'block');
+  $('#returnToMainMenuButton').css('display', 'none');
+
+  //menuoption is a div which have inside other divs like login etc.
+  $('#loginAndRegister').css('display', 'none');
+  $('#highscore').css('display', 'none');
+  $('#playMenu').css('display', 'none');
+  $('#roomCodeScreen').css('display', 'none');
+  $('#interactionForm').css('display', 'none');
+  $('#difficultySelection').css('display', 'none');
 }
 
 // Dagmara

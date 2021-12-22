@@ -1,14 +1,10 @@
 let currentPage = 1;
 
 function showHighscores() {
-  $('#loginAndRegister').css('display', 'none');
-  $('#menuOptions').css('display', 'block');
-  $('#panel').css('display', 'none');
-  $('#gameScreen').css('display', 'none');
-  $('#roomCodeScreen').css('display', 'none');
-  $('#interactionForm').css('display', 'none');
-  $('#difficultySelection').css('display', 'none');
+  $('#mainMenu').css('display', 'none');
+  $('#returnToMainMenuButton').css('display', 'block');
   $('#returnToMainMenuButton').addClass('highscoreReturnToMainButton');
+  $('#highscore').css('display', 'block');
   createHighscoreScreen();
 }
 
@@ -34,8 +30,7 @@ function createHighscoreScreen() {
         </div>
       </div>
       `);
-  } 
-  $('#highscore').css('display', 'block');  
+  }   
 }
 
 function changePage(pageNumber) {
