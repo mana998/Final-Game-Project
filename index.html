@@ -26,7 +26,6 @@
 </head>
 <body>
     <script src="/socket.io/socket.io.js"></script>
-    <div id="viewBlock"></div>
     <div class="container-fluid">
         <button class="backgroundPicture" id="loggedInUserIcon"></button>
         <div id="menuScreen">
@@ -58,24 +57,27 @@
     </div>
     <div id="endScreen" style="display: none">
     </div>
-    <button type="button" class="btn" id="backgroundMusicControl" onClick = "toggleBackgroundMusic()"></button>
-    <button type="button" class="btn" id="soundFxControl" onClick = "toggleSoundFx()"></button>
     <button type="button" class="btn" id="showHelp" onClick = "showHelpWindow()"></button>
-    <div id="inGameElements">
-        <span id="gemEffectMessage"></span>
-        <span id="score">Score: <span id="scoreValue">0</span></span>
-        <img src="./assets/images/game/healthOutline.png" id="healthOutline">
-        <img src="./assets/images/game/healthFill.png" id="healthFill">
-        <img src="./assets/images/buttons/enterButton.png" id="enterButton">
-    </div>
-    <div id="interactionMenu">
-        <button type="button" class="backgroundPicture smallButton interactionButton" id="bragInteraction" onClick = "selectInteraction('brag')"><span class="buttonText grayText">brag</span></button>
-        <button type="button" class="backgroundPicture smallButton interactionButton" id="greetInteraction" onClick = "selectInteraction('greet')"><span class="buttonText grayText">greet</span></button>
-        <button type="button" class="backgroundPicture smallButton interactionButton" id="byeInteraction" onClick = "selectInteraction('bye')"><span class="buttonText grayText">bye</span></button>
-        <button type="button" class="backgroundPicture smallButton interactionButton" id="complainInteraction" onClick = "selectInteraction('complain')"><span class="buttonText grayText">complain</span></button>
-    </div>
     <div id="helpWindow"></div>
-    <canvas id ="canvas" width="500", height="500"></canvas>
+    <div id="game">
+        <div id="viewBlock"></div>
+        <canvas id ="canvas" width="500", height="500"></canvas>
+        <div id="inGameElements">
+            <span id="gemEffectMessage"></span>
+            <span id="score">Score: <span id="scoreValue">0</span></span>
+            <img src="./assets/images/game/healthOutline.png" id="healthOutline">
+            <img src="./assets/images/game/healthFill.png" id="healthFill">
+            <img src="./assets/images/buttons/enterButton.png" id="enterButton">
+        </div>
+        <div id="interactionMenu">
+            <button type="button" class="backgroundPicture smallButton interactionButton" id="bragInteraction" onClick = "selectInteraction('brag')"><span class="buttonText grayText">brag</span></button>
+            <button type="button" class="backgroundPicture smallButton interactionButton" id="greetInteraction" onClick = "selectInteraction('greet')"><span class="buttonText grayText">greet</span></button>
+            <button type="button" class="backgroundPicture smallButton interactionButton" id="byeInteraction" onClick = "selectInteraction('bye')"><span class="buttonText grayText">bye</span></button>
+            <button type="button" class="backgroundPicture smallButton interactionButton" id="complainInteraction" onClick = "selectInteraction('complain')"><span class="buttonText grayText">complain</span></button>
+        </div>
+        <button type="button" class="btn" id="backgroundMusicControl" onClick = "toggleBackgroundMusic()"></button>
+        <button type="button" class="btn" id="soundFxControl" onClick = "toggleSoundFx()"></button>
+    </div>
     <script src="./models/Utils.js"></script>
     <script src="./models/Img.js"></script>
     <script src="./models/Sound.js"></script>
