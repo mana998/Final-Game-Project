@@ -229,7 +229,6 @@ async function destroySession() {
   if (!result.isDestroyed) {
     await checkSession();
   }
-  
 }
 
 // Marianna & Dagmara

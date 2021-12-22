@@ -1,5 +1,15 @@
+/* Global style */
+
 * {
     font-family: 'Press Start 2P';
+}
+
+*:focus {
+    outline: 0;
+}
+
+*, ::before, ::after {
+    box-sizing: content-box !important;
 }
 
 body {
@@ -18,72 +28,204 @@ body {
     background-image: url("../assets/images/backgrounds/background.png");
 }
 
-.gameTitle {
-    text-shadow: 0.2vw 0.2vw #2e1c19;
-    font-size: 4vw;
-    padding-bottom: 1vw; 
-    color: #412824;
-    margin: 0;
-    padding-top: 1vw;
-}
-
-/* main menu*/
-
-#createNewGameButton, #joinGameButton, #loginAndRegisterButton, #highscoreButton, #interactionsButton {
-    background-image: url("../assets/images/buttons/orangeButtonBig.png");
-    background-position: center;
-    text-align: center;
-    font-size: 2.5vw;
-    background-size: contain;
-    display: block;
-    width: 40%;
-    margin:0 auto;
-    border: none;
-    margin-top: 1%;
-    background-color: transparent;
-} 
-
-/**/
-#playGameButton {
-    margin: 2vw;
-}
-
-#loggedInUserIcon {
-    background-image: url("../assets/images/buttons/logout.png");
-    background-position: center;
-    background-size: cover;
-    height: 4vw;
-    width: 4vw;
-    display: none;
-    position: absolute;
-    right: 1vw;
-    top: 1vw;
-    border: none;
-}
-
-#loggedInUser {
-    display: block;
-    padding-top: 1vw;
-}
-
-#lobby {
-    position: absolute;
-    bottom: 0%;
-    right: 1%;
-}
-
-#lobbyText {
-    text-shadow: 0.2vw 0.2vw #2e1c19;
-    font-size: 2vw;
-    padding-bottom: 1vw; 
-    color: #412824;
-    margin: 0;
-}
-
+/* game screen */
 
 #canvas {
     display: none;
+    transform: scale(3);
+    z-index: -1;
+    position: absolute;
+    top: 0;
 }
+
+/* limit view of the map */
+#viewBlock {
+    display: none;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%,transparent 100px,black calc(320px - 32px));
+    margin: 0 auto;
+}
+
+/* health, score, messages display*/
+
+#inGameElements {
+    display: none;
+    position: fixed;
+    z-index: 5;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+#healthOutline {
+    margin: 2em;
+    height: 5em;
+}
+
+#healthFill {
+    margin: 2em;
+    height: 5em;
+    z-index: 4;
+    position: absolute;
+    /*4.54em = nothing, 0.4em = full heart*/
+    clip: rect(0.4em, 5em, 5em, 0);
+    left: 0;
+}
+
+#gemEffectMessage {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    top: 5em;
+    font-size: 2vw;
+    color: rgb(190, 190, 190);
+    z-index: 4;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#score {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    color: white;
+    z-index: 4;
+    margin: 1em;
+}
+
+/* Turn on/off music icon */
+
+#backgroundMusicControl {
+    position: fixed;
+    top: 0;
+    right: 4em;
+    z-index: 6;
+    margin: 1em;
+    width: 3em;
+    height: 3em;
+    display:none;
+    background-image: url('../assets/images/buttons/musicOn.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* Turn on/off sound effects */
+
+#soundFxControl {
+    position: fixed;
+    top: 0;
+    right: 8em;
+    z-index: 6;
+    margin: 1em;
+    width: 3em;
+    height: 3em;
+    display:none;
+    background-image: url('../assets/images/buttons/soundFxOn.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* Help screen, Turn on/off help screen */
+
+#showHelp {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 6;
+    margin: 1em;
+    width: 3em;
+    height: 3em;
+    display:none;
+    background-image: url('../assets/images/buttons/helpButton.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.helpImage {
+    margin-left: 2.5vw;
+    height: 5vw;
+    vertical-align: -webkit-baseline-middle;
+    padding: 0.5vw;
+}
+
+#movementExplanationHeader {
+    display: block;
+}
+
+#movementExplanationText {
+    display: inline-block;
+    width: 50%;
+}
+
+#wasdMovementImage, #arrowsMovementImage, #coinImage, #gemImage {
+    vertical-align: baseline;
+    height: 7vw;
+    margin-left: 1.5em;
+}
+
+#coinImage, #gemImage {
+    height: 8vw;
+}
+
+.collectiblesExplanationText {
+    display: inline-block;
+    width: 60vw;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.onOffHeader {
+    text-align: center;
+}
+
+.trapImages {
+    justify-items: center;
+    display: inline-grid;
+}
+
+.trapImage {
+    margin: 0;
+}
+
+#enterButton {
+    display: none;
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+    height: 13%;
+    opacity: 0.5;
+}
+
+/* Buttons in the game for controling the interactions category */
+
+#interactionMenu {
+    position: fixed;
+    z-index: 6;
+    display:none;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 30%;
+    width: 63%;
+}
+
+/* category button*/
+
+.interactionButton {
+    background-image: url("../assets/images/buttons/grayButtonSmall.png");
+    width: 22% !important;
+    border:none;
+    font-size: 1.5vw;
+}
+
+/*Score endscreen*/
 
 #endScreen {
     z-index: 6;
@@ -92,7 +234,6 @@ body {
     height: 100%;
 }
 
-/*Score endscreen*/
 #currentScores {
     width: fit-content;
     background-image: url("../assets/images/buttons/brownTable.png");
@@ -146,254 +287,7 @@ body {
     background-image: url("../assets/images/buttons/grayButtonSmall.png");
 }
 
-#viewBlock {
-    display: none;
-    position: fixed;
-    top: 0;
-    z-index: 3;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 50% 50%,transparent 100px,black calc(320px - 32px));
-    margin: 0 auto;
-}
-
-canvas {
-    transform: scale(3);
-    z-index: -1;
-    position: absolute;
-    top: 0;
-}
-
-#returnToMainMenuButton {
-    display: none;
-}
-
-#backgroundMusicControl {
-    position: fixed;
-    top: 0;
-    right: 4em;
-    z-index: 6;
-    margin: 1em;
-    width: 3em;
-    height: 3em;
-    display:none;
-    background-image: url('../assets/images/buttons/musicOn.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-#soundFxControl {
-    position: fixed;
-    top: 0;
-    right: 8em;
-    z-index: 6;
-    margin: 1em;
-    width: 3em;
-    height: 3em;
-    display:none;
-    background-image: url('../assets/images/buttons/soundFxOn.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-#showHelp {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 6;
-    margin: 1em;
-    width: 3em;
-    height: 3em;
-    display:none;
-    background-image: url('../assets/images/buttons/helpButton.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-#interactionMenu {
-    position: fixed;
-    z-index: 6;
-    display:none;
-    left: 50%;
-    transform: translate(-50%, 0);
-    top: 30%;
-    width: 63%;
-}
-
-.interactionButton {
-    background-image: url("../assets/images/buttons/grayButtonSmall.png");
-    width: 22% !important;
-    border:none;
-    font-size: 1.5vw;
-}
-
-/* character select*/
-.characterLabel {
-    width: 32px;
-    height: 32px;
-    background-image:url('../assets/images/game/test.png');
-    transform: scale(2);
-    margin-top: 20%;
-}
-
-.characterInput {
-    display: none;
-}
-
-.characterItem {
-    display: inline-block;
-    margin: 2% 0;
-    max-width: 20% !important;
-}
-
-.characterItem label {
-    cursor: pointer;
-}
-
-.characterItem label:hover {
-    filter: grayscale(0%);
-}
-
-.characterItem label.fullyDisabled:hover {
-    filter: grayscale(100%) !important;
-}
-
-#charactersContainer {
-    margin: 0;
-    width: 50%;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-#characters {
-    text-align: center;
-}
-
-.disabled {
-    filter: grayscale(100%);
-}
-/**/
-
-#inGameElements {
-    display: none;
-    position: fixed;
-    z-index: 5;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-}
-
-#healthOutline {
-    margin: 2em;
-    height: 5em;
-}
-
-#healthFill {
-    margin: 2em;
-    height: 5em;
-    z-index: 4;
-    position: absolute;
-    /*4.54em = nothing, 0.4em = full heart*/
-    clip: rect(0.4em, 5em, 5em, 0);
-    left: 0;
-}
-
-#gemEffectMessage {
-    position: fixed;
-    width: 100%;
-    text-align: center;
-    top: 5em;
-    font-size: 2vw;
-    color: rgb(190, 190, 190);
-    z-index: 4;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-#score {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    color: white;
-    z-index: 4;
-    margin: 1em;
-}
-
-#usernameMessage {
-    display: block;
-    padding-top: 1%;
-}
-
-/*login register */
-#repeatPasswordDiv {
-    display: none;
-    margin-bottom: 1%;
-}
-
-#loginMessage, #wrongGameCode {
-    padding-top: 1%;
-    display: block;
-}
-.inputBigButton {
-    background-image: url("../assets/images/buttons/brownButtonBig.png");
-    background-position: center;
-    text-align: center;
-    margin: 0 auto;
-    width: 40% !important;
-    margin-top: 1%;
-    font-size: 2.5vw;
-}
-
-::placeholder {
-    color: #574741;
-}
-
-#loginButton, #registerButton, #joinGameButtonAfterCodeInput, #playGameButton, .difficultyButton {
-    background-image: url("../assets/images/buttons/orangeButtonSmall.png");
-    background-position: center;
-    font-size: 2vw;
-    margin-top: 1%;
-    width: 41%;
-    border: none;
-}
-.difficultyButton {
-    width: 20vw !important;
-    margin: 1% auto 0;
-    display: block;
-}
-
-/*#difficultyButtons {
-    margin: 0 auto;
-    width: 50%;
-}*/
-
-.buttonControl {
-    width: 45%;
-    margin: 0 auto;
-}
-
-#returnToMainMenuButton, #removePlayerAndGoToMainMenu {
-    background-image: url("../assets/images/buttons/grayButtonSmall.png");
-    background-position: center;
-    font-size: 2vw;
-    margin: 0 auto;
-    margin-top: 1%;
-    width: 20vw;
-    border: none;
-}
-
-/* code screen */
-#joinGameButtonAfterCodeInput, #playGameButton {
-    width: 32%;
-    margin: 1% 0 0 0;
-    border: none;
-}
-
-#codeInput {
-    border: none;
-}
-
+/* help window both in play screen and game */
 #helpWindow {
     display: none;
     position: fixed;
@@ -474,6 +368,33 @@ canvas {
     background-image:  url("../assets/images/buttons/orangeButtonSquare.png"); 
 }
 
+/* Title on every page */
+
+.gameTitle {
+    text-shadow: 0.2vw 0.2vw #2e1c19;
+    font-size: 4vw;
+    padding-bottom: 1vw; 
+    color: #412824;
+    margin: 0;
+    padding-top: 1vw;
+}
+
+/* main menu*/
+
+#createNewGameButton, #joinGameButton, #loginAndRegisterButton, #highscoreButton, #interactionsButton {
+    background-image: url("../assets/images/buttons/orangeButtonBig.png");
+    background-position: center;
+    text-align: center;
+    font-size: 2.5vw;
+    background-size: contain;
+    display: block;
+    width: 40%;
+    margin:0 auto;
+    border: none;
+    margin-top: 1%;
+    background-color: transparent;
+} 
+
 #interactionsButton {
     background-image: url('../assets/images/buttons/interactionPixelart.png');
     background-size: cover;
@@ -487,13 +408,156 @@ canvas {
     margin: 0 2em 1em 0em;
 }
 
-.categoryTitle {
+#loggedInUser {
+    display: block;
+    padding-top: 1vw;
+}
+
+/* Play Screen */
+
+#playGameButton {
+    margin: 2vw;
+}
+
+#usernameMessage {
+    display: block;
+    padding-top: 1%;
+}
+
+#usernameInput {
+    text-align: center !important;
+}
+
+.returnToMainMenuCharacterSelection {
+    width: 32.5% !important;
+}
+
+/* Amount of players in the room */
+#lobby {
+    position: absolute;
+    bottom: 0%;
+    right: 1%;
+}
+
+#lobbyText {
     text-shadow: 0.2vw 0.2vw #2e1c19;
-    font-size: 4vw;
-    padding: 0 0 1vw 0; 
+    font-size: 2vw;
+    padding-bottom: 1vw; 
     color: #412824;
     margin: 0;
-    text-transform: uppercase;
+}
+
+/* Logged in icon displayed on Highscore, Interaction and Main Menu Screen */
+
+#loggedInUserIcon {
+    background-image: url("../assets/images/buttons/logout.png");
+    background-position: center;
+    background-size: cover;
+    height: 4vw;
+    width: 4vw;
+    display: none;
+    position: absolute;
+    right: 1vw;
+    top: 1vw;
+    border: none;
+}
+
+/* Button on Highscore, Interaction, Code, Difficulty, Sign up Screen */
+
+#returnToMainMenuButton {
+    display: none;
+}
+
+/* select character */
+
+.characterLabel {
+    width: 32px;
+    height: 32px;
+    background-image:url('../assets/images/game/characters.png');
+    transform: scale(2);
+    margin-top: 20%;
+}
+
+.characterInput {
+    display: none;
+}
+
+.characterItem {
+    display: inline-block;
+    margin: 2% 0;
+    max-width: 20% !important;
+}
+
+.characterItem label {
+    cursor: pointer;
+}
+
+.characterItem label:hover {
+    filter: grayscale(0%);
+}
+
+.characterItem label.fullyDisabled:hover {
+    filter: grayscale(100%) !important;
+}
+
+#charactersContainer {
+    margin: 0;
+    width: 50%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* character placement on the screen */
+.col-3 {
+    width: 15% !important;
+}
+
+#characters {
+    text-align: center;
+}
+
+.disabled {
+    filter: grayscale(100%);
+}
+
+/*login register */
+
+#repeatPasswordDiv {
+    display: none;
+    margin-bottom: 1%;
+}
+
+#loginMessage, #wrongGameCode {
+    padding-top: 1%;
+    display: block;
+}
+
+.buttonControl {
+    width: 45%;
+    margin: 0 auto;
+}
+
+/* general buttons styles */
+
+.inputBigButton {
+    background-image: url("../assets/images/buttons/brownButtonBig.png");
+    background-position: center;
+    text-align: center;
+    margin: 0 auto;
+    width: 40% !important;
+    margin-top: 1%;
+    font-size: 2.5vw;
+}
+
+::placeholder {
+    color: #574741;
+}
+
+.backgroundPicture {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
 }
 
 .longInput {
@@ -502,30 +566,6 @@ canvas {
     border: none !important;
     display: block !important;
     padding: 0 !important;
-}
-
-.interactionForm {
-    width: 75%;
-    display: block;
-    margin-left: 12.5%;
-    margin-right: 12.5%;
-}
-
-.submitButton, .resetButton, #resetAll {
-    background-color: transparent;
-    width: 15% !important;
-    position: relative;
-    float: right;
-    background-image: url('../assets/images/buttons/orangeButtonSmall.png');
-    background-size: contain;
-    color: #73340e;
-    border: none;
-    padding: 0;
-}
-
-#resetAll {
-    top: 1vw;
-    width: 20vw !important;
 }
 
 .orangeText {
@@ -538,29 +578,6 @@ canvas {
 
 .grayText {
     color: #4c4a49;
-}
-
-
-#resetAll {
-    right: 12.5%;
-    font-size: 2vw;
-}
-
-#interactionForms {
-    overflow-y: scroll;
-    height: 50vh;
-}
-
-.categoryButtons {
-    display: inline-block;
-    width: 100%;
-}
-
-.backgroundPicture {
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: transparent;
 }
 
 .longButton {
@@ -609,86 +626,104 @@ canvas {
     text-align: left;
 }
 
-*:focus {
-    outline: 0;
+button:hover, input:hover, input:focus {
+    filter: brightness(85%);
 }
 
-*, ::before, ::after {
-    box-sizing: content-box !important;
+/* specific buttons style */ 
+
+#loginButton, #registerButton, #joinGameButtonAfterCodeInput, #playGameButton, .difficultyButton {
+    background-image: url("../assets/images/buttons/orangeButtonSmall.png");
+    background-position: center;
+    font-size: 2vw;
+    margin-top: 1%;
+    width: 41%;
+    border: none;
 }
 
-#usernameInput {
-    text-align: center !important;
+#returnToMainMenuButton, #removePlayerAndGoToMainMenu {
+    background-image: url("../assets/images/buttons/grayButtonSmall.png");
+    background-position: center;
+    font-size: 2vw;
+    margin: 0 auto;
+    margin-top: 1%;
+    width: 20vw;
+    border: none;
 }
 
-.returnToMainMenuCharacterSelection {
-    width: 32.5% !important;
-}
+/* difficulty screen */
 
-.helpImage {
-    margin-left: 2.5vw;
-    height: 5vw;
-    vertical-align: -webkit-baseline-middle;
-    padding: 0.5vw;
-}
-
-/*#movementExplanation {
-    width: 50%;
-    display: inline-block;
-}*/
-
-#movementExplanationHeader {
+.difficultyButton {
+    width: 20vw !important;
+    margin: 1% auto 0;
     display: block;
 }
 
-#movementExplanationText {
-    display: inline-block;
-    width: 50%;
+/* code screen */
+#joinGameButtonAfterCodeInput, #playGameButton {
+    width: 32%;
+    margin: 1% 0 0 0;
+    border: none;
 }
 
-#wasdMovementImage, #arrowsMovementImage, #coinImage, #gemImage {
-    vertical-align: baseline;
-    height: 7vw;
-    margin-left: 1.5em;
+#codeInput {
+    border: none;
 }
 
-#coinImage, #gemImage {
-    height: 8vw;
-}
+/* interaction screen */
 
-.collectiblesExplanationText {
-    display: inline-block;
-    width: 60vw;
-}
-
-.gridContainer {
-    display: grid;
-    grid-template-columns: 50% 50%;
-}
-
-.onOffHeader {
-    text-align: center;
-}
-
-.trapImages {
-    justify-items: center;
-    display: inline-grid;
-}
-
-.trapImage {
+.categoryTitle {
+    text-shadow: 0.2vw 0.2vw #2e1c19;
+    font-size: 4vw;
+    padding: 0 0 1vw 0; 
+    color: #412824;
     margin: 0;
+    text-transform: uppercase;
 }
 
-#enterButton {
-    display: none;
-    position: absolute;
-    right: 2%;
-    bottom: 2%;
-    height: 13%;
-    opacity: 0.5;
+.interactionForm {
+    width: 75%;
+    display: block;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
 }
 
-/* highscore */
+.submitButton, .resetButton, #resetAll {
+    background-color: transparent;
+    width: 15% !important;
+    position: relative;
+    float: right;
+    background-image: url('../assets/images/buttons/orangeButtonSmall.png');
+    background-size: contain;
+    color: #73340e;
+    border: none;
+    padding: 0;
+}
+
+#resetAll {
+    top: 1vw;
+    width: 20vw !important;
+    right: 12.5%;
+    font-size: 2vw;
+}
+
+#interactionForms {
+    overflow-y: scroll;
+    height: 50vh;
+}
+
+.categoryButtons {
+    display: inline-block;
+    width: 100%;
+}
+
+.interactionsReturnToMainButton {
+    left: 50%;
+    transform: translate(50%, 0);
+}
+
+/* highscore screen */
+
 #highscoreList {
     background-image: url("../assets/images/buttons/brownTableBig.png");
     background-position: center;
@@ -717,11 +752,6 @@ canvas {
     transform: translate(-50%, 0);
 }
 
-.interactionsReturnToMainButton {
-    left: 50%;
-    transform: translate(50%, 0);
-}
-
 #pagesContainer {
     margin-left: auto;
     margin-right: auto;
@@ -741,12 +771,4 @@ canvas {
     height: 4vw;
     width: 4vw;
     font-size: 1.5vw;
-}
-
-.col-3 {
-    width: 15% !important;
-}
-
-button:hover, input:hover, input:focus {
-    filter: brightness(85%);
 }
