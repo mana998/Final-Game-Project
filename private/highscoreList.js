@@ -6,12 +6,9 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
     db.query('SELECT COUNT(high_score.high_score_id) AS scoresCount FROM high_score;',(error, result, fields) => {
       if (result && result.length) {
         const pageLimit = 10;
-        const currentPage = req.params.currentPage;
         const scoresSize = result[0].scoresCount;
-        const offset = (currentPage - 1) *pageLimit; //minus one because offset defines from which row we want to retrieve data
-        const fullPages = parseInt(scoresSize/pageLimit);
-        const reminderOfScores = scoresSize % pageLimit === 0 ? 0 : 1;
-        const pages = fullPages + reminderOfScores;
+        const offset = (req.params.currentPage - 1) *pageLimit; //minus one because offset defines from which row we want to retrieve data
+        const pages = Math.ceil(scoresSize/pageLimit);
         db.query(`SELECT high_score.high_score_id, player.username, high_score.score, high_score.date_time 
         FROM player 
         JOIN high_score
@@ -21,9 +18,8 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
         OFFSET ?;`, [pageLimit,offset], (error, result, fields) => {
           if (result && result.length) {
             const highscores = [];
-            let index = (currentPage - 1) * pageLimit + 1.
+            let index = offset + 1.
             for (const highscore of result) {
-              //date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0];
               highscores.push({
                 place: index, username: highscore.username, score: highscore.score, dateTime: highscore.date_time.toISOString().slice(0, 19).replace('T', ' '),
               });
