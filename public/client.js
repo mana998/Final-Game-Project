@@ -18,18 +18,12 @@ socket.io.on("close", tryReconnect);
 // hide game menu and show the game username input and play button
 function init() {
   $('#usernameInput').val('');
-  $('#loginAndRegister').css('display', 'none');
-  $('#menuOptions').css('display', 'block');
-  $('#panel').css('display', 'none');
-  $('#highscore').css('display', 'none');
-  $('#gameScreen').css('display', 'block');
-  $('#returnToMainMenuButton').css('display', 'none');
-  $('#roomCodeScreen').css('display', 'none');
-  $('#interactionForm').css('display', 'none');
-  $('#difficultySelection').css('display', 'none');
-  createUsernameScreen();
+  $('#playMenu').css('display', 'block');
   $('#showHelp').css('display', 'block');
   $('#loggedInUserIcon').css('display', 'none');
+  $('#difficultySelection').css('display', 'none');
+  $('#returnToMainMenuButton').css('display', 'none');
+  createUsernameScreen();
 }
 
 function createUsernameScreen() {
@@ -51,10 +45,7 @@ function createUsernameScreen() {
       generateCharacterSelection();
       $('#usernameInput').on('change', handleCreateUsername);
       $('#playGameButton').on('click', playGame);
-  } else {
-      $('#playMenu').css('display', 'block');
-  }
-  
+  };
 }
 
 //Dagmara

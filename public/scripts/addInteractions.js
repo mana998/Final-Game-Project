@@ -74,15 +74,10 @@ async function createInteractionsForm(id) {
 }
 
 async function showInteractions(playerId) {
-  $('#loginAndRegister').css('display', 'none');
-  $('#menuOptions').css('display', 'block');
-  $('#panel').css('display', 'none');
+  $('#mainMenu').css('display', 'none');
   $('#interactionForm').css('display', 'block');
   $('#interactionForm').empty();
-  $('#gameScreen').css('display', 'none');
-  $('#highscore').css('display', 'none');
-  $('#roomCodeScreen').css('display', 'none');
-  $('#difficultySelection').css('display', 'none');
+  $('#returnToMainMenuButton').css('display', 'block');
   $('#returnToMainMenuButton').addClass('interactionsReturnToMainButton');
   createInteractionsForm(playerId);
 }

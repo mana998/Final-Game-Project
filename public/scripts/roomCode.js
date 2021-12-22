@@ -1,16 +1,10 @@
-function codeScreen () {
+function showCodeScreen () {
     $('#codeInput').val('');
     $('#wrongGameCode').remove();
-    $('#loginAndRegister').css('display', 'none');
-    $('#menuOptions').css('display', 'block');
-    $('#panel').css('display', 'none');
-    $('#highscore').css('display', 'none');
-    $('#gameScreen').css('display', 'none');
-    $('#interactionForm').css('display', 'none');
-    $('#difficultySelection').css('display', 'none');
+    $('#mainMenu').css('display', 'none');
+    $('#returnToMainMenuButton').css('display', 'block');
     createRoomCodeScreen();  
     $('#loggedInUserIcon').css('display', 'none');
-
 }
 
 function createRoomCodeScreen() {
@@ -65,5 +59,5 @@ socket.on('EmptyRoom', handleEmptyRoom);
 socket.on('FullRoom', handleFullRoom);
 socket.on('wrongCode', handleWrongCode);
 
-$('#joinGameButton').on('click', codeScreen);
+$('#joinGameButton').on('click', showCodeScreen);
 
