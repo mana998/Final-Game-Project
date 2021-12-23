@@ -3,7 +3,7 @@ function showCodeScreen () {
     $('#wrongGameCode').remove();
     $('#mainMenu').css('display', 'none');
     $('#returnToMainMenuButton').css('display', 'block');
-    $('#roomCodeScreen').css('display', 'block'); 
+    $('#roomCodeScreen').css('display', 'block');
     createRoomCodeScreen();  
     $('#loggedInUserIcon').css('display', 'none');
 }
@@ -46,12 +46,12 @@ function handleFullRoom() {
 // Dagmara
 // if the room code is valid it allows player to join existing game
 async function joinGame() {
-    const gameCode = $('#codeInput').val();
+    const roomName = $('#codeInput').val();
     const result = await getSession();
     if (result.username && result.playerId) {
-        socket.emit('joinGame', {gameCode:gameCode, logged:result.username});
+        socket.emit('joinGame', {roomName:roomName, logged:result.username});
     } else {
-        socket.emit('joinGame', {gameCode});
+        socket.emit('joinGame', {roomName});
     } 
 }
 

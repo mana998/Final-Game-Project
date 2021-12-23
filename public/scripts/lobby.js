@@ -100,8 +100,8 @@ function playGame() {
     $('.characterLabel').removeAttr('onClick');
     $('#usernameInput').attr('disabled', 'true');
     updateServerPlayer();
-    const gameCode = $('#displayGameCode').text();
-    socket.emit('playGame', gameCode);
+    const roomName = $('#displayGameCode').text();
+    socket.emit('playGame', roomName);
     setAnimation(selectedCharacter);
     $('#game').css('display', 'block');
   }
@@ -181,9 +181,9 @@ function playersReady(players) {
 
   // Dagmara
 // Display game code
-function handleGameCodeDisplay(gameCode) {
+function handleGameCodeDisplay(roomName) {
     init();
-    $('#displayGameCode').text(gameCode);
+    $('#displayGameCode').text(roomName);
   }
 
   // Dagmara

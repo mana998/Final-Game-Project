@@ -1,3 +1,4 @@
+//Marianna & Dagmara
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
   // used on the server
   // eslint-disable-next-line global-require
@@ -23,10 +24,8 @@ const goal = new Img('./assets/images/game/goal.png', 0, 0, 0, 0, 0, 1);
 const path = new Img('./assets/images/game/path.png', 0, 0, 0, 0, 0, 1);
 const coin = new Img('./assets/images/game/coin.png', 0, 0, 0, 4, 5, 1);
 const gem = new Img('./assets/images/game/gem.png', 0, 0, 0, 3, 5, 1);
-//no animation
 const trap = new Img('./assets/images/game/trap.png', 0, 0, 0, 0, 0, 1);
 const movingTrap = new Img('./assets/images/game/ninjaStar.png', 0, 0, 0, 0, 0, 1);
-//no animation
 const onOffTrap = new Img('./assets/images/game/onOffTrap.png', 0, 0, 0, 0, 0, 1);
 
 class GameMap {
@@ -34,7 +33,7 @@ class GameMap {
     // 0 path
     // 1 wall
     // 2 goal
-    // 3 player
+    // 3 player - not used
     // 4 coin
     // 5 gem
     // 6 trap
@@ -58,7 +57,7 @@ class GameMap {
   // Marianna
   // draw map in relation to player
   draw(ctx, player, canvasWidth, canvasHeight) {
-    //limit rendering to 5 blocks around player
+    //limit rendering to 8 blocks around player
     let rowStart = Math.floor(player.y / this.tileHeight - 8);
     if (rowStart < 0) rowStart = 0;
     let rowEnd = Math.floor(player.y / this.tileHeight + 8);
@@ -67,7 +66,7 @@ class GameMap {
     if (columnStart < 0) columnStart = 0;
     let columnEnd = Math.floor(player.x / this.tileWidth + 8);
     if (columnEnd > this.tiles[0].length) columnEnd = this.tiles[0].length;
-    //temporary solution to avoid making moving traps hidden behind the path
+    // renders the path everywhere so than we can render objects on top of it
     for (let row = rowStart; row < rowEnd; row++) {
       for (let column = columnStart; column < columnEnd; column++) {
         path.draw(
@@ -83,7 +82,6 @@ class GameMap {
       for (let column = columnStart; column < columnEnd; column++) {
         switch (this.tiles[row][column]) {
           case String(this.tiles[row][column]).match(/^4/)?.input:
-            // take one coin to draw as they are the same
             coin.draw(
               ctx,
               (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
@@ -93,7 +91,6 @@ class GameMap {
             );
             break;
           case String(this.tiles[row][column]).match(/^5/)?.input:
-            // take one gem to draw as they are the same
             gem.draw(
               ctx,
               (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
@@ -103,12 +100,9 @@ class GameMap {
             );
             break;
           case String(this.tiles[row][column]).match(/^6/)?.input:
-            // take one trap to draw as they are the same, the traps image will be different but for now only one img
             //draw all traps but only first occurence of moving trap
             if (String(this.tiles[row][column]).match(/^(6\.\d+|6\.\d+\.1)$/)) {
               const blockValue = this.tiles[row][column].split('.');
-              //console.log(blockValue);
-              //console.log(this.tiles[row][column]);
               map.traps[parseInt(blockValue[1])].draw(
                 ctx,
                 (canvasWidth - player.width) / 2 - player.x + (column * this.tileWidth),
@@ -179,6 +173,8 @@ class GameMap {
       column = Utilities.getRandomNumber(0, this.tiles[row].length);
       // at least third of the map away from the goal
     } while (Math.abs(row - this.goalRow) < this.tiles.length / 3 || Math.abs(column - this.goalColumn) < this.tiles[row].length / 3 || this.tiles[row][column] !== 0);
+    //even though we don't use this value to draw/monitore player position on the map 
+    //it's useful to avoid rendering objects at the player start position
     this.tiles[row][column] = 3;
     player.x = column * this.tileWidth;
     player.y = row * this.tileHeight + this.tileHeight;
@@ -212,6 +208,7 @@ class GameMap {
       //get gem type key
       const gemTypeKey = this.gemClasses[Utilities.getRandomNumber(0, this.gemClasses.length)];
       this.tiles[row][column] = `5.${i}`;
+      //create new gem object method
       let newGem = getNewGem(gemTypeKey, [0, 0]);
       const gemValue = newGem.values[Utilities.getRandomNumber(0, newGem.values.length)];
       newGem.value = gemValue;
@@ -297,7 +294,7 @@ class GameMap {
           //direction
           const direction = Utilities.getRandomNumber(0, 2);
           //how long th trap will be active
-          const time = [1000, 2000, 5000, 4000, 3000];
+          const time = [2000, 5000, 4000, 3000];
           const activeTime = time[Utilities.getRandomNumber(0, time.length)];
           //decide if the trap should appear on or off
           const isActive = Utilities.getRandomNumber(0,2);
