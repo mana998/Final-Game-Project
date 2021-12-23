@@ -35,10 +35,10 @@ window.addEventListener('load', () => {
 //entry values are for character with value 0 (red player)
 let animations = {
   // startRow, startColumn, rows, columns value 
-  down: [0, 0, 0, 2],
-  left: [1, 0, 0, 2],
-  right: [2, 0, 0, 2],
-  up: [3, 0, 0, 2],
+  down:   [0, 0, 0, 2],
+  left:   [1, 0, 0, 2],
+  right:  [2, 0, 0, 2],
+  up:     [3, 0, 0, 2],
 };
 
 //Dagmara
@@ -49,20 +49,21 @@ function setAnimation (value) {
   if (value > 3) {
     //calculate the start position for each character in second row
     startColumnPosition = (value - 4) *3;
-    animations.down[0] = 4;
-    animations.left[0] = 5;
-    animations.right[0] = 6;
-    animations.up[0] = 7;
+    setAnimationRow(4);
   } else {
-    animations.down[0] = 0;
-    animations.left[0] = 1;
-    animations.right[0] = 2;
-    animations.up[0] = 3;
+    setAnimationRow(0);
   }
   animations.down[1] = startColumnPosition;
   animations.left[1] =  startColumnPosition;
   animations.right[1] =  startColumnPosition;
   animations.up[1] =  startColumnPosition;
+}
+
+function setAnimationRow(value) {
+  animations.down[0] = value;
+  animations.left[0] = ++value;
+  animations.right[0] = ++value;
+  animations.up[0] = ++value;
 }
 
 // Marianna
@@ -105,17 +106,14 @@ function draw(data) {
   } else {
     player.isMovingTrapCollision(map, canvas.height, canvas.width)
   }
-  // draw map
+  // draw map for player or for player who you are spectating
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
   // draw all players
   data.players.map((gamePlayer) => {
     if (!gamePlayer.isDone) {
-      if (player.username === gamePlayer.username) {
-        // draw your player - center camera
-        player.draw(ctx, (canvas.width - player.width) / 2, (canvas.height - player.height) / 2);
-      } else if (spectatingPlayer && spectatingPlayer.username === gamePlayer.username) {
-        // or draw spectating player - center camera
-        spectatingPlayer.draw(ctx, (canvas.width - spectatingPlayer.width) / 2, (canvas.height - spectatingPlayer.height) / 2);
+      if (player.username === gamePlayer.username || (spectatingPlayer && spectatingPlayer.username === gamePlayer.username)) {
+        // draw your player or the player you are spectating - center camera
+        compareToPlayer.draw(ctx, (canvas.width - compareToPlayer.width) / 2, (canvas.height - compareToPlayer.height) / 2);
       } else if (!gamePlayer.isDone) {
         // or draw all other players in relation to spectating player
         // transform data into proper object
@@ -147,6 +145,7 @@ function draw(data) {
   if (!player.isDone) {
     if (player.isNear) {
       $('#enterButton').css('display', 'block');
+      //if condition checks if the players just met
       if (!player.message && displayMessageCount === -1) socket.emit('getRandomMessage');
       displayMessageCount++
     }
@@ -209,60 +208,20 @@ function changeAnimation(direction) {
 // Marianna
 // key listeners to move the player
 function movePlayer(e) {
-  //! !!!THINK ABOUT STORING BLOCK TYPES IN SOME GLOBAL VARIABLES!!!!
   if (!playing || player.isDone) return;
   let currentSpeed = player.speed;
-  //used when speed is dirrent that 4 so the player is not stuck on turns
-  let denominator = 1;
   switch (e.key) {
     case (e.key.match(player.movement.left)?.input):
-      changeAnimation('left');
-      // check for wall collision
-      do {
-        currentSpeed = currentSpeed / denominator;
-        if (!player.isBlockCollision(map, 'left','', '', -currentSpeed, 0)) {
-          player.x -= currentSpeed;
-          player.isBlockCollision(map, 'left', canvas.height, canvas.width);
-        } else {
-          denominator = 2;
-        }
-      }while (player.isBlockCollision(map, 'left','', '', -currentSpeed, 0));
+      handleMove('left', -currentSpeed , 0);
       break;
     case (e.key.match(player.movement.right)?.input):
-      changeAnimation('right');
-      do {
-        currentSpeed = currentSpeed / denominator;
-        if (!player.isBlockCollision(map, 'right','', '', currentSpeed, 0)) {
-          player.x += currentSpeed;
-          player.isBlockCollision(map, 'right', canvas.height, canvas.width);
-        } else {
-          denominator = 2;
-        }
-      }while (player.isBlockCollision(map, 'right','', '', currentSpeed, 0));
+      handleMove('right', currentSpeed , 0);
       break;
     case (e.key.match(player.movement.up)?.input):
-      changeAnimation('up');
-      do {
-        currentSpeed = currentSpeed / denominator
-        if (!player.isBlockCollision(map, 'up','', '', 0, -currentSpeed)) {
-          player.y -= currentSpeed;
-          player.isBlockCollision(map, 'up', canvas.height, canvas.width);
-        } else {
-          denominator = 2;
-        }
-      }while (player.isBlockCollision(map, 'up','', '', 0, -currentSpeed));
+      handleMove('up', 0 , -currentSpeed);
       break;
     case (e.key.match(player.movement.down)?.input):
-      changeAnimation('down');
-      do {
-        currentSpeed = currentSpeed / denominator;
-        if (!player.isBlockCollision(map, 'down','', '', 0, currentSpeed)) {
-          player.y += currentSpeed;
-          player.isBlockCollision(map, 'down', canvas.height, canvas.width);
-        } else {
-          denominator = 2;
-        }
-      }while (player.isBlockCollision(map, 'down','', '', 0, currentSpeed));
+      handleMove('down', 0 , currentSpeed);
       break;
     case "Enter":
       //player is near other players - we don't need to check for collision again
@@ -276,6 +235,30 @@ function movePlayer(e) {
   if (walkingSound.sound.paused) walkingSound.play();
   // add update of server
   updateServerPlayer();
+}
+
+function handleMove(direction, currentSpeedX , currentSpeedY) {
+  //used when speed is different that 4 so the player is not stuck on turns
+  let denominator = 1;
+  changeAnimation(direction);
+  do {
+    if (currentSpeedX === 0 ) {
+      currentSpeedY = currentSpeedY / denominator;
+    }else {
+      currentSpeedX = currentSpeedX / denominator;
+    }
+    // check for wall collision
+    if (!player.isBlockCollision(map, direction,'', '', currentSpeedX, currentSpeedY)) {
+      if (currentSpeedX === 0 ) {
+        player.y += currentSpeedY;
+      }else {
+        player.x += currentSpeedX;
+      }
+      player.isBlockCollision(map, direction, canvas.height, canvas.width);
+    } else {
+      denominator = 2;
+    }
+  }while (player.isBlockCollision(map, direction,'', '', currentSpeedX, currentSpeedY));
 }
 
 //Marianna

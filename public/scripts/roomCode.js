@@ -3,6 +3,7 @@ function showCodeScreen () {
     $('#wrongGameCode').remove();
     $('#mainMenu').css('display', 'none');
     $('#returnToMainMenuButton').css('display', 'block');
+    $('#roomCodeScreen').css('display', 'block'); 
     createRoomCodeScreen();  
     $('#loggedInUserIcon').css('display', 'none');
 }
@@ -18,8 +19,7 @@ function createRoomCodeScreen() {
                 <button type="button" class="backgroundPicture bigButton" onClick="joinGame()" id="joinGameButtonAfterCodeInput"><span class="buttonText orangeText">JOIN GAME</span></button>
             </div>
         `);
-    } 
-    $('#roomCodeScreen').css('display', 'block');  
+    }   
 }
 
 // Dagmara
