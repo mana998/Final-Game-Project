@@ -1,3 +1,4 @@
+//Marianna
 function showHelpWindow() {
   $('#helpWindow').css('display', 'block');
   $('.container-fluid').css('filter', 'blur(0.5em)');

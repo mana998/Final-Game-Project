@@ -6,6 +6,7 @@ const app = express();
 // setup static dir
 app.use(express.static(`${__dirname}/public`));
 
+//set up session
 const session = require('express-session');
 app.use(session({
   secret: 'requiredSecret',
@@ -13,7 +14,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false },
 }));
-
+//allows to recognise incoming object as json object
 app.use(express.json());
 
 // allow to pass form data
@@ -21,15 +22,15 @@ app.use(express.urlencoded({ extended: true }));
 
 const fetch = require('node-fetch');
 
-// database setup
+//create server and set up the sockets on the server
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+
+// database setup
 const db = require('./database/connection').connection;
 
 const handleSession = require('./private/session.js');
 app.use(handleSession.router);
-
-// setup socket server
 
 // import game class
 const { Game } = require('./private/models/Game');
@@ -151,13 +152,13 @@ io.on('connection', (socket) => {
 
   //Dagmara
   function handleJoinGame(data) {
-    const desiredRoom = io.sockets.adapter.rooms.get(data.gameCode);
+    const desiredRoom = io.sockets.adapter.rooms.get(data.roomName);
     if (!desiredRoom) {
       socket.emit('wrongCode', 'Invalid room code.');
       return;
     }
 
-    const uniqueUsername = games[data.gameCode].players
+    const uniqueUsername = games[data.roomName].players
     .every((player) => player.username !== data.logged);
 
     if (!uniqueUsername) {
@@ -173,24 +174,24 @@ io.on('connection', (socket) => {
       socket.emit('FullRoom');
       return;
     }
-    playersRoomTable[socket.id] = data.gameCode;
-    socket.emit('roomName', data.gameCode);
-    socket.join(data.gameCode);
+    playersRoomTable[socket.id] = data.roomName;
+    socket.emit('roomName', data.roomName);
+    socket.join(data.roomName);
     //send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
     io.to(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
     socket.emit('createPlayer', socket.id);
   }
 
-  function startGameInterval(gameCode, gameState) {
+  function startGameInterval(roomName, gameState) {
     gameState.interval = setInterval(() => {
-      io.to(gameCode).emit('newFrame', gameState);
+      io.to(roomName).emit('newFrame', gameState);
     }, 1000 / FRAME_RATE);
   }
 
   //Dagmara & Marianna
-  function startGame(gameCode) {
-    const gameState = games[gameCode];
+  function startGame(roomName) {
+    const gameState = games[roomName];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
     if (allPlayerrsReadyToPlay === gameState.players.length) {
       //send map to each player
@@ -202,12 +203,12 @@ io.on('connection', (socket) => {
       gameState.map.traps.map( trap => {
         trapTypes.push(trap.__proto__.constructor.name);
       })
-      io.to(gameCode).emit('mapCreated', {gameMap: gameState.map, gemTypes: gemTypes, trapTypes: trapTypes});
+      io.to(roomName).emit('mapCreated', {gameMap: gameState.map, gemTypes: gemTypes, trapTypes: trapTypes});
       gameState.playing = true;
       // send new player position to each player
       gameState.players.map((player) => gameState.map.setPlayerStartPosition(player));
-      io.to(gameCode).emit('playersReady', gameState.players);
-      startGameInterval(gameCode, gameState);
+      io.to(roomName).emit('playersReady', gameState.players);
+      startGameInterval(roomName, gameState);
     } else {
       socket.emit('playersNotReady', 'Other players are still not ready, give them another minute!');
     }
@@ -297,12 +298,11 @@ io.on('connection', (socket) => {
       if (result.isSaved) {
         io.to(playersRoomTable[socket.id]).emit("scoreMessage", data.playerId);
       }
-      
     }
   }
 
 // Dagmara
-//update lobby on player cleave
+//update lobby on player leave
 function updateLobby(currentNumber) {
   io.to(playersRoomTable[socket.id]).emit("numberOfPlayersInTheRoom", currentNumber);
 }

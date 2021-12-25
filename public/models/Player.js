@@ -1,7 +1,7 @@
 const talkSound = new Sound('talk', 'soundfx');
 
 class Player extends GameObject { // Marianna
-  constructor(x, y, width, height, img, username, message, socketId) {
+  constructor(x, y, width, height, img, username, message, socketId, playerId) {
     super(x, y, width, height, img);
     this.username = username;
     this.health = 10;
@@ -18,19 +18,17 @@ class Player extends GameObject { // Marianna
       down: /^([sS]|ArrowDown)$/
     }
     this.message = message || '';
-    this.playerId = '';
+    this.playerId = playerId || '';
   }
 
   // Block types
   // 0 path
   // 1 wall
   // 2 goal
-  // 3 player
   // Marianna
   // check for collision
   // based on player rotation check only adjecent tiles in correct direction
   // check based on tilemap
-  // for future: instead of collision might just return tiletype if there is collision and based on that act
   isBlockCollision(map, direction, canvasHeight, canvasWidth, columnMovement, rowMovement) {
     let collision = false;
     const x = this.x + columnMovement || this.x;
@@ -40,56 +38,43 @@ class Player extends GameObject { // Marianna
     // column that the player is in
     const column = Math.floor(x / map.tileWidth);
     const onlyWallCollision = (columnMovement || rowMovement) ? 1 : 0; // check only for wall collision
-    // console.log('row', row, 'column', column, 'x', x, 'y', y);
     switch (direction) {
       case 'up':
         collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
-        // console.log('check row', row - 1, 'column', column);
         if (x % map.tileWidth) {
           collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
-          // console.log('check row', row - 1, 'column', column + 1);
         }
         break;
       case 'down':
         if (y % map.tileHeight) {
           collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map, canvasHeight, canvasWidth);
-          // console.log('check row', row , 'column', column);
           if (x % map.tileWidth) {
             collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
-            // console.log('check row', row, 'column', column + 1);
           }
         } else {
           collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
-          // console.log('check row', row - 1, 'column', column);
           if (x % map.tileWidth) {
             collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
-            // console.log('check row', row - 1, 'column', column + 1);
           }
         }
         break;
       case 'right':
         if (x % map.tileWidth) {
           collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth);
-          // console.log('check row', row - 1, 'column', column + 1);
           if (y % map.tileHeight) {
             collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
-            // console.log('check row', row, 'column', column + 1);
           }
         } else {
           collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
-          // console.log('check row', row - 1, 'column', column);
           if (y % map.tileHeight) {
             collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
-            // console.log('check row', row, 'column', column + 1);
           }
         }
         break;
       case 'left':
         collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
-        // console.log('check row', row - 1, 'column', column);
         if (y % map.tileHeight) {
           collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
-          // console.log('check row', row, 'column', column);
         }
         break;
       default:
@@ -102,7 +87,7 @@ class Player extends GameObject { // Marianna
     const row = Math.floor(this.y / map.tileHeight);
     // column that the player is in
     const column = Math.floor(this.x / map.tileWidth);
-    //need to check for all 4 blocks - row, row - 1, column, column + 1
+    //need to check for all 4 blocks - row, row - 1, column, column + 1,
     if (String(map.tiles[row - 1][column]).match(/^6/)) {
       this.handleCollision(map.tiles[row - 1][column], row, column, '', map, canvasHeight, canvasWidth)
     }
@@ -134,7 +119,7 @@ class Player extends GameObject { // Marianna
         this.handleGemCollision(block, row, column, map);
         break;
       case (block.match(/^6/)?.input):
-        this.handleTrapCollision(block, row, column, map, canvasHeight, canvasWidth);
+        this.handleTrapCollision(block, map);
         break;
       default:
     }
@@ -163,10 +148,10 @@ class Player extends GameObject { // Marianna
     endScreen.setAttribute('style', 'display:block');
     socket.emit('playerFinished', this);
     updateServerPlayer();
-    this.draw = () => {};
     // playing false so movement keys get disabled
     playing = false;
     window.addEventListener('keyup', changeSpectator);
+    showEndScreen();
   }
 
   handleCoinCollision(block, row, column, map) {
@@ -183,10 +168,10 @@ class Player extends GameObject { // Marianna
     map.gems[parseInt(blockValue[1])].onCollect(this, parseInt(blockValue[1]));
   }
 
-  handleTrapCollision(block, row, column, map, canvasHeight, canvasWidth) {
+  handleTrapCollision(block, map) {
     const blockValue = block.split('.');
     if (map.traps[parseInt(blockValue[1])].__proto__.constructor.name === 'MovingTrap') {
-      //calculate actual player position not in relation to center of the canvas
+      //calculate actual trap position not in relation to center of the canvas
       const trapPlaceholder = {
         x: (map.traps[parseInt(blockValue[1])].startColumn * map.tileWidth) + map.traps[parseInt(blockValue[1])].x,
         y: ((map.traps[parseInt(blockValue[1])].startRow + 1) * map.tileHeight) + map.traps[parseInt(blockValue[1])].y,
@@ -194,7 +179,7 @@ class Player extends GameObject { // Marianna
         height: map.traps[parseInt(blockValue[1])].height
       };
       //return if no collision
-      if (!map.checkCollision(player, trapPlaceholder)) {
+      if (!Utilities.checkCollision(player, trapPlaceholder)) {
         return;
       }
     }
@@ -212,7 +197,7 @@ class Player extends GameObject { // Marianna
       players.map(gamePlayer => {
           if (this.username !== gamePlayer.username) {
             if (!gamePlayer.isDone &&
-              map.checkCollision(gamePlayer, {
+              Utilities.checkCollision(gamePlayer, {
               x: player.x - 2 * map.tileWidth,
               y: player.y - 2 * map.tileHeight,
               width: player.width * 5,
@@ -225,7 +210,7 @@ class Player extends GameObject { // Marianna
       })
       return isNear;
   }
-
+  //draw the player and display message while talking
   draw (ctx, x, y) {
     super.draw(ctx, x, y);
     displayText(this.message, x + player.width/2, y - 10)

@@ -8,9 +8,8 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 class OnOffTrap extends Trap {
     constructor(x, y, width, height, img, value, activeTime, isActive) {
         super(x, y, width, height, img, value);
-        this.value = value;
+        this.activeTime = activeTime;
         this.isActive = isActive;
-        this.speed = activeTime;
 
         if (! (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports)) {
             const trapValue = this.value;
@@ -22,7 +21,7 @@ class OnOffTrap extends Trap {
                     this.value = trapValue;
                     this.isActive = !this.isActive
                 }
-            }, this.speed);
+            }, this.activeTime);
         }
     }
 
