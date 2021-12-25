@@ -301,10 +301,10 @@ body {
 #helpWindow {
     display: none;
     position: fixed;
-    top: 2vw;
+    top: -1vw;
     z-index: 4;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 0) scale(0.8);
     width: 80vw;
     height: fit-content;
     z-index: 7;
