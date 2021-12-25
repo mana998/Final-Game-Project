@@ -32,7 +32,7 @@ function init() {
             </div>
         `);
         generateCharacterSelection();
-        $('#usernameInput').on('change', handleCreateUsername);
+        $('#usernameInput').on('input', handleCreateUsername);
         $('#playGameButton').on('click', playGame);
     } else {
       $('#usernameInput').removeAttr('disabled');
@@ -120,6 +120,9 @@ function playGame() {
 // Checks if player can use the username
 function handleCreateUsername() {
     username = $('#usernameInput').val();
+    if (!username) {
+      $('#playGameButton').attr('disabled', 'true');
+    }
     socket.emit('createUsername', ({ player, username }));
     socket.on('usernameDeclined', usernameMessage);
   }
