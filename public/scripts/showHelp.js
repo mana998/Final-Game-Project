@@ -3,11 +3,14 @@ function showHelpWindow() {
   $('#helpWindow').css('display', 'block');
   $('.container-fluid').css('filter', 'blur(0.5em)');
   $('.container-fluid').css('transform', 'scale(1.5)');
-  //$('div').not('#helpWindow').css('filter', 'blur(0.2em)');
   if ($('#helpWindow').is(':empty')) {
     showInitialWindow();
   }
   showBasicInfo();
+}
+
+function addPageNumber (number) {
+  return `<p class="helpPageNumber">${number}/5</p>`
 }
 
 function showInitialWindow() {
@@ -49,6 +52,7 @@ function showBasicInfo() {
   across the maze that will hurt you. You can see your
   remaining health in the top left corner.
   If your health reaches 0, you cannot continue the game</p>`);
+  $('#contentText').append(addPageNumber(1));
 };
 
 function showControls() {
@@ -70,6 +74,7 @@ function showControls() {
   $('#contentText').append(`<img class="helpImage" id="soundImage" src="../assets/images/helpScreen/soundHelp.png">`);
   $('#contentText').append(`<p class='helpContentText'>To disable music or sound effects, click on these icons
   in top right corner.</p>`);
+  $('#contentText').append(addPageNumber(2));
 };
 
 function showCollectibles() {
@@ -92,6 +97,7 @@ function showCollectibles() {
   </p></div>
   <img class="helpImage" id="gemImage" src="../assets/images/helpScreen/gem.png">
   </div>`);
+  $('#contentText').append(addPageNumber(3));
 };
 
 function showGemTypes() {
@@ -119,6 +125,7 @@ function showGemTypes() {
   block += `<p class='helpContentText gridItem'>increase or decrease your
   speed for certain amount of time</p></div>`;
   $('#contentText').append(block);
+  $('#contentText').append(addPageNumber(4));
 };
 
 function showTraps() {
@@ -145,4 +152,5 @@ function showTraps() {
       traps += `</div>`;
   traps += `</div>`;
   $('#contentText').append(traps);
+  $('#contentText').append(addPageNumber(5));
 };

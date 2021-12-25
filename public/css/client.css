@@ -204,6 +204,16 @@ body {
     opacity: 0.5;
 }
 
+.helpPageNumber {
+    position: fixed;
+    right: 2vw;
+    bottom: 3vw;
+    width: 100%;
+    text-align: right;
+    color: #412824;
+    font-size: 2vw;
+}
+
 /* Buttons in the game for controling the interactions category */
 
 #interactionMenu {
