@@ -212,7 +212,7 @@ async function getSession() {
 async function checkSession() {
   const result = await getSession();
   if (result.playerId && result.username) {
-    $('#loggedInUser').text(`Hey ${sessionResult.username}, welcome back`);
+    $('#loggedInUser').text(`Hey ${result.username}, welcome back`);
     $('#loggedInUserIcon').css('display','block');
     changeButtonToLogout();
   } else {
