@@ -640,6 +640,10 @@ button:hover, input:hover, input:focus {
     filter: brightness(85%);
 }
 
+button:disabled, input:disabled {
+    filter: grayscale(100%) brightness(85%);
+}
+
 /* specific buttons style */ 
 
 #loginButton, #registerButton, #joinGameButtonAfterCodeInput, #playGameButton, .difficultyButton {
