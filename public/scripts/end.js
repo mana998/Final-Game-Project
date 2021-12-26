@@ -1,12 +1,20 @@
+//store scores of players who already finished the game
+const playerScores = []
+
 // Marianna
 // when player finishes, add their score to the display
-function addScoreToDisplay(player) {
+function addScoreToDisplay(passedPlayer) {
   walkingSound.pause();
-  $("#currentScoresTable").append(`<tr>
-  <td id="${player.playerId}" class="playerEndScore">${player.username}</td>
-  <td id="${player.playerId}Score"> ${player.score}</td>
-  <td id="${player.playerId}Highscore" class="highscoreText"></td>
-  </tr>)`);
+  if ($("#currentScoresTable").length || passedPlayer.username === player.username) {
+    $("#currentScoresTable").append(`<tr>
+    <td id="${passedPlayer.playerId}" class="playerEndScore">${passedPlayer.username}</td>
+    <td id="${passedPlayer.playerId}Score"> ${passedPlayer.score}</td>
+    <td id="${passedPlayer.playerId}Highscore" class="highscoreText"></td>
+    </tr>)`);
+    if (playerScores.length) addScoreToDisplay(playerScores.shift());
+  } else {
+    playerScores.push(passedPlayer);
+  }
 }
 
 function addMessageToScore(playerId) {
@@ -52,6 +60,7 @@ function showEndScreen() {
   </div>`);
   $("#endScreen").append(`<span id="spectateAnotherPlayer">(Press enter to spectate another player)</span>`);
   $("#endScreen").append(`<button type="button" class="backgroundPicture smallButton" id="leaveGameButton" onClick="leaveGame()"><span class="buttonText grayText">MAIN MENU</span></button>`);
+
 }
 
 socket.on('addPlayerScore', addScoreToDisplay);
