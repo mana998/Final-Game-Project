@@ -80,7 +80,7 @@ router.post('/api/users/register', (req, res) => {
       });
     } else {
       res.send({
-        message: 'Please, correct amount of characters from: A-Z and 0-9.',
+        message: 'Please, enter correct amount of characters from: A-Z and 0-9.',
       });
     }
     db.release();
