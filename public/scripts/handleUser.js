@@ -14,9 +14,9 @@ function createLoginAndgisterScreen() {
   $("#loginAndRegister").append(`
       <h1 id="loginAndRegisterHeadder" class="gameTitle">LOGIN</h1>
       <form>
-          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="USERNAME" type="text" id="username" name="username"></div>
-          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="PASSWORD" type="password" id="password" name="password"></div>
-          <div id="repeatPasswordDiv"class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword"></div>
+          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="USERNAME" type="text" id="username" name="username" pattern="^[a-zA-Z\d]{1,25}$" title="Please, use 1 to 25 characters from: A-Z and 0-9."></div>
+          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="PASSWORD" type="password" id="password" name="password" pattern="^[a-zA-Z\d]{1,100}$" title="Please, use 1 to 100 characters from: A-Z and 0-9."></div>
+          <div id="repeatPasswordDiv"class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword" pattern="^[a-zA-Z\d]{1,100}$" title="Please, use 1 to 100 characters from: A-Z and 0-9."></div>
       </form>
       <div class="buttonControl">
           <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()"><span id="loginButtonText" class="buttonText orangeText">LOGIN</span></button>
