@@ -350,7 +350,7 @@ class GameMap {
     //condition for every trap
     let isAvailable = this.tiles[startRow][startColumn] !== 0; //current block needs to be 0
     //moving traps
-    if (trapType === 2 && !isAvailable) {
+    if (trapType === 1 && !isAvailable) {
       isAvailable = isAvailable || 
       this.tiles[startRow+1][startColumn + 1] || 
       this.tiles[startRow+1][startColumn + 1] !== 0 || //block in next row and next collumn
