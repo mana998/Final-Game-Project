@@ -7,7 +7,7 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 class FreezeGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
     super(x, y, width, height, value, affectsMe, `You have been frozen for ${value / 1000} seconds`);
-    this.values = [5000, 10000, 15000, 20000];
+    this.values = [5000, 10000, 15000, 1200];
   }
 
   onCollect(player, position, affectsMe) {

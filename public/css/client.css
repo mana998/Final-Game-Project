@@ -204,6 +204,16 @@ body {
     opacity: 0.5;
 }
 
+.helpPageNumber {
+    position: fixed;
+    right: 2vw;
+    bottom: 3vw;
+    width: 100%;
+    text-align: right;
+    color: #412824;
+    font-size: 2vw;
+}
+
 /* Buttons in the game for controling the interactions category */
 
 #interactionMenu {
@@ -291,10 +301,10 @@ body {
 #helpWindow {
     display: none;
     position: fixed;
-    top: 2vw;
+    top: -1vw;
     z-index: 4;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 0) scale(0.8);
     width: 80vw;
     height: fit-content;
     z-index: 7;
@@ -509,7 +519,7 @@ body {
 
 /* character placement on the screen */
 .col-3 {
-    width: 15% !important;
+    width: 19% !important;
 }
 
 #characters {
@@ -628,6 +638,10 @@ body {
 
 button:hover, input:hover, input:focus {
     filter: brightness(85%);
+}
+
+button:disabled, input:disabled {
+    filter: grayscale(100%) brightness(85%);
 }
 
 /* specific buttons style */ 
