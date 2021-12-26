@@ -29,7 +29,7 @@ class Player extends GameObject { // Marianna
   // check for collision
   // based on player rotation check only adjecent tiles in correct direction
   // check based on tilemap
-  isBlockCollision(map, direction, canvasHeight, canvasWidth, columnMovement, rowMovement) {
+  isBlockCollision(map, direction, columnMovement, rowMovement) {
     let collision = false;
     const x = this.x + columnMovement || this.x;
     const y = this.y + rowMovement || this.y;
@@ -40,41 +40,41 @@ class Player extends GameObject { // Marianna
     const onlyWallCollision = (columnMovement || rowMovement) ? 1 : 0; // check only for wall collision
     switch (direction) {
       case 'up':
-        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
+        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
         if (x % map.tileWidth) {
-          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
+          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map) || collision;
         }
         break;
       case 'down':
         if (y % map.tileHeight) {
-          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map, canvasHeight, canvasWidth);
+          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map);
           if (x % map.tileWidth) {
-            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
+            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map) || collision;
           }
         } else {
-          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
+          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
           if (x % map.tileWidth) {
-            collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
+            collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map) || collision;
           }
         }
         break;
       case 'right':
         if (x % map.tileWidth) {
-          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth);
+          collision = this.handleCollision(map.tiles[row - 1][column + 1], row - 1, column + 1, onlyWallCollision, map);
           if (y % map.tileHeight) {
-            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
+            collision = this.handleCollision(map.tiles[row][column + 1], row, column + 1, onlyWallCollision, map) || collision;
           }
         } else {
-          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
+          collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
           if (y % map.tileHeight) {
-            collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
+            collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map) || collision;
           }
         }
         break;
       case 'left':
-        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map, canvasHeight, canvasWidth);
+        collision = this.handleCollision(map.tiles[row - 1][column], row - 1, column, onlyWallCollision, map);
         if (y % map.tileHeight) {
-          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map, canvasHeight, canvasWidth) || collision;
+          collision = this.handleCollision(map.tiles[row][column], row, column, onlyWallCollision, map) || collision;
         }
         break;
       default:
@@ -82,27 +82,27 @@ class Player extends GameObject { // Marianna
     return collision;
   }
 
-  isMovingTrapCollision(map, canvasHeight, canvasWidth) {
+  isMovingTrapCollision(map) {
     // row that the player is in
     const row = Math.floor(this.y / map.tileHeight);
     // column that the player is in
     const column = Math.floor(this.x / map.tileWidth);
     //need to check for all 4 blocks - row, row - 1, column, column + 1,
     if (String(map.tiles[row - 1][column]).match(/^6/)) {
-      this.handleCollision(map.tiles[row - 1][column], row, column, '', map, canvasHeight, canvasWidth)
+      this.handleCollision(map.tiles[row - 1][column], row, column, '', map)
     }
     if (this.y % map.tileHeight && String(map.tiles[row][column]).match(/^6/)) {
-      this.handleCollision(map.tiles[row][column], row, column, '', map, canvasHeight, canvasWidth)
+      this.handleCollision(map.tiles[row][column], row, column, '', map)
     }
     if (this.x % map.tileWidth && String(map.tiles[row - 1][column + 1]).match(/^6/)) {
-      this.handleCollision(map.tiles[row - 1][column + 1], row, column, '', map, canvasHeight, canvasWidth)
+      this.handleCollision(map.tiles[row - 1][column + 1], row, column, '', map)
     }
     if (this.y % map.tileHeight && this.x % map.tileWidth && String(map.tiles[row][column + 1]).match(/^6/)) {
-      this.handleCollision(map.tiles[row][column + 1], row, column, '', map, canvasHeight, canvasWidth)
+      this.handleCollision(map.tiles[row][column + 1], row, column, '', map)
     }
   }
 
-  handleCollision(block, row, column, onlyWallCollision, map, canvasHeight, canvasWidth) {
+  handleCollision(block, row, column, onlyWallCollision, map) {
     // check only wall collisions
     if (block !== 1 && onlyWallCollision) block = '';
     block = String(block);

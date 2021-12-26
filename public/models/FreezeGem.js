@@ -13,20 +13,20 @@ class FreezeGem extends Gem { // Marianna
   onCollect(player, position, affectsMe) {
     super.onCollect();
     if (this.affectsMe || affectsMe) { //force affectsMe value
-      this.freezePlayer(player, this.value);
+      this.freezePlayer(player);
     } else {
       socket.emit('gemAffectsOthers', position);
     }
   }
 
   //decide whether to reverse for current player or other players
-  freezePlayer(player, value) {
+  freezePlayer(player) {
     super.displayMessage();
     player.speed = 0;
     //reverse back after period of time
     setTimeout ( () => {
       player.speed = 4;
-    }, value);
+    }, this.value);
   }
 }
 

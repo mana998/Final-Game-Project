@@ -9,8 +9,8 @@ const collectCoinSound = new Sound('coin', 'soundfx');
 collectCoinSound.sound.volume = 0.2;
 
 class Coin extends Collectible { // Marianna
-  constructor(x, y, width, height, value, sound) {
-    super(x, y, width, height, value, sound);
+  constructor(x, y, width, height, value) {
+    super(x, y, width, height, value);
    }
   
   onCollect (player) {

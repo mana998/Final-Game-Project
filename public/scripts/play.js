@@ -104,7 +104,7 @@ function draw(data) {
       compareToPlayer = spectatingPlayer;
     }
   } else {
-    player.isMovingTrapCollision(map, canvas.height, canvas.width)
+    player.isMovingTrapCollision(map)
   }
   // draw map for player or for player who you are spectating
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
@@ -248,17 +248,17 @@ function handleMove(direction, currentSpeedX , currentSpeedY) {
       currentSpeedX = currentSpeedX / denominator;
     }
     // check for wall collision
-    if (!player.isBlockCollision(map, direction,'', '', currentSpeedX, currentSpeedY)) {
+    if (!player.isBlockCollision(map, direction, currentSpeedX, currentSpeedY)) {
       if (currentSpeedX === 0 ) {
         player.y += currentSpeedY;
       }else {
         player.x += currentSpeedX;
       }
-      player.isBlockCollision(map, direction, canvas.height, canvas.width);
+      player.isBlockCollision(map, direction);
     } else {
       denominator = 2;
     }
-  }while (player.isBlockCollision(map, direction,'', '', currentSpeedX, currentSpeedY));
+  }while (player.isBlockCollision(map, direction, currentSpeedX, currentSpeedY));
 }
 
 //Marianna
