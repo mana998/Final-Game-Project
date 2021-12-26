@@ -30,7 +30,12 @@ router.get('/api/interactions', (req, res) => {
 
 router.post('/api/interactions', (req, res) => {
   pool.getConnection(async function(err, db) {
-    let interaction_category_id;
+    if(!req.body.interactions.every(interaction => interaction.length <= 45)) {
+      res.send({
+        message: 'The interaction can have max 45 characters.'
+      });
+    } else {
+      let interaction_category_id;
     //get category id
     let result = await getCategoryId(db, req.body.interaction_category)
     if (result && result.length === 1) {
@@ -61,7 +66,9 @@ router.post('/api/interactions', (req, res) => {
             message: 'Something went wrong. Try again.'
           });
         }
+      }
     }
+    
     db.release();
   });
 });

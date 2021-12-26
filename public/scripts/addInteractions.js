@@ -14,6 +14,9 @@ async function changeInteractions(id, category) {
     body: JSON.stringify({ "player_id": id, "interaction_category": category, "interactions": interactions }),
   });
   const result = await response.json();
+  if (result.message !== 'Interactions added'){
+    alert(result.message);
+  }
 }
 
 async function resetInteractions(id, category) {
@@ -34,7 +37,7 @@ async function resetInteractions(id, category) {
 
 function addInteractionField(category, interaction) {
   return `<div class="longInput longButton backgroundPicture">
-  <input type="text" class="inputButtonText brownText input-${category}" value='${interaction}'>
+  <input type="text" class="inputButtonText brownText input-${category}" value='${interaction}' maxlenght='45'>
   </div>`;
 }
 
