@@ -10,7 +10,7 @@ class Utils {
   }
 
     //Dagmara
-    //check if string contains only : ; < = > A-Z and 0-9 and from 1 to 25 characters
+    //check if string contains only : ; < = > A-Z and 0-9 and from 1 to 25/100 characters
     checkStringCharacters(word, amount=25) {
         const reg = new RegExp(`^[a-zA-Z\d]{1,${amount}}$`);
         return reg.test(word);
