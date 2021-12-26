@@ -45,7 +45,7 @@ router.post('/api/users/login', (req, res) => {
 router.post('/api/users/register', (req, res) => {
   pool.getConnection(function(err, db) {
     const usernameValid = Utils.checkStringCharacters(req.body.username);
-    const passwordValid = Utils.checkStringCharacters(req.body.password);
+    const passwordValid = Utils.checkStringCharacters(req.body.password, 100);
     if (usernameValid && passwordValid) {
       db.query('SELECT * FROM player WHERE username=?;', [req.body.username], (error, result, fields) => {
         if (result && result.length === 1) {
@@ -80,7 +80,7 @@ router.post('/api/users/register', (req, res) => {
       });
     } else {
       res.send({
-        message: 'Please, use one or more characters from: A-Z and 0-9.',
+        message: 'Please, correct amount of characters from: A-Z and 0-9.',
       });
     }
     db.release();
