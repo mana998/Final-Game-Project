@@ -13,6 +13,7 @@ module.exports = {
   },
   rules: {
     "class-methods-use-this": [1, { "enforceForClassFields": false }],
-    'max-len': ["error", { "code": 150 }]
+    'max-len': ["error", { "code": 150 }],
+    'no-plusplus': 'off'
   },
 };

@@ -6,15 +6,16 @@ const app = express();
 // setup static dir
 app.use(express.static(`${__dirname}/public`));
 
-//set up session
+// set up session
 const session = require('express-session');
+
 app.use(session({
   secret: 'requiredSecret',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false },
 }));
-//allows to recognise incoming object as json object
+// allows to recognise incoming object as json object
 app.use(express.json());
 
 // allow to pass form data
@@ -22,14 +23,16 @@ app.use(express.urlencoded({ extended: true }));
 
 const fetch = require('node-fetch');
 
-//create server and set up the sockets on the server
+// create server and set up the sockets on the server
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 // database setup
 const db = require('./database/connection').connection;
 
+/* eslint-disable import/extensions */
 const handleSession = require('./private/session.js');
+
 app.use(handleSession.router);
 
 // import game class
@@ -44,14 +47,17 @@ const FRAME_RATE = 30;
 
 // user login and register
 const usersRouter = require('./private/users.js');
+
 app.use(usersRouter.router);
 
 // highscore list
 const highscoreListRouter = require('./private/highscoreList.js');
+
 app.use(highscoreListRouter.router);
 
 // user interactions
 const interactionsRouter = require('./private/interactions.js');
+
 app.use(interactionsRouter.router);
 
 app.get('/', (req, res) => {
@@ -65,7 +71,7 @@ const playersRoomTable = {};
 const games = {};
 
 io.on('connection', (socket) => {
-  //Marianna & Dagmara
+  // Marianna & Dagmara
   async function handleNewGameCreation(difficulty) {
     // create socketIO room and client that joins the game have to add the code which is roomId
     const roomName = Utils.createId(8); // function which creates id, we pass length of the id
@@ -79,20 +85,20 @@ io.on('connection', (socket) => {
 
     // import map class
     // eslint-disable-next-line global-require
-    const {GameMap} = require('./public/models/GameMap');
+    const { GameMap } = require('./public/models/GameMap');
     const mapFile = `./private/assets/maps/map${Utils.getRandomNumber(1, 6)}.json`;
     const map = new GameMap('', '', '', '', '', difficulty);
     // eslint-disable-next-line global-require
     map.loadMap(mapFile); // eslint-disable-line import/no-dynamic-require
     games[roomName].map = map;
-    //get logged in player id
+    // get logged in player id
     let id = '';
     let response = await fetch(`${process.env.URL}getsession`);
     let result = await response.json();
     if (result.playerId) {
       id = result.playerId;
     }
-    //load player interactions
+    // load player interactions
     let url = `${process.env.URL}api/interactions`;
     if (id) url += `?player_id=${id}`;
     response = await fetch(url);
@@ -103,14 +109,14 @@ io.on('connection', (socket) => {
     socket.emit('createPlayer', socket.id);
   }
 
-  //Dagmara
+  // Dagmara
   function addPlayerToGameObject(player) {
     const newPlayer = player;
     newPlayer.socketId = socket.id;
     games[playersRoomTable[socket.id]].players.push(newPlayer);
   }
 
-  //Marianna
+  // Marianna
   function handleClientPlayerUpdate(data) {
     // update the player object with new data
     const updatedPlayer = games[playersRoomTable[socket.id]].players
@@ -124,13 +130,13 @@ io.on('connection', (socket) => {
     games[playersRoomTable[socket.id]].players[index] = data.player;
   }
 
-  //Marianna
+  // Marianna
   function handleClientMapUpdate(tiles) {
-      games[playersRoomTable[socket.id]].map.tiles = tiles;
-      io.to(playersRoomTable[socket.id]).emit('mapUpdated', tiles);
+    games[playersRoomTable[socket.id]].map.tiles = tiles;
+    io.to(playersRoomTable[socket.id]).emit('mapUpdated', tiles);
   }
 
-  //Dagmara
+  // Dagmara
   function handleCreateUsername(initialData) {
     const data = initialData;
     const usernameValid = Utils.checkStringCharacters(data.username);
@@ -150,7 +156,7 @@ io.on('connection', (socket) => {
     socket.emit('updatePlayer', data.player);
   }
 
-  //Dagmara
+  // Dagmara
   function handleJoinGame(data) {
     const desiredRoom = io.sockets.adapter.rooms.get(data.roomName);
     if (!desiredRoom) {
@@ -159,7 +165,7 @@ io.on('connection', (socket) => {
     }
 
     const uniqueUsername = games[data.roomName].players
-    .every((player) => player.username !== data.logged);
+      .every((player) => player.username !== data.logged);
 
     if (!uniqueUsername) {
       socket.emit('wrongCode', 'Player with your username is already in the game!');
@@ -177,33 +183,34 @@ io.on('connection', (socket) => {
     playersRoomTable[socket.id] = data.roomName;
     socket.emit('roomName', data.roomName);
     socket.join(data.roomName);
-    //send number of players in the room
+    // send number of players in the room
     totalPlayersInRoom = desiredRoom.size;
     io.to(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', totalPlayersInRoom);
     socket.emit('createPlayer', socket.id);
   }
 
+  /* eslint no-param-reassign: "error" */
   function startGameInterval(roomName, gameState) {
     gameState.interval = setInterval(() => {
       io.to(roomName).emit('newFrame', gameState);
     }, 1000 / FRAME_RATE);
   }
 
-  //Dagmara & Marianna
+  // Dagmara & Marianna
   function startGame(roomName) {
     const gameState = games[roomName];
     const allPlayerrsReadyToPlay = gameState.players.filter((player) => player.readyToPlay).length;
     if (allPlayerrsReadyToPlay === gameState.players.length) {
-      //send map to each player
+      // send map to each player
       const gemTypes = [];
-      gameState.map.gems.map( gem => {
+      gameState.map.gems.map((gem) => {
         gemTypes.push(gem.__proto__.constructor.name);
-      })
+      });
       const trapTypes = [];
-      gameState.map.traps.map( trap => {
+      gameState.map.traps.map((trap) => {
         trapTypes.push(trap.__proto__.constructor.name);
-      })
-      io.to(roomName).emit('mapCreated', {gameMap: gameState.map, gemTypes: gemTypes, trapTypes: trapTypes});
+      });
+      io.to(roomName).emit('mapCreated', { gameMap: gameState.map, gemTypes, trapTypes });
       gameState.playing = true;
       // send new player position to each player
       gameState.players.map((player) => gameState.map.setPlayerStartPosition(player));
@@ -221,18 +228,18 @@ io.on('connection', (socket) => {
     // give time till server updates with newest values
     setTimeout(() => {
       // check if all players finished to disable spectating mode
-      if (games[playersRoomTable[socket.id]].players.every((player) => player.isDone === true)) {
+      if (games[playersRoomTable[socket.id]].players.every((mappedPlayer) => mappedPlayer.isDone === true)) {
         io.to(playersRoomTable[socket.id]).emit('gameEnded');
       }
     }, 100);
   }
 
-  //Marianna
+  // Marianna
   function changeSpectatingPlayer(username) {
     // get player list
     const { players } = games[playersRoomTable[socket.id]];
     // find current spectating player and index
-    const player = players.find((player) => player.username === username);
+    const player = players.find((mappedPlayer) => mappedPlayer.username === username);
     const playerPosition = players.indexOf(player);
     let position = playerPosition;
     // look for player who isn't done
@@ -272,40 +279,41 @@ io.on('connection', (socket) => {
     socket.broadcast.to(playersRoomTable[socket.id]).emit('gemEffect', value);
   }
 
-  //Marianna
-  function handleGetRandomMessage(type) {
+  // Marianna
+  function handleGetRandomMessage(passedType) {
+    let type = passedType;
     const game = games[playersRoomTable[socket.id]];
     const types = Object.keys(game.interactions);
-    //get random type
+    // get random type
     if (!type) {
       type = types[Utils.getRandomNumber(0, types.length)];
     }
-    //get random message
+    // get random message
     const message = game.interactions[type][Utils.getRandomNumber(0, game.interactions[type].length)];
     socket.emit('changePlayerMessage', message);
   }
 
-  //Dagmara
-  //save player score to database
+  // Dagmara
+  // save player score to database
   async function handleSavePlayer(data) {
     if (data.playerId) {
-        response = await fetch(`${process.env.URL}api/highestscores`, {
+      const response = await fetch(`${process.env.URL}api/highestscores`, {
         method: 'POST',
-        body: JSON.stringify({playerId: data.playerId, score: data.score}),
-        headers: { 'Content-Type': 'application/json' }
+        body: JSON.stringify({ playerId: data.playerId, score: data.score }),
+        headers: { 'Content-Type': 'application/json' },
       });
-      result = await response.json();
+      const result = await response.json();
       if (result.isSaved) {
-        io.to(playersRoomTable[socket.id]).emit("scoreMessage", data.playerId);
+        io.to(playersRoomTable[socket.id]).emit('scoreMessage', data.playerId);
       }
     }
   }
 
-// Dagmara
-//update lobby on player leave
-function updateLobby(currentNumber) {
-  io.to(playersRoomTable[socket.id]).emit("numberOfPlayersInTheRoom", currentNumber);
-}
+  // Dagmara
+  // update lobby on player leave
+  function updateLobby(currentNumber) {
+    io.to(playersRoomTable[socket.id]).emit('numberOfPlayersInTheRoom', currentNumber);
+  }
 
   socket.on('newGame', handleNewGameCreation);
   socket.on('joinGame', handleJoinGame);
@@ -326,6 +334,7 @@ function updateLobby(currentNumber) {
 });
 
 const PORT = process.env.PORT || 8080;
+/* eslint-disable no-debugger, no-console */
 server.listen(PORT, (error) => {
   if (error) {
     console.log(error);
