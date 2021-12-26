@@ -1,8 +1,9 @@
-//Dagmara & Marianna
+/* eslint-disable no-unused-vars, no-undef */
+// Dagmara & Marianna
 const walkingSound = new Sound('walk', 'soundfx');
 walkingSound.sound.volume = 0.5;
 walkingSound.sound.loop = true;
-walkingSound.sound.setAttribute("id", "walk");
+walkingSound.sound.setAttribute('id', 'walk');
 
 let displayMessageCount = -1;
 const maxDisplayMessageCount = 90;
@@ -31,39 +32,45 @@ window.addEventListener('load', () => {
   canvas.height = window.innerHeight;
 });
 
-//Marianna
-//entry values are for character with value 0 (red player)
-let animations = {
-  // startRow, startColumn, rows, columns value 
-  down:   [0, 0, 0, 2],
-  left:   [1, 0, 0, 2],
-  right:  [2, 0, 0, 2],
-  up:     [3, 0, 0, 2],
+// Marianna
+// entry values are for character with value 0 (red player)
+const animations = {
+  // startRow, startColumn, rows, columns value
+  down: [0, 0, 0, 2],
+  left: [1, 0, 0, 2],
+  right: [2, 0, 0, 2],
+  up: [3, 0, 0, 2],
 };
-
-//Dagmara
-//set right animaton for the character
-function setAnimation (value) {
-  //calculate the start position for each character
-  let startColumnPosition = value * 3; 
-  if (value > 3) {
-    //calculate the start position for each character in second row
-    startColumnPosition = (value - 4) *3;
-    setAnimationRow(4);
-  } else {
-    setAnimationRow(0);
-  }
-  animations.down[1] = startColumnPosition;
-  animations.left[1] =  startColumnPosition;
-  animations.right[1] =  startColumnPosition;
-  animations.up[1] =  startColumnPosition;
-}
 
 function setAnimationRow(value) {
   animations.down[0] = value;
   animations.left[0] = ++value;
   animations.right[0] = ++value;
   animations.up[0] = ++value;
+}
+
+// Dagmara
+// set right animaton for the character
+function setAnimation(value) {
+  // calculate the start position for each character
+  let startColumnPosition = value * 3;
+  if (value > 3) {
+    // calculate the start position for each character in second row
+    startColumnPosition = (value - 4) * 3;
+    setAnimationRow(4);
+  } else {
+    setAnimationRow(0);
+  }
+  animations.down[1] = startColumnPosition;
+  animations.left[1] = startColumnPosition;
+  animations.right[1] = startColumnPosition;
+  animations.up[1] = startColumnPosition;
+}
+
+// Marianna
+// update server if something on the client changed
+function updateServerPlayer() {
+  socket.emit('clientPlayerUpdated', { player });
 }
 
 // Marianna
@@ -99,12 +106,12 @@ function draw(data) {
           tempPlayer.img.currentColumn,
         ),
         tempPlayer.username,
-        tempPlayer.message
+        tempPlayer.message,
       );
       compareToPlayer = spectatingPlayer;
     }
   } else {
-    player.isMovingTrapCollision(map)
+    player.isMovingTrapCollision(map);
   }
   // draw map for player or for player who you are spectating
   map.draw(ctx, compareToPlayer, canvas.width, canvas.height);
@@ -145,9 +152,9 @@ function draw(data) {
   if (!player.isDone) {
     if (player.isNear) {
       $('#enterButton').css('display', 'block');
-      //if condition checks if the players just met
+      // if condition checks if the players just met
       if (!player.message && displayMessageCount === -1) socket.emit('getRandomMessage');
-      displayMessageCount++
+      displayMessageCount++;
     }
     if (!player.isNear || displayMessageCount === maxDisplayMessageCount) {
       player.message = '';
@@ -158,13 +165,7 @@ function draw(data) {
         $('#enterButton').css('display', 'none');
       }
     }
-  };
-}
-
-// Marianna
-// update server if something on the client changed
-function updateServerPlayer() {
-  socket.emit('clientPlayerUpdated', {player});
+  }
 }
 
 function handleMapUpdated(tiles) {
@@ -205,29 +206,54 @@ function changeAnimation(direction) {
   }
 }
 
+function handleMove(direction, currentSpeedX, currentSpeedY) {
+  // used when speed is different that 4 so the player is not stuck on turns
+  let denominator = 1;
+  changeAnimation(direction);
+  do {
+    if (currentSpeedX === 0) {
+      currentSpeedY /= denominator;
+    } else {
+      currentSpeedX /= denominator;
+    }
+    // check for wall collision
+    if (!player.isBlockCollision(map, direction, currentSpeedX, currentSpeedY)) {
+      if (currentSpeedX === 0) {
+        player.y += currentSpeedY;
+      } else {
+        player.x += currentSpeedX;
+      }
+      player.isBlockCollision(map, direction);
+    } else {
+      denominator = 2;
+    }
+  } while (player.isBlockCollision(map, direction, currentSpeedX, currentSpeedY));
+}
+
 // Marianna
 // key listeners to move the player
 function movePlayer(e) {
   if (!playing || player.isDone) return;
-  let currentSpeed = player.speed;
+  const currentSpeed = player.speed;
   switch (e.key) {
     case (e.key.match(player.movement.left)?.input):
-      handleMove('left', -currentSpeed , 0);
+      handleMove('left', -currentSpeed, 0);
       break;
     case (e.key.match(player.movement.right)?.input):
-      handleMove('right', currentSpeed , 0);
+      handleMove('right', currentSpeed, 0);
       break;
     case (e.key.match(player.movement.up)?.input):
-      handleMove('up', 0 , -currentSpeed);
+      handleMove('up', 0, -currentSpeed);
       break;
     case (e.key.match(player.movement.down)?.input):
-      handleMove('down', 0 , currentSpeed);
+      handleMove('down', 0, currentSpeed);
       break;
-    case "Enter":
-      //player is near other players - we don't need to check for collision again
+    case 'Enter':
+      // player is near other players - we don't need to check for collision again
       if (player.isNear) {
         $('#interactionMenu').css('display', 'block');
       }
+      break;
     default:
       // no need to update server if player didn't move
       return;
@@ -237,49 +263,25 @@ function movePlayer(e) {
   updateServerPlayer();
 }
 
-function handleMove(direction, currentSpeedX , currentSpeedY) {
-  //used when speed is different that 4 so the player is not stuck on turns
-  let denominator = 1;
-  changeAnimation(direction);
-  do {
-    if (currentSpeedX === 0 ) {
-      currentSpeedY = currentSpeedY / denominator;
-    }else {
-      currentSpeedX = currentSpeedX / denominator;
-    }
-    // check for wall collision
-    if (!player.isBlockCollision(map, direction, currentSpeedX, currentSpeedY)) {
-      if (currentSpeedX === 0 ) {
-        player.y += currentSpeedY;
-      }else {
-        player.x += currentSpeedX;
-      }
-      player.isBlockCollision(map, direction);
-    } else {
-      denominator = 2;
-    }
-  }while (player.isBlockCollision(map, direction, currentSpeedX, currentSpeedY));
-}
-
-//Marianna
+// Marianna
 function handleMapCreated(data) {
   map = new GameMap(data.gameMap.tiles, data.gameMap.timeLimit, data.gameMap.coins, data.gameMap.gems, data.gameMap.traps, data.gameMap.difficulty);
   for (let i = 0; i < data.gameMap.coins.length; i++) {
     map.coins[i] = new Coin(0, 0, 32, 32, data.gameMap.coins[i].value);
   }
   for (let i = 0; i < data.gameMap.gems.length; i++) {
-      map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
+    map.gems[i] = getNewGem(data.gemTypes[i], [data.gameMap.gems[i].value, data.gameMap.gems[i].affectsMe]);
   }
   for (let i = 0; i < data.gameMap.traps.length; i++) {
     const trapProperties = [];
-    for (const property in data.gameMap.traps[i]){
+    for (const property in data.gameMap.traps[i]) {
       trapProperties.push(data.gameMap.traps[i][property]);
     }
     map.traps[i] = getNewTrap(data.trapTypes[i], trapProperties);
   }
 }
 
-//Marianna
+// Marianna
 function displayText(text, x, y, align = 'center', color = 'white', size = 10, font = 'Helvetica') {
   ctx.font = `${size}px ${font}`;
   ctx.fillStyle = color;
@@ -287,7 +289,7 @@ function displayText(text, x, y, align = 'center', color = 'white', size = 10, f
   ctx.fillText(text, x, y);
 }
 
-//Marianna
+// Marianna
 function handleChangePlayerMessage(message) {
   player.message = message;
   updateServerPlayer();
@@ -307,16 +309,16 @@ socket.on('newFrame', (data) => {
   draw(data);
 });
 
-//Marianna
-//invoke gem effect based on index
+// Marianna
+// invoke gem effect based on index
 socket.on('gemEffect', (position) => {
   map.gems[position].onCollect(player, position, 1);
 });
 
-socket.on('mapUpdated', handleMapUpdated)
-socket.on('mapCreated', handleMapCreated)
+socket.on('mapUpdated', handleMapUpdated);
+socket.on('mapCreated', handleMapCreated);
 
-socket.on('changePlayerMessage', handleChangePlayerMessage)
+socket.on('changePlayerMessage', handleChangePlayerMessage);
 
 function selectInteraction(type) {
   socket.emit('getRandomMessage', type);
