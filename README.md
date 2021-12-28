@@ -121,12 +121,22 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO player VALUES (1, 'a_maze_thing', 'difficultPassinteraction_category'), (2, 'destroyer', 'password');
  ```
  ```bash
-INSERT INTO interaction_category VALUES (1, 'greeting'), (2, 'complain'), (3, 'brag');
+INSERT INTO interaction_category values (1, 'greet'), (2, 'complain'), (3, 'brag'), (4, 'bye');
  ```
  ```bash
 INSERT INTO interaction VALUES (1, 'Nice to see you!',1,1), (2, 'What a boring game!',2,1),
-(3, 'I am the best player in the maze!',3,1),
-(4, 'Hey there!',1,2), (5, 'This game is too short!',2,2), (6, 'Woohooo, I am amazing!',3,2);
+(3, 'I am the best player in the maze!',3,1), (4, 'Hey there!',1,2), (5, 'This game is too short!',2,2), 
+(6, 'Woohooo, I am amazing!',3,2), (7, 'Nice to see you!',1,null), (8, 'What a boring game!',2,null), 
+(9, 'I am the best player in the maze!',3,null), (10, 'Hey there!',1,null), (11, 'This game is too short!',2,null), 
+(12, 'Woohooo, I am amazing!',3,null), (13, 'Bye bye!',4,null), (14, 'See ya!',4,null), ('Heyaaaa!',1), ('Yo!',1), 
+('Stop right there!',1),('Hello!',1),('Hi!',1), ('Guten Tag!',1),('Bonjour!',1),('Ahoj!',1), ('Dzien dobry!',1),
+('Dobry den!',1),('Hola!',1),('Goddag!',1), ('Where are other players!',2), ('Who took all the coins?!',2), 
+('Who took all the gems?!',2), ('Who keeps teleporting me?!',2),('Stop freezing me!',2), ('How do I move!',2),
+('God damnit my keys are reversed!',2), ('Help, I am stuck!',2), ('Look at my score!',3),('I know where the exit is!',3),
+('It is too easy for me!',3),('You guys are noobs!',3),('I am so rich!',3), ('Let me freeze you!',3),('I am the fastest one here!',3),
+('I am so powerful!',3),('I am the winner!',3) ,('See you losers!',4),('Aufwiedersehen!',4),('Dovidenia!',4),('Hej Hej!',4),
+('Dowidzenia!',4),('I am leaving!',4),('See you never again!',4),('Hope to see you again!',4),('I hope we meet again!',4),
+('See you on the other side!',4), ('See you on the highscore list!',4);
  ```
   ```bash
 INSERT INTO high_score VALUES (1, 1, 55, '2021-11-08 12:24:44'), (2,1, 46,'2021-11-09 21:44:14'),
