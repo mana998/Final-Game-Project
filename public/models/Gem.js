@@ -24,11 +24,11 @@ class Gem extends Collectible { // Marianna
       collectGemSound.play();
     }
     $('#gemEffectMessage').text(this.message);
-      setTimeout(() => {
-        if ($('#gemEffectMessage').text() === this.message) {
-          $('#gemEffectMessage').text('');
-        }
-      }, 5000)
+    setTimeout(() => {
+      if ($('#gemEffectMessage').text() === this.message) {
+        $('#gemEffectMessage').text('');
+      }
+    }, 5000);
   }
 }
 
