@@ -181,6 +181,7 @@ function playersReady(players) {
   startBackgroundMusic();
   startSoundFx();
   //set health to 100%
+  $('#scoreValue').text("0");
   $('#healthFill').css('clip', `rect(0.4em, 5em, 5em, 0)`);
 }
 
