@@ -180,6 +180,8 @@ function playersReady(players) {
   $('#inGameElements').css('display', 'block');
   startBackgroundMusic();
   startSoundFx();
+  //set health to 100%
+  $('#healthFill').css('clip', `rect(0.4em, 5em, 5em, 0)`);
 }
 
 // Dagmara
