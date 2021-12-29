@@ -20,15 +20,17 @@ class Gem extends Collectible { // Marianna
   }
 
   displayMessage() {
-    if (collectGemSound.sound.paused) {
-      collectGemSound.play();
-    }
-    $('#gemEffectMessage').text(this.message);
-    setTimeout(() => {
-      if ($('#gemEffectMessage').text() === this.message) {
-        $('#gemEffectMessage').text('');
+    if (!player.isDone) {
+      if (collectGemSound.sound.paused) {
+        collectGemSound.play();
       }
-    }, 5000);
+      $('#gemEffectMessage').text(this.message);
+      setTimeout(() => {
+        if ($('#gemEffectMessage').text() === this.message) {
+          $('#gemEffectMessage').text('');
+        }
+      }, 5000);
+    }
   }
 }
 
