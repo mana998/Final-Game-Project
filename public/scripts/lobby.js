@@ -3,6 +3,17 @@
 let playing = false;
 
 // Dagmara
+// If username is invalid the user is promped to enter different username
+function usernameMessage(message = '') {
+  if ($('#usernameMessage')) {
+    $('#usernameMessage').remove();
+  }
+  if (message) {
+    $('#playMenu form').append(`<span id="usernameMessage">${message}</span>`);
+  }
+}
+
+// Dagmara
 // Checks if player can use the username
 function handleCreateUsername() {
   username = $('#usernameInput').val();
@@ -80,17 +91,6 @@ function setNumberOfPlayersInTheRoom(numberOfPlayers) {
     $('#lobby p.gameTitle').remove();
   }
   $('#lobby').append(`<p id = "lobbyCount" class="gameTitle">${numberOfPlayers}/4</p>`);
-}
-
-// Dagmara
-// If username is invalid the user is promped to enter different username
-function usernameMessage(message = '') {
-  if ($('#usernameMessage')) {
-    $('#usernameMessage').remove();
-  }
-  if (message) {
-    $('#playMenu form').append(`<span id="usernameMessage">${message}</span>`);
-  }
 }
 
 // Dagmara
