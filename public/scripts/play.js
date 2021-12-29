@@ -143,7 +143,11 @@ function draw(data) {
           gamePlayer.message,
         );
         // get data about other players from server
-        gamePlayer.draw(ctx, ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x, ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y);
+        gamePlayer.draw(
+          ctx,
+          ((canvas.width - compareToPlayer.width) / 2) - compareToPlayer.x + gamePlayer.x,
+          ((canvas.height - compareToPlayer.height) / 2) - compareToPlayer.y + gamePlayer.y,
+        );
       }
     }
   });
