@@ -52,10 +52,10 @@ router.get('/api/highestscores/:currentPage', (req, res) => {
 router.post('/api/highestscores', (req, res) => {
   pool.getConnection((err, db) => {
     db.query('SELECT COUNT(high_score.score) AS scoresCount FROM high_score;', (error, result, fields) => {
-      if (result && result[0].scoresCount > 100) {
+      if (result && result[0].scoresCount >= 100) {
         db.query('SELECT COUNT(high_score.score) AS highScoreCount FROM high_score WHERE high_score.score < ?;', 
           [req.body.score], (error, result, fields) => {
-          if (result && !result[0].highScoreCount) {
+          if (result && result[0].highScoreCount) {
             db.query('DELETE FROM high_score ORDER BY high_score.score ASC LIMIT 1', (error, result, fields) => {
               if (result && result.affectedRows === 1) {
                 insertScore(req, res);
