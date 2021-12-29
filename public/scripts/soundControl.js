@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-undef */
 const backgroundMusic = new Sound('backgroundMusic', 'bgMusic');
 backgroundMusic.sound.setAttribute('loop', 'true');
 

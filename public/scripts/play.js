@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-undef */
 // Dagmara & Marianna
 const walkingSound = new Sound('walk', 'soundfx');
 walkingSound.sound.volume = 0.5;

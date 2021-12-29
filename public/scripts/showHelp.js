@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-undef */
 function addPageNumber(number) {
   return `<p class="helpPageNumber">${number}/5</p>`;
 }

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-undef */
 let currentPage = 1;
 
 function createHighscoreScreen() {

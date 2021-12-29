@@ -1,4 +1,3 @@
-/* eslint-disable no-undef, no-unused-vars */
 // store scores of players who already finished the game
 const playerScores = [];
 

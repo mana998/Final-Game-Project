@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-undef */
 // Dgmara
 function createLoginAndgisterScreen() {
   if (!$('#loginAndRegister').children().length) {

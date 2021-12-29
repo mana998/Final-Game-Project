@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars, no-undef */
-
 function createRoomCodeScreen() {
   if (!$('#roomCodeScreen').children().length) {
     $('#roomCodeScreen').append(`

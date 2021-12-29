@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-undef */
 // Marianna & Dagmara
 // control variable to check whether game is in-progress
 let playing = false;
