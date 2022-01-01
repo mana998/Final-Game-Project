@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-//Dagmara
-//return playerId from session
+// Dagmara
+// return playerId from session
 router.get('/getsession', (req, res) => {
   if (req.session.playerId && req.session.username) {
     res.send({
@@ -10,13 +10,13 @@ router.get('/getsession', (req, res) => {
     });
   } else {
     res.send({
-      message: "User not logged in.",
+      message: 'User not logged in.',
     });
   }
 });
 
-//Dagmara
-//sets session id with player id
+// Dagmara
+// sets session id with player id
 router.post('/setsession', (req, res) => {
   if (req.body.playerId && req.body.username) {
     req.session.playerId = req.body.playerId;
@@ -27,8 +27,8 @@ router.post('/setsession', (req, res) => {
   }
 });
 
-//Dagmara
-//destroys session
+// Dagmara
+// destroys session
 router.delete('/destroysession', (req, res) => {
   req.session.destroy((error) => {
     if (error) {

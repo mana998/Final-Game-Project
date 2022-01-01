@@ -11,7 +11,7 @@ class Collectible extends GameObject { // Marianna
   }
 
   onCollect() {
-    //method stays for future implementations
+    // method stays for future implementations
   }
 }
 

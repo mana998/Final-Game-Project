@@ -1,16 +1,8 @@
 let currentPage = 1;
 
-function showHighscores() {
-  $('#mainMenu').css('display', 'none');
-  $('#returnToMainMenuButton').css('display', 'block');
-  $('#returnToMainMenuButton').addClass('highscoreReturnToMainButton');
-  $('#highscore').css('display', 'block');
-  createHighscoreScreen();
-}
-
 function createHighscoreScreen() {
   if (!$('#highscore').children().length) {
-      $('#highscore').append(`
+    $('#highscore').append(`
       <div id="highscoreBody">
         <h1 id="highscoreHeadder" class="gameTitle">HIGHSCORE</h1>
         <table id="highscoreList" class="backgroundPicture bigTable brownText">
@@ -30,15 +22,10 @@ function createHighscoreScreen() {
         </div>
       </div>
       `);
-  }   
+  }
 }
 
-function changePage(pageNumber) {
-  currentPage = pageNumber;
-  displayAllHighscores();
-}
-
-//display highscore with pagination
+// display highscore with pagination
 async function displayAllHighscores() {
   const response = await fetch(`/api/highestscores/${currentPage}`);
   const result = await response.json();
@@ -54,34 +41,54 @@ async function displayAllHighscores() {
         `));
     $('#pages').empty();
     let visiblePageNumbers = 3;
-    switch(currentPage) {
+    switch (currentPage) {
       case 1:
-        if (currentPage + 3 > result.pages){
+        if (currentPage + 3 > result.pages) {
           visiblePageNumbers = result.pages;
         }
-        for (let page = currentPage; page <= visiblePageNumbers; page ++) {
-          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page})"><span class="buttonText orangeText">${page}</span></button>`);
-        } 
+        for (let page = currentPage; page <= visiblePageNumbers; page++) {
+          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page})">
+            <span class="buttonText orangeText">${page}</span>
+            </button>
+          `);
+        }
         break;
       case result.pages:
-        let startPage = currentPage-2;
-        if (currentPage - visiblePageNumbers <= 0){
-          startPage  = 1;
+        let startPage = currentPage - 2;
+        if (currentPage - visiblePageNumbers <= 0) {
+          startPage = 1;
         }
-        for (let page = startPage; page <= result.pages; page ++) {
-          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page})"><span class="buttonText orangeText">${page}</span></button>`);
+        for (let page = startPage; page <= result.pages; page++) {
+          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page})">
+            <span class="buttonText orangeText">${page}</span>
+            </button>
+          `);
         }
         break;
       default:
-        for (let page = currentPage; page < currentPage+visiblePageNumbers; page ++) {
-          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page-1})"><span class="buttonText orangeText">${page-1}</span></button>`);
+        for (let page = currentPage; page < currentPage + visiblePageNumbers; page++) {
+          $('#pages').append(`<button class="backgroundPicture squareButton" onclick = "changePage(${page - 1})">
+            <span class="buttonText orangeText">${page - 1}</span>
+            </button>
+          `);
         }
-    }  
-  } else {
-    if (!$("#message").text()) {
-      $('#highscoreBody form').append(`</br><span id="message">${result.message}</span>`);
     }
+  } else if (!$('#message').text()) {
+    $('#highscoreBody form').append(`</br><span id="message">${result.message}</span>`);
   }
+}
+
+function changePage(pageNumber) {
+  currentPage = pageNumber;
+  displayAllHighscores();
+}
+
+function showHighscores() {
+  $('#mainMenu').css('display', 'none');
+  $('#returnToMainMenuButton').css('display', 'block');
+  $('#returnToMainMenuButton').addClass('highscoreReturnToMainButton');
+  $('#highscore').css('display', 'block');
+  createHighscoreScreen();
 }
 
 async function openHighscores() {

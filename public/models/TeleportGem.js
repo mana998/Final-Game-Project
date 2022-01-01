@@ -6,21 +6,21 @@ if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.ex
 
 class TeleportGem extends Gem { // Marianna
   constructor(x, y, width, height, value, affectsMe) {
-    super(x, y, width, height, value, affectsMe, `You have been teleported`);
+    super(x, y, width, height, value, affectsMe, 'You have been teleported');
     this.values = [];
   }
 
   onCollect(player, position, affectsMe) {
     super.onCollect();
-    //decide whether to teleport current player or other players
-    if (this.affectsMe || affectsMe) { //force affectsMe value
+    // decide whether to teleport current player or other players
+    if (this.affectsMe || affectsMe) { // force affectsMe value
       this.teleport(player, map);
     } else {
       socket.emit('gemAffectsOthers', position);
     }
   }
 
-  //swap movement for passed player
+  // swap movement for passed player
   teleport(player, map) {
     super.displayMessage();
     let [row, column] = [-1, -1];
@@ -33,6 +33,5 @@ class TeleportGem extends Gem { // Marianna
     updateServerPlayer();
   }
 }
-
 
 if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) module.exports = { TeleportGem };

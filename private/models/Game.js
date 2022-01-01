@@ -1,10 +1,10 @@
-//Marianna
+// Marianna
 class Game {
   constructor() {
     this.players = [];
     this.map = {};
     this.playing = false;
-    this.interactions = {}
+    this.interactions = {};
   }
 }
 

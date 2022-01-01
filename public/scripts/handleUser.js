@@ -1,37 +1,36 @@
 // Dgmara
-// show div for login and register hide menu
-function openLoginAndRegistration() {
-  $("#loginMessage").remove();
-  $('#loginAndRegister').css('display', 'block');
-  $('#mainMenu').css('display', 'none');
-  createLoginAndgisterScreen();
-  $('#loggedInUserIcon').css('display', 'none');
-  $('#returnToMainMenuButton').css('display', 'block');
-}
-
 function createLoginAndgisterScreen() {
-  if (!$("#loginAndRegister").children().length) {
-  $("#loginAndRegister").append(`
+  if (!$('#loginAndRegister').children().length) {
+    $('#loginAndRegister').append(`
       <h1 id="loginAndRegisterHeadder" class="gameTitle">LOGIN</h1>
       <form>
-          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="USERNAME" type="text" id="username" name="username" pattern="^[a-zA-Z\d]{1,25}$" title="Please, use 1 to 25 characters from: A-Z and 0-9."></div>
-          <div class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="PASSWORD" type="password" id="password" name="password" pattern="^[a-zA-Z\d]{1,100}$" title="Please, use 1 to 100 characters from: A-Z and 0-9."></div>
-          <div id="repeatPasswordDiv"class="inputBigButton backgroundPicture bigButton"><input class="buttonText brownText" placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword" pattern="^[a-zA-Z\d]{1,100}$" title="Please, use 1 to 100 characters from: A-Z and 0-9."></div>
+          <div class="inputBigButton backgroundPicture bigButton">
+            <input class="buttonText brownText" placeholder="USERNAME" type="text" id="username" name="username" pattern="^[a-zA-Z\d]{1,25}$" title="Please, use 1 to 25 characters from: A-Z and 0-9.">
+          </div>
+          <div class="inputBigButton backgroundPicture bigButton">
+            <input class="buttonText brownText" placeholder="PASSWORD" type="password" id="password" name="password" pattern="^[a-zA-Z\d]{1,100}$" title="Please, use 1 to 100 characters from: A-Z and 0-9.">
+          </div>
+          <div id="repeatPasswordDiv"class="inputBigButton backgroundPicture bigButton">
+            <input class="buttonText brownText" placeholder="REPEAT PASSWORD" type="password" id="repeatPassword" name="repeatPassword" pattern="^[a-zA-Z\d]{1,100}$" title="Please, use 1 to 100 characters from: A-Z and 0-9.">
+          </div>
       </form>
       <div class="buttonControl">
-          <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()"><span id="loginButtonText" class="buttonText orangeText">LOGIN</span></button>
-          <button type="button" id="registerButton" class="backgroundPicture smallButton" onClick="activateRegistration()"><span class="buttonText orangeText">REGISTER</span></button>
+          <button type="button" id="loginButton" class="backgroundPicture smallButton" onClick="login()">
+            <span id="loginButtonText" class="buttonText orangeText">LOGIN</span>
+          </button>
+          <button type="button" id="registerButton" class="backgroundPicture smallButton" onClick="activateRegistration()">
+            <span class="buttonText orangeText">REGISTER</span>
+          </button>
       </div> 
-    `)
+    `);
   }
-  
 }
 
 // Dagmara
 // If username is invalid the user is promped to enter different username
 function invalidInput(message = '') {
-  if ($("#loginMessage")){
-    $("#loginMessage").remove();
+  if ($('#loginMessage')) {
+    $('#loginMessage').remove();
   }
   if (message) {
     $('#loginAndRegister form').append(`<span id="loginMessage">${message}</span>`);
@@ -59,7 +58,7 @@ function showMainMenu() {
   $('#showHelp').css('display', 'none');
   $('#returnToMainMenuButton').css('display', 'none');
 
-  //menuoption is a div which have inside other divs like login etc.
+  // menuoption is a div which have inside other divs like login etc.
   $('#loginAndRegister').css('display', 'none');
   $('#highscore').css('display', 'none');
   $('#playMenu').css('display', 'none');
@@ -75,7 +74,7 @@ function showMainMenu() {
 // Dagmara
 // begin register procedure
 function activateRegistration() {
-  $("#loginMessage").remove();
+  $('#loginMessage').remove();
   $('#loginAndRegisterHeadder').text('REGISTER');
   $('#registerButton').attr('onclick', 'register()');
   $('#repeatPasswordDiv').css('display', 'block');
@@ -141,20 +140,19 @@ async function login() {
     const sessionResult = await setSession(result.playerId, result.username);
     if (sessionResult.playerId && sessionResult.username) {
       $('#loggedInUser').text(`Hey ${sessionResult.username}, welcome back`);
-      $('#loggedInUserIcon').css('display','block');
+      $('#loggedInUserIcon').css('display', 'block');
       showMainMenu();
       changeButtonToLogout();
     }
   } else {
     invalidInput(result.message);
   }
-
 }
 
 // Dagmara
 // funtion to register new user and send request to server to check and add user to db
 async function register() {
-  $("#loginMessage").remove();
+  $('#loginMessage').remove();
   const username = $('#username').val();
   const password = $('#password').val();
   const repeatPassword = $('#repeatPassword').val();
@@ -213,13 +211,23 @@ async function checkSession() {
   const result = await getSession();
   if (result.playerId && result.username) {
     $('#loggedInUser').text(`Hey ${result.username}, welcome back`);
-    $('#loggedInUserIcon').css('display','block');
+    $('#loggedInUserIcon').css('display', 'block');
     changeButtonToLogout();
   } else {
     changeButtonToLogin();
     $('#loggedInUser').text('');
     $('#loggedInUserIcon').css('display', 'none');
   }
+}
+
+// show div for login and register hide menu
+function openLoginAndRegistration() {
+  $('#loginMessage').remove();
+  $('#loginAndRegister').css('display', 'block');
+  $('#mainMenu').css('display', 'none');
+  createLoginAndgisterScreen();
+  $('#loggedInUserIcon').css('display', 'none');
+  $('#returnToMainMenuButton').css('display', 'block');
 }
 
 // Marianna & Dagmara

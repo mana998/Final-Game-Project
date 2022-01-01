@@ -1,6 +1,6 @@
-//Marianna
+// Marianna
 // setup socket
-const socket = io()
+const socket = io();
 const tryReconnect = () => {
   setTimeout(() => {
     socket.io.open((err) => {
@@ -9,8 +9,6 @@ const tryReconnect = () => {
       }
     });
   }, 2000);
-}
+};
 
-socket.io.on("close", tryReconnect);
-
-
+socket.io.on('close', tryReconnect);

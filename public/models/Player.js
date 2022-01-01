@@ -1,5 +1,9 @@
 const talkSound = new Sound('talk', 'soundfx');
 
+function updateServerMap(tiles) {
+  socket.emit('clientMapUpdated', tiles);
+}
+
 class Player extends GameObject { // Marianna
   constructor(x, y, width, height, img, username, message, socketId, playerId) {
     super(x, y, width, height, img);
@@ -15,8 +19,8 @@ class Player extends GameObject { // Marianna
       left: /^([aA]|ArrowLeft)$/,
       right: /^([dD]|ArrowRight)$/,
       up: /^([wW]|ArrowUp)$/,
-      down: /^([sS]|ArrowDown)$/
-    }
+      down: /^([sS]|ArrowDown)$/,
+    };
     this.message = message || '';
     this.playerId = playerId || '';
   }
@@ -87,18 +91,18 @@ class Player extends GameObject { // Marianna
     const row = Math.floor(this.y / map.tileHeight);
     // column that the player is in
     const column = Math.floor(this.x / map.tileWidth);
-    //need to check for all 4 blocks - row, row - 1, column, column + 1,
+    // need to check for all 4 blocks - row, row - 1, column, column + 1,
     if (String(map.tiles[row - 1][column]).match(/^6/)) {
-      this.handleCollision(map.tiles[row - 1][column], row, column, '', map)
+      this.handleCollision(map.tiles[row - 1][column], row, column, '', map);
     }
     if (this.y % map.tileHeight && String(map.tiles[row][column]).match(/^6/)) {
-      this.handleCollision(map.tiles[row][column], row, column, '', map)
+      this.handleCollision(map.tiles[row][column], row, column, '', map);
     }
     if (this.x % map.tileWidth && String(map.tiles[row - 1][column + 1]).match(/^6/)) {
-      this.handleCollision(map.tiles[row - 1][column + 1], row, column, '', map)
+      this.handleCollision(map.tiles[row - 1][column + 1], row, column, '', map);
     }
     if (this.y % map.tileHeight && this.x % map.tileWidth && String(map.tiles[row][column + 1]).match(/^6/)) {
-      this.handleCollision(map.tiles[row][column + 1], row, column, '', map)
+      this.handleCollision(map.tiles[row][column + 1], row, column, '', map);
     }
   }
 
@@ -123,6 +127,7 @@ class Player extends GameObject { // Marianna
         break;
       default:
     }
+    return false;
   }
 
   // Marianna
@@ -135,15 +140,15 @@ class Player extends GameObject { // Marianna
     // if final number is negative, set it to 0;
     timeScore = timeScore > 0 ? timeScore : 0;
     this.score += timeScore;
-    //reset score in case player dies
+    // reset score in case player dies
     if (dead) {
       this.score = 0;
     } else {
       if (map.difficulty === 0) {
         this.score /= 2;
       }
-      this.score = Math.floor(this.score/2);
-      socket.emit('savePlayer', {score:this.score, playerId: this.playerId});
+      this.score = Math.floor(this.score / 2);
+      socket.emit('savePlayer', { score: this.score, playerId: this.playerId });
     }
     endScreen.setAttribute('style', 'display:block');
     socket.emit('playerFinished', this);
@@ -158,32 +163,32 @@ class Player extends GameObject { // Marianna
     map.tiles[row][column] = 0;
     updateServerMap(map.tiles);
     const blockValue = block.split('.');
-    map.coins[parseInt(blockValue[1])].onCollect(this);
+    map.coins[parseInt(blockValue[1], 10)].onCollect(this);
   }
 
   handleGemCollision(block, row, column, map) {
     map.tiles[row][column] = 0;
     updateServerMap(map.tiles);
     const blockValue = block.split('.');
-    map.gems[parseInt(blockValue[1])].onCollect(this, parseInt(blockValue[1]));
+    map.gems[parseInt(blockValue[1], 10)].onCollect(this, parseInt(blockValue[1], 10));
   }
 
   handleTrapCollision(block, map) {
     const blockValue = block.split('.');
-    if (map.traps[parseInt(blockValue[1])].__proto__.constructor.name === 'MovingTrap') {
-      //calculate actual trap position not in relation to center of the canvas
+    if (map.traps[parseInt(blockValue[1], 10)].__proto__.constructor.name === 'MovingTrap') {
+      // calculate actual trap position not in relation to center of the canvas
       const trapPlaceholder = {
-        x: (map.traps[parseInt(blockValue[1])].startColumn * map.tileWidth) + map.traps[parseInt(blockValue[1])].x,
-        y: ((map.traps[parseInt(blockValue[1])].startRow + 1) * map.tileHeight) + map.traps[parseInt(blockValue[1])].y,
-        width: map.traps[parseInt(blockValue[1])].width,
-        height: map.traps[parseInt(blockValue[1])].height
+        x: (map.traps[parseInt(blockValue[1], 10)].startColumn * map.tileWidth) + map.traps[parseInt(blockValue[1], 10)].x,
+        y: ((map.traps[parseInt(blockValue[1], 10)].startRow + 1) * map.tileHeight) + map.traps[parseInt(blockValue[1], 10)].y,
+        width: map.traps[parseInt(blockValue[1], 10)].width,
+        height: map.traps[parseInt(blockValue[1], 10)].height,
       };
-      //return if no collision
+      // return if no collision
       if (!Utilities.checkCollision(player, trapPlaceholder)) {
         return;
       }
     }
-    map.traps[parseInt(blockValue[1])].onCollision(player);
+    map.traps[parseInt(blockValue[1], 10)].onCollision(player);
     if (this.health <= 0) {
       if (!this.isDone) {
         this.playerIsDone(1);
@@ -191,36 +196,32 @@ class Player extends GameObject { // Marianna
     }
   }
 
-  //detect whether to initiate conversation
+  // detect whether to initiate conversation
   isNearPlayers(players) {
-      let isNear = false;
-      players.map(gamePlayer => {
-          if (this.username !== gamePlayer.username) {
-            if (!gamePlayer.isDone &&
-              Utilities.checkCollision(gamePlayer, {
-              x: player.x - 2 * map.tileWidth,
-              y: player.y - 2 * map.tileHeight,
-              width: player.width * 5,
-              height: player.height * 5
-            })){
-              isNear = true;
-              return isNear;
-            }
-          }
-      })
-      return isNear;
+    let isNear = false;
+    players.map((gamePlayer) => {
+      if (this.username !== gamePlayer.username) {
+        if (!gamePlayer.isDone
+              && Utilities.checkCollision(gamePlayer, {
+                x: player.x - 2 * map.tileWidth,
+                y: player.y - 2 * map.tileHeight,
+                width: player.width * 5,
+                height: player.height * 5,
+              })) {
+          isNear = true;
+          return isNear;
+        }
+      }
+    });
+    return isNear;
   }
-  //draw the player and display message while talking
-  draw (ctx, x, y) {
+
+  // draw the player and display message while talking
+  draw(ctx, x, y) {
     super.draw(ctx, x, y);
-    displayText(this.message, x + player.width/2, y - 10)
+    displayText(this.message, x + player.width / 2, y - 10);
     if (this.message && talkSound.sound.paused) {
       talkSound.play();
     }
-
   }
-}
-
-function updateServerMap(tiles) {
-  socket.emit('clientMapUpdated', tiles);
 }

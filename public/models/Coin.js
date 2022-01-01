@@ -11,9 +11,9 @@ collectCoinSound.sound.volume = 0.2;
 class Coin extends Collectible { // Marianna
   constructor(x, y, width, height, value) {
     super(x, y, width, height, value);
-   }
-  
-  onCollect (player) {
+  }
+
+  onCollect(player) {
     player.score += this.value;
     collectCoinSound.play();
     $('#scoreValue').text(player.score);

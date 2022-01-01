@@ -1,7 +1,7 @@
-//code taken from previous project
-//Marianna
+// code taken from previous project
+// Marianna
 class Img {
-  //size parameter might be deleted
+  // size parameter might be deleted
   constructor(src, startRow, startColumn, rows, columns, speed, size, currentRow, currentColumn) {
     // src img
     this.src = src;
@@ -65,7 +65,6 @@ class Img {
     }
     // draw the image (spritesheet IMG, start x on img, start y on img, width, height, x on canvas, y on canvas, width on canvas, height on canvas)
     ctx.drawImage(this.img, startX, startY, width, height, x, y, width * this.size, height * this.size);
-    
   }
 }
 
