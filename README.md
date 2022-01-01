@@ -2,15 +2,16 @@
 Semester 5, final project at KEA.
 
 # General Idea
-The main concept of this game is to get out of the maze as fast as possible and collect the most amount of coins. There are different bonuses and traps along the way that will make your traversal easier or harder. Everything is randomly generated so there is a very low probability that you will have 2 similar experiences. To make the experience more enjoyable, you can play this game with your friends and compete against each other.
+The main concept of this game is to get out of the maze as fast as possible and collect the highest amount of coins. There are different bonuses and traps along the way that will make your traversal easier or harder. Everything is randomly generated, which lowers the probability of having two similar experiences. To make the game more enjoyable, you can play it with your friends and compete against each other.
 
 # Features
-- Variety of characters that player can choose from
-- Various maps with traps and collectibles
+- Variety of characters that players can choose from
+- Randomly selected map with traps and collectibles
 - Background music and sound effects
 - Customizable character dialogues
 - Multiplayer mode with rooms
 - Leaderboard
+- Easy/Hard mode
 
 # Run the game
 There are two ways of running the game:
@@ -50,7 +51,7 @@ USE `<database name>` ;
 CREATE TABLE IF NOT EXISTS `<database name>`.`player` (
   `player_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(1000) NOT NULL,
+  `password` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`player_id`),
   UNIQUE INDEX `player_id_UNIQUE` (`player_id` ASC) ,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) )
@@ -91,8 +92,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
  ```bash
 CREATE TABLE IF NOT EXISTS `<database name>`.`interaction` (
-  `interaction_id` INT NOT NULL,
-  `interaction_message` VARCHAR(45) NOT NULL,
+  `interaction_id` INT NOT NULL AUTO_INCREMENT,
+  `interaction_message` VARCHAR(45) NOT NULL ,
   `interaction_category_id` INT NOT NULL,
   `player_id` INT DEFAULT NULL,
   PRIMARY KEY (`interaction_id`),
