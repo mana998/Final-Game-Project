@@ -55,6 +55,10 @@ function playGame() {
   const roomName = $('#displayGameCode').text();
   socket.emit('playGame', roomName);
   setAnimation(selectedCharacter);
+  $('#viewBlock').css('display', 'none');
+  $('#inGameElements').css('display', 'none');
+  $('#backgroundMusicControl').css('display', 'none');
+  $('#soundFxControl').css('display', 'none');
   $('#game').css('display', 'block');
 }
 
@@ -82,6 +86,8 @@ function createUsernameScreen() {
     $('#playGameButton').attr('disabled', 'true');
     $('#characters').empty();
     generateCharacterSelection();
+    $('#usernameMessage').text('');
+    $('#endScreen').empty();
   }
 }
 
