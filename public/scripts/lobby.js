@@ -10,6 +10,7 @@ function usernameMessage(message = '') {
   }
   if (message) {
     $('#playMenu form').append(`<span id="usernameMessage">${message}</span>`);
+    $('#playGameButton').attr('disabled', 'true');
   }
 }
 

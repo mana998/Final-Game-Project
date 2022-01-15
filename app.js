@@ -148,6 +148,8 @@ io.on('connection', (socket) => {
       .every((player) => player.username !== data.username);
     if (!uniqueUsername) {
       socket.emit('usernameDeclined', 'Username is already taken!');
+      data.player.username = data.username;
+      handleClientPlayerUpdate(data);
       return;
     }
     data.player.username = data.username;
